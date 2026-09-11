@@ -1,1 +1,0 @@
-Temporary profile asset notes.
