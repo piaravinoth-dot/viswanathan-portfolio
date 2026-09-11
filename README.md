@@ -1,27 +1,36 @@
-# Viswanathan G — Immersive Portfolio
+# Viswanathan G — Immersive Portfolio V4
 
-Production-ready immersive portfolio for Viswanathan G.
+Live portfolio: https://viswanathan-portfolio-iota.vercel.app
 
-## Positioning
-Art Director · Creative Technologist · UI/UX Designer · AI Product Builder.
+Premium interactive portfolio for Viswanathan G, positioned around Art Direction, Creative Leadership, UI/UX, Campaign Systems, Editorial Communication and AI-driven design workflows.
 
 ## Experience direction
-This version is inspired by premium interactive designer portfolios, but built around Viswanathan's own identity, work and positioning. It uses a loading sequence, large identity-led hero, horizontal drag-based work exploration, keyboard controls, animated project systems and responsive case-study pages.
+- Oversized identity-led first screen
+- Drag / wheel horizontal work exploration
+- Custom cursor and hover states
+- Keyboard controls: G = grid, T = dark mode, I = information drawer
+- AI Studio floating interface showcase
+- Responsive mobile adaptation
 
-## Main pages
-- `index.html`
-- `work/ai-design-studio.html`
-- `work/consulting-website.html`
-- `work/campaign-systems.html`
-- `about.html`
-- `resume.html`
-- `contact.html`
+## Production polish
+- SEO metadata and canonical URLs
+- Open Graph / Twitter social preview
+- Favicon and web manifest
+- Robots.txt and sitemap.xml
+- Vercel static hosting configuration
+- 404 fallback page
 
-## Deploy
-Static HTML/CSS/JS. No build step. Deploy directly to Vercel, Netlify, GitHub Pages or any static host.
+## Stack
+Semantic HTML, responsive CSS and vanilla JavaScript. No paid dependencies and no build step.
 
-## Controls
-- `G` — Toggle grid
-- `T` — Toggle dark mode
-- `I` — Toggle information drawer
-- Arrow keys — Navigate project panels
+## Main routes
+- `/`
+- `/work/ai-design-studio`
+- `/work/consulting-website`
+- `/work/campaign-systems`
+- `/about`
+- `/resume`
+- `/contact`
+
+## Deployment
+Optimized for Vercel static hosting with clean URLs.
