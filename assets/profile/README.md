@@ -1,0 +1,1 @@
+Profile image assets for the homepage.
