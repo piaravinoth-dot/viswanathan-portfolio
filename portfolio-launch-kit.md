@@ -6,7 +6,25 @@ Live portfolio: https://viswanathan-portfolio-iota.vercel.app
 Art Director | UI/UX Designer | Creative Technologist | AI Design Specialist
 
 ## One-line portfolio description
-A senior design portfolio covering art direction, campaign systems, editorial communication, UI/UX, website builds and AI-assisted creative workflows.
+A senior design portfolio covering graphic design, social media creatives, UI/UX, professional website experiences, print collaterals, OOH, vehicle branding, presentations, logo design, branding, editorial communication and AI-assisted creative workflows.
+
+## Design services / work I handle
+- Graphic design
+- Social media posters and campaign creatives
+- UI/UX design
+- Professional website UI, landing pages and responsive website presentation
+- Print collaterals: brochures, pamphlets, booklets, flyers, handouts and newspaper ads
+- OOH design: hoardings, banners, standees, flex boards and outdoor ads
+- Vehicle branding: car, van, bike, auto and campaign vehicle layouts
+- PowerPoint presentations, pitch decks and proposal decks
+- Logo design, title units and identity lockups
+- Branding and visual identity systems
+- Digital ads, GDN banners, thumbnails and platform-ready adaptations
+- Editorial design and dense information layout
+- Infographics, comparison cards and statistics-led visuals
+- Event collaterals, placards, backdrops, badges and on-ground branding
+- Design systems, templates and quality-control workflows
+- AI-assisted design ideation, variation creation and creative workflow automation
 
 ## Best-fit job titles to apply for
 - Art Director
@@ -23,14 +41,14 @@ A senior design portfolio covering art direction, campaign systems, editorial co
 - AI Workflow Designer
 
 ## Primary recruiter intro
-I’m a senior Art Director and UI/UX-focused Creative Technologist with 10+ years of experience across campaign systems, editorial design, digital products, website builds and AI-assisted creative workflows.
+I’m a senior Art Director and UI/UX-focused Creative Technologist with 10+ years of experience across graphic design, social media creatives, campaign systems, editorial design, professional website experiences and AI-assisted creative workflows.
 
-My work combines visual direction, design systems and practical product-building. I have led high-volume campaign communication, built responsive website experiences, and developed AI-assisted creative workflows that improve production speed without losing design control.
+My work combines visual direction, design systems and practical product-building. I handle digital, print, OOH, branding, presentation design and website UI with strong production discipline and creative quality control.
 
 Portfolio: https://viswanathan-portfolio-iota.vercel.app
 
 ## Short LinkedIn / WhatsApp recruiter message
-Hi, I’m Viswanathan G, an Art Director, UI/UX Designer and Creative Technologist with 10+ years of experience in campaign systems, editorial design, digital products, website builds and AI-assisted creative workflows.
+Hi, I’m Viswanathan G, an Art Director, UI/UX Designer and Creative Technologist with 10+ years of experience across graphic design, social media creatives, campaign systems, print collaterals, OOH, branding, presentation design, professional website experiences and AI-assisted creative workflows.
 
 I’m exploring senior design, UI/UX, creative technology and AI design specialist roles across India, global teams and remote opportunities.
 
@@ -40,9 +58,9 @@ Resume available on request.
 ## Job application message — Design / Art Director roles
 Hi,
 
-I’m Viswanathan G, a senior Art Director and Creative Lead with 10+ years of experience across campaign systems, brand communication, editorial design and high-volume visual production.
+I’m Viswanathan G, a senior Art Director and Creative Lead with 10+ years of experience across graphic design, social media creatives, campaign systems, brand communication, editorial design and high-volume visual production.
 
-I have led scalable design systems, managed fast creative execution, reviewed output quality and built visual communication for large public-facing campaigns. My portfolio also includes UI/UX, website builds and AI-assisted creative workflows, which add stronger digital and technology depth to my design profile.
+I handle complete design execution across digital, print, OOH, vehicle branding, presentation design, logo design, branding and campaign visual systems. My profile also includes UI/UX, professional website experiences and AI-assisted creative workflows, which add stronger digital and technology depth to my design work.
 
 Portfolio: https://viswanathan-portfolio-iota.vercel.app
 
@@ -53,7 +71,7 @@ Hi,
 
 I’m Viswanathan G, a UI/UX-focused Creative Technologist with a strong background in visual design, art direction and digital communication.
 
-Along with 10+ years of design experience, I have built complete website experiences using Figma, responsive layout thinking and Codex-assisted development workflows. My strength is converting visual direction, content structure and user flow into clear, polished digital experiences.
+Along with 10+ years of design experience, I work on professional website UI, landing pages, responsive layout thinking and Figma-led digital presentation. My strength is converting visual direction, content structure and user flow into clear, polished digital experiences.
 
 Portfolio: https://viswanathan-portfolio-iota.vercel.app
 
@@ -64,7 +82,7 @@ Hi,
 
 I’m Viswanathan G, an Art Director and Creative Technologist with 10+ years of design experience and hands-on work in AI-assisted creative workflows.
 
-My recent work includes building design-led digital experiences and developing AI-assisted design systems that support editable creative production, faster iteration, content workflows and design control. I bring a designer-first perspective to AI tools, product thinking and creative automation.
+My recent work includes design-led digital experiences and AI-assisted design systems that support editable creative production, faster iteration, content workflows and design control. I bring a designer-first perspective to AI tools, product thinking and creative automation.
 
 Portfolio: https://viswanathan-portfolio-iota.vercel.app
 
@@ -73,7 +91,7 @@ I would be glad to discuss how my design, UI and AI workflow experience can supp
 ## International / remote job message
 Hi,
 
-I’m Viswanathan G from India, an Art Director, UI/UX Designer and Creative Technologist with 10+ years of experience across campaign systems, editorial design, digital products, website builds and AI-assisted creative workflows.
+I’m Viswanathan G from India, an Art Director, UI/UX Designer and Creative Technologist with 10+ years of experience across graphic design, social media creatives, campaign systems, editorial design, professional website experiences and AI-assisted creative workflows.
 
 I’m open to international and remote opportunities where senior visual design, UI/UX, creative leadership and AI-enabled production experience can add value.
 
@@ -85,9 +103,9 @@ I’d be glad to connect and discuss suitable opportunities.
 Art Director | UI/UX Designer | Creative Technologist | AI Design Specialist
 
 ## LinkedIn About
-I’m a senior Art Director and UI/UX-focused Creative Technologist with 10+ years of experience across campaign systems, editorial design, digital products, website builds and AI-assisted creative workflows.
+I’m a senior Art Director and UI/UX-focused Creative Technologist with 10+ years of experience across graphic design, social media creatives, campaign systems, editorial design, professional website experiences and AI-assisted creative workflows.
 
-My work combines visual direction, design systems and practical product-building. I have led high-volume campaign communication, built responsive website experiences, and developed AI-assisted creative workflows that improve production speed without losing design control.
+My work combines visual direction, design systems and practical product-building. I handle digital creatives, print collaterals, OOH, vehicle branding, presentations, logo design, branding, website UI and AI-assisted design workflows with a focus on clarity, speed and creative quality control.
 
 I’m open to senior design, art direction, UI/UX, creative technology and AI design specialist roles across India, global teams and remote opportunities.
 
@@ -100,7 +118,7 @@ Art Director | UI/UX Designer | Creative Technologist | AI Design Specialist
 Portfolio: https://viswanathan-portfolio-iota.vercel.app
 
 ## Behance profile line
-Art Director, UI/UX Designer and Creative Technologist focused on campaign systems, editorial communication, digital product experiences and AI-assisted design workflows.
+Art Director, UI/UX Designer and Creative Technologist focused on graphic design, campaign systems, editorial communication, professional website experiences and AI-assisted design workflows.
 
 Portfolio: https://viswanathan-portfolio-iota.vercel.app
 
@@ -128,5 +146,6 @@ Avoid applying as a pure Software Engineer, Backend Developer, Full Stack Develo
 - AI Design Studio, Digital Product Experience and Campaign Systems pages open correctly.
 - No broken image icon is visible.
 - Public-facing text does not mention placeholder, fallback, upload-ready or internal setup.
+- No “2 websites built” wording appears.
 - Name and large headings do not cut on mobile.
 - Portfolio link is added to LinkedIn, resume and job applications.
