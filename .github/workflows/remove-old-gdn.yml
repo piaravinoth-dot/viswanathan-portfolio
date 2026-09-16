@@ -1,0 +1,91 @@
+name: Remove old GDN references
+
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-old-gdn.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Remove old GDN cards and rebalance layouts
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          # Portfolio archive
+          p = Path('portfolio.html')
+          s = p.read_text(encoding='utf-8')
+          s, n = re.subn(
+              r'<a class="project wide reveal" href="https://www\.behance\.net/gallery/252836923/GDN-ads-Resizes".*?</a>\n?',
+              '', s, count=1, flags=re.S
+          )
+          if n != 1:
+              raise SystemExit(f'Expected 1 portfolio GDN card, removed {n}')
+
+          # Renumber archive from 7 to 6 and rebalance the remaining cards.
+          for old, new in [
+              ('01 / 07','01 / 06'), ('02 / 07','02 / 06'), ('03 / 07','03 / 06'),
+              ('04 / 07','04 / 06'), ('06 / 07','05 / 06'), ('07 / 07','06 / 06')
+          ]:
+              s = s.replace(old, new)
+          s = s.replace(
+              '<a class="project reveal" href="https://www.behance.net/gallery/252835901/Samvidhan-Gaurav-Abhiyaan_Presentation"',
+              '<a class="project wide reveal" href="https://www.behance.net/gallery/252835901/Samvidhan-Gaurav-Abhiyaan_Presentation"'
+          )
+          s = s.replace(
+              '<a class="project reveal offset" href="https://www.behance.net/gallery/252836513/Campaign-Thumbnails"',
+              '<a class="project wide reveal" href="https://www.behance.net/gallery/252836513/Campaign-Thumbnails"'
+          )
+          p.write_text(s, encoding='utf-8')
+
+          # Campaign case study
+          p = Path('work/campaign-systems.html')
+          s = p.read_text(encoding='utf-8')
+          s, n = re.subn(
+              r'<a class="project reveal" href="https://www\.behance\.net/gallery/252836923/GDN-ads-Resizes".*?</a>\n?',
+              '', s, count=1, flags=re.S
+          )
+          if n != 1:
+              raise SystemExit(f'Expected 1 campaign GDN card, removed {n}')
+
+          s = s.replace('<b>GDN, thumbnails & social</b>', '<b>Thumbnails & social</b>')
+          for old, new in [
+              ('<small>02 · SOCIAL</small>', '<small>01 · SOCIAL</small>'),
+              ('<small>03 · BRANDING</small>', '<small>02 · BRANDING</small>'),
+              ('<small>04 · EDITORIAL</small>', '<small>03 · EDITORIAL</small>'),
+              ('<small>05 · PUBLICATION</small>', '<small>04 · PUBLICATION</small>'),
+              ('<small>06 · PRESENTATION</small>', '<small>05 · PRESENTATION</small>'),
+              ('<small>07 · GROUND</small>', '<small>06 · GROUND</small>')
+          ]:
+              s = s.replace(old, new)
+
+          old_css = '.project:nth-child(1){grid-column:span 8}.project:nth-child(2){grid-column:span 4}.project:nth-child(3){grid-column:span 4}.project:nth-child(4){grid-column:span 8}.project:nth-child(5),.project:nth-child(6),.project:nth-child(7){grid-column:span 4}.shot{aspect-ratio:4/3;overflow:hidden;background:#ddd}.project:nth-child(1) .shot,.project:nth-child(4) .shot{aspect-ratio:16/9}'
+          new_css = '.project:nth-child(1),.project:nth-child(2),.project:nth-child(3){grid-column:span 4}.project:nth-child(4){grid-column:span 8}.project:nth-child(5){grid-column:span 4}.project:nth-child(6){grid-column:span 12}.shot{aspect-ratio:4/3;overflow:hidden;background:#ddd}.project:nth-child(4) .shot,.project:nth-child(6) .shot{aspect-ratio:16/9}'
+          if old_css not in s:
+              raise SystemExit('Expected campaign work-grid CSS not found')
+          s = s.replace(old_css, new_css)
+          p.write_text(s, encoding='utf-8')
+
+          # Safety check: no old GDN project/link remains in these live pages.
+          for path in ['portfolio.html', 'work/campaign-systems.html']:
+              t = Path(path).read_text(encoding='utf-8')
+              if '252836923' in t or 'GDN Ads' in t or 'GDN-ads-Resizes' in t:
+                  raise SystemExit(f'Old GDN reference still present in {path}')
+
+      - name: Commit website update and remove one-time workflow
+        run: |
+          git config user.name "portfolio-ui-bot"
+          git config user.email "portfolio-ui-bot@users.noreply.github.com"
+          git rm .github/workflows/remove-old-gdn.yml
+          git add portfolio.html work/campaign-systems.html
+          git commit -m "Remove previous GDN work from portfolio"
+          git push
