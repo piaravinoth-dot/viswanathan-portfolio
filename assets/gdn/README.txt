@@ -1,0 +1,1 @@
+Final GDN portfolio assets. Images are stored in this folder and presented through /work/gdn.
