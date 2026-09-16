@@ -1,0 +1,62 @@
+name: Polish resume tools grid
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/tools-grid-polish.yml'
+permissions:
+  contents: write
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update resume tools section
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('resume.html')
+          s = p.read_text(encoding='utf-8')
+
+          old_css = ".skills{display:flex;flex-wrap:wrap;gap:9px}.skills span{border:1px solid var(--line);border-radius:999px;background:var(--paper);padding:10px 13px;font-size:11px;font-weight:800}"
+          new_css = ".skills{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:stretch}.tool-card{min-width:0;min-height:92px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#fbfaf6 0%,var(--paper) 100%);padding:14px;display:flex;align-items:center;gap:12px;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}.tool-card:hover{transform:translateY(-2px);border-color:rgba(41,66,255,.28);box-shadow:0 12px 30px rgba(16,16,20,.06)}.tool-icon{width:44px;height:44px;flex:0 0 44px;border-radius:12px;border:1px solid rgba(16,16,20,.12);background:#fff;display:grid;place-items:center;font-size:11px;font-weight:900;letter-spacing:-.02em;color:var(--ink)}.tool-icon.brand{color:var(--blue);background:rgba(41,66,255,.05);border-color:rgba(41,66,255,.16)}.tool-icon.ai{background:var(--ink);color:#fff;border-color:var(--ink)}.tool-name{min-width:0;font-size:12px;font-weight:800;line-height:1.25;color:var(--ink)}"
+          if old_css not in s:
+              raise SystemExit('Expected old skills CSS not found')
+          s = s.replace(old_css, new_css, 1)
+
+          old_media = ".columns,.proof{grid-template-columns:1fr}.proof{gap:8px}"
+          new_media = ".columns,.proof{grid-template-columns:1fr}.skills{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tool-card{min-height:76px;padding:12px;border-radius:17px;gap:10px}.tool-icon{width:38px;height:38px;flex-basis:38px;border-radius:10px;font-size:10px}.tool-name{font-size:12px}.proof{gap:8px}"
+          if old_media not in s:
+              raise SystemExit('Expected mobile insertion point not found')
+          s = s.replace(old_media, new_media, 1)
+
+          old_print = ".job{padding:16px 0}.skills span{background:#fff}.proof b{font-size:46px}"
+          new_print = ".job{padding:16px 0}.skills{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.tool-card{min-height:auto;padding:8px;box-shadow:none;background:#fff}.tool-icon{width:30px;height:30px;flex-basis:30px;background:#fff!important;color:#101014!important}.tool-name{font-size:9px}.proof b{font-size:46px}"
+          if old_print not in s:
+              raise SystemExit('Expected print CSS not found')
+          s = s.replace(old_print, new_print, 1)
+
+          old_html = '<section class="row"><div class="row-label"><span>04 / Tools</span><h2>Hands-on.</h2></div><div class="skills"><span>Adobe Photoshop</span><span>Illustrator</span><span>Premiere Pro</span><span>Figma</span><span>CorelDRAW</span><span>Midjourney</span><span>Adobe Firefly</span><span>Codex</span><span>Generative AI</span><span>Responsive Design</span></div></section>'
+          new_html = '<section class="row"><div class="row-label"><span>04 / Tools</span><h2>Hands-on.</h2></div><div class="skills"><div class="tool-card"><span class="tool-icon brand" aria-hidden="true">Ps</span><span class="tool-name">Adobe Photoshop</span></div><div class="tool-card"><span class="tool-icon brand" aria-hidden="true">Ai</span><span class="tool-name">Adobe Illustrator</span></div><div class="tool-card"><span class="tool-icon brand" aria-hidden="true">Pr</span><span class="tool-name">Premiere Pro</span></div><div class="tool-card"><span class="tool-icon brand" aria-hidden="true">Fg</span><span class="tool-name">Figma</span></div><div class="tool-card"><span class="tool-icon" aria-hidden="true">CD</span><span class="tool-name">CorelDRAW</span></div><div class="tool-card"><span class="tool-icon" aria-hidden="true">MJ</span><span class="tool-name">Midjourney</span></div><div class="tool-card"><span class="tool-icon brand" aria-hidden="true">Ff</span><span class="tool-name">Adobe Firefly</span></div><div class="tool-card"><span class="tool-icon ai" aria-hidden="true">&lt;/&gt;</span><span class="tool-name">Codex</span></div><div class="tool-card"><span class="tool-icon ai" aria-hidden="true">AI</span><span class="tool-name">Generative AI</span></div><div class="tool-card"><span class="tool-icon" aria-hidden="true">↔</span><span class="tool-name">Responsive Design</span></div></div></section>'
+          if old_html not in s:
+              raise SystemExit('Expected tools HTML not found')
+          s = s.replace(old_html, new_html, 1)
+
+          # Add an intermediate breakpoint so the grid stays balanced on smaller laptops/tablets.
+          marker = '@media(max-width:900px){'
+          insert = '@media(max-width:1200px) and (min-width:901px){.skills{grid-template-columns:repeat(3,minmax(0,1fr))}}'
+          if insert not in s:
+              s = s.replace(marker, insert + marker, 1)
+
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit polished tools grid and remove one-time workflow
+        run: |
+          git config user.name "portfolio-ui-bot"
+          git config user.email "portfolio-ui-bot@users.noreply.github.com"
+          git add resume.html
+          git rm .github/workflows/tools-grid-polish.yml
+          git commit -m "Polish resume tools grid alignment"
+          git push
