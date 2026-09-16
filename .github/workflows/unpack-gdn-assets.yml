@@ -2,7 +2,8 @@ name: Unpack final GDN assets
 on:
   push:
     paths:
-      - 'assets/gdn-final-web.zip'
+      - '.github/workflows/unpack-gdn-assets.yml'
+      - 'assets/gdn-final-web.zip.b64.part6'
 jobs:
   unpack:
     runs-on: ubuntu-latest
@@ -12,14 +13,27 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Unpack final GDN web assets
+      - name: Rebuild and unpack final GDN web assets
         run: |
+          cat assets/gdn-final-web.zip.b64.part1 \
+              assets/gdn-final-web.zip.b64.part2 \
+              assets/gdn-final-web.zip.b64.part3 \
+              assets/gdn-final-web.zip.b64.part4 \
+              assets/gdn-final-web.zip.b64.part5 \
+              assets/gdn-final-web.zip.b64.part6 \
+            | base64 -d > assets/gdn-final-web.zip
           mkdir -p assets/gdn
           unzip -o assets/gdn-final-web.zip -d assets/gdn
-          rm -f assets/gdn-final-web.zip
+          rm -f assets/gdn-final-web.zip \
+                assets/gdn-final-web.zip.b64.part1 \
+                assets/gdn-final-web.zip.b64.part2 \
+                assets/gdn-final-web.zip.b64.part3 \
+                assets/gdn-final-web.zip.b64.part4 \
+                assets/gdn-final-web.zip.b64.part5 \
+                assets/gdn-final-web.zip.b64.part6
           git config user.name "portfolio-ui-bot"
           git config user.email "portfolio-ui-bot@users.noreply.github.com"
-          git add assets/gdn assets/gdn-final-web.zip
+          git add -A
           if git diff --cached --quiet; then
             echo "No changes"
             exit 0
