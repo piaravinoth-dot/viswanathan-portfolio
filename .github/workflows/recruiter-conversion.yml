@@ -1,0 +1,126 @@
+name: Recruiter conversion polish
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/recruiter-conversion.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Tighten recruiter-facing content
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace(path, old, new, count=1):
+              p = Path(path)
+              s = p.read_text()
+              if old not in s:
+                  raise SystemExit(f'Missing expected text in {path}: {old[:100]}')
+              s = s.replace(old, new, count)
+              p.write_text(s)
+
+          # Homepage: stronger leadership positioning + compact proof strip.
+          replace('index.html',
+            '<p class="intro"><strong>I build clear visual systems and digital experiences</strong> across art direction, campaign design, UI/UX and AI-assisted creative workflows.</p>',
+            '<p class="intro"><strong>I lead and build clear visual systems and digital experiences</strong> — combining art direction, team-level design review, UI/UX and AI-assisted creative workflows from direction to production-ready execution.</p>')
+          replace('index.html',
+            '\n.section{padding:72px 32px;',
+            '\n.proof-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--line)}.proof-strip div{padding:18px 32px;border-right:1px solid var(--line)}.proof-strip div:last-child{border-right:0}.proof-strip b{display:block;font-size:22px;letter-spacing:-.035em}.proof-strip span{display:block;margin-top:5px;font-size:8px;font-weight:900;letter-spacing:.13em;color:var(--muted);text-transform:uppercase}\n.section{padding:72px 32px;')
+          replace('index.html',
+            '.hero-photo-frame{aspect-ratio:4/4.45;border-radius:18px}.section{padding:50px 18px;',
+            '.hero-photo-frame{aspect-ratio:4/4.45;border-radius:18px}.proof-strip{grid-template-columns:1fr}.proof-strip div{padding:15px 18px;border-right:0;border-bottom:1px solid var(--line)}.proof-strip div:last-child{border-bottom:0}.section{padding:50px 18px;')
+          replace('index.html',
+            '</section>\n<section class="section" id="services">',
+            '</section>\n<section class="proof-strip" aria-label="Career highlights"><div><b>10+ years</b><span>Visual design & communication</span></div><div><b>200+ creatives</b><span>Campaign production</span></div><div><b>200–300 approx.</b><span>AI Design Studio users</span></div></section>\n<section class="section" id="services">')
+
+          # Portfolio: make role, contribution and proof faster to scan.
+          replace('portfolio.html',
+            'Campaign systems, digital products and AI-assisted design — curated around projects that show both visual craft and the thinking behind the system.',
+            'Three focused case studies show how I lead, structure and execute work across campaign systems, digital products and AI-assisted design — from direction through production.')
+          replace('portfolio.html',
+            'This portfolio is intentionally selective. The focus is on work that shows art direction, adaptable systems, interface thinking and production-ready execution.',
+            'This portfolio is intentionally selective. Each featured case makes my role, design decisions, system thinking and production outcome easy to scan.')
+          replace('portfolio.html',
+            'Long-form case studies that show the role, system and decisions behind the final output — not only the finished image.',
+            'Each case study is structured around challenge, role, scope, process and result so the contribution is clear before the visual details.')
+          replace('portfolio.html',
+            'Real work across manifesto design, digital advertising, presentation, merchandise and ground communication.',
+            'Art direction and scalable production across manifesto, digital, presentation, merchandise and ground communication.')
+          replace('portfolio.html',
+            'Designer-first creative technology with editable AI-assisted output.',
+            'Product and design direction for an editable AI-assisted workspace used by approximately 200–300 people.')
+          replace('portfolio.html',
+            'Responsive interface structure, hierarchy and design-to-build thinking.',
+            'UI/UX direction from information architecture and Figma through responsive implementation.')
+
+          # About: foreground hands-on leadership and measurable proof.
+          replace('about.html',
+            '<p><strong>Art Director, UI/UX Designer and Creative Technologist</strong> working across visual systems, digital products and AI-assisted creative workflows — from direction to production-ready execution.</p>',
+            '<p><strong>Art Director, UI/UX Designer and Creative Technologist</strong> combining hands-on craft with creative leadership — setting direction, reviewing quality and building production-ready systems across campaigns, digital products and AI-assisted workflows.</p>')
+          replace('about.html',
+            '<div><b>Design + technology</b><span>UI/UX and AI workflows</span></div>',
+            '<div><b>200–300 approx.</b><span>AI Design Studio users</span></div>')
+          replace('about.html',
+            'My experience spans high-volume communication, advertising production, creative leadership and newer product/AI workflows.',
+            'My experience spans high-volume campaign communication, international advertising production, creative leadership, UI/UX and AI-assisted product development.')
+          replace('about.html',
+            'Creative leadership, art direction, campaign systems, UI/UX and AI-assisted creative innovation.',
+            'Creative leadership, art direction, campaign systems, team reviews, UI/UX and AI-assisted creative innovation, including AI Design Studio.')
+
+          # Resume: make the printed version recruiter-ready and more outcome-led.
+          replace('resume.html',
+            '.btn.primary{background:var(--ink);color:#fff}.snapshot{',
+            '.btn.primary{background:var(--ink);color:#fff}.quick-contact{display:flex;flex-wrap:wrap;gap:12px 18px;margin-top:18px;font-size:9px;font-weight:900;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}.quick-contact a{border-bottom:1px solid var(--line);padding-bottom:3px}.snapshot{')
+          replace('resume.html',
+            '.hero-side p{font-size:18px}.actions{display:grid;',
+            '.hero-side p{font-size:18px}.quick-contact{gap:10px 14px;line-height:1.5}.actions{display:grid;')
+          replace('resume.html',
+            'Art Director, UI/UX Designer and Creative Technologist connecting visual craft, scalable systems and AI-assisted creative workflows.',
+            'Art Director, UI/UX Designer and Creative Technologist combining hands-on execution with creative leadership, scalable systems and AI-assisted product thinking.')
+          replace('resume.html',
+            '<div class="actions"><button class="btn primary" onclick="window.print()">SAVE / PRINT ↓</button><a class="btn" href="/portfolio">VIEW PORTFOLIO ↗</a></div>',
+            '<div class="actions"><button class="btn primary" onclick="window.print()">SAVE / PRINT ↓</button><a class="btn" href="/portfolio">VIEW PORTFOLIO ↗</a></div><div class="quick-contact"><a href="mailto:piaravinoth@gmail.com">piaravinoth@gmail.com</a><a href="https://in.linkedin.com/in/viswanathan-g-55a0176a" target="_blank" rel="noopener">LinkedIn ↗</a><span>India · Global / Remote</span></div>')
+          replace('resume.html',
+            '<b>AI-assisted design</b>',
+            '<b>AI Design Studio</b>')
+          replace('resume.html',
+            '<strong>Designer first, systems thinker by practice.</strong> I work across art direction, visual communication, UI/UX and creative technology—moving comfortably between setting the direction and making the work production-ready.',
+            '<strong>10+ years across visual design and communication.</strong> I combine hands-on craft with creative leadership across art direction, campaign systems, UI/UX and creative technology—setting direction, reviewing quality and taking work through to production-ready execution.')
+          replace('resume.html',
+            'Art direction, campaign systems, visual reviews, UI/UX and AI-assisted creative innovation across high-volume communication workflows.',
+            'Art direction, campaign systems, team-level visual reviews, UI/UX and AI-assisted creative innovation across high-volume workflows, including AI Design Studio.')
+          replace('resume.html',
+            'Political campaign communication, creative systems and production across multiple formats and fast-moving communication requirements.',
+            'Campaign communication, creative systems and production across multiple formats and fast-moving communication requirements.')
+
+          # Contact: make availability and recruiter pathways explicit.
+          replace('contact.html',
+            '.email{display:inline-block;margin-top:32px;font-size:clamp(21px,2.7vw,42px);line-height:1.15;font-weight:800;letter-spacing:-.04em;border-bottom:2px solid var(--ink);padding-bottom:7px;overflow-wrap:anywhere}.details{',
+            '.email{display:inline-block;margin-top:32px;font-size:clamp(21px,2.7vw,42px);line-height:1.15;font-weight:800;letter-spacing:-.04em;border-bottom:2px solid var(--ink);padding-bottom:7px;overflow-wrap:anywhere}.contact-secondary{display:flex;flex-wrap:wrap;gap:14px 20px;margin-top:18px}.contact-secondary a{font-size:9px;font-weight:900;letter-spacing:.12em;border-bottom:1px solid var(--line);padding-bottom:4px}.details{')
+          replace('contact.html',
+            'For senior creative roles, art direction, UI/UX, creative technology or selected project conversations.',
+            'Open to senior roles and selected collaborations across art direction, visual design, UI/UX and creative technology — in India, globally and remotely.')
+          replace('contact.html',
+            '<a class="email" href="mailto:piaravinoth@gmail.com">piaravinoth@gmail.com ↗</a>',
+            '<a class="email" href="mailto:piaravinoth@gmail.com">piaravinoth@gmail.com ↗</a><div class="contact-secondary"><a href="https://in.linkedin.com/in/viswanathan-g-55a0176a" target="_blank" rel="noopener">LINKEDIN ↗</a><a href="/resume">RESUME ↗</a></div>')
+          replace('contact.html',
+            'India-based, open to global and remote opportunities.',
+            'India-based, open to relocation, global and remote opportunities.')
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/recruiter-conversion.yml
+          git add index.html portfolio.html about.html resume.html contact.html
+          git commit -m "Polish portfolio for recruiter conversion"
+          git push
