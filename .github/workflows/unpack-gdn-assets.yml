@@ -1,0 +1,28 @@
+name: Unpack final GDN assets
+on:
+  push:
+    paths:
+      - 'assets/gdn-final-web.zip'
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Unpack final GDN web assets
+        run: |
+          mkdir -p assets/gdn
+          unzip -o assets/gdn-final-web.zip -d assets/gdn
+          rm -f assets/gdn-final-web.zip
+          git config user.name "portfolio-ui-bot"
+          git config user.email "portfolio-ui-bot@users.noreply.github.com"
+          git add assets/gdn assets/gdn-final-web.zip
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "Add final GDN gallery assets"
+          git push origin HEAD:main
