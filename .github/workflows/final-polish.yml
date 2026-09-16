@@ -1,0 +1,115 @@
+name: Final portfolio polish
+
+on:
+  push:
+    paths:
+      - '.github/workflows/final-polish.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Normalize metadata, links and image loading
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          base = "https://viswanathan-portfolio-iota.vercel.app"
+          routes = {
+              "index.html": "/",
+              "portfolio.html": "/portfolio",
+              "about.html": "/about",
+              "resume.html": "/resume",
+              "contact.html": "/contact",
+              "work/ai-design-studio.html": "/work/ai-design-studio",
+              "work/consulting-website.html": "/work/consulting-website",
+              "work/campaign-systems.html": "/work/campaign-systems",
+          }
+
+          href_map = {
+              'href="index.html"': 'href="/"',
+              'href="../index.html"': 'href="/"',
+              'href="portfolio.html"': 'href="/portfolio"',
+              'href="../portfolio.html"': 'href="/portfolio"',
+              'href="about.html"': 'href="/about"',
+              'href="../about.html"': 'href="/about"',
+              'href="resume.html"': 'href="/resume"',
+              'href="../resume.html"': 'href="/resume"',
+              'href="contact.html"': 'href="/contact"',
+              'href="../contact.html"': 'href="/contact"',
+              'href="work/ai-design-studio.html"': 'href="/work/ai-design-studio"',
+              'href="../work/ai-design-studio.html"': 'href="/work/ai-design-studio"',
+              'href="work/consulting-website.html"': 'href="/work/consulting-website"',
+              'href="../work/consulting-website.html"': 'href="/work/consulting-website"',
+              'href="work/campaign-systems.html"': 'href="/work/campaign-systems"',
+              'href="../work/campaign-systems.html"': 'href="/work/campaign-systems"',
+          }
+
+          for name, route in routes.items():
+              path = Path(name)
+              if not path.exists():
+                  continue
+              s = path.read_text(encoding="utf-8")
+              canonical = base + route
+              s = re.sub(r'<link rel="canonical" href="[^"]+">', f'<link rel="canonical" href="{canonical}">', s)
+              s = re.sub(r'<meta property="og:url" content="[^"]+">', f'<meta property="og:url" content="{canonical}">', s)
+              s = s.replace(base + '/og-image.svg', base + '/og-image.png')
+              s = s.replace('href="favicon.svg"', 'href="/favicon.svg"').replace('href="../favicon.svg"', 'href="/favicon.svg"')
+
+              if '/site.webmanifest' not in s:
+                  s = re.sub(r'(<link rel="icon"[^>]*>)', r'\1\n<link rel="manifest" href="/site.webmanifest">', s, count=1)
+
+              if 'property="og:image:width"' not in s and 'property="og:image"' in s:
+                  s = re.sub(
+                      r'(<meta property="og:image"[^>]*>)',
+                      r'\1\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta property="og:image:alt" content="Viswanathan G — Art Director, UI/UX Designer and Creative Technologist">',
+                      s,
+                      count=1,
+                  )
+
+              if 'name="twitter:card"' not in s:
+                  marker = re.search(r'<meta property="og:url"[^>]*>', s)
+                  if marker:
+                      pos = marker.end()
+                      s = s[:pos] + '\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:image" content="' + base + '/og-image.png">' + s[pos:]
+              elif 'name="twitter:image"' not in s:
+                  s = re.sub(r'(<meta name="twitter:card"[^>]*>)', r'\1\n<meta name="twitter:image" content="' + base + r'/og-image.png">', s, count=1)
+
+              for old, new in href_map.items():
+                  s = s.replace(old, new)
+
+              count = [0]
+              def tune_img(m):
+                  tag = m.group(0)
+                  if 'loading=' in tag or tag.rstrip().endswith('/>') and 'loading=' in tag:
+                      count[0] += 1
+                      return tag
+                  attrs = ' decoding="async"'
+                  if count[0] == 0:
+                      attrs += ' loading="eager" fetchpriority="high"'
+                  else:
+                      attrs += ' loading="lazy"'
+                  count[0] += 1
+                  return tag[:-1] + attrs + '>'
+              s = re.sub(r'<img\b[^>]*>', tune_img, s)
+
+              path.write_text(s, encoding="utf-8")
+
+      - name: Commit polished files
+        run: |
+          git config user.name "portfolio-qc-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html portfolio.html about.html resume.html contact.html work/*.html
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git commit -m "Normalize clean URLs, social metadata and image loading"
+          git push
