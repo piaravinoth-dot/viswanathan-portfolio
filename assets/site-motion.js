@@ -11,7 +11,7 @@
   q('.btn,.cta a,.footer-cta a,.practice-link,.lab-link,.contact-link,.quick-contact a').forEach(el=>el.classList.add('motion-link'));
   q('.portrait,.feature,.project-frame').forEach(el=>el.classList.add('motion-tilt'));
 
-  const io=!reduce?new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible','in');io.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -4% 0px'}):null;
+  const io=!reduce?new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible','in');io.unobserve(e.target)}}),{threshold:.06,rootMargin:'0px 0px -2% 0px'}):null;
   q('.motion-reveal,.motion-stagger,.reveal').forEach(el=>{if(reduce)el.classList.add('is-visible','in');else io.observe(el)});
 
   const topbar=document.querySelector('.topbar');
@@ -21,10 +21,16 @@
   let lenis=null;
   const startLenis=()=>{
     if(reduce||!fine||!window.Lenis){addEventListener('scroll',()=>updateProgress(scrollY),{passive:true});return;}
-    lenis=new Lenis({duration:1.18,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smoothWheel:true,wheelMultiplier:.92,touchMultiplier:1.1});
+    lenis=new Lenis({
+      duration:.68,
+      easing:t=>1-Math.pow(1-t,4),
+      smoothWheel:true,
+      wheelMultiplier:1.38,
+      touchMultiplier:1.1
+    });
     lenis.on('scroll',e=>updateProgress(e.scroll));
     const raf=time=>{lenis.raf(time);requestAnimationFrame(raf)};requestAnimationFrame(raf);
-    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const target=document.querySelector(a.getAttribute('href'));if(!target)return;e.preventDefault();lenis.scrollTo(target,{offset:-72,duration:1.05})}));
+    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const target=document.querySelector(a.getAttribute('href'));if(!target)return;e.preventDefault();lenis.scrollTo(target,{offset:-72,duration:.72})}));
   };
 
   if(!reduce&&fine){
@@ -45,8 +51,8 @@
 
   q('.motion-card').forEach(el=>el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--card-x',`${e.clientX-r.left}px`);el.style.setProperty('--card-y',`${e.clientY-r.top}px`)}));
 
-  q('.motion-tilt').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(1000px) rotateY(${x*2.4}deg) rotateX(${-y*2}deg) translateY(-2px)`});el.addEventListener('pointerleave',()=>el.style.transform='')});
+  q('.motion-tilt').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(1000px) rotateY(${x*2.2}deg) rotateX(${-y*1.8}deg) translateY(-2px)`});el.addEventListener('pointerleave',()=>el.style.transform='')});
 
   const hero=document.querySelector('.hero');const heroTitle=document.querySelector('.hero h1');const portrait=document.querySelector('.portrait');
-  if(hero&&heroTitle){let ticking=false;const parallax=()=>{const r=hero.getBoundingClientRect();const y=Math.max(-1,Math.min(1,-r.top/Math.max(1,r.height)));heroTitle.style.transform=`translate3d(0,${y*12}px,0)`;if(portrait)portrait.style.transform=`translate3d(0,${y*-6}px,0)`;ticking=false};addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(parallax)}},{passive:true});}
+  if(hero&&heroTitle){let ticking=false;const parallax=()=>{const r=hero.getBoundingClientRect();const y=Math.max(-1,Math.min(1,-r.top/Math.max(1,r.height)));heroTitle.style.transform=`translate3d(0,${y*9}px,0)`;if(portrait)portrait.style.transform=`translate3d(0,${y*-4}px,0)`;ticking=false};addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(parallax)}},{passive:true});}
 })();
