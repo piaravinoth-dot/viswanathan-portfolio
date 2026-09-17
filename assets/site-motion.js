@@ -10,26 +10,43 @@
   q('.belief,.step,.cap,.practice-card,.tool-card,.tool-tile-v2,.feature,.project,.lab-card,.contact-card').forEach(el=>el.classList.add('motion-card'));
   q('.btn,.cta a,.footer-cta a,.practice-link,.lab-link,.contact-link,.quick-contact a').forEach(el=>el.classList.add('motion-link'));
   q('.portrait,.feature,.project-frame').forEach(el=>el.classList.add('motion-tilt'));
-  const io=!reduce?new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible','in');io.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -6% 0px'}):null;
+
+  const io=!reduce?new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible','in');io.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -4% 0px'}):null;
   q('.motion-reveal,.motion-stagger,.reveal').forEach(el=>{if(reduce)el.classList.add('is-visible','in');else io.observe(el)});
+
   const topbar=document.querySelector('.topbar');
-  const updateProgress=()=>{const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);const p=Math.min(1,scrollY/max);progress.style.transform=`scaleX(${p})`;if(topbar)topbar.classList.toggle('is-scrolled',scrollY>18)};
-  addEventListener('scroll',updateProgress,{passive:true});updateProgress();
+  const updateProgress=(y=scrollY)=>{const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);progress.style.transform=`scaleX(${Math.min(1,y/max)})`;if(topbar)topbar.classList.toggle('is-scrolled',y>18)};
+  updateProgress();
+
+  let lenis=null;
+  const startLenis=()=>{
+    if(reduce||!fine||!window.Lenis){addEventListener('scroll',()=>updateProgress(scrollY),{passive:true});return;}
+    lenis=new Lenis({duration:1.18,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smoothWheel:true,wheelMultiplier:.92,touchMultiplier:1.1});
+    lenis.on('scroll',e=>updateProgress(e.scroll));
+    const raf=time=>{lenis.raf(time);requestAnimationFrame(raf)};requestAnimationFrame(raf);
+    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const target=document.querySelector(a.getAttribute('href'));if(!target)return;e.preventDefault();lenis.scrollTo(target,{offset:-72,duration:1.05})}));
+  };
+
+  if(!reduce&&fine){
+    if(window.Lenis)startLenis();
+    else{
+      const s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js';
+      s.async=true;
+      s.onload=startLenis;
+      s.onerror=()=>addEventListener('scroll',()=>updateProgress(scrollY),{passive:true});
+      document.head.appendChild(s);
+    }
+  }else addEventListener('scroll',()=>updateProgress(scrollY),{passive:true});
+
   if(reduce||!fine)return;
-  // premium inertial wheel scrolling
-  let current=scrollY,target=scrollY,raf=0,lastNative=performance.now();
-  const maxScroll=()=>Math.max(0,document.documentElement.scrollHeight-innerHeight);
-  const loop=()=>{const d=target-current;current+=d*.115;if(Math.abs(d)<.35){current=target;raf=0}else raf=requestAnimationFrame(loop);scrollTo(0,current)};
-  addEventListener('wheel',e=>{if(e.ctrlKey||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;const scroller=e.target.closest('[data-native-scroll],textarea,select');if(scroller)return;e.preventDefault();target=Math.max(0,Math.min(maxScroll(),target+e.deltaY*1.02));if(!raf){current=scrollY;raf=requestAnimationFrame(loop)}},{passive:false});
-  addEventListener('mousedown',()=>{target=scrollY;current=scrollY});
-  addEventListener('keydown',e=>{if(['PageDown','PageUp','Home','End','ArrowDown','ArrowUp',' '].includes(e.key)){target=scrollY;current=scrollY}});
-  // magnetic links/buttons
-  q('.motion-link,nav a').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left-r.width/2)*.12;const y=(e.clientY-r.top-r.height/2)*.18;el.style.transform=`translate3d(${x}px,${y-2}px,0)`});el.addEventListener('pointerleave',()=>el.style.transform='')});
-  // card spotlight
+
+  q('.motion-link,nav a').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left-r.width/2)*.1;const y=(e.clientY-r.top-r.height/2)*.13;el.style.transform=`translate3d(${x}px,${y-1}px,0)`});el.addEventListener('pointerleave',()=>el.style.transform='')});
+
   q('.motion-card').forEach(el=>el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--card-x',`${e.clientX-r.left}px`);el.style.setProperty('--card-y',`${e.clientY-r.top}px`)}));
-  // subtle tilt only on larger visual cards
-  q('.motion-tilt').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(1000px) rotateY(${x*3.2}deg) rotateX(${-y*2.6}deg) translateY(-3px)`});el.addEventListener('pointerleave',()=>el.style.transform='')});
-  // page-specific parallax
+
+  q('.motion-tilt').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(1000px) rotateY(${x*2.4}deg) rotateX(${-y*2}deg) translateY(-2px)`});el.addEventListener('pointerleave',()=>el.style.transform='')});
+
   const hero=document.querySelector('.hero');const heroTitle=document.querySelector('.hero h1');const portrait=document.querySelector('.portrait');
-  if(hero&&heroTitle){let ticking=false;const parallax=()=>{const r=hero.getBoundingClientRect();const y=Math.max(-1,Math.min(1,-r.top/Math.max(1,r.height)));heroTitle.style.transform=`translate3d(0,${y*20}px,0)`;if(portrait)portrait.style.transform=`translate3d(0,${y*-10}px,0)`;ticking=false};addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(parallax)}},{passive:true});}
+  if(hero&&heroTitle){let ticking=false;const parallax=()=>{const r=hero.getBoundingClientRect();const y=Math.max(-1,Math.min(1,-r.top/Math.max(1,r.height)));heroTitle.style.transform=`translate3d(0,${y*12}px,0)`;if(portrait)portrait.style.transform=`translate3d(0,${y*-6}px,0)`;ticking=false};addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(parallax)}},{passive:true});}
 })();
