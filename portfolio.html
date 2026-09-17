@@ -107,8 +107,8 @@
  });
  let current=scrollY,target=scrollY,raf=0;
  const clamp=v=>Math.max(0,Math.min(v,document.documentElement.scrollHeight-innerHeight));
- const step=()=>{current+=(target-current)*.095;if(Math.abs(target-current)<.15)current=target;scrollTo(0,current);if(current!==target)raf=requestAnimationFrame(step);else raf=0};
- addEventListener('wheel',e=>{if(e.ctrlKey||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;e.preventDefault();target=clamp(target+e.deltaY*.9);if(!raf)raf=requestAnimationFrame(step)},{passive:false});
+ const step=()=>{current+=(target-current)*.24;if(Math.abs(target-current)<.4)current=target;scrollTo(0,current);if(current!==target)raf=requestAnimationFrame(step);else raf=0};
+ addEventListener('wheel',e=>{if(e.ctrlKey||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;e.preventDefault();target=clamp(target+e.deltaY*1.35);if(!raf)raf=requestAnimationFrame(step)},{passive:false});
  addEventListener('scroll',()=>{if(!raf){current=target=scrollY}},{passive:true});
  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');const dest=id&&document.querySelector(id);if(!dest)return;e.preventDefault();target=clamp(dest.getBoundingClientRect().top+scrollY-70);if(!raf)raf=requestAnimationFrame(step)}));
 })();
