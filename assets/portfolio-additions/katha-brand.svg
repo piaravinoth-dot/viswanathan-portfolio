@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200">
+<rect width="1600" height="1200" fill="#f7eedf"/><rect x="80" y="80" width="1440" height="1040" rx="30" fill="#b3482c"/>
+<text x="125" y="160" font-family="Arial" font-size="22" font-weight="700" letter-spacing="7" fill="#f7eedf">BRAND SYSTEM / COFFEE</text>
+<text x="125" y="330" font-family="Georgia" font-size="150" fill="#fff1df">Katha</text><text x="130" y="405" font-family="Arial" font-size="24" letter-spacing="5" fill="#f7d3b8">COFFEE FOR SLOWER MORNINGS</text>
+<circle cx="1280" cy="300" r="145" fill="#f0c960"/><path d="M1195 310c45-115 130-140 190-55-35 100-115 145-190 55z" fill="#2f372c"/>
+<rect x="130" y="500" width="390" height="480" rx="22" fill="#f0c960"/><text x="175" y="590" font-family="Arial" font-size="54" font-weight="900" fill="#2f372c">HOUSE</text><text x="175" y="650" font-family="Arial" font-size="54" font-weight="900" fill="#2f372c">ROAST</text><text x="175" y="885" font-family="Arial" font-size="18" letter-spacing="4" fill="#2f372c">01 / WARM / BALANCED</text>
+<rect x="565" y="500" width="390" height="480" rx="22" fill="#2f372c"/><text x="610" y="590" font-family="Arial" font-size="54" font-weight="900" fill="#f7eedf">DARK</text><text x="610" y="650" font-family="Arial" font-size="54" font-weight="900" fill="#f7eedf">ROAST</text><text x="610" y="885" font-family="Arial" font-size="18" letter-spacing="4" fill="#f7d3b8">02 / DEEP / COCOA</text>
+<rect x="1000" y="500" width="390" height="480" rx="22" fill="#f7eedf"/><text x="1045" y="590" font-family="Arial" font-size="54" font-weight="900" fill="#b3482c">FILTER</text><text x="1045" y="650" font-family="Arial" font-size="54" font-weight="900" fill="#b3482c">BLEND</text><text x="1045" y="885" font-family="Arial" font-size="18" letter-spacing="4" fill="#665a4d">03 / BRIGHT / CLEAN</text>
+</svg>
