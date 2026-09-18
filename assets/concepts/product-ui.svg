@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100">
+<defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#11131a"/><stop offset="1" stop-color="#1a2233"/></linearGradient></defs>
+<rect width="1600" height="1100" fill="url(#g)"/>
+<text x="90" y="120" fill="#8da2ff" font-family="Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="5">SELF-INITIATED / PRODUCT UI</text>
+<text x="90" y="230" fill="#fff" font-family="Arial,sans-serif" font-size="96" font-weight="900">Pulse Finance</text>
+<rect x="90" y="320" width="1420" height="700" rx="34" fill="#f8f9fb"/>
+<rect x="90" y="320" width="240" height="700" rx="34" fill="#121722"/>
+<circle cx="150" cy="390" r="18" fill="#6f86ff"/><rect x="190" y="374" width="82" height="26" rx="13" fill="#fff"/>
+<rect x="130" y="470" width="130" height="18" rx="9" fill="#5d6676"/><rect x="130" y="530" width="115" height="18" rx="9" fill="#5d6676"/><rect x="130" y="590" width="145" height="18" rx="9" fill="#5d6676"/>
+<text x="390" y="420" fill="#131722" font-family="Arial,sans-serif" font-size="42" font-weight="800">Overview</text>
+<rect x="390" y="470" width="320" height="150" rx="24" fill="#e9edff"/><rect x="740" y="470" width="320" height="150" rx="24" fill="#eef7ef"/><rect x="1090" y="470" width="320" height="150" rx="24" fill="#fff0e8"/>
+<text x="425" y="535" fill="#697184" font-family="Arial,sans-serif" font-size="20">Revenue</text><text x="425" y="585" fill="#11131a" font-family="Arial,sans-serif" font-size="44" font-weight="900">$84.2K</text>
+<text x="775" y="535" fill="#697184" font-family="Arial,sans-serif" font-size="20">Growth</text><text x="775" y="585" fill="#11131a" font-family="Arial,sans-serif" font-size="44" font-weight="900">+18.4%</text>
+<text x="1125" y="535" fill="#697184" font-family="Arial,sans-serif" font-size="20">Runway</text><text x="1125" y="585" fill="#11131a" font-family="Arial,sans-serif" font-size="44" font-weight="900">16 mo</text>
+<rect x="390" y="665" width="1020" height="285" rx="24" fill="#151b28"/>
+<path d="M440 865 C560 800,620 840,720 750 S900 830,1000 720 S1170 760,1360 675" fill="none" stroke="#8da2ff" stroke-width="12"/>
+<circle cx="1360" cy="675" r="11" fill="#fff"/>
+</svg>
