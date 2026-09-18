@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200">
+<rect width="1600" height="1200" fill="#f0ece3"/><text x="90" y="100" font-family="Arial" font-size="24" font-weight="700" letter-spacing="7" fill="#6a6259">IDENTITY SYSTEM / 01</text>
+<text x="90" y="245" font-family="Georgia" font-size="130" fill="#1c2222">Aureli.</text><text x="95" y="305" font-family="Arial" font-size="20" letter-spacing="5" fill="#666d65">NATURAL LIVING / QUIET FORMS / EVERYDAY RITUALS</text>
+<line x1="90" y1="350" x2="1510" y2="350" stroke="#c7c0b5"/>
+<g transform="translate(250 590)"><path d="M0-150 L115 145 45 145 0 40-45 145-115 145Z" fill="#1c2222"/><path d="M-5-15 C50-55 95-25 125 15 C60 30 25 20-5 5Z" fill="#768166"/></g>
+<text x="105" y="835" font-family="Georgia" font-size="60" letter-spacing="12" fill="#1c2222">AURELI</text>
+<g transform="translate(650 465)"><rect width="360" height="460" fill="#1c2222"/><text x="55" y="80" font-family="Arial" font-size="18" letter-spacing="5" fill="#cdb989">PRIMARY MARK</text><g transform="translate(180 240) scale(.65)"><path d="M0-150 L115 145 45 145 0 40-45 145-115 145Z" fill="#cdb989"/><path d="M-5-15 C50-55 95-25 125 15 C60 30 25 20-5 5Z" fill="#768166"/></g></g>
+<g transform="translate(1060 465)"><rect width="450" height="210" fill="#d7c6aa"/><text x="35" y="55" font-family="Arial" font-size="16" letter-spacing="4" fill="#1c2222">PALETTE</text><circle cx="90" cy="130" r="38" fill="#1c2222"/><circle cx="190" cy="130" r="38" fill="#768166"/><circle cx="290" cy="130" r="38" fill="#d7c6aa"/><circle cx="390" cy="130" r="38" fill="#f0ece3"/></g>
+<g transform="translate(1060 715)"><rect width="450" height="210" fill="#fffaf0"/><text x="35" y="55" font-family="Arial" font-size="16" letter-spacing="4" fill="#6a6259">TYPOGRAPHY</text><text x="35" y="125" font-family="Georgia" font-size="48" fill="#1c2222">Aa / Georgia</text><text x="35" y="170" font-family="Arial" font-size="18" letter-spacing="3" fill="#1c2222">SYSTEM / LABELS / BODY</text></g>
+</svg>
