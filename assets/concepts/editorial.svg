@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100">
+<rect width="1600" height="1100" fill="#ece9df"/>
+<text x="90" y="120" fill="#2942ff" font-family="Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="5">SELF-INITIATED / EDITORIAL</text>
+<rect x="110" y="190" width="650" height="830" fill="#fff"/>
+<rect x="840" y="190" width="650" height="830" fill="#2942ff"/>
+<text x="150" y="320" fill="#111114" font-family="Arial,sans-serif" font-size="44" font-weight="700">ISSUE 01 / 2026</text>
+<text x="150" y="510" fill="#111114" font-family="Arial,sans-serif" font-size="122" font-weight="900" letter-spacing="-6">CIVIC</text>
+<text x="150" y="620" fill="#111114" font-family="Arial,sans-serif" font-size="122" font-weight="900" letter-spacing="-6">FUTURES</text>
+<rect x="150" y="700" width="500" height="210" fill="#f2c84b"/>
+<text x="180" y="765" fill="#111114" font-family="Arial,sans-serif" font-size="25" font-weight="700">DESIGNING PUBLIC LIFE</text>
+<text x="180" y="815" fill="#111114" font-family="Arial,sans-serif" font-size="20">Cities / access / mobility / culture</text>
+<text x="900" y="320" fill="#fff" font-family="Arial,sans-serif" font-size="30" font-weight="700">FEATURE / 04</text>
+<circle cx="1165" cy="570" r="190" fill="#f2c84b"/>
+<rect x="950" y="820" width="400" height="18" rx="9" fill="#fff"/><rect x="950" y="862" width="330" height="18" rx="9" fill="#c8d0ff"/><rect x="950" y="904" width="365" height="18" rx="9" fill="#c8d0ff"/>
+</svg>
