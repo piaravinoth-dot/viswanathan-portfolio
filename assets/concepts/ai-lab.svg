@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100">
+<defs><radialGradient id="r"><stop stop-color="#8b63ff"/><stop offset=".45" stop-color="#2942ff"/><stop offset="1" stop-color="#101014"/></radialGradient></defs>
+<rect width="1600" height="1100" fill="#0c0d12"/>
+<text x="90" y="120" fill="#9eaaff" font-family="Arial,sans-serif" font-size="30" font-weight="700" letter-spacing="5">SELF-INITIATED / AI CREATIVE LAB</text>
+<circle cx="800" cy="610" r="360" fill="url(#r)"/>
+<circle cx="800" cy="610" r="285" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
+<circle cx="800" cy="610" r="200" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="2"/>
+<text x="470" y="535" fill="#fff" font-family="Arial,sans-serif" font-size="82" font-weight="900">FORM / SIGNAL</text>
+<text x="610" y="610" fill="#d9dcff" font-family="Arial,sans-serif" font-size="28">GENERATIVE VISUAL SYSTEM</text>
+<rect x="100" y="740" width="360" height="220" rx="24" fill="#151823" stroke="#343a50"/>
+<text x="135" y="800" fill="#8ea0ff" font-family="Arial,sans-serif" font-size="20" font-weight="700">PROMPT / 01</text><rect x="135" y="845" width="250" height="12" rx="6" fill="#6b7185"/><rect x="135" y="880" width="190" height="12" rx="6" fill="#6b7185"/>
+<rect x="1140" y="180" width="360" height="220" rx="24" fill="#151823" stroke="#343a50"/>
+<text x="1175" y="240" fill="#8ea0ff" font-family="Arial,sans-serif" font-size="20" font-weight="700">OUTPUT / 08</text><circle cx="1320" cy="325" r="54" fill="#2942ff"/>
+</svg>
