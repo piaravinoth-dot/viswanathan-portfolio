@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350">
+<defs><clipPath id="c"><rect x="0" y="0" width="1080" height="1350"/></clipPath><linearGradient id="g" x1="0" y1="1" x2="0" y2="0"><stop stop-color="#0d1e19"/><stop offset=".72" stop-color="#0d1e19" stop-opacity=".12"/><stop offset="1" stop-color="#0d1e19" stop-opacity="0"/></linearGradient></defs>
+<g clip-path="url(#c)"><image href="https://images.unsplash.com/photo-1742800788220-1e42256d6022?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=82&w=1600" x="0" y="0" width="1080" height="1350" preserveAspectRatio="xMidYMid slice"/><rect width="1080" height="1350" fill="url(#g)"/></g>
+<rect x="56" y="60" width="190" height="42" rx="21" fill="#f0c964"/><text x="85" y="88" font-family="Arial" font-size="18" font-weight="900" fill="#0d1e19">HERITAGE / 01</text>
+<text x="58" y="930" font-family="Georgia" font-size="96" fill="#fff">Wear the</text><text x="58" y="1020" font-family="Georgia" font-size="96" fill="#fff">story forward.</text>
+<text x="62" y="1095" font-family="Arial" font-size="24" letter-spacing="4" fill="#e7dfd2">TRADITION / TEXTILE / EVERYDAY STYLE</text>
+<line x1="60" y1="1150" x2="680" y2="1150" stroke="#f0c964" stroke-width="6"/><text x="60" y="1220" font-family="Arial" font-size="24" font-weight="800" fill="#fff">AURELI FESTIVE EDIT / 2026</text>
+</svg>
