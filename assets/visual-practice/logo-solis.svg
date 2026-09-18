@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200"><defs><filter id="s"><feDropShadow dy="18" stdDeviation="22" flood-opacity=".18"/></filter></defs><rect width="1600" height="1200" fill="#f2ede3"/>
+<text x="90" y="110" font-family="Arial" font-size="26" font-weight="700" letter-spacing="7" fill="#6f674f">LOGO / NATURAL WELLNESS</text>
+<g filter="url(#s)"><rect x="90" y="180" width="620" height="860" fill="#26332c"/><rect x="760" y="180" width="750" height="410" fill="#fcfaf4"/><rect x="760" y="630" width="360" height="410" fill="#dbcaa4"/><rect x="1150" y="630" width="360" height="410" fill="#1f2722"/></g>
+<g transform="translate(395 510)"><path d="M0-130 C90-70 110 45 0 140 C-110 45-90-70 0-130Z" fill="none" stroke="#c5a862" stroke-width="14"/><path d="M0 135V-120" stroke="#c5a862" stroke-width="10"/><path d="M0-45 C55-60 95-30 120 5 C60 18 25 3 0-20Z" fill="none" stroke="#c5a862" stroke-width="10"/><path d="M0 15 C-55 0-95 30-120 65 C-60 78-25 63 0 40Z" fill="none" stroke="#c5a862" stroke-width="10"/></g>
+<text x="260" y="780" font-family="Georgia" font-size="72" letter-spacing="12" fill="#f3ead2">SOLIS</text><text x="278" y="830" font-family="Arial" font-size="18" letter-spacing="8" fill="#c5a862">NATURAL WELLNESS</text>
+<text x="830" y="320" font-family="Georgia" font-size="102" fill="#26332c">Solis</text><text x="835" y="380" font-family="Arial" font-size="21" letter-spacing="5" fill="#7c786e">A CALMER WAY TO FEEL WELL.</text>
+<g transform="translate(940 780)"><circle r="98" fill="#26332c"/><path d="M0-55 C45-20 52 30 0 64 C-52 30-45-20 0-55Z" fill="none" stroke="#dbcaa4" stroke-width="8"/><path d="M0 60V-50" stroke="#dbcaa4" stroke-width="6"/></g>
+<text x="830" y="965" font-family="Arial" font-size="18" letter-spacing="5" fill="#5b5141">PRIMARY MARK</text>
+<g transform="translate(1325 770)"><circle r="98" fill="#dbcaa4"/><path d="M0-55 C45-20 52 30 0 64 C-52 30-45-20 0-55Z" fill="none" stroke="#26332c" stroke-width="8"/><path d="M0 60V-50" stroke="#26332c" stroke-width="6"/></g>
+</svg>
