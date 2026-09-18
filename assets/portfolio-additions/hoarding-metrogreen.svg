@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 960">
+<rect width="1920" height="960" fill="#dce9df"/><rect x="70" y="70" width="1780" height="820" rx="34" fill="#f7f4eb"/>
+<text x="120" y="150" font-family="Arial" font-size="24" font-weight="900" letter-spacing="7" fill="#3c7656">METRO GREEN / CITY 2030</text>
+<text x="120" y="350" font-family="Arial" font-size="115" font-weight="900" fill="#163d2d">LESS CAR.</text><text x="120" y="465" font-family="Arial" font-size="115" font-weight="900" fill="#163d2d">MORE CITY.</text>
+<text x="125" y="565" font-family="Arial" font-size="26" letter-spacing="4" fill="#6d7e73">MOVE LIGHTER / CONNECT BETTER / BREATHE EASIER</text>
+<circle cx="1430" cy="470" r="240" fill="#f0c94f"/><path d="M1295 470h270M1430 335v270" stroke="#163d2d" stroke-width="38" stroke-linecap="round"/>
+<rect x="120" y="690" width="400" height="86" rx="43" fill="#163d2d"/><text x="185" y="745" font-family="Arial" font-size="25" font-weight="900" fill="#fff">CHOOSE PUBLIC TRANSIT</text>
+</svg>
