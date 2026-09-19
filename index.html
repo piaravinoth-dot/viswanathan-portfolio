@@ -37,7 +37,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.opening{display:none}.ticker-track{animation:none}.hero-top,.hero h1,.g-wrap,.g-orbit,.intro-column,.portrait-stack,.design-surface,.type-card,.system-card,.curve path,.curve circle,.curve-note,.motion-reveal{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important;transition:none!important;animation:none!important}.cursor-halo,.scroll-progress{display:none!important}}
 
 .hero-red{position:relative;display:block;height:calc(100svh - 72px);min-height:650px;overflow:hidden;background:#b51f0e;border-bottom:1px solid rgba(255,255,255,.18)}
-.hero-red-art{display:block;width:100%;height:100%;object-fit:cover;object-position:center center}
+.hero-red picture{display:block;width:100%;height:100%}.hero-red-art{display:block;width:100%;height:100%;object-fit:cover;object-position:center center}
 .hero-red:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.08),transparent 35%,transparent 80%,rgba(0,0,0,.04))}
 .hero-red-cta{position:absolute;left:4.8%;bottom:12%;z-index:2;display:inline-flex;align-items:center;gap:24px;padding:16px 24px;border-radius:999px;background:#101014;color:#fff;border:1px solid rgba(255,255,255,.22);font-size:10px;font-weight:900;letter-spacing:.18em;box-shadow:0 16px 38px rgba(0,0,0,.18);transition:transform .35s var(--ease),background .3s ease}
 .hero-red-cta:hover{transform:translateY(-3px);background:#000}
@@ -50,7 +50,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   .topbar:not(.scrolled) nav a:after{background:#fff}
   .topbar:not(.scrolled) .brand{color:#fff}
 }
-@media(max-width:900px){.hero-red{display:none}}
+@media(max-width:900px){.hero{display:none!important}.hero-red{display:block;height:calc(100svh - 62px);min-height:620px}.hero-red-art{object-position:center top}.hero-red-cta{left:18px;right:18px;bottom:20px;justify-content:center;padding:15px 18px;font-size:9px}.topbar{background:rgba(164,24,8,.97);color:#fff;border-bottom-color:rgba(255,255,255,.18)}.topbar nav a:hover{color:#fff}.topbar nav a:after{background:#fff}.topbar .brand{color:#fff}}
 
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","name":"Viswanathan G","url":"https://viswanathan-portfolio-iota.vercel.app/","jobTitle":"Art Director · UI/UX Designer · Creative Technologist","sameAs":["https://in.linkedin.com/in/viswanathan-g-55a0176a","https://www.behance.net/--11"],"knowsAbout":["Art Direction","UI/UX Design","Creative Technology","Campaign Systems","AI-Assisted Design"]},{"@type":"WebSite","name":"Viswanathan G Portfolio","url":"https://viswanathan-portfolio-iota.vercel.app/"}]}</script>
@@ -62,7 +62,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 <main>
 <section class="hero-red" aria-labelledby="heroRedTitle">
 <h1 id="heroRedTitle" class="sr-only">Viswanathan G — Art Director, UI/UX Designer and Creative Technologist</h1>
-<img class="hero-red-art" src="/assets/profile/home-hero-red.webp?v=1" alt="Viswanathan G portfolio hero featuring his formal coat-suit portrait in a red editorial design" fetchpriority="high" decoding="async">
+<picture><source media="(max-width:900px)" srcset="/assets/profile/home-hero-red-mobile.webp?v=1"><img class="hero-red-art" src="/assets/profile/home-hero-red.webp?v=1" alt="Viswanathan G portfolio hero featuring his formal coat-suit portrait in a red editorial design" fetchpriority="high" decoding="async"></picture>
 <a class="hero-red-cta magnetic" href="/portfolio">VIEW SELECTED WORK <span aria-hidden="true">→</span></a>
 </section>
 <section class="hero" id="hero">
