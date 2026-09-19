@@ -52,6 +52,45 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 }
 @media(max-width:900px){.hero{display:none!important}.hero-red{display:block;height:calc(100svh - 62px);min-height:620px}.hero-red-art{object-position:center top}.hero-red-cta{left:18px;right:18px;bottom:20px;justify-content:center;padding:15px 18px;font-size:9px}.topbar{background:rgba(164,24,8,.97);color:#fff;border-bottom-color:rgba(255,255,255,.18)}.topbar nav a:hover{color:#fff}.topbar nav a:after{background:#fff}.topbar .brand{color:#fff}}
 
+
+/* Live editorial homepage hero */
+.live-hero{position:relative;min-height:calc(100svh - 72px);overflow:hidden;isolation:isolate;display:grid;grid-template-columns:minmax(0,56%) minmax(360px,44%);align-items:center;padding:clamp(48px,5vw,82px) 5vw 54px;color:#fff;background:radial-gradient(circle at 76% 42%,rgba(255,160,48,.68),transparent 28%),linear-gradient(110deg,#a91408 0%,#dc2609 44%,#ff4a0a 100%);border-bottom:1px solid rgba(255,255,255,.18)}
+.live-hero:before{content:"";position:absolute;inset:0;z-index:-3;opacity:.25;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.055) 0 1px,transparent 1px 10px);mix-blend-mode:soft-light}
+.live-grid{position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px);background-size:120px 120px}
+.live-spikes{position:absolute;z-index:-1;bottom:-7%;height:72%;width:32%;opacity:.72;background:repeating-linear-gradient(100deg,transparent 0 18px,rgba(10,10,12,.88) 18px 31px,transparent 31px 51px);clip-path:polygon(0 100%,5% 76%,10% 97%,15% 43%,21% 92%,27% 20%,34% 88%,40% 4%,47% 90%,55% 27%,63% 94%,71% 48%,80% 98%,88% 65%,100% 100%)}
+.live-spikes-left{left:38%;transform:scaleX(.78)}.live-spikes-right{right:-3%}
+.live-content{position:relative;z-index:5;max-width:980px}.live-eyebrow{font-size:clamp(9px,.75vw,12px);font-weight:800;letter-spacing:.28em;margin-bottom:24px;opacity:0;transform:translateY(18px)}
+.live-name-wrap{position:relative;margin-bottom:26px}.live-name-wrap h1{margin:0;font-size:clamp(66px,8.4vw,150px);line-height:.76;letter-spacing:-.065em!important;font-weight:900;text-shadow:0 8px 30px rgba(0,0,0,.14);opacity:0;transform:translateY(48px)}
+.live-g{margin-top:3px;font-size:clamp(112px,11.7vw,210px);line-height:.7;font-weight:900;letter-spacing:-.07em;color:#101014;text-shadow:0 10px 25px rgba(0,0,0,.12);opacity:0;transform:translateX(-35px)}
+.live-content h2{margin:0 0 14px;font-size:clamp(22px,2.1vw,38px);line-height:1.05;letter-spacing:-.025em!important;opacity:0;transform:translateY(18px)}
+.live-content p{max-width:720px;margin:0;font-size:clamp(17px,1.4vw,24px);line-height:1.45;color:rgba(255,255,255,.82);opacity:0;transform:translateY(18px)}
+.live-button{display:inline-flex;align-items:center;justify-content:space-between;gap:45px;margin-top:30px;min-width:320px;padding:16px 24px;border-radius:999px;background:#101014;color:#fff;border:1px solid rgba(255,255,255,.18);font-size:10px;font-weight:900;letter-spacing:.17em;box-shadow:0 15px 35px rgba(0,0,0,.2);opacity:0;transform:translateY(18px);transition:transform .35s var(--ease),box-shadow .35s ease,background .35s ease}.live-button span{font-size:22px;font-weight:400;line-height:1}.live-button:hover{background:#000;box-shadow:0 22px 45px rgba(0,0,0,.28)}
+.live-disciplines{margin-top:56px;font-size:10px;font-weight:800;letter-spacing:.25em;color:rgba(255,255,255,.76);opacity:0;transform:translateY(14px)}
+.live-portrait{position:absolute;right:-1%;bottom:0;width:49%;height:95%;z-index:3;display:flex;align-items:flex-end;justify-content:center;pointer-events:auto;perspective:1100px;opacity:0;transform:translateY(45px)}
+.live-portrait img{position:relative;z-index:2;width:auto;max-width:100%;height:92%;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 30px 40px rgba(0,0,0,.26));transform-origin:bottom center;transition:transform .5s var(--ease)}
+.live-glow{position:absolute;width:min(36vw,540px);height:min(36vw,540px);border-radius:50%;right:8%;top:13%;z-index:0;background:radial-gradient(circle,rgba(255,195,75,.62),rgba(255,98,18,.24) 48%,transparent 70%);filter:blur(5px);animation:liveGlow 5s ease-in-out infinite alternate}
+.intro-complete .live-eyebrow{opacity:1;transform:none;transition:opacity .65s .05s var(--ease),transform .65s .05s var(--ease)}
+.intro-complete .live-name-wrap h1{opacity:1;transform:none;transition:opacity .7s .12s var(--ease),transform .95s .12s var(--ease)}
+.intro-complete .live-g{opacity:1;transform:none;transition:opacity .7s .28s var(--ease),transform .9s .28s var(--ease)}
+.intro-complete .live-content h2{opacity:1;transform:none;transition:opacity .65s .42s var(--ease),transform .7s .42s var(--ease)}
+.intro-complete .live-content p{opacity:1;transform:none;transition:opacity .65s .5s var(--ease),transform .7s .5s var(--ease)}
+.intro-complete .live-button{opacity:1;transform:none;transition:opacity .65s .58s var(--ease),transform .7s .58s var(--ease),box-shadow .35s ease,background .35s ease}
+.intro-complete .live-disciplines{opacity:1;transform:none;transition:opacity .65s .68s var(--ease),transform .7s .68s var(--ease)}
+.intro-complete .live-portrait{opacity:1;transform:none;transition:opacity .8s .2s var(--ease),transform 1s .2s var(--ease)}
+@keyframes liveGlow{to{transform:scale(1.08);opacity:.82}}
+.topbar:not(.scrolled){background:rgba(164,24,8,.97);color:#fff;border-bottom-color:rgba(255,255,255,.18)}.topbar:not(.scrolled) nav a:hover{color:#fff}.topbar:not(.scrolled) nav a:after{background:#fff}.topbar:not(.scrolled) .brand{color:#fff}
+@media(max-width:900px){
+  .live-hero{min-height:calc(100svh - 62px);display:block;padding:40px 18px 28px;background:radial-gradient(circle at 72% 58%,rgba(255,142,35,.62),transparent 32%),linear-gradient(160deg,#a91408 0%,#e52b09 52%,#ff4a09 100%)}
+  .live-grid{background-size:84px 84px}.live-content{max-width:none}.live-eyebrow{font-size:8px;letter-spacing:.18em;margin-bottom:18px;white-space:nowrap}
+  .live-name-wrap{margin-bottom:18px}.live-name-wrap h1{font-size:clamp(48px,13.9vw,72px);line-height:.83;white-space:nowrap}.live-g{font-size:clamp(92px,27vw,132px);margin-top:6px}
+  .live-content h2{font-size:19px;max-width:92%;margin-top:10px}.live-content p{font-size:15px;line-height:1.42;max-width:88%}
+  .live-button{position:absolute;left:18px;right:18px;bottom:22px;z-index:8;min-width:0;width:calc(100vw - 36px);justify-content:center;gap:38px;margin:0;padding:16px 20px;font-size:9px}
+  .live-disciplines{display:none}.live-portrait{right:-16%;bottom:70px;width:105%;height:57%;justify-content:flex-end;pointer-events:none}.live-portrait img{height:100%;max-width:none;object-position:bottom right}.live-glow{width:330px;height:330px;right:0;top:3%}
+  .live-spikes-left{left:-4%;width:38%;height:52%}.live-spikes-right{right:-12%;width:58%;height:66%}
+}
+@media(max-width:430px){.live-hero{padding-top:34px}.live-eyebrow{font-size:7.4px}.live-name-wrap h1{font-size:13.6vw}.live-content h2{font-size:18px}.live-content p{font-size:14px}.live-portrait{height:54%;right:-20%}}
+@media(prefers-reduced-motion:reduce){.live-eyebrow,.live-name-wrap h1,.live-g,.live-content h2,.live-content p,.live-button,.live-disciplines,.live-portrait{opacity:1!important;transform:none!important;transition:none!important}.live-glow{animation:none!important}}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","name":"Viswanathan G","url":"https://viswanathan-portfolio-iota.vercel.app/","jobTitle":"Art Director · UI/UX Designer · Creative Technologist","sameAs":["https://in.linkedin.com/in/viswanathan-g-55a0176a","https://www.behance.net/--11"],"knowsAbout":["Art Direction","UI/UX Design","Creative Technology","Campaign Systems","AI-Assisted Design"]},{"@type":"WebSite","name":"Viswanathan G Portfolio","url":"https://viswanathan-portfolio-iota.vercel.app/"}]}</script>
 </head>
@@ -60,19 +99,24 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div><div class="cursor-halo" id="cursorHalo" aria-hidden="true"></div>
 <header class="topbar" id="topbar"><a class="brand magnetic" href="/">VG<span>®</span></a><nav><a class="magnetic" href="/portfolio">PORTFOLIO</a><a class="magnetic" href="/about">ABOUT</a><a class="magnetic" href="/resume">RESUME</a><a class="magnetic" href="/contact">CONTACT</a></nav></header>
 <main>
-<section class="hero-red" aria-labelledby="heroRedTitle">
-<h1 id="heroRedTitle" class="sr-only">Viswanathan G — Art Director, UI/UX Designer and Creative Technologist</h1>
-<picture><source media="(max-width:900px)" srcset="/assets/profile/home-hero-red-mobile.webp?v=1"><img class="hero-red-art" src="/assets/profile/home-hero-red.webp?v=1" alt="Viswanathan G portfolio hero featuring his formal coat-suit portrait in a red editorial design" fetchpriority="high" decoding="async"></picture>
-<a class="hero-red-cta magnetic" href="/portfolio">VIEW SELECTED WORK <span aria-hidden="true">→</span></a>
-</section>
-<section class="hero" id="hero">
-<div class="hero-top"><span class="role-line">Art Director · UI/UX · Creative Technologist</span><span class="hero-meta">Hyderabad · India / Global / Remote</span></div>
-<div class="name-mask"><h1>Viswanathan</h1></div>
-<div class="hero-main">
-<div class="g-wrap" data-parallax="-0.02"><span class="g">G.</span><span class="g-orbit" aria-hidden="true"></span></div>
-<div class="intro-column"><div class="intro-kicker">Direction · Systems · Production</div><div class="intro-card"><p><strong>I lead visual direction and build design systems that move from idea to production.</strong> My work connects campaign communication, digital products, team-level creative direction and AI-assisted design.</p><div class="hero-actions"><a class="btn primary magnetic" href="/portfolio">VIEW SELECTED WORK</a><a class="btn secondary magnetic" href="/contact">START A CONVERSATION ↗</a></div></div></div>
-<div class="portrait-stack" id="portraitStack" data-parallax="0.02"><div class="portrait-accent"></div><div class="portrait" id="portraitCard"><img src="assets/profile/viswanathan-hero.webp?v=8" alt="Portrait of Viswanathan G" loading="eager" fetchpriority="high" decoding="async"></div><span class="portrait-note">10+ years in design</span></div>
-<div class="design-surface" id="designSurface" aria-label="Abstract design system visual"><span class="surface-label">Design system / visual language</span><div class="surface-axis"></div><div class="type-card"><small>TYPE / SCALE</small><b>Aa <span>96</span></b></div><div class="system-card"><small>GRID / MODULES</small><div class="mini-grid"><i></i><i></i><i></i><i></i></div></div><div class="curve"><svg viewBox="0 0 360 140" preserveAspectRatio="none" aria-hidden="true"><path d="M5 112 C82 20 146 132 224 54 S318 42 355 82"/><circle cx="5" cy="112" r="5"/><circle cx="224" cy="54" r="5"/><circle cx="355" cy="82" r="5"/></svg></div><span class="curve-note">Motion · hierarchy · rhythm</span></div>
+<section class="live-hero" id="hero" aria-labelledby="liveHeroName">
+<div class="live-grid" aria-hidden="true"></div>
+<div class="live-spikes live-spikes-left" aria-hidden="true"></div>
+<div class="live-spikes live-spikes-right" aria-hidden="true"></div>
+<div class="live-content">
+  <div class="live-eyebrow">ART DIRECTION · UI/UX · AI DESIGN</div>
+  <div class="live-name-wrap">
+    <h1 id="liveHeroName">VISWANATHAN</h1>
+    <div class="live-g">G.</div>
+  </div>
+  <h2>Art Director · Multidisciplinary Designer</h2>
+  <p>Building campaign systems, digital experiences and AI-assisted creative workflows — from visual direction to production-ready execution.</p>
+  <a class="live-button magnetic" href="/portfolio">VIEW SELECTED WORK <span aria-hidden="true">→</span></a>
+  <div class="live-disciplines">BRANDING · CAMPAIGNS · DIGITAL · AI</div>
+</div>
+<div class="live-portrait" id="portraitStack">
+  <div class="live-glow" aria-hidden="true"></div>
+  <img id="portraitCard" src="/assets/profile/viswanathan-hero.webp?v=8" alt="Portrait of Viswanathan G in a formal blue coat suit" fetchpriority="high" decoding="async">
 </div>
 </section>
 <section class="proof" aria-label="Career highlights"><div><b>10+ years</b><span>Design & communication</span></div><div><b>200+ creatives</b><span>Campaign production</span></div><div><b>~200–300</b><span>AI Design Studio users</span></div><div><b>4 disciplines</b><span>Art · Product · AI · Systems</span></div></section>
