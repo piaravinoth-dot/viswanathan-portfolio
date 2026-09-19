@@ -211,6 +211,43 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   .live-portrait img{object-position:60% center!important}
 }
 
+
+/* Reliable final portrait rendering */
+.live-portrait{
+  background-image:url('/assets/profile/home-hero-red.webp?v=4')!important;
+  background-repeat:no-repeat!important;
+  background-size:cover!important;
+  background-position:right center!important;
+}
+.live-portrait img{display:none!important}
+.live-portrait:after{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:26%;
+  z-index:2;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(220,39,9,.98) 0%,rgba(220,39,9,.72) 35%,rgba(220,39,9,0) 100%);
+}
+.live-glow{display:none!important}
+@media(max-width:900px){
+  .live-portrait{
+    right:-7%!important;
+    bottom:0!important;
+    width:76%!important;
+    height:48%!important;
+    background-size:auto 100%!important;
+    background-position:right bottom!important;
+  }
+  .live-portrait:after{
+    width:22%;
+    background:linear-gradient(90deg,rgba(229,43,9,.95) 0%,rgba(229,43,9,.55) 45%,rgba(229,43,9,0) 100%);
+  }
+}
+@media(max-width:430px){
+  .live-portrait{right:-10%!important;width:82%!important;height:46%!important}
+}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","name":"Viswanathan G","url":"https://viswanathan-portfolio-iota.vercel.app/","jobTitle":"Art Director · UI/UX Designer · Creative Technologist","sameAs":["https://in.linkedin.com/in/viswanathan-g-55a0176a","https://www.behance.net/--11"],"knowsAbout":["Art Direction","UI/UX Design","Creative Technology","Campaign Systems","AI-Assisted Design"]},{"@type":"WebSite","name":"Viswanathan G Portfolio","url":"https://viswanathan-portfolio-iota.vercel.app/"}]}</script>
 </head>
