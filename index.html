@@ -373,6 +373,57 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   }
 }
 
+
+/* Isolated final portrait layer — no legacy portrait rules apply */
+.hero-photo-final{
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:48%;
+  height:92%;
+  z-index:4;
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-end;
+  pointer-events:none;
+  opacity:1;
+  visibility:visible;
+}
+.hero-photo-final img{
+  display:block;
+  width:auto;
+  height:100%;
+  max-width:100%;
+  object-fit:contain;
+  object-position:bottom right;
+  opacity:1;
+  visibility:visible;
+  filter:drop-shadow(0 28px 38px rgba(0,0,0,.22));
+}
+@media(max-width:900px){
+  .hero-photo-final{
+    right:-8%;
+    bottom:0;
+    width:80%;
+    height:47%;
+    z-index:4;
+  }
+  .hero-photo-final img{
+    width:auto;
+    height:100%;
+    max-width:none;
+    object-fit:contain;
+    object-position:bottom right;
+  }
+}
+@media(max-width:430px){
+  .hero-photo-final{
+    right:-11%;
+    width:86%;
+    height:45%;
+  }
+}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","name":"Viswanathan G","url":"https://viswanathan-portfolio-iota.vercel.app/","jobTitle":"Art Director · UI/UX Designer · Creative Technologist","sameAs":["https://in.linkedin.com/in/viswanathan-g-55a0176a","https://www.behance.net/--11"],"knowsAbout":["Art Direction","UI/UX Design","Creative Technology","Campaign Systems","AI-Assisted Design"]},{"@type":"WebSite","name":"Viswanathan G Portfolio","url":"https://viswanathan-portfolio-iota.vercel.app/"}]}</script>
 </head>
@@ -396,7 +447,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   <a class="live-button magnetic" href="/portfolio">VIEW SELECTED WORK <span aria-hidden="true">→</span></a>
   <div class="live-disciplines">BRANDING · CAMPAIGNS · DIGITAL · AI</div>
 </div>
-<div class="live-portrait" id="portraitStack">
+<div class="hero-photo-final" id="portraitStack">
   <div class="live-glow" aria-hidden="true"></div>
   <img id="portraitCard" src="/assets/profile/home-hero-red.webp?v=5" alt="Portrait of Viswanathan G in a formal blue coat suit" fetchpriority="high" decoding="async">
 </div>
