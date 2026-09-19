@@ -35,6 +35,23 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 @media(max-width:1120px){.hero-main{grid-template-columns:170px minmax(320px,1fr) minmax(280px,340px);column-gap:24px}.g{font-size:150px}.g-orbit{left:72px;top:62px}.type-card{width:190px}.system-card{left:36%;width:210px}.practice-grid{grid-template-columns:repeat(2,1fr)}.proof{grid-template-columns:repeat(2,1fr)}.proof div:nth-child(2){border-right:0}.proof div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
 @media(max-width:900px){.topbar{height:62px;padding:0 14px;grid-template-columns:auto minmax(0,1fr);gap:14px}.brand{font-size:18px}nav{justify-content:flex-start;gap:16px;overflow-x:auto;scrollbar-width:none}nav::-webkit-scrollbar{display:none}nav a{font-size:9px;letter-spacing:.07em;flex:0 0 auto}.opening,.cursor-halo{display:none}.hero{padding:34px 18px 24px}.hero-top{align-items:flex-start}.hero-meta{display:none}.hero h1{font-size:clamp(52px,15vw,82px);white-space:normal;line-height:.86}.hero-main{display:grid;grid-template-columns:1fr;grid-template-areas:"g" "intro" "surface" "portrait";margin-top:16px;gap:20px}.g-wrap{min-height:0}.g{font-size:clamp(82px,24vw,124px)}.g-orbit{width:80px;height:80px;left:72px;top:36px}.intro-column{padding-top:0}.intro-card{padding:22px;border-radius:20px}.intro-card p{font-size:17px}.hero-actions{display:grid}.btn{width:100%}.design-surface{min-height:150px}.type-card{left:2%;top:38px;width:150px;height:96px;padding:12px}.type-card b{font-size:28px;margin-top:18px}.system-card{left:46%;top:30px;width:150px;height:104px;padding:12px}.mini-grid{gap:4px;margin-top:14px}.mini-grid i{height:30px}.curve,.curve-note{display:none}.portrait-stack{padding-left:16px;max-width:520px}.portrait{aspect-ratio:4/4.5}.proof{grid-template-columns:1fr}.proof div,.proof div:nth-child(2){border-right:0;border-bottom:1px solid var(--line);padding:15px 18px}.proof div:last-child{border-bottom:0}.section{padding:54px 18px;scroll-margin-top:62px}.section-head{grid-template-columns:1fr;gap:15px;margin-bottom:26px}.section h2{font-size:clamp(46px,14vw,66px)}.practice-grid{grid-template-columns:1fr}.practice-card{min-height:220px;padding:22px}.cta{padding:54px 18px}footer{display:grid;gap:8px;padding:20px 18px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.opening{display:none}.ticker-track{animation:none}.hero-top,.hero h1,.g-wrap,.g-orbit,.intro-column,.portrait-stack,.design-surface,.type-card,.system-card,.curve path,.curve circle,.curve-note,.motion-reveal{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important;transition:none!important;animation:none!important}.cursor-halo,.scroll-progress{display:none!important}}
+
+.hero-red{position:relative;display:block;height:calc(100svh - 72px);min-height:650px;overflow:hidden;background:#b51f0e;border-bottom:1px solid rgba(255,255,255,.18)}
+.hero-red-art{display:block;width:100%;height:100%;object-fit:cover;object-position:center center}
+.hero-red:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.08),transparent 35%,transparent 80%,rgba(0,0,0,.04))}
+.hero-red-cta{position:absolute;left:4.8%;bottom:12%;z-index:2;display:inline-flex;align-items:center;gap:24px;padding:16px 24px;border-radius:999px;background:#101014;color:#fff;border:1px solid rgba(255,255,255,.22);font-size:10px;font-weight:900;letter-spacing:.18em;box-shadow:0 16px 38px rgba(0,0,0,.18);transition:transform .35s var(--ease),background .3s ease}
+.hero-red-cta:hover{transform:translateY(-3px);background:#000}
+.hero-red-cta span{font-size:20px;line-height:1;font-weight:400}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+@media(min-width:901px){
+  .hero{display:none}
+  .topbar:not(.scrolled){background:rgba(164,24,8,.96);color:#fff;border-bottom-color:rgba(255,255,255,.2)}
+  .topbar:not(.scrolled) nav a:hover{color:#fff}
+  .topbar:not(.scrolled) nav a:after{background:#fff}
+  .topbar:not(.scrolled) .brand{color:#fff}
+}
+@media(max-width:900px){.hero-red{display:none}}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","name":"Viswanathan G","url":"https://viswanathan-portfolio-iota.vercel.app/","jobTitle":"Art Director · UI/UX Designer · Creative Technologist","sameAs":["https://in.linkedin.com/in/viswanathan-g-55a0176a","https://www.behance.net/--11"],"knowsAbout":["Art Direction","UI/UX Design","Creative Technology","Campaign Systems","AI-Assisted Design"]},{"@type":"WebSite","name":"Viswanathan G Portfolio","url":"https://viswanathan-portfolio-iota.vercel.app/"}]}</script>
 </head>
@@ -43,6 +60,11 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div><div class="cursor-halo" id="cursorHalo" aria-hidden="true"></div>
 <header class="topbar" id="topbar"><a class="brand magnetic" href="/">VG<span>®</span></a><nav><a class="magnetic" href="/portfolio">PORTFOLIO</a><a class="magnetic" href="/about">ABOUT</a><a class="magnetic" href="/resume">RESUME</a><a class="magnetic" href="/contact">CONTACT</a></nav></header>
 <main>
+<section class="hero-red" aria-labelledby="heroRedTitle">
+<h1 id="heroRedTitle" class="sr-only">Viswanathan G — Art Director, UI/UX Designer and Creative Technologist</h1>
+<img class="hero-red-art" src="/assets/profile/home-hero-red.webp?v=1" alt="Viswanathan G portfolio hero featuring his formal coat-suit portrait in a red editorial design" fetchpriority="high" decoding="async">
+<a class="hero-red-cta magnetic" href="/portfolio">VIEW SELECTED WORK <span aria-hidden="true">→</span></a>
+</section>
 <section class="hero" id="hero">
 <div class="hero-top"><span class="role-line">Art Director · UI/UX · Creative Technologist</span><span class="hero-meta">Hyderabad · India / Global / Remote</span></div>
 <div class="name-mask"><h1>Viswanathan</h1></div>
