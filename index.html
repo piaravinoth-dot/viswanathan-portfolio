@@ -166,6 +166,51 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   .live-portrait{width:92%;height:53%;right:-11%;bottom:-1%}
 }
 
+
+/* Final portrait treatment — use approved red/orange portrait asset */
+.live-portrait{
+  right:-2%!important;
+  bottom:0!important;
+  width:52%!important;
+  height:100%!important;
+  overflow:visible!important;
+}
+.live-portrait img{
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  clip-path:none!important;
+  filter:drop-shadow(0 24px 36px rgba(0,0,0,.16))!important;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.72) 11%,#000 26%,#000 100%);
+  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.72) 11%,#000 26%,#000 100%);
+}
+@media(max-width:900px){
+  .live-portrait{
+    right:-16%!important;
+    bottom:0!important;
+    width:92%!important;
+    height:53%!important;
+    overflow:visible!important;
+  }
+  .live-portrait img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    object-position:58% center!important;
+    clip-path:none!important;
+    -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.75) 13%,#000 30%,#000 100%);
+    mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.75) 13%,#000 30%,#000 100%);
+  }
+  .live-content p{max-width:92%!important}
+  .live-button{margin-top:20px!important}
+}
+@media(max-width:430px){
+  .live-portrait{right:-20%!important;width:98%!important;height:51%!important}
+  .live-portrait img{object-position:60% center!important}
+}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","name":"Viswanathan G","url":"https://viswanathan-portfolio-iota.vercel.app/","jobTitle":"Art Director · UI/UX Designer · Creative Technologist","sameAs":["https://in.linkedin.com/in/viswanathan-g-55a0176a","https://www.behance.net/--11"],"knowsAbout":["Art Direction","UI/UX Design","Creative Technology","Campaign Systems","AI-Assisted Design"]},{"@type":"WebSite","name":"Viswanathan G Portfolio","url":"https://viswanathan-portfolio-iota.vercel.app/"}]}</script>
 </head>
@@ -191,7 +236,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 </div>
 <div class="live-portrait" id="portraitStack">
   <div class="live-glow" aria-hidden="true"></div>
-  <img id="portraitCard" src="/assets/profile/viswanathan-hero.webp?v=8" alt="Portrait of Viswanathan G in a formal blue coat suit" fetchpriority="high" decoding="async">
+  <img id="portraitCard" src="/assets/profile/home-hero-red.webp?v=3" alt="Portrait of Viswanathan G in a formal blue coat suit" fetchpriority="high" decoding="async">
 </div>
 </section>
 <section class="proof" aria-label="Career highlights"><div><b>10+ years</b><span>Design & communication</span></div><div><b>200+ creatives</b><span>Campaign production</span></div><div><b>~200–300</b><span>AI Design Studio users</span></div><div><b>4 disciplines</b><span>Art · Product · AI · Systems</span></div></section>
