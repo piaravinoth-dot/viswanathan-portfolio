@@ -457,6 +457,46 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   }
 }
 
+
+/* Safari-safe portrait layer: CSS background, no image element */
+.hero-photo-final{
+  position:absolute!important;
+  right:0!important;
+  bottom:0!important;
+  width:52%!important;
+  height:96%!important;
+  z-index:4!important;
+  display:block!important;
+  pointer-events:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  background-image:url('/assets/profile/home-hero-red.webp?v=7')!important;
+  background-repeat:no-repeat!important;
+  background-size:auto 100%!important;
+  background-position:right bottom!important;
+}
+.hero-photo-final img,.hero-photo-final .live-glow{display:none!important}
+@media(max-width:900px){
+  .live-hero{min-height:1040px!important}
+  .hero-photo-final{
+    top:600px!important;
+    right:-12%!important;
+    bottom:auto!important;
+    width:92%!important;
+    height:440px!important;
+    background-size:auto 100%!important;
+    background-position:right bottom!important;
+  }
+}
+@media(max-width:430px){
+  .hero-photo-final{
+    top:610px!important;
+    right:-15%!important;
+    width:100%!important;
+    height:430px!important;
+  }
+}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","name":"Viswanathan G","url":"https://viswanathan-portfolio-iota.vercel.app/","jobTitle":"Art Director · UI/UX Designer · Creative Technologist","sameAs":["https://in.linkedin.com/in/viswanathan-g-55a0176a","https://www.behance.net/--11"],"knowsAbout":["Art Direction","UI/UX Design","Creative Technology","Campaign Systems","AI-Assisted Design"]},{"@type":"WebSite","name":"Viswanathan G Portfolio","url":"https://viswanathan-portfolio-iota.vercel.app/"}]}</script>
 </head>
@@ -480,10 +520,7 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   <a class="live-button magnetic" href="/portfolio">VIEW SELECTED WORK <span aria-hidden="true">→</span></a>
   <div class="live-disciplines">BRANDING · CAMPAIGNS · DIGITAL · AI</div>
 </div>
-<div class="hero-photo-final" id="portraitStack">
-  <div class="live-glow" aria-hidden="true"></div>
-  <img id="portraitCard" src="/assets/profile/viswanathan-transparent.webp?v=2" alt="Portrait of Viswanathan G in a formal blue coat suit" fetchpriority="high" decoding="async">
-</div>
+<div class="hero-photo-final" id="portraitStack" aria-hidden="true"></div>
 </section>
 <section class="proof" aria-label="Career highlights"><div><b>10+ years</b><span>Design & communication</span></div><div><b>200+ creatives</b><span>Campaign production</span></div><div><b>~200–300</b><span>AI Design Studio users</span></div><div><b>4 disciplines</b><span>Art · Product · AI · Systems</span></div></section>
 <div class="ticker" aria-label="Design disciplines"><div class="ticker-track"><div class="ticker-group"><span>Creative Direction</span><i>✦</i><span>Art Direction</span><i>✦</i><span>UI/UX</span><i>✦</i><span>AI Design</span><i>✦</i><span>Campaign Systems</span><i>✦</i><span>Branding</span><i>✦</i><span>Digital Products</span><i>✦</i><span>Creative Technology</span><i>✦</i></div><div class="ticker-group" aria-hidden="true"><span>Creative Direction</span><i>✦</i><span>Art Direction</span><i>✦</i><span>UI/UX</span><i>✦</i><span>AI Design</span><i>✦</i><span>Campaign Systems</span><i>✦</i><span>Branding</span><i>✦</i><span>Digital Products</span><i>✦</i><span>Creative Technology</span><i>✦</i></div></div></div>
