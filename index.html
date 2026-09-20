@@ -424,6 +424,39 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   }
 }
 
+
+/* Mobile portrait placement — keep it visible in the first hero view */
+@media(max-width:900px){
+  .live-hero{
+    min-height:1020px!important;
+    height:auto!important;
+  }
+  .hero-photo-final{
+    top:610px!important;
+    bottom:auto!important;
+    right:-7%!important;
+    width:82%!important;
+    height:410px!important;
+    z-index:4!important;
+  }
+  .hero-photo-final img{
+    height:100%!important;
+    width:auto!important;
+    max-width:none!important;
+    object-fit:contain!important;
+    object-position:bottom right!important;
+  }
+}
+@media(max-width:430px){
+  .live-hero{min-height:1040px!important}
+  .hero-photo-final{
+    top:625px!important;
+    right:-10%!important;
+    width:88%!important;
+    height:415px!important;
+  }
+}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","name":"Viswanathan G","url":"https://viswanathan-portfolio-iota.vercel.app/","jobTitle":"Art Director · UI/UX Designer · Creative Technologist","sameAs":["https://in.linkedin.com/in/viswanathan-g-55a0176a","https://www.behance.net/--11"],"knowsAbout":["Art Direction","UI/UX Design","Creative Technology","Campaign Systems","AI-Assisted Design"]},{"@type":"WebSite","name":"Viswanathan G Portfolio","url":"https://viswanathan-portfolio-iota.vercel.app/"}]}</script>
 </head>
