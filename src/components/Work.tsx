@@ -67,31 +67,34 @@ useEffect(()=>{
 useEffect(()=>{
   if(!orbitMobile)return;
   const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const context=gsap.context(()=>{
-    orbitRefs.current.forEach((element,index)=>{
-      if(!element)return;
-      let offset=(index-orbitIndex+products.length)%products.length;
-      if(offset>products.length/2)offset-=products.length;
-      const abs=Math.abs(offset),side=Math.sign(offset);
-      gsap.to(element,{
-        xPercent:offset*32,
-        y:abs*15,
-        rotationY:reduced?0:-side*Math.min(abs*22,55),
-        rotationZ:reduced?0:offset*-2,
-        scale:1-abs*.10,
-        opacity:abs>=3?.28:abs===2?.56:abs===1?.83:1,
-        zIndex:10-abs,
-        duration:reduced?0:1.05,
-        ease:"power3.inOut",
-        overwrite:true
-      });
+  // Preserve GSAP transforms between changes; reverting the context each
+  // rotation reset transforms to zero and caused visible iOS shaking.
+  orbitRefs.current.forEach((element,index)=>{
+    if(!element)return;
+    let offset=(index-orbitIndex+products.length)%products.length;
+    if(offset>products.length/2)offset-=products.length;
+    const abs=Math.abs(offset),side=Math.sign(offset);
+    gsap.to(element,{
+      xPercent:offset*32,
+      y:abs*12,
+      rotationY:reduced?0:-side*Math.min(abs*18,48),
+      rotationZ:reduced?0:-offset*1.2,
+      scale:1-abs*.085,
+      opacity:abs>=3?.16:abs===2?.42:abs===1?.78:1,
+      zIndex:10-abs,
+      duration:reduced?0:.95,
+      ease:"power2.inOut",
+      force3D:true,
+      overwrite:"auto"
     });
   });
-  return()=>context.revert();
 },[orbitIndex,orbitMobile]);
+useEffect(()=>()=>{
+  orbitRefs.current.forEach(element=>{if(element)gsap.killTweensOf(element)});
+},[]);
 useEffect(()=>{
   if(!orbitMobile||!orbitPlaying||document.hidden||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-  const timer=window.setInterval(()=>setOrbitIndex(index=>(index+1)%products.length),3100);
+  const timer=window.setInterval(()=>setOrbitIndex(index=>(index+1)%products.length),4500);
   const stop=()=>{if(document.hidden)setOrbitPlaying(false)};
   document.addEventListener("visibilitychange",stop);
   return()=>{window.clearInterval(timer);document.removeEventListener("visibilitychange",stop)};
