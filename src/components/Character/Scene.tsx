@@ -63,7 +63,14 @@ const Scene=()=>{
     setCharacter(renderer,scene,camera,()=>disposed).loadCharacter().then(gltf=>{
       if(!gltf)return;
       if(disposed){disposeModel(gltf.scene);return;}
-      model=gltf.scene;scene.add(model);
+      model=gltf.scene;
+      // The laptop screen in this borrowed rig is a GROUP, not necessarily a mesh.
+      // Hide the entire monitor object on mobile only, before it enters the scene.
+      if(window.matchMedia("(max-width: 1024px)").matches){
+        const monitor=model.getObjectByName("Plane004") || model.getObjectByName("Plane.004");
+        if(monitor){monitor.visible=false;monitor.scale.set(0,0,0);}
+      }
+      scene.add(model);
       animations=setAnimations(gltf);
       if(hoverDivRef.current)stopHover=animations.hover(gltf,hoverDivRef.current);
       head=model.getObjectByName("spine006");screen=model.getObjectByName("screenlight");
