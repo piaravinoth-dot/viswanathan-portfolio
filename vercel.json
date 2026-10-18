@@ -26,6 +26,14 @@
     {
       "source": "/work/social-media-intelligence/",
       "destination": "/index.html"
+    },
+    {
+      "source": "/work/content-tracker",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/work/content-tracker/",
+      "destination": "/index.html"
     }
   ]
 }
