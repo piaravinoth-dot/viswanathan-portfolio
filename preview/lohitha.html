@@ -18,11 +18,10 @@
 </main><script>
 (()=>{const loader=document.querySelector('.loader');if(!matchMedia('(prefers-reduced-motion:reduce)').matches){const start=performance.now();const b=loader.querySelector('b');function run(t){const p=Math.min(1,(t-start)/950);b.textContent=Math.round(100*(1-(1-p)**3));if(p<1)requestAnimationFrame(run);else setTimeout(()=>loader.classList.add('done'),270)}requestAnimationFrame(run)}else loader.classList.add('done');const portrait=document.querySelector('.portrait-layer'),scenes=[...document.querySelectorAll('.scene')];function update(){let active=scenes[0],dist=1e10;for(const s of scenes){const r=s.getBoundingClientRect(),d=Math.abs((r.top+r.bottom)/2-innerHeight/2);if(d<dist){dist=d;active=s}}scenes.forEach(s=>s.classList.toggle('active',s===active));portrait.classList.toggle('left',active.dataset.mode==='left');portrait.classList.toggle('red',active.dataset.mode==='red');portrait.classList.toggle('hide',active.dataset.mode==='off')}addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
   let tx=0,ty=0,tr=0,x=0,y=0,r=0,dragging=false,dragX=0,dragY=0;
-  const setTarget=(clientX,clientY,mult=1)=>{const px=Math.max(-1,Math.min(1,(clientX/innerWidth-.5)*2));const py=Math.max(-1,Math.min(1,(clientY/innerHeight-.5)*2));tx=px*26*mult;ty=py*17*mult;tr=px*4.2*mult};
-  if(matchMedia('(pointer:fine)').matches){
-    addEventListener('pointermove',e=>setTarget(e.clientX,e.clientY),{passive:true});
-    document.addEventListener('pointerleave',()=>{tx=ty=tr=0});
-  }
+  const setTarget=(clientX,clientY,mult=1)=>{const px=Math.max(-1,Math.min(1,(clientX/innerWidth-.5)*2));const py=Math.max(-1,Math.min(1,(clientY/innerHeight-.5)*2));tx=px*52*mult;ty=py*32*mult;tr=px*7.5*mult};
+  addEventListener('pointermove',e=>{if(e.pointerType!=='touch')setTarget(e.clientX,e.clientY)},{passive:true});
+  addEventListener('mousemove',e=>setTarget(e.clientX,e.clientY),{passive:true});
+  document.addEventListener('pointerleave',()=>{tx=ty=tr=0});
   addEventListener('touchstart',e=>{if(e.touches.length===1){dragX=e.touches[0].clientX;dragY=e.touches[0].clientY;dragging=true}},{passive:true});
   addEventListener('touchmove',e=>{if(dragging&&e.touches.length===1){const t=e.touches[0];tx=Math.max(-28,Math.min(28,(t.clientX-dragX)*.23));ty=Math.max(-20,Math.min(20,(t.clientY-dragY)*.20));tr=Math.max(-4,Math.min(4,(t.clientX-dragX)*.03))}},{passive:true});
   addEventListener('touchend',()=>{dragging=false;tx=ty=tr=0},{passive:true});
