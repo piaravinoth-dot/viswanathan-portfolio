@@ -64,3 +64,7 @@ The final production navigation check additionally found that the VG brand link 
 ## About working-pose placement
 
 Move the existing seated typing/workstation reveal from the end of About to the hero-to-About transition. Settle the camera at z75/y8.4 with the scene on the left; reveal the monitor only after the camera begins pulling back. Keep biography opacity intact throughout About. Preserve typing/blink animation and the separate fade before capabilities. Mobile retains the established non-overlapping layout. Real GPU rendering is unavailable in this browser; camera/DOM animation checks do not verify the final GPU image.
+
+## PROFILE edge placement and WebGL diagnosis
+
+PROFILE now stays rotated -90 degrees along the far-right viewport edge on desktop and mobile, with a 44px touch target and visible focus outline. Its placement includes viewport gutters and safe-area insets. The remote QA browser reports GL_VENDOR/GL_RENDERER Disabled while creating a WebGL context; this is a browser environment restriction, not a website setting that can be enabled by frontend code. User-supplied screenshots demonstrate GPU rendering in the user's browser. No security or browser GPU settings were changed.

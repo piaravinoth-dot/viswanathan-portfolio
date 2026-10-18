@@ -101,3 +101,29 @@ div.resume-button span {
     margin-top: -1.5px;
   }
 }
+
+/* Keep PROFILE vertical at the viewport edge at every breakpoint. */
+.resume-button {
+  right: calc((100% - 100vw) / 2 + max(12px, env(safe-area-inset-right)));
+  bottom: max(30px, env(safe-area-inset-bottom));
+  transform-origin: left bottom;
+  transform: translateX(100%) rotate(-90deg);
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  gap: 9px;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 3px;
+  color: #c5c8ce;
+  background: #0b1017ed;
+  border: 1px solid #ffffff20;
+  border-radius: 4px;
+  transition: color .2s, border-color .2s;
+}
+.resume-button:hover {color: #f6a66b;border-color: #f6a66b88}
+.resume-button:focus-visible {outline: 2px solid #f6a66b;outline-offset: 4px}
+.resume-button > span {display: flex;align-items: center;font-size: 17px}
+@media(max-width:499px){.resume-button{font-size:11px;letter-spacing:2px;padding:8px 10px;bottom:24px}}
