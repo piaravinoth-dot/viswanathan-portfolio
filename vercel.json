@@ -4,12 +4,52 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/work/:slug",
-      "destination": "/index.html"
+      "source": "/work/ai-design-studio",
+      "destination": "/case-study-pages/ai-design-studio.html"
     },
     {
-      "source": "/work/:slug/",
-      "destination": "/index.html"
+      "source": "/work/ai-design-studio/",
+      "destination": "/case-study-pages/ai-design-studio.html"
+    },
+    {
+      "source": "/work/content-studio",
+      "destination": "/case-study-pages/content-studio.html"
+    },
+    {
+      "source": "/work/content-studio/",
+      "destination": "/case-study-pages/content-studio.html"
+    },
+    {
+      "source": "/work/social-media-intelligence",
+      "destination": "/case-study-pages/social-media-intelligence.html"
+    },
+    {
+      "source": "/work/social-media-intelligence/",
+      "destination": "/case-study-pages/social-media-intelligence.html"
+    },
+    {
+      "source": "/work/content-tracker",
+      "destination": "/case-study-pages/content-tracker.html"
+    },
+    {
+      "source": "/work/content-tracker/",
+      "destination": "/case-study-pages/content-tracker.html"
+    },
+    {
+      "source": "/work/splitmate",
+      "destination": "/case-study-pages/splitmate.html"
+    },
+    {
+      "source": "/work/splitmate/",
+      "destination": "/case-study-pages/splitmate.html"
+    },
+    {
+      "source": "/work/clip-studio",
+      "destination": "/case-study-pages/clip-studio.html"
+    },
+    {
+      "source": "/work/clip-studio/",
+      "destination": "/case-study-pages/clip-studio.html"
     }
   ],
   "headers": [
