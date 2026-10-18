@@ -41,11 +41,35 @@ export function setCharTimeline(character: THREE.Object3D, camera: THREE.Perspec
 }
 
 export function setAllTimeline() {
-  const context = gsap.context(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timeline = gsap.timeline({scrollTrigger:{trigger:".career-section",start:"top 80%",end:"bottom 65%",scrub:true,invalidateOnRefresh:true}});
-    timeline.fromTo(".career-timeline",{maxHeight:"10%",opacity:0},{maxHeight:"100%",opacity:1,duration:1},0)
-      .fromTo(".career-info-box",{opacity:.3},{opacity:1,stagger:.1,duration:.5},0);
+  const media = gsap.matchMedia();
+  // Keep the existing desktop animation completely unchanged.
+  media.add("(min-width: 901px)", () => {
+    const context = gsap.context(() => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const timeline = gsap.timeline({scrollTrigger:{trigger:".career-section",start:"top 80%",end:"bottom 65%",scrub:true,invalidateOnRefresh:true}});
+      timeline.fromTo(".career-timeline",{maxHeight:"10%",opacity:0},{maxHeight:"100%",opacity:1,duration:1},0)
+        .fromTo(".career-info-box",{opacity:.3},{opacity:1,stagger:.1,duration:.5},0);
+    });
+    return () => context.revert();
   });
-  return () => context.revert();
+  media.add("(max-width: 900px)", () => {
+    const context = gsap.context(() => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const entries = gsap.utils.toArray<HTMLElement>(".career-info-box");
+      // Each job reveals independently when it enters the phone viewport.
+      // Scroll back up to reverse naturally, without autoplaying offscreen items.
+      entries.forEach((entry) => {
+        gsap.fromTo(entry,{opacity:.25,y:32},{
+          opacity:1,y:0,ease:"none",immediateRender:false,
+          scrollTrigger:{trigger:entry,start:"top 88%",end:"top 50%",scrub:true,invalidateOnRefresh:true},
+        });
+      });
+      gsap.fromTo(".career-timeline",{maxHeight:"0%",opacity:.7},{
+        maxHeight:"100%",opacity:1,ease:"none",
+        scrollTrigger:{trigger:".career-info",start:"top 86%",end:"bottom 65%",scrub:true,invalidateOnRefresh:true},
+      });
+    });
+    return () => context.revert();
+  });
+  return () => media.revert();
 }
