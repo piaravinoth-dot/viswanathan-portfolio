@@ -76,5 +76,6 @@ export default function setSplitText() {
     );
   });
 
-  ScrollTrigger.addEventListener("refresh", () => setSplitText());
+  // Resplit on the existing resize lifecycle, not every ScrollTrigger refresh.
+  // Refreshing layout must not add another listener and duplicate text animations.
 }

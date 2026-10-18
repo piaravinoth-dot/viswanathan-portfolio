@@ -397,8 +397,8 @@ h2.landing-info-h2 {
 }
 .landing-summary{font-size:14px;line-height:1.65;font-weight:400;letter-spacing:0;color:#c0c5ca;max-width:270px;margin:20px 0}.landing-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.landing-actions a{font-size:12px;padding:10px 0;border-bottom:1px solid #8b6e55;color:#f1e9de}.landing-actions a:focus-visible{outline:2px solid var(--accentColor);outline-offset:5px}@media(max-width:1199px){.landing-summary{max-width:300px;font-size:13px;line-height:1.55;margin:14px 0}.landing-actions{gap:20px}}@media(max-height:650px) and (max-width:1199px){.landing-summary{font-size:12px;max-width:280px;margin:10px 0}.landing-actions a{padding:6px 0}}
 
-/* Mobile hero: reserve separate areas for the introduction, character and role. */
-@media (max-width: 767px) {
+/* Phone and tablet hero: separate the introduction, character and role. */
+@media (max-width: 1024px) {
   .landing-section {
     height: calc(470px + min(110vw, 480px));
     min-height: 100svh;
