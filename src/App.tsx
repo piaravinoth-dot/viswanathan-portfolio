@@ -1,23 +1,28 @@
 import { lazy, Suspense } from "react";
 import "./App.css";
-import AIDesignStudioCaseStudy from "./components/AIDesignStudioCaseStudy";
-import ContentStudioCaseStudy from "./components/ContentStudioCaseStudy";
-import SocialIntelligenceCaseStudy from "./components/SocialIntelligenceCaseStudy";
-import ContentTrackerCaseStudy from "./components/ContentTrackerCaseStudy";
-import SplitMateCaseStudy from "./components/SplitMateCaseStudy";
-import ClipStudioCaseStudy from "./components/ClipStudioCaseStudy";
+const AIDesignStudioCaseStudy = lazy(() => import("./components/AIDesignStudioCaseStudy"));
+const ContentStudioCaseStudy = lazy(() => import("./components/ContentStudioCaseStudy"));
+const SocialIntelligenceCaseStudy = lazy(() => import("./components/SocialIntelligenceCaseStudy"));
+const ContentTrackerCaseStudy = lazy(() => import("./components/ContentTrackerCaseStudy"));
+const SplitMateCaseStudy = lazy(() => import("./components/SplitMateCaseStudy"));
+const ClipStudioCaseStudy = lazy(() => import("./components/ClipStudioCaseStudy"));
 
 const CharacterModel = lazy(() => import("./components/Character"));
 const MainContainer = lazy(() => import("./components/MainContainer"));
 import { LoadingProvider } from "./context/LoadingProvider";
 
 const App = () => {
-  if (window.location.pathname.startsWith("/work/ai-design-studio")) return <AIDesignStudioCaseStudy />;
-  if (window.location.pathname.startsWith("/work/content-studio")) return <ContentStudioCaseStudy />;
-  if (window.location.pathname.startsWith("/work/social-media-intelligence")) return <SocialIntelligenceCaseStudy />;
-  if (window.location.pathname.startsWith("/work/content-tracker")) return <ContentTrackerCaseStudy />;
-  if (window.location.pathname.startsWith("/work/splitmate")) return <SplitMateCaseStudy />;
-  if (window.location.pathname.replace(/\/$/, "") === "/work/clip-studio") return <ClipStudioCaseStudy />;
+  const route = window.location.pathname.replace(/\/$/, "");
+  const caseStudies = {
+    "/work/ai-design-studio": AIDesignStudioCaseStudy,
+    "/work/content-studio": ContentStudioCaseStudy,
+    "/work/social-media-intelligence": SocialIntelligenceCaseStudy,
+    "/work/content-tracker": ContentTrackerCaseStudy,
+    "/work/splitmate": SplitMateCaseStudy,
+    "/work/clip-studio": ClipStudioCaseStudy,
+  };
+  const CaseStudy = caseStudies[route];
+  if (CaseStudy) return <Suspense fallback={<main className="case-loading" role="status">Loading case study…</main>}><CaseStudy /></Suspense>;
   return (
     <>
       <LoadingProvider>

@@ -41,3 +41,11 @@ Live homepage verification also exposed an existing failure: `THREE.WebGLRendere
 - Added Products to the main menu; compact mobile navigation and a dark header keep the links readable over the light product section. Hash links, browser hash changes and reduced-motion navigation are handled.
 - Artwork viewer is portaled to the document body so transformed smooth-scroll containers do not displace the fixed overlay. Focus enters the viewer, Tab wraps between its controls, arrow keys change artwork, Escape closes it, and focus returns to the selected artwork. Background scrolling is paused while the viewer is open.
 - Browser checks covered direct product anchors on desktop and 390px mobile, Contact navigation, viewer keyboard controls and focus restoration. Build and TypeScript checks passed.
+
+## Recruiter access, metadata and loading
+
+The latest available enhanced ATS resume (eight products, 17 October 2026) is linked unchanged as `/resume/Viswanathan_G_Resume.pdf`. The homepage still presents six selected case studies. About, Contact and career descriptions are grounded in that resume; no new adoption or research claims were added.
+
+Each of the seven public pages receives its own description, canonical URL, Open Graph and Twitter metadata, structured data and 1200×630 sharing image. The Vite build emits route-specific HTML head metadata, with matching Vercel rewrites, a sitemap containing only the seven current routes and a robots file. Case-study content still renders through React; this is not full static prerendering or a promise of search indexing.
+
+Case-study modules and their CSS load only for the selected route. Before splitting, the combined entry JavaScript was about 301 kB minified (84.6 kB gzip); afterward the React entry is about 153 kB (49.6 kB gzip) with a separate shared icons chunk. These are build-artifact sizes, not measured network-speed or Core Web Vitals scores. The 3D module remains lazy and its behavior is preserved.

@@ -69,3 +69,5 @@
     line-height: 2.7rem;
   }
 }
+
+.about-actions{display:flex;flex-wrap:wrap;gap:16px 25px;margin-top:28px}.about-actions a{font-size:13px;line-height:1.5;border-bottom:1px solid #8b6e55;padding:12px 0;letter-spacing:0}.about-actions a:first-child{color:var(--accentColor)}.about-actions span{font-size:10px;margin-left:14px}.about-actions a:focus-visible{outline:2px solid var(--accentColor);outline-offset:5px}

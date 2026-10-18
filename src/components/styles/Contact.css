@@ -114,3 +114,4 @@ a.contact-social {
     width: calc(100% - 25px);
   }
 }
+.contact-box>p{max-width:320px}.contact-social>span{font-size:11px;margin-left:14px}.contact-social:focus-visible{outline:2px solid var(--accentColor);outline-offset:5px}

@@ -5,51 +5,70 @@
   "rewrites": [
     {
       "source": "/work/ai-design-studio",
-      "destination": "/index.html"
+      "destination": "/case-study-pages/ai-design-studio.html"
     },
     {
       "source": "/work/ai-design-studio/",
-      "destination": "/index.html"
+      "destination": "/case-study-pages/ai-design-studio.html"
     },
     {
       "source": "/work/content-studio",
-      "destination": "/index.html"
+      "destination": "/case-study-pages/content-studio.html"
     },
     {
       "source": "/work/content-studio/",
-      "destination": "/index.html"
+      "destination": "/case-study-pages/content-studio.html"
     },
     {
       "source": "/work/social-media-intelligence",
-      "destination": "/index.html"
+      "destination": "/case-study-pages/social-media-intelligence.html"
     },
     {
       "source": "/work/social-media-intelligence/",
-      "destination": "/index.html"
+      "destination": "/case-study-pages/social-media-intelligence.html"
     },
     {
       "source": "/work/content-tracker",
-      "destination": "/index.html"
+      "destination": "/case-study-pages/content-tracker.html"
     },
     {
       "source": "/work/content-tracker/",
-      "destination": "/index.html"
+      "destination": "/case-study-pages/content-tracker.html"
     },
     {
       "source": "/work/splitmate",
-      "destination": "/index.html"
+      "destination": "/case-study-pages/splitmate.html"
     },
     {
       "source": "/work/splitmate/",
-      "destination": "/index.html"
+      "destination": "/case-study-pages/splitmate.html"
     },
     {
       "source": "/work/clip-studio",
-      "destination": "/index.html"
+      "destination": "/case-study-pages/clip-studio.html"
     },
     {
       "source": "/work/clip-studio/",
-      "destination": "/index.html"
+      "destination": "/case-study-pages/clip-studio.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/resume/Viswanathan_G_Resume.pdf",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/pdf"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=\"Viswanathan_G_Resume.pdf\""
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
     }
   ]
 }
