@@ -1,0 +1,3 @@
+import "./styles/About.css";
+const About=()=> <div className="about-section" id="about"><div className="about-me"><h3 className="title">About Me</h3><p className="para">I'm Viswanathan G — a senior product and visual designer, creative lead, and builder working at the intersection of art direction, digital experiences, and AI-powered creative technology. My practice spans political and public-interest campaigns, brand storytelling, interface design, and independent digital products. I bring concept, craft, and execution together to make work that communicates with clarity and impact.</p></div></div>;
+export default About;

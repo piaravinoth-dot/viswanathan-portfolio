@@ -1,0 +1,3 @@
+import {FaGithub,FaLinkedinIn} from "react-icons/fa6";import {TbNotes} from "react-icons/tb";import "./styles/SocialIcons.css";import HoverLinks from "./HoverLinks";
+const SocialIcons=()=> <div className="icons-section"><div className="social-icons" data-cursor="icons" id="social"><span><a href="https://github.com/piaravinoth-dot" target="_blank" rel="noreferrer" aria-label="GitHub"><FaGithub/></a></span><span><a href="https://www.linkedin.com/in/viswanathan-g-55a0176a/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><FaLinkedinIn/></a></span></div><a className="resume-button" href="https://www.linkedin.com/in/viswanathan-g-55a0176a/" target="_blank" rel="noreferrer"><HoverLinks text="PROFILE"/><span><TbNotes/></span></a></div>;
+export default SocialIcons;

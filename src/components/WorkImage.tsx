@@ -1,0 +1,1 @@
+const WorkImage=({image,alt}:{image:string,alt:string})=><div className="work-image"><div className="work-image-in"><img loading="lazy" src={image} alt={alt}/></div></div>;export default WorkImage;
