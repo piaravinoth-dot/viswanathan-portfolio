@@ -45,25 +45,23 @@ const Navbar = () => {
       let id: string;
       try { id = decodeURIComponent(window.location.hash.slice(1)); }
       catch { return; }
-      const target = document.getElementById(id);
-      if (target) {
-        ScrollTrigger.refresh();
-        const headerHeight = document.querySelector<HTMLElement>(".header")?.offsetHeight || 0;
-        const position = Math.max(0, smoother.offset(target, "top top") - headerHeight - 12);
-        gsap.killTweensOf(smoother, "scrollTop");
-        // Use the same content coordinates for native scrolling and section navigation.
-        if (animate) gsap.to(smoother, {scrollTop: position, duration: 0.7, ease: "power2.out", overwrite: "auto"});
-        else smoother.scrollTop(position);
-      }
+      const target = id ? document.getElementById(id) : null;
+      if (id && !target) return;
+      ScrollTrigger.refresh();
+      const headerHeight = document.querySelector<HTMLElement>(".header")?.offsetHeight || 0;
+      const position = target ? Math.max(0, smoother.offset(target, "top top") - headerHeight - 12) : 0;
+      gsap.killTweensOf(smoother, "scrollTop");
+      if (animate) gsap.to(smoother, {scrollTop: position, duration: 0.7, ease: "power2.out", overwrite: "auto"});
+      else smoother.scrollTop(position);
     };
     const onHashChange = () => followHash(false);
     const onAnchorClick = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      const link = (event.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
-      const hash = link?.getAttribute("href");
-      if (!hash || hash === "#") return;
+      const link = (event.target as Element).closest<HTMLAnchorElement>('a[href^="#"],a[href="/#"]');
+      const hash = link?.getAttribute("href")?.replace(/^\//, "");
+      if (!hash) return;
       let target: HTMLElement | null;
-      try { target = document.getElementById(decodeURIComponent(hash.slice(1))); }
+      try { target = hash === "#" ? document.documentElement : document.getElementById(decodeURIComponent(hash.slice(1))); }
       catch { return; }
       if (!target) return;
       event.preventDefault();
