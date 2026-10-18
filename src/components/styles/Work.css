@@ -307,3 +307,22 @@
   .orbit-card:focus-within,.orbit-index button:focus-visible,.orbit-controls button:focus-visible{outline:2px solid #e5ad86;outline-offset:3px}
 }
 @media(min-width:761px) and (max-width:1050px){.orbit-card{width:380px;left:calc(50% - 190px)}.orbit-index button{font-size:10px;padding:8px}.orbit-index button span{font-size:11px}}
+
+/* QA: constrain exhibition grids and prevent viewport-width overflow. */
+.product-section,.product-inner,.mobile-product-orbit{min-width:0;max-width:100%;box-sizing:border-box}
+@media(min-width:761px){
+  .product-section .product-inner{width:min(1440px,calc(100% - 64px));max-width:calc(100% - 64px)}
+  .mobile-product-orbit{width:100%;margin-inline:0;padding-inline:clamp(14px,2vw,32px)}
+  .orbit-index{width:100%;max-width:100%;grid-template-columns:repeat(6,minmax(0,1fr));box-sizing:border-box}
+  .orbit-index button{box-sizing:border-box;min-width:0;overflow:hidden;overflow-wrap:anywhere;white-space:normal}
+  .orbit-index button span{display:block;max-width:100%;overflow-wrap:anywhere;word-break:normal}
+  .orbit-stage{max-width:100%;contain:layout paint}
+}
+@media(min-width:761px) and (max-width:1120px){
+  .orbit-index{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .orbit-index button{min-height:54px;flex-direction:row;align-items:center;gap:6px}
+}
+@media(min-width:761px) and (max-width:850px){
+  .product-section .product-inner{width:calc(100% - 36px);max-width:calc(100% - 36px)}
+}
+@media(max-width:760px){.mobile-product-orbit{box-sizing:border-box;width:calc(100% + 10px)}.orbit-index button{min-width:0;overflow:hidden}.orbit-index button span{min-width:0}}
