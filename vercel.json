@@ -1,1 +1,15 @@
-{"framework":"vite","buildCommand":"npm run build","outputDirectory":"dist"}
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/work/ai-design-studio",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/work/ai-design-studio/",
+      "destination": "/index.html"
+    }
+  ]
+}
