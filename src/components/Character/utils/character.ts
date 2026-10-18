@@ -36,7 +36,7 @@ const setCharacter = (
                 // These baked light/shadow planes have opaque black pixels and
                 // can cover the character and page at the close-up camera angle.
                 // Lighting comes from the scene lights and CSS rim instead.
-                if (child.name === "screenlight" || child.name === "ground") {
+                if (child.name === "screenlight" || child.name === "ground" || (window.matchMedia("(max-width: 1024px)").matches && (child.name === "Plane004" || child.name === "Plane.004"))) {
                   child.visible = false;
                 }
                 const mesh = child as THREE.Mesh;
