@@ -34,3 +34,10 @@ The source package explicitly marks live extractor success, standalone backend d
 Project-ID-scoped Vercel operations succeeded after reconnection; explicitly team-scoped requests still returned 403. Production deployment `dpl_Tq6hqZHnoLDMRfDiCmKSG6aBYHzZ` published commit `2e37feab39d0325da464816b9a3560663ff015a6` to the existing domain. Both `/work/splitmate` and `/work/clip-studio` loaded in the public browser, their interactive examples worked, and both rendered at a 390px iframe viewport without horizontal page overflow.
 
 Live homepage verification also exposed an existing failure: `THREE.WebGLRenderer` threw during initialization on browsers without WebGL, unmounting the React root. The renderer creation is now guarded. Unsupported browsers complete the existing loading sequence and retain access to the portfolio content; supported browsers continue through the original animation path.
+
+## Final navigation and gallery pass
+
+- Return links to `/#products` now restore the intended section after the loading sequence. The original ScrollSmoother `scrollTo` clamp used the native document height despite the configured 1.7 speed; section offsets now use the smoother’s scrollTop coordinate space. Header clearance is applied.
+- Added Products to the main menu; compact mobile navigation and a dark header keep the links readable over the light product section. Hash links, browser hash changes and reduced-motion navigation are handled.
+- Artwork viewer is portaled to the document body so transformed smooth-scroll containers do not displace the fixed overlay. Focus enters the viewer, Tab wraps between its controls, arrow keys change artwork, Escape closes it, and focus returns to the selected artwork. Background scrolling is paused while the viewer is open.
+- Browser checks covered direct product anchors on desktop and 390px mobile, Contact navigation, viewer keyboard controls and focus restoration. Build and TypeScript checks passed.

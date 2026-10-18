@@ -1,6 +1,8 @@
-import {useEffect,useState} from "react";
+import {useEffect,useRef,useState} from "react";
 import {MdArrowOutward,MdClose,MdArrowBack,MdArrowForward} from "react-icons/md";
 import "./styles/Work.css";
+import {createPortal} from "react-dom";
+import {smoother} from "./Navbar";
 
 const artworks=[
 {title:"Concert Campaign",type:"Event / Visual storytelling",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/15-concert-poster.webp",shape:"large"},
@@ -32,7 +34,30 @@ return <div className="pv-clip"><div className="pv-clip-window"><div className="
 };
 const Work=()=>{
 const [openImage,setOpenImage]=useState<number|null>(null);
-useEffect(()=>{if(openImage===null)return;const fn=(e:KeyboardEvent)=>{if(e.key==="Escape")setOpenImage(null);if(e.key==="ArrowRight")setOpenImage(v=>v===null?null:(v+1)%artworks.length);if(e.key==="ArrowLeft")setOpenImage(v=>v===null?null:(v+artworks.length-1)%artworks.length)};window.addEventListener("keydown",fn);return()=>window.removeEventListener("keydown",fn)},[openImage]);
+const dialogRef=useRef<HTMLDivElement>(null);
+useEffect(()=>{
+  if(openImage===null)return;
+  const previousFocus=document.activeElement as HTMLElement|null;
+  const previousOverflow=document.body.style.overflowY;
+  const wasPaused=smoother?.paused();
+  document.body.style.overflowY="hidden";
+  smoother?.paused(true);
+  dialogRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
+  const fn=(e:KeyboardEvent)=>{
+    if(e.key==="Escape"){e.preventDefault();setOpenImage(null)}
+    if(e.key==="ArrowRight"){e.preventDefault();setOpenImage(v=>v===null?null:(v+1)%artworks.length)}
+    if(e.key==="ArrowLeft"){e.preventDefault();setOpenImage(v=>v===null?null:(v+artworks.length-1)%artworks.length)}
+    if(e.key==="Tab"){
+      const controls=dialogRef.current?.querySelectorAll<HTMLButtonElement>("button");
+      if(!controls?.length)return;
+      const first=controls[0],last=controls[controls.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+    }
+  };
+  window.addEventListener("keydown",fn);
+  return()=>{window.removeEventListener("keydown",fn);document.body.style.overflowY=previousOverflow;smoother?.paused(Boolean(wasPaused));previousFocus?.focus({preventScroll:true})};
+},[openImage!==null]);
 return <section className="work-section" id="work">
 <div className="work-container section-container">
 <div className="work-intro"><div><span className="work-eyebrow"><i/> 01 / SELECTED VISUAL WORK</span><h2>Work that<br/><em>speaks.</em></h2></div><div className="work-intro-right"><p>From the first idea to the final frame. A selection of commercial, campaign, editorial and visual storytelling projects.</p><span>SCROLL TO EXPLORE &nbsp; ↓</span></div></div>
@@ -44,6 +69,6 @@ return <section className="work-section" id="work">
 <div className="product-list">{products.map((p,i)=><article className={`product-feature product-${p.accent}`} key={p.id}><div className="product-copy"><div className="product-number"><span>{p.id} / 06</span><span>{p.note}</span></div><div className="product-copy-main"><h3>{p.title}</h3><h4>{p.subtitle}</h4><p>{p.description}</p><div className="product-skills">{p.skills.map(s=><Chip key={s}>{s}</Chip>)}</div></div><div className="product-copy-foot"><span className="product-bottom-note">VISWANATHAN G. &nbsp; / &nbsp; PRODUCT &amp; CREATIVE TECHNOLOGY</span>{p.id==="01"&&<a className="product-case-link" href="/work/ai-design-studio">Explore full case study <MdArrowOutward/></a>}{p.id==="02"&&<a className="product-case-link" href="/work/content-studio">Explore full case study <MdArrowOutward/></a>}{p.id==="03"&&<a className="product-case-link" href="/work/social-media-intelligence">Explore full case study <MdArrowOutward/></a>}{p.id==="04"&&<a className="product-case-link" href="/work/content-tracker">Explore full case study <MdArrowOutward/></a>}{p.id==="05"&&<a className="product-case-link" href="/work/splitmate">Explore full case study <MdArrowOutward/></a>}{p.id==="06"&&<a className="product-case-link" href="/work/clip-studio">Explore full case study <MdArrowOutward/></a>}</div></div><div className="product-art"><span className="product-art-label">PRODUCT EXPERIENCE / VISUAL STUDY</span><ProductVisual type={p.visual}/><span className="product-art-corner">0{i+1} <MdArrowOutward/></span></div></article>)}</div>
 <div className="product-outro"><span>DESIGN THAT WORKS AS WELL AS IT LOOKS.</span><a href="#contact">Have a project in mind? <MdArrowOutward/></a></div>
 </div></div>
-{openImage!==null&&<div className="art-lightbox" role="dialog" aria-modal="true" aria-label="Portfolio image viewer" onClick={()=>setOpenImage(null)}><button type="button" className="art-lightbox-close" aria-label="Close image" onClick={()=>setOpenImage(null)}><MdClose/></button><button type="button" className="art-lightbox-prev" aria-label="Previous image" onClick={e=>{e.stopPropagation();setOpenImage((openImage+artworks.length-1)%artworks.length)}}><MdArrowBack/></button><figure onClick={e=>e.stopPropagation()}><img src={artworks[openImage].image} alt={artworks[openImage].title}/><figcaption>{artworks[openImage].title} <span>{artworks[openImage].type}</span></figcaption></figure><button type="button" className="art-lightbox-next" aria-label="Next image" onClick={e=>{e.stopPropagation();setOpenImage((openImage+1)%artworks.length)}}><MdArrowForward/></button></div>}
+{openImage!==null&&createPortal(<div ref={dialogRef} className="art-lightbox" role="dialog" aria-modal="true" aria-label="Portfolio image viewer" onClick={()=>setOpenImage(null)}><button type="button" className="art-lightbox-close" aria-label="Close image" onClick={()=>setOpenImage(null)}><MdClose/></button><button type="button" className="art-lightbox-prev" aria-label="Previous image" onClick={e=>{e.stopPropagation();setOpenImage((openImage+artworks.length-1)%artworks.length)}}><MdArrowBack/></button><figure onClick={e=>e.stopPropagation()}><img src={artworks[openImage].image} alt={artworks[openImage].title}/><figcaption>{artworks[openImage].title} <span>{artworks[openImage].type}</span></figcaption></figure><button type="button" className="art-lightbox-next" aria-label="Next image" onClick={e=>{e.stopPropagation();setOpenImage((openImage+1)%artworks.length)}}><MdArrowForward/></button></div>,document.body)}
 </section>};
 export default Work;

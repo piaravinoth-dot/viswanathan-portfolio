@@ -4,11 +4,13 @@ import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import "./styles/Navbar.css";
+import { useLoading } from "../context/LoadingProvider";
 
 gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
 export let smoother: ScrollSmoother;
 
 const Navbar = () => {
+  const { isLoading } = useLoading();
   useEffect(() => {
     smoother = ScrollSmoother.create({
       wrapper: "#smooth-wrapper",
@@ -23,22 +25,54 @@ const Navbar = () => {
     smoother.scrollTop(0);
     smoother.paused(false);
 
-    let links = document.querySelectorAll(".header ul a");
-    links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
-      element.addEventListener("click", (e) => {
-        if (window.innerWidth > 1024) {
-          e.preventDefault();
-          let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
-          smoother.scrollTo(section, true, "top top");
-        }
-      });
-    });
-    window.addEventListener("resize", () => {
-      ScrollSmoother.refresh(true);
-    });
+    const onResize = () => ScrollSmoother.refresh(true);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      smoother.kill();
+    };
   }, []);
+
+  useEffect(() => {
+    if (isLoading) return;
+    const followHash = (animate = false) => {
+      let id: string;
+      try { id = decodeURIComponent(window.location.hash.slice(1)); }
+      catch { return; }
+      const target = document.getElementById(id);
+      if (target) {
+        ScrollTrigger.refresh();
+        const headerHeight = document.querySelector<HTMLElement>(".header")?.offsetHeight || 0;
+        const position = Math.max(0, smoother.offset(target, "top top") - headerHeight - 12);
+        gsap.killTweensOf(smoother, "scrollTop");
+        // scrollTo clamps against native page height, which is shorter with speed > 1.
+        if (animate) gsap.to(smoother, {scrollTop: position, duration: 0.7, ease: "power2.out", overwrite: "auto"});
+        else smoother.scrollTop(position);
+      }
+    };
+    const onHashChange = () => followHash(false);
+    const onAnchorClick = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const link = (event.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
+      const hash = link?.getAttribute("href");
+      if (!hash || hash === "#") return;
+      let target: HTMLElement | null;
+      try { target = document.getElementById(decodeURIComponent(hash.slice(1))); }
+      catch { return; }
+      if (!target) return;
+      event.preventDefault();
+      if (window.location.hash !== hash) window.history.pushState(null, "", hash);
+      followHash(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    };
+    const frame = window.requestAnimationFrame(() => followHash(false));
+    document.addEventListener("click", onAnchorClick);
+    window.addEventListener("hashchange", onHashChange);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      document.removeEventListener("click", onAnchorClick);
+      window.removeEventListener("hashchange", onHashChange);
+    };
+  }, [isLoading]);
   return (
     <>
       <div className="header">
@@ -63,6 +97,11 @@ const Navbar = () => {
           <li>
             <a data-href="#work" href="#work">
               <HoverLinks text="WORK" />
+            </a>
+          </li>
+          <li>
+            <a data-href="#products" href="#products">
+              <HoverLinks text="PRODUCTS" />
             </a>
           </li>
           <li>

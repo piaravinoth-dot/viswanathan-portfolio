@@ -81,3 +81,11 @@
     font-size: 18px;
   }
 }
+
+.header a:focus-visible{outline:2px solid var(--accentColor);outline-offset:6px}
+@media(min-width:500px){.header ul{column-gap:clamp(20px,4vw,60px)}}
+@media(min-width:900px) and (max-width:1399px){.navbar-connect{display:none}}
+@media(min-width:1400px){.navbar-connect{font-size:13px}}
+/* Keep navigation legible over both dark artwork and light product sections. */
+.header{background:#0b1017f5}
+@media(max-width:499px){.header{width:100%;padding:18px 15px}.header ul{flex-direction:row;align-items:center;column-gap:12px;row-gap:0;font-size:9px}.header ul li{letter-spacing:.4px}.nav-fade{height:70px}}
