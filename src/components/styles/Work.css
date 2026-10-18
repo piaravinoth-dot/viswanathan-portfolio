@@ -326,3 +326,20 @@
   .product-section .product-inner{width:calc(100% - 36px);max-width:calc(100% - 36px)}
 }
 @media(max-width:760px){.mobile-product-orbit{box-sizing:border-box;width:calc(100% + 10px)}.orbit-index button{min-width:0;overflow:hidden}.orbit-index button span{min-width:0}}
+
+/* Final overflow containment: orbit cards intentionally recede inside the stage. */
+html,body,#root{max-width:100%;overflow-x:clip}
+.work-section,.product-section{overflow-x:clip}
+.product-section .product-inner{box-sizing:border-box;min-width:0}
+.mobile-product-orbit{overflow:hidden;max-width:100%;box-sizing:border-box}
+.orbit-stage{overflow:hidden;isolation:isolate;max-width:100%;width:100%}
+.orbit-index{box-sizing:border-box;min-width:0;max-width:100%;width:100%;overflow:visible}
+@media(min-width:761px){
+ .product-section .product-inner{width:calc(100% - 64px);max-width:1440px;margin-inline:auto}
+ .mobile-product-orbit{width:100%;max-width:100%;margin-left:0;margin-right:0}
+ .orbit-index{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:9px;align-items:stretch}
+ .orbit-index button{display:flex;flex-direction:row;align-items:center;gap:9px;min-width:0;width:100%;max-width:100%;white-space:normal;overflow:hidden}
+ .orbit-index button span{display:block;min-width:0;overflow-wrap:anywhere}
+}
+@media(min-width:1440px){.orbit-index{grid-template-columns:repeat(6,minmax(0,1fr))!important}}
+@media(max-width:760px){.product-section .product-inner{max-width:calc(100% - 44px)}.mobile-product-orbit{max-width:calc(100% + 10px)}}
