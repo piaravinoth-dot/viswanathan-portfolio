@@ -18,6 +18,14 @@
     {
       "source": "/work/content-studio/",
       "destination": "/index.html"
+    },
+    {
+      "source": "/work/social-media-intelligence",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/work/social-media-intelligence/",
+      "destination": "/index.html"
     }
   ]
 }
