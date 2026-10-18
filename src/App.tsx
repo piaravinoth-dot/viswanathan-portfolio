@@ -5,6 +5,7 @@ import ContentStudioCaseStudy from "./components/ContentStudioCaseStudy";
 import SocialIntelligenceCaseStudy from "./components/SocialIntelligenceCaseStudy";
 import ContentTrackerCaseStudy from "./components/ContentTrackerCaseStudy";
 import SplitMateCaseStudy from "./components/SplitMateCaseStudy";
+import ClipStudioCaseStudy from "./components/ClipStudioCaseStudy";
 
 const CharacterModel = lazy(() => import("./components/Character"));
 const MainContainer = lazy(() => import("./components/MainContainer"));
@@ -16,6 +17,7 @@ const App = () => {
   if (window.location.pathname.startsWith("/work/social-media-intelligence")) return <SocialIntelligenceCaseStudy />;
   if (window.location.pathname.startsWith("/work/content-tracker")) return <ContentTrackerCaseStudy />;
   if (window.location.pathname.startsWith("/work/splitmate")) return <SplitMateCaseStudy />;
+  if (window.location.pathname.replace(/\/$/, "") === "/work/clip-studio") return <ClipStudioCaseStudy />;
   return (
     <>
       <LoadingProvider>

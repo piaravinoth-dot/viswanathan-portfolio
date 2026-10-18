@@ -42,6 +42,14 @@
     {
       "source": "/work/splitmate/",
       "destination": "/index.html"
+    },
+    {
+      "source": "/work/clip-studio",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/work/clip-studio/",
+      "destination": "/index.html"
     }
   ]
 }
