@@ -10,6 +10,14 @@
     {
       "source": "/work/ai-design-studio/",
       "destination": "/index.html"
+    },
+    {
+      "source": "/work/content-studio",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/work/content-studio/",
+      "destination": "/index.html"
     }
   ]
 }
