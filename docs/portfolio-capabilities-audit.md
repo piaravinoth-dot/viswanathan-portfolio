@@ -60,3 +60,7 @@ The final production navigation check additionally found that the VG brand link 
 - Both capabilities and product accordions now initialize with no selection. Activation toggles an item closed; selecting another keeps at most one open. The fully closed desktop product collection fills the available width.
 - Hide the complete multi-material monitor group during hero/About close-ups, rather than fading just one of its mesh primitives. Disable baked screen-light and ground planes to remove opaque rectangular overlays. Finish the scene fade before capabilities enters the main reading area.
 - Verified initial ten closed triggers, keyboard open/close, and exclusive product selection in the browser. Production build, TypeScript and whitespace checks passed. This browser still cannot render WebGL, so the model correction is based on inspection of the actual GLB node/material structure and supplied GPU screenshots; a real GPU visual recheck remains necessary.
+
+## About working-pose placement
+
+Move the existing seated typing/workstation reveal from the end of About to the hero-to-About transition. Settle the camera at z75/y8.4 with the scene on the left; reveal the monitor only after the camera begins pulling back. Keep biography opacity intact throughout About. Preserve typing/blink animation and the separate fade before capabilities. Mobile retains the established non-overlapping layout. Real GPU rendering is unavailable in this browser; camera/DOM animation checks do not verify the final GPU image.
