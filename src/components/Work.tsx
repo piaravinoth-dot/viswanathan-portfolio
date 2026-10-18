@@ -66,7 +66,6 @@ useEffect(()=>{
   return()=>query.removeEventListener("change",update);
 },[]);
 useEffect(()=>{
-  if(!orbitMobile)return;
   const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   // Preserve GSAP transforms between changes; reverting the context each
   // rotation reset transforms to zero and caused visible iOS shaking.
