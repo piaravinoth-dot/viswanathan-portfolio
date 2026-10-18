@@ -26,12 +26,12 @@ export const handleTouchEnd = (
     interpolationY: number
   ) => void
 ) => {
-  setTimeout(() => {
+  let second: ReturnType<typeof setTimeout>;
+  const first = setTimeout(() => {
     setMousePosition(0, 0, 0.03, 0.03);
-    setTimeout(() => {
-      setMousePosition(0, 0, 0.1, 0.2);
-    }, 1000);
+    second = setTimeout(() => setMousePosition(0, 0, 0.1, 0.2), 1000);
   }, 2000);
+  return () => {clearTimeout(first);clearTimeout(second);};
 };
 
 export const handleHeadRotation = (

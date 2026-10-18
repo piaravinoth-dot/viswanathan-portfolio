@@ -9,17 +9,28 @@ interface ParaElement extends HTMLElement {
 }
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
+const ownedElements = new Set<ParaElement>();
 
-export default function setSplitText() {
+export default function setSplitText(cleanupOnly = false) {
   ScrollTrigger.config({ ignoreMobileResize: true });
-  if (window.innerWidth < 900) return;
   const paras: NodeListOf<ParaElement> = document.querySelectorAll(".para");
   const titles: NodeListOf<ParaElement> = document.querySelectorAll(".title");
+
+  new Set([...ownedElements, ...paras, ...titles]).forEach(element => {
+    element.anim?.scrollTrigger?.kill();
+    element.anim?.kill();
+    element.split?.revert();
+    delete element.anim;
+    delete element.split;
+  });
+  ownedElements.clear();
+  if (cleanupOnly || window.innerWidth < 900 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const TriggerStart = window.innerWidth <= 1024 ? "top 60%" : "20% 60%";
   const ToggleAction = "play pause resume reverse";
 
   paras.forEach((para: ParaElement) => {
+    ownedElements.add(para);
     para.classList.add("visible");
     if (para.anim) {
       para.anim.progress(1).kill();
@@ -49,6 +60,7 @@ export default function setSplitText() {
     );
   });
   titles.forEach((title: ParaElement) => {
+    ownedElements.add(title);
     if (title.anim) {
       title.anim.progress(1).kill();
       title.split?.revert();

@@ -35,3 +35,20 @@ Technology claims are limited to source-supported React, TypeScript, CSS, GSAP, 
 The cloud browser disables WebGL. It reports the existing Three.js context-creation errors and exercises the portfolio's fallback. Character framing was checked using the reserved DOM bounds; actual GPU rendering, the full 3D scroll choreography, physical touch gestures and iOS Safari were not verified. Browser-extension metadata errors also appeared and are unrelated to the application. No new application runtime errors were observed in the inspected non-WebGL paths. No Core Web Vitals or device performance score is claimed.
 
 The existing Vite warning about the large Three.js-related chunk remains. No dependency or unrelated architecture change was introduced.
+
+## Follow-up: front-page animation regression
+
+The supplied desktop screenshot exposed a WebGL-path layout error that the initial fallback-only browser checks had missed. The character's CSS `translateX(-50%)` centering was being overwritten by a GSAP pixel `x: 0` start value, placing the canvas centre at the viewport's right edge. The desktop About reveal also applied a negative half-section translation before it was visible, and competing SplitText loops could overlap the two role variants.
+
+Corrections:
+
+- Preserve canvas centering with explicit `xPercent: -50, x: 0`; use percent-based scroll positions without overwriting the base transform. Subsequent scene motion uses `to` transitions instead of prematurely applying later `fromTo` start states.
+- Reveal About within its own normal-flow section, and keep Career in normal flow. Use one clipped CSS track per rotating role line, with a static reduced-motion alternative.
+- Do not let a canvas resize kill unrelated ScrollTriggers or ScrollSmoother. Own scene timelines in a reversible GSAP context. Remove random-interval leakage.
+- Cancel render frames, loading/intro/touch timers and named listeners on scene teardown. Dispose model/renderer resources, reject stale async results and release model blob URLs. Prevent late environment-map completion from resetting the final lighting intensity.
+- Move intro and career animation ownership out of the disposable loading screen and WebGL loader. Schedule loader timers in effects, with cleanup; the slow-load fallback always unlocks the homepage.
+- Revert old SplitText wrappers and their triggers before responsive rebuilds, including when crossing into mobile. Keep the native and smooth-scroll coordinate scale at 1:1. Let the transparent canvas pass clicks through, while retaining only the face's small hover region.
+
+A local, unpublished regression harness exercised the actual desktop GSAP timeline with a Three.js object/camera but without requiring a GPU-rendered model. At 1920px, the canvas bounds were 0–1920, with centre 960. At 1366px, the bounds were 0–1366, with centre 683. About content started below the hero. Both role tracks had distinct nonoverlapping rows. After desktop → mobile → desktop resizing, the model host count remained one and the visible scroll-trigger diagnostic returned to the same desktop count (5 → 1 → 5), rather than accumulating. Desktop About and Contact navigation retained header clearance; mobile View projects landed at about 69px under the 57px header. The deliberately stalled loading test exited with the loader removed, body scrolling enabled and the homepage visible.
+
+The normal homepage was rechecked at all eight widths with no document overflow, four capabilities and six products. These tests validate layout and animation lifecycle, not a real GPU screenshot or physical Safari/touch behavior.

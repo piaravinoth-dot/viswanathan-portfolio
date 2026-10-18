@@ -12,11 +12,15 @@ export let smoother: ScrollSmoother;
 const Navbar = () => {
   const { isLoading } = useLoading();
   useEffect(() => {
+    const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+    const previousRestoration = window.history.scrollRestoration;
+    document.documentElement.style.scrollBehavior = "auto";
+    window.history.scrollRestoration = "manual";
     smoother = ScrollSmoother.create({
       wrapper: "#smooth-wrapper",
       content: "#smooth-content",
       smooth: 1.7,
-      speed: 1.7,
+      speed: 1,
       effects: true,
       autoResize: true,
       ignoreMobileResize: true,
@@ -30,6 +34,8 @@ const Navbar = () => {
     return () => {
       window.removeEventListener("resize", onResize);
       smoother.kill();
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      window.history.scrollRestoration = previousRestoration;
     };
   }, []);
 
@@ -45,7 +51,7 @@ const Navbar = () => {
         const headerHeight = document.querySelector<HTMLElement>(".header")?.offsetHeight || 0;
         const position = Math.max(0, smoother.offset(target, "top top") - headerHeight - 12);
         gsap.killTweensOf(smoother, "scrollTop");
-        // scrollTo clamps against native page height, which is shorter with speed > 1.
+        // Use the same content coordinates for native scrolling and section navigation.
         if (animate) gsap.to(smoother, {scrollTop: position, duration: 0.7, ease: "power2.out", overwrite: "auto"});
         else smoother.scrollTop(position);
       }

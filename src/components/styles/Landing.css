@@ -421,3 +421,21 @@ h2.landing-info-h2 {
   h2.landing-info-h2 {font-size:36px;line-height:40px;height:40px;width:auto;margin:0}
   .landing-h2-1,.landing-h2-2,.landing-h2-info,.landing-h2-info-1 {left:0;right:0;text-align:center}
 }
+
+/* Each role occupies its own clipping track; words never share a baseline. */
+.landing-info .landing-role-line{display:block;position:relative;overflow:hidden;height:1.16em;line-height:1.16;margin:0;white-space:nowrap;min-width:0}
+.landing-info h3{margin-bottom:7px}
+.landing-info h2.landing-info-h2{width:auto;margin:0;height:1.16em;line-height:1.16}
+.landing-info-h2::after{display:none}
+.landing-role-word{position:absolute;inset:0;display:block}
+.role-first{animation:roleFirst 10s infinite cubic-bezier(.4,0,.2,1)}
+.role-second{opacity:0;transform:translateY(110%);animation:roleSecond 10s infinite cubic-bezier(.4,0,.2,1)}
+@keyframes roleFirst{0%,40%{opacity:1;transform:translateY(0)}48%,90%{opacity:0;transform:translateY(-110%)}91%{opacity:0;transform:translateY(110%)}100%{opacity:1;transform:translateY(0)}}
+@keyframes roleSecond{0%,40%{opacity:0;transform:translateY(110%)}48%,90%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-110%)}}
+@media(min-width:1025px){.landing-info{width:30%;max-width:500px}.landing-info .landing-role-line{text-align:left}}
+@media(max-width:1024px){.landing-info{width:min(320px,100%)}.landing-info .landing-role-line{text-align:center}}
+@media(prefers-reduced-motion:reduce){.role-first{animation:none;opacity:1;transform:none}.role-second{animation:none;display:none}}
+
+.character-model{pointer-events:none}
+.character-hover{pointer-events:auto}
+.character-unavailable .character-hover{pointer-events:none}

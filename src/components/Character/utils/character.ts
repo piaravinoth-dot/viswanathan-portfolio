@@ -1,12 +1,12 @@
 import * as THREE from "three";
 import { DRACOLoader, GLTF, GLTFLoader } from "three-stdlib";
-import { setCharTimeline, setAllTimeline } from "../../utils/GsapScroll";
 import { decryptFile } from "./decrypt";
 
 const setCharacter = (
   renderer: THREE.WebGLRenderer,
   scene: THREE.Scene,
-  camera: THREE.PerspectiveCamera
+  camera: THREE.PerspectiveCamera,
+  isCancelled: () => boolean = () => false
 ) => {
   const loader = new GLTFLoader();
   const dracoLoader = new DRACOLoader();
@@ -20,6 +20,7 @@ const setCharacter = (
           "https://cdn.jsdelivr.net/gh/akashrmalhotra/3d-portfolio@main/public/models/character.enc",
           "MyCharacter12"
         );
+        if (isCancelled()) { dracoLoader.dispose(); resolve(null); return; }
         const blobUrl = URL.createObjectURL(new Blob([encryptedBlob]));
 
         let character: THREE.Object3D;
@@ -27,6 +28,8 @@ const setCharacter = (
           blobUrl,
           async (gltf) => {
             character = gltf.scene;
+            try {
+            if (isCancelled()) { resolve(gltf); return; }
             await renderer.compileAsync(character, camera, scene);
             character.traverse((child: any) => {
               if (child.isMesh) {
@@ -51,18 +54,21 @@ const setCharacter = (
               }
             });
             resolve(gltf);
-            setCharTimeline(character, camera);
-            setAllTimeline();
-            character!.getObjectByName("footR")!.position.y = 3.36;
-            character!.getObjectByName("footL")!.position.y = 3.36;
+            for (const name of ["footR", "footL"]) {
+              const foot = character.getObjectByName(name);
+              if (foot) foot.position.y = 3.36;
+            }
 
             // Monitor scale is handled by GsapScroll.ts animations
 
-            dracoLoader.dispose();
+            } catch (error) { reject(error); }
+            finally { URL.revokeObjectURL(blobUrl); dracoLoader.dispose(); }
           },
           undefined,
           (error) => {
             console.error("Error loading GLTF model:", error);
+            URL.revokeObjectURL(blobUrl);
+            dracoLoader.dispose();
             reject(error);
           }
         );

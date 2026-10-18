@@ -3,6 +3,8 @@ import { RGBELoader } from "three-stdlib";
 import { gsap } from "gsap";
 
 const setLighting = (scene: THREE.Scene) => {
+  let disposed = false;
+  const tweens: gsap.core.Tween[] = [];
   const directionalLight = new THREE.DirectionalLight(0xf6a66b, 0);
   directionalLight.intensity = 0;
   directionalLight.position.set(-0.47, -0.32, -1);
@@ -18,17 +20,18 @@ const setLighting = (scene: THREE.Scene) => {
   pointLight.castShadow = true;
   scene.add(pointLight);
 
+  scene.environmentIntensity = 0;
   new RGBELoader()
     .setPath("https://cdn.jsdelivr.net/gh/akashrmalhotra/3d-portfolio@main/public/models/")
     .load("char_enviorment.hdr", function (texture) {
+      if (disposed) { texture.dispose(); return; }
       texture.mapping = THREE.EquirectangularReflectionMapping;
       scene.environment = texture;
-      scene.environmentIntensity = 0;
       scene.environmentRotation.set(5.76, 85.85, 1);
     });
 
   function setPointLight(screenLight: any) {
-    if (screenLight.material.opacity > 0.9) {
+    if (screenLight?.material?.opacity > 0.9) {
       pointLight.intensity = screenLight.material.emissiveIntensity * 20;
     } else {
       pointLight.intensity = 0;
@@ -37,25 +40,25 @@ const setLighting = (scene: THREE.Scene) => {
   const duration = 2;
   const ease = "power2.inOut";
   function turnOnLights() {
-    gsap.to(scene, {
+    tweens.push(gsap.to(scene, {
       environmentIntensity: 0.64,
       duration: duration,
       ease: ease,
-    });
-    gsap.to(directionalLight, {
+    }));
+    tweens.push(gsap.to(directionalLight, {
       intensity: 1,
       duration: duration,
       ease: ease,
-    });
-    gsap.to(".character-rim", {
+    }));
+    tweens.push(gsap.to(".character-rim", {
       y: "55%",
       opacity: 1,
       delay: 0.2,
       duration: 2,
-    });
+    }));
   }
 
-  return { setPointLight, turnOnLights };
+  return { setPointLight, turnOnLights, dispose: () => {disposed=true;tweens.forEach(tween=>tween.kill());scene.environment?.dispose();scene.environment=null;directionalLight.dispose();pointLight.dispose();} };
 };
 
 export default setLighting;

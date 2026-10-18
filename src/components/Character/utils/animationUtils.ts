@@ -5,14 +5,15 @@ import { eyebrowBoneNames, typingBoneNames } from "../../../data/boneData";
 const setAnimations = (gltf: GLTF) => {
   let character = gltf.scene;
   let mixer = new THREE.AnimationMixer(character);
+  let blinkTimer: ReturnType<typeof setTimeout> | undefined;
   if (gltf.animations) {
     const introClip = gltf.animations.find(
       (clip) => clip.name === "introAnimation"
     );
-    const introAction = mixer.clipAction(introClip!);
-    introAction.setLoop(THREE.LoopOnce, 1);
-    introAction.clampWhenFinished = true;
-    introAction.play();
+    const introAction = introClip ? mixer.clipAction(introClip) : null;
+    introAction?.setLoop(THREE.LoopOnce, 1);
+    if (introAction) introAction.clampWhenFinished = true;
+    introAction?.play();
     const clipNames = ["key1", "key2", "key5", "key6"];
     clipNames.forEach((name) => {
       const clip = THREE.AnimationClip.findByName(gltf.animations, name);
@@ -36,12 +37,12 @@ const setAnimations = (gltf: GLTF) => {
     const introClip = gltf.animations.find(
       (clip) => clip.name === "introAnimation"
     );
-    const introAction = mixer.clipAction(introClip!);
-    introAction.clampWhenFinished = true;
-    introAction.reset().play();
-    setTimeout(() => {
+    const introAction = introClip ? mixer.clipAction(introClip) : null;
+    if (introAction) introAction.clampWhenFinished = true;
+    introAction?.reset().play();
+    blinkTimer = setTimeout(() => {
       const blink = gltf.animations.find((clip) => clip.name === "Blink");
-      mixer.clipAction(blink!).play().fadeIn(0.5);
+      if (blink) mixer.clipAction(blink).play().fadeIn(0.5);
     }, 2500);
   }
   function hover(gltf: GLTF, hoverDiv: HTMLDivElement) {
@@ -80,7 +81,7 @@ const setAnimations = (gltf: GLTF) => {
       hoverDiv.removeEventListener("mouseleave", onLeaveFace);
     };
   }
-  return { mixer, startIntro, hover };
+  return { mixer, startIntro, hover, dispose: () => {clearTimeout(blinkTimer);mixer.stopAllAction();mixer.uncacheRoot(character);} };
 };
 
 const createBoneAction = (
