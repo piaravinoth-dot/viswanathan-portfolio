@@ -39,7 +39,11 @@ const Scene=()=>{
     renderer.toneMappingExposure=1;
     host.appendChild(renderer.domElement);
     const camera=new THREE.PerspectiveCamera(14.5,box.width/box.height,.1,1000);
-    camera.position.set(0,13.1,24.7);camera.zoom=1.1;camera.updateProjectionMatrix();
+    camera.position.set(0,13.1,24.7);camera.zoom=1.1;
+    // Phone/tablet framing: bring the face above the lower edge and fit the figure.
+    // Desktop perspective and animation remain unchanged.
+    if(window.matchMedia("(max-width: 1024px)").matches){camera.position.y=10.8;camera.zoom=.78;}
+    camera.updateProjectionMatrix();
     const light=setLighting(scene),progress=setProgress(setLoading),clock=new THREE.Clock();
     let disposed=false,frame=0;
     let introTimer:ReturnType<typeof setTimeout>;
