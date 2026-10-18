@@ -11,8 +11,7 @@ const artworks=[
 {title:"Telangana Manifesto",type:"Editorial / Publication",image:"https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/44b5a9252833713.6a58f729ec818.jpg",shape:"large"},
 {title:"Ganesh Chaturthi",type:"Festive / Art direction",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/06-ganesh-chaturthi.webp",shape:"large"},
 {title:"Live Music",type:"Entertainment / Poster",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/14-concert-layout.webp",shape:"small"},
-{title:"Happy Hours",type:"Hospitality / Social creative",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/10-happy-hours.webp",shape:"small"},
-{title:"Creator Community",type:"Presentation / Editorial",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/portfolio-visuals/creator-community-deck.svg",shape:"large"}
+{title:"Happy Hours",type:"Hospitality / Social creative",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/10-happy-hours.webp",shape:"small"}
 ];
 type Product={id:string;title:string;subtitle:string;description:string;skills:string[];accent:string;visual:string;note:string};
 const products:Product[]=[
@@ -61,8 +60,8 @@ useEffect(()=>{
 return <section className="work-section" id="work">
 <div className="work-container section-container">
 <div className="work-intro"><div><span className="work-eyebrow"><i/> 01 / SELECTED VISUAL WORK</span><h2>Work that<br/><em>speaks.</em></h2></div><div className="work-intro-right"><p>From the first idea to the final frame. A selection of commercial, campaign, editorial and visual storytelling projects.</p><span>SCROLL TO EXPLORE &nbsp; ↓</span></div></div>
-<div className="art-grid">{artworks.map((a,i)=><button type="button" className={`art-piece art-${a.shape}`} key={a.title} onClick={()=>setOpenImage(i)} aria-label={`View ${a.title} image`} data-cursor="disable"><div className="art-image"><img src={a.image} alt={a.title+" — original portfolio artwork"} loading="lazy"/><span className="art-open"><MdArrowOutward/></span></div><div className="art-caption"><span><b>{a.title}</b><small>{a.type}</small></span><span className="art-index">{String(i+1).padStart(2,"0")} / 08</span></div></button>)}</div>
-<div className="work-gallery-end"><span>VISUAL DESIGN / ART DIRECTION / CREATIVE SYSTEMS</span><a href="https://www.behance.net/--11" target="_blank" rel="noreferrer">Explore more on Behance <MdArrowOutward/></a></div>
+<div className="art-grid">{artworks.map((a,i)=><button type="button" className={`art-piece art-${a.shape}`} key={a.title} onClick={()=>setOpenImage(i)} aria-label={`View ${a.title} image`} data-cursor="disable"><div className="art-image"><img src={a.image} alt={a.title+" — original portfolio artwork"} loading="lazy"/><span className="art-open"><MdArrowOutward/></span></div><div className="art-caption"><span><b>{a.title}</b><small>{a.type}</small></span><span className="art-index">{String(i+1).padStart(2,"0")} / {String(artworks.length).padStart(2,"0")}</span></div></button>)}</div>
+<div className="work-gallery-end"><span>VISUAL DESIGN / ART DIRECTION / CREATIVE SYSTEMS</span></div>
 </div>
 <div className="product-section" id="products"><div className="product-inner section-container">
 <div className="product-heading"><div className="product-topline"><span><i/> 02 / DIGITAL PRODUCTS</span><span>SELECTED PRODUCT DESIGN / 2026</span></div><div className="product-heading-grid"><h2>Ideas, made<br/><em>interactive.</em></h2><p>Six products spanning creative AI, content operations, analytics and everyday utilities. Designed with an emphasis on usability, workflow and visual craft.</p></div><div className="product-count">06 <span>SELECTED PRODUCTS</span></div></div>
