@@ -36,6 +36,7 @@ const Scene = () => {
       } catch (error) {
         // The portfolio content must remain available without GPU support.
         console.warn("3D rendering unavailable; continuing with portfolio content.", error);
+        canvasDiv.current.style.pointerEvents = "none";
         setLoading(100);
         return;
       }
