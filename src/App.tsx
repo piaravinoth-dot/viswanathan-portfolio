@@ -7,7 +7,7 @@ const MainContainer = lazy(() => import("./components/MainContainer"));
 import { LoadingProvider } from "./context/LoadingProvider";
 
 const App = () => {
-  if (window.location.pathname.replace(/\\/$/, "") === "/work/ai-design-studio") return <AIDesignStudioCaseStudy />;
+  if (window.location.pathname.startsWith("/work/ai-design-studio")) return <AIDesignStudioCaseStudy />;
   return (
     <>
       <LoadingProvider>
