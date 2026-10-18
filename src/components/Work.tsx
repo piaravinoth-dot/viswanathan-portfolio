@@ -2,6 +2,7 @@ import {useEffect,useRef,useState} from "react";
 import {MdArrowOutward,MdClose,MdArrowBack,MdArrowForward} from "react-icons/md";
 import "./styles/Work.css";
 import {createPortal} from "react-dom";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {smoother} from "./Navbar";
 
 const artworks=[
@@ -32,9 +33,10 @@ if(type==="split")return <div className="pv-split"><div className="pv-phone"><di
 return <div className="pv-clip"><div className="pv-clip-window"><div className="pv-clip-top">CLIP STUDIO <span>● &nbsp; WORKSPACE</span></div><div className="pv-clip-inner"><span className="pv-clip-eyebrow">VIDEO WORKFLOW, SIMPLIFIED</span><h3>Save what<br/><i>inspires.</i></h3><div className="pv-url">https://video-link.example <span>↗</span></div><div className="pv-clip-formats"><span>MP4</span><span>HD</span><span>ORIGINAL</span></div><div className="pv-clip-action">Continue &nbsp; ↗</div></div></div><div className="pv-clip-circle">▶</div></div>
 };
 const Work=()=>{
-const [activeProduct,setActiveProduct]=useState(0);
+const [activeProduct,setActiveProduct]=useState<number|null>(null);
 const selectProduct=(index:number)=>{
-  setActiveProduct(index);
+  setActiveProduct(current=>current===index?null:index);
+  requestAnimationFrame(()=>ScrollTrigger.refresh());
   if(window.innerWidth>760)return;
   requestAnimationFrame(()=>{
     const panel=document.getElementById(`product-trigger-${products[index].id}`)?.closest<HTMLElement>(".product-panel");
@@ -78,7 +80,7 @@ return <section className="work-section" id="work">
 <div className="product-heading"><div className="product-topline"><span><i/> 02 / DIGITAL PRODUCTS</span><span>SELECTED PRODUCT DESIGN / 2026</span></div><div className="product-heading-grid"><h2>Ideas, made<br/><em>interactive.</em></h2><p>Six products spanning creative AI, content operations, analytics and everyday utilities. Designed with an emphasis on usability, workflow and visual craft.</p></div><div className="product-count">06 <span>SELECTED PRODUCTS</span></div></div>
 <div className="product-showcase-hint"><span>EXPLORE THE COLLECTION</span><span>Select a product to open <MdArrowForward/></span></div>
 <div className="product-deck">{products.map((p,i)=>{const active=activeProduct===i;return <article className={`product-panel product-${p.accent}${active?" is-active":""}`} key={p.id}>
-<button type="button" className="product-rail" id={`product-trigger-${p.id}`} aria-expanded={active} aria-controls={`product-panel-${p.id}`} onClick={()=>selectProduct(i)} data-cursor="disable"><span className="product-rail-number">{p.id}</span><span className="product-rail-title">{p.title}</span><span className="product-rail-category">{p.note}</span><span className="product-rail-icon" aria-hidden="true">{active?"↗":"+"}</span><span className="product-sr-only">{active?"Selected product":"Explore product"}</span></button>
+<button type="button" className="product-rail" id={`product-trigger-${p.id}`} aria-expanded={active} aria-controls={`product-panel-${p.id}`} onClick={()=>selectProduct(i)} data-cursor="disable"><span className="product-rail-number">{p.id}</span><span className="product-rail-title">{p.title}</span><span className="product-rail-category">{p.note}</span><span className="product-rail-icon" aria-hidden="true">{active?"−":"+"}</span><span className="product-sr-only">{active?"Selected product":"Explore product"}</span></button>
 <div className="product-panel-body" id={`product-panel-${p.id}`} role="region" aria-labelledby={`product-trigger-${p.id}`} hidden={!active}>
 <div className="product-copy"><div className="product-copy-main"><span className="product-detail-eyebrow">PRODUCT DESIGN / {p.id} OF 06</span><h3>{p.title}</h3><h4>{p.subtitle}</h4><p>{p.description}</p><div className="product-skills">{p.skills.map(s=><Chip key={s}>{s}</Chip>)}</div></div><div className="product-copy-foot"><a className="product-case-link" href={`/work/${p.slug}`}>View case study <MdArrowOutward/></a><span className="product-bottom-note">STRATEGY · INTERFACE · EXPERIENCE</span></div></div>
 <div className="product-art"><span className="product-art-label">RECONSTRUCTED UI · SAMPLE CONTENT</span><ProductVisual type={p.visual}/><span className="product-art-corner">{p.id} / 06 <MdArrowOutward/></span></div>

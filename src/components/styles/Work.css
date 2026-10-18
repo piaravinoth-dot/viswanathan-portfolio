@@ -237,3 +237,7 @@
 .product-panel.product-lilac{--tone:#d5c6e2}.product-panel.product-sage{--tone:#d1dcd0}.product-panel.product-blue{--tone:#b7c9e4}.product-panel.product-peach{--tone:#f1d0b9}.product-panel.product-mint{--tone:#c8dfd5}.product-panel.product-sand{--tone:#d9d1c0}
 @media(max-width:760px){.product-section .product-inner{width:auto;max-width:none;margin:0 22px}}
 @media(max-width:360px){.product-section .product-inner{margin:0 16px}.product-panel .product-copy{padding:15px 18px 24px}.product-showcase-hint{letter-spacing:.06em}}
+
+/* Give the closed collection the full available width before a selection. */
+.product-deck:not(:has(.is-active)) .product-panel{flex:1 1 0%}
+@media(max-width:760px){.product-deck:not(:has(.is-active)) .product-panel{flex:0 0 auto}}

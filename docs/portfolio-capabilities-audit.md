@@ -54,3 +54,9 @@ A local, unpublished regression harness exercised the actual desktop GSAP timeli
 The normal homepage was rechecked at all eight widths with no document overflow, four capabilities and six products. These tests validate layout and animation lifecycle, not a real GPU screenshot or physical Safari/touch behavior.
 
 The final production navigation check additionally found that the VG brand link changed to an empty hash without resetting ScrollSmoother. Empty-hash navigation and the explicit `/#` brand link now share the same return-to-top handler. The decorative cursor's render frame, hover listeners and mouse listener are also cleaned up on unmount instead of accumulating in development remounts.
+
+## October 18 screenshot follow-up
+
+- Both capabilities and product accordions now initialize with no selection. Activation toggles an item closed; selecting another keeps at most one open. The fully closed desktop product collection fills the available width.
+- Hide the complete multi-material monitor group during hero/About close-ups, rather than fading just one of its mesh primitives. Disable baked screen-light and ground planes to remove opaque rectangular overlays. Finish the scene fade before capabilities enters the main reading area.
+- Verified initial ten closed triggers, keyboard open/close, and exclusive product selection in the browser. Production build, TypeScript and whitespace checks passed. This browser still cannot render WebGL, so the model correction is based on inspection of the actual GLB node/material structure and supplied GPU screenshots; a real GPU visual recheck remains necessary.

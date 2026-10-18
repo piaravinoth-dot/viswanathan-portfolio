@@ -8,25 +8,11 @@ export function setCharTimeline(character: THREE.Object3D, camera: THREE.Perspec
       // Keep percent centering separate from pixel offsets and scroll movement.
       gsap.set(".character-model", {xPercent:-50,x:0,yPercent:0,y:0,opacity:1});
       gsap.set(".character-hover", {pointerEvents:"auto"});
-      let monitor: THREE.Mesh | undefined;
-      let screenLight: THREE.Mesh | undefined;
-      character.traverse(object => {
-        const mesh = object as THREE.Mesh;
-        if (!mesh.isMesh) return;
-        if (mesh.name === "screenlight") screenLight = mesh;
-        if (mesh.parent?.name === "Plane004" && !Array.isArray(mesh.material) && mesh.material?.name === "Material.018") monitor = mesh;
-      });
-      if (monitor && !Array.isArray(monitor.material)) {
-        monitor.material.transparent = true;
-        monitor.material.opacity = 0;
-      }
-      if (screenLight && !Array.isArray(screenLight.material)) {
-        const material = screenLight.material as THREE.MeshStandardMaterial;
-        material.transparent = true;
-        material.opacity = 0;
-        material.emissive?.set("#B0F5EA");
-        gsap.to(material, {emissiveIntensity:()=>Math.random()*8,duration:()=>.2+Math.random()*.6,repeat:-1,repeatRefresh:true});
-      }
+      // GLTFLoader sanitizes Plane.004 to Plane004. Hide the entire
+      // multi-material monitor, including its black glass, during close-ups.
+      const monitor = character.getObjectByName("Plane004") || character.getObjectByName("Plane.004");
+      const monitorScale = monitor?.scale.clone();
+      if (monitor) gsap.set(monitor.scale, {x:0,y:0,z:0});
       const neck = character.getObjectByName("spine005");
       const intro = gsap.timeline({scrollTrigger:{trigger:".landing-section",start:"top top",end:"bottom top",scrub:true,invalidateOnRefresh:true}});
       intro.fromTo(character.rotation,{y:0},{y:.7,duration:1},0)
@@ -40,15 +26,17 @@ export function setCharTimeline(character: THREE.Object3D, camera: THREE.Perspec
         .to(".about-me",{opacity:0,delay:3,duration:2},0)
         .to(".character-model",{xPercent:-62,delay:2,duration:5},0)
         .to(".character-hover",{pointerEvents:"none",delay:2,duration:0},0)
-        .to(".character-model",{opacity:0,delay:5,duration:1},0)
         .to(character.rotation,{y:.92,x:.12,delay:3,duration:3},0)
         .to(".character-rim",{opacity:0,scale:0,yPercent:-70,delay:2,duration:5},0);
       if (neck) about.to(neck.rotation,{x:.6,delay:2,duration:3},0);
-      if (monitor && !Array.isArray(monitor.material)) {
-        about.to(monitor.material,{opacity:1,duration:.8,delay:3.2},0)
-          .fromTo(monitor.position,{y:-10,z:2},{y:0,z:0,delay:1.5,duration:3},0);
+      if (monitor && monitorScale) {
+        about.to(monitor.scale,{x:monitorScale.x,y:monitorScale.y,z:monitorScale.z,duration:1,delay:3.2},0);
       }
-      if (screenLight && !Array.isArray(screenLight.material)) about.to(screenLight.material,{opacity:1,duration:.8,delay:4.5},0);
+      // The 3D scene belongs to the hero/About, never the capabilities content.
+      gsap.to(".character-model", {opacity:0, ease:"none", scrollTrigger:{
+        trigger:"#capabilities", start:"top 95%", end:"top 75%", scrub:true,
+        invalidateOnRefresh:true,
+      }});
     });
     return () => context.revert();
   });

@@ -33,6 +33,12 @@ const setCharacter = (
             await renderer.compileAsync(character, camera, scene);
             character.traverse((child: any) => {
               if (child.isMesh) {
+                // These baked light/shadow planes have opaque black pixels and
+                // can cover the character and page at the close-up camera angle.
+                // Lighting comes from the scene lights and CSS rim instead.
+                if (child.name === "screenlight" || child.name === "ground") {
+                  child.visible = false;
+                }
                 const mesh = child as THREE.Mesh;
 
                 // Change clothing colors to match site theme

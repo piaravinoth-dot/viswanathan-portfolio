@@ -40,7 +40,7 @@ const capabilities = [
 ];
 
 const WhatIDo = () => {
-  const [expanded, setExpanded] = useState<number | null>(0);
+  const [expanded, setExpanded] = useState<number | null>(null);
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   const interacted = useRef(false);
   const lastSelected = useRef(0);
