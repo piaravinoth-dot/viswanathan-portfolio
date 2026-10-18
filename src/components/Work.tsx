@@ -3,6 +3,7 @@ import {MdArrowOutward,MdClose,MdArrowBack,MdArrowForward} from "react-icons/md"
 import "./styles/Work.css";
 import {createPortal} from "react-dom";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
+import gsap from "gsap";
 import {smoother} from "./Navbar";
 
 const artworks=[
@@ -45,6 +46,57 @@ const selectProduct=(index:number)=>{
     smoother.scrollTop(Math.max(0,smoother.offset(panel,"top top")-headerHeight-12));
   });
 };
+const [orbitIndex,setOrbitIndex]=useState(0);
+const [orbitPlaying,setOrbitPlaying]=useState(true);
+const [orbitMobile,setOrbitMobile]=useState(()=>window.matchMedia("(max-width: 760px)").matches);
+const orbitRefs=useRef<(HTMLDivElement|null)[]>([]);
+const touchStart=useRef<{x:number;y:number}|null>(null);
+const orbitUserPause=useRef<number|null>(null);
+const orbitNext=(delta:number)=>{
+  setOrbitIndex(current=>(current+delta+products.length)%products.length);
+  setOrbitPlaying(false);
+  if(orbitUserPause.current!==null)window.clearTimeout(orbitUserPause.current);
+  orbitUserPause.current=window.setTimeout(()=>setOrbitPlaying(true),9000);
+};
+useEffect(()=>{
+  const query=window.matchMedia("(max-width: 760px)");
+  const update=()=>setOrbitMobile(query.matches);
+  query.addEventListener("change",update);
+  return()=>query.removeEventListener("change",update);
+},[]);
+useEffect(()=>{
+  if(!orbitMobile)return;
+  const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const context=gsap.context(()=>{
+    orbitRefs.current.forEach((element,index)=>{
+      if(!element)return;
+      let offset=(index-orbitIndex+products.length)%products.length;
+      if(offset>products.length/2)offset-=products.length;
+      const abs=Math.abs(offset),side=Math.sign(offset);
+      gsap.to(element,{
+        xPercent:offset*32,
+        y:abs*15,
+        rotationY:reduced?0:-side*Math.min(abs*22,55),
+        rotationZ:reduced?0:offset*-2,
+        scale:1-abs*.10,
+        opacity:abs>=3?.28:abs===2?.56:abs===1?.83:1,
+        zIndex:10-abs,
+        duration:reduced?0:1.05,
+        ease:"power3.inOut",
+        overwrite:true
+      });
+    });
+  });
+  return()=>context.revert();
+},[orbitIndex,orbitMobile]);
+useEffect(()=>{
+  if(!orbitMobile||!orbitPlaying||document.hidden||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const timer=window.setInterval(()=>setOrbitIndex(index=>(index+1)%products.length),3100);
+  const stop=()=>{if(document.hidden)setOrbitPlaying(false)};
+  document.addEventListener("visibilitychange",stop);
+  return()=>{window.clearInterval(timer);document.removeEventListener("visibilitychange",stop)};
+},[orbitMobile,orbitPlaying]);
+useEffect(()=>()=>{if(orbitUserPause.current!==null)window.clearTimeout(orbitUserPause.current)},[]);
 const [openImage,setOpenImage]=useState<number|null>(null);
 const dialogRef=useRef<HTMLDivElement>(null);
 useEffect(()=>{
@@ -79,6 +131,21 @@ return <section className="work-section" id="work">
 <div className="product-section" id="products"><div className="product-inner section-container">
 <div className="product-heading"><div className="product-topline"><span><i/> 02 / DIGITAL PRODUCTS</span><span>SELECTED PRODUCT DESIGN / 2026</span></div><div className="product-heading-grid"><h2>Ideas, made<br/><em>interactive.</em></h2><p>Six products spanning creative AI, content operations, analytics and everyday utilities. Designed with an emphasis on usability, workflow and visual craft.</p></div><div className="product-count">06 <span>SELECTED PRODUCTS</span></div></div>
 <div className="product-showcase-hint"><span>EXPLORE THE COLLECTION</span><span>Select a product to open <MdArrowForward/></span></div>
+<div className="mobile-product-orbit" aria-label="Interactive six-product carousel">
+  <div className="orbit-topline"><span>THE PRODUCT COLLECTION</span><span>{String(orbitIndex+1).padStart(2,"0")} / 06</span></div>
+  <div className="orbit-stage" onTouchStart={event=>{touchStart.current={x:event.touches[0].clientX,y:event.touches[0].clientY};}} onTouchEnd={event=>{if(!touchStart.current)return;const dx=event.changedTouches[0].clientX-touchStart.current.x;const dy=event.changedTouches[0].clientY-touchStart.current.y;touchStart.current=null;if(Math.abs(dx)>38&&Math.abs(dx)>Math.abs(dy)*1.2)orbitNext(dx<0?1:-1);}}>
+    {products.map((p,i)=><div key={p.id} ref={element=>{orbitRefs.current[i]=element;}} className={`orbit-card orbit-${p.accent}${orbitIndex===i?" orbit-active":""}`} aria-hidden={orbitIndex!==i} style={{pointerEvents:orbitIndex===i?"auto":"none"}}>
+      <div className="orbit-card-meta"><span>{p.id} / 06</span><span>{p.note}</span></div>
+      <div className="orbit-card-image"><ProductVisual type={p.visual}/></div>
+      <div className="orbit-card-copy"><h3>{p.title}</h3><p>{p.subtitle}</p></div>
+      <a className="orbit-card-action" href={`/work/${p.slug}`} tabIndex={orbitIndex===i?0:-1}>View case study <MdArrowOutward/></a>
+    </div>)}
+  </div>
+  <div className="orbit-controls"><button type="button" onClick={()=>orbitNext(-1)} aria-label="Previous product"><MdArrowBack/></button><span>{products[orbitIndex].title}</span><button type="button" onClick={()=>orbitNext(1)} aria-label="Next product"><MdArrowForward/></button></div>
+  <button type="button" className="orbit-autoplay" onClick={()=>setOrbitPlaying(current=>!current)} aria-pressed={orbitPlaying}>{orbitPlaying?"Pause rotation":"Play rotation"}</button>
+  <div className="orbit-index" aria-label="Choose a product">{products.map((p,i)=><button type="button" key={p.id} aria-current={orbitIndex===i?"true":undefined} className={orbitIndex===i?"orbit-index-active":""} onClick={()=>orbitNext((i-orbitIndex+products.length)%products.length)}>{p.id} <span>{p.title}</span></button>)}</div>
+  <p className="orbit-note">SWIPE CARDS OR USE ARROWS TO EXPLORE · SIX PRODUCTS</p>
+</div>
 <div className="product-deck">{products.map((p,i)=>{const active=activeProduct===i;return <article className={`product-panel product-${p.accent}${active?" is-active":""}`} key={p.id}>
 <button type="button" className="product-rail" id={`product-trigger-${p.id}`} aria-expanded={active} aria-controls={`product-panel-${p.id}`} onClick={()=>selectProduct(i)} data-cursor="disable"><span className="product-rail-number">{p.id}</span><span className="product-rail-title">{p.title}</span><span className="product-rail-category">{p.note}</span><span className="product-rail-icon" aria-hidden="true">{active?"−":"+"}</span><span className="product-sr-only">{active?"Selected product":"Explore product"}</span></button>
 <div className="product-panel-body" id={`product-panel-${p.id}`} role="region" aria-labelledby={`product-trigger-${p.id}`} hidden={!active}>
