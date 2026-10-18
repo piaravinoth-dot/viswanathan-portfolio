@@ -27,4 +27,10 @@ The source package explicitly marks live extractor success, standalone backend d
 - Root page width matched viewport width at 320px and 390px iframe sizes (excluding browser scrollbar); no text/button overflow detected in those checks.
 - Existing case-study components 01–04 and homepage animation components were preserved.
 - Vercel production publication was attempted for project `viswanathan-portfolio`, ID `prj_uJpPQEO2pC0Fv7tO0CXxXbQa0Vut`, team `team_8IAldplVZVRzaj3tG7dznMvn` / `viswanathang-9855`. The connected account returned a team-authorization 403.
-- The requested public SplitMate URL returned a Vercel 404 during verification. A successful GitHub Vercel status confirms a preview build, not production availability. Production must be deployed and both final URLs verified after team authorization is restored.
+- The requested public SplitMate URL returned a Vercel 404 during verification. A successful GitHub Vercel status confirms a preview build, not production availability. This was the initial blocked attempt; see the publication update below.
+
+## Production publication update — 18 October 2026
+
+Project-ID-scoped Vercel operations succeeded after reconnection; explicitly team-scoped requests still returned 403. Production deployment `dpl_Tq6hqZHnoLDMRfDiCmKSG6aBYHzZ` published commit `2e37feab39d0325da464816b9a3560663ff015a6` to the existing domain. Both `/work/splitmate` and `/work/clip-studio` loaded in the public browser, their interactive examples worked, and both rendered at a 390px iframe viewport without horizontal page overflow.
+
+Live homepage verification also exposed an existing failure: `THREE.WebGLRenderer` threw during initialization on browsers without WebGL, unmounting the React root. The renderer creation is now guarded. Unsupported browsers complete the existing loading sequence and retain access to the portfolio content; supported browsers continue through the original animation path.
