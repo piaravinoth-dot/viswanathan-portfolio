@@ -51,6 +51,7 @@ const [orbitPlaying,setOrbitPlaying]=useState(true);
 const [orbitMobile,setOrbitMobile]=useState(()=>window.matchMedia("(max-width: 760px)").matches);
 const orbitRefs=useRef<(HTMLDivElement|null)[]>([]);
 const touchStart=useRef<{x:number;y:number}|null>(null);
+const orbitSwipeAt=useRef(0);
 const orbitUserPause=useRef<number|null>(null);
 const orbitNext=(delta:number)=>{
   setOrbitIndex(current=>(current+delta+products.length)%products.length);
@@ -136,8 +137,8 @@ return <section className="work-section" id="work">
 <div className="product-showcase-hint"><span>EXPLORE THE COLLECTION</span><span>Select a product to open <MdArrowForward/></span></div>
 <div className="mobile-product-orbit" aria-label="Interactive six-product carousel">
   <div className="orbit-topline"><span>THE PRODUCT COLLECTION</span><span>{String(orbitIndex+1).padStart(2,"0")} / 06</span></div>
-  <div className="orbit-stage" onTouchStart={event=>{touchStart.current={x:event.touches[0].clientX,y:event.touches[0].clientY};}} onTouchEnd={event=>{if(!touchStart.current)return;const dx=event.changedTouches[0].clientX-touchStart.current.x;const dy=event.changedTouches[0].clientY-touchStart.current.y;touchStart.current=null;if(Math.abs(dx)>38&&Math.abs(dx)>Math.abs(dy)*1.2)orbitNext(dx<0?1:-1);}}>
-    {products.map((p,i)=><div key={p.id} ref={element=>{orbitRefs.current[i]=element;}} className={`orbit-card orbit-${p.accent}${orbitIndex===i?" orbit-active":""}`} aria-hidden={orbitIndex!==i} style={{pointerEvents:orbitIndex===i?"auto":"none"}}>
+  <div className="orbit-stage" onTouchStart={event=>{touchStart.current={x:event.touches[0].clientX,y:event.touches[0].clientY};}} onTouchEnd={event=>{if(!touchStart.current)return;const dx=event.changedTouches[0].clientX-touchStart.current.x;const dy=event.changedTouches[0].clientY-touchStart.current.y;touchStart.current=null;if(Math.abs(dx)>38&&Math.abs(dx)>Math.abs(dy)*1.2){orbitSwipeAt.current=Date.now();orbitNext(dx<0?1:-1);}}}>
+    {products.map((p,i)=><div key={p.id} ref={element=>{orbitRefs.current[i]=element;}} className={`orbit-card orbit-${p.accent}${orbitIndex===i?" orbit-active":""}`} aria-hidden={orbitIndex!==i} style={{pointerEvents:orbitIndex===i?"auto":"none"}} onClick={event=>{if(orbitIndex!==i||Date.now()-orbitSwipeAt.current<650||event.target instanceof Element&&event.target.closest("a"))return;window.location.assign(`/work/${p.slug}`);}}>
       <div className="orbit-card-meta"><span>{p.id} / 06</span><span>{p.note}</span></div>
       <div className="orbit-card-image"><ProductVisual type={p.visual}/></div>
       <div className="orbit-card-copy"><h3>{p.title}</h3><p>{p.subtitle}</p></div>
