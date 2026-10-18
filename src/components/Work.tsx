@@ -6,7 +6,7 @@ const artworks=[
 {title:"Concert Campaign",type:"Event / Visual storytelling",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/15-concert-poster.webp",shape:"large"},
 {title:"Natural Stone",type:"Brand / Commercial",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/03-quartzites.webp",shape:"small"},
 {title:"Onam Brunch",type:"Hospitality / Campaign",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/04-onam-brunch.webp",shape:"small"},
-{title:"Telangana Manifesto",type:"Editorial / Publication",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/portfolio-visuals/booklet-har-ghar-tiranga.svg",shape:"large"},
+{title:"Telangana Manifesto",type:"Editorial / Publication",image:"https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/44b5a9252833713.6a58f729ec818.jpg",shape:"large"},
 {title:"Ganesh Chaturthi",type:"Festive / Art direction",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/06-ganesh-chaturthi.webp",shape:"large"},
 {title:"Live Music",type:"Entertainment / Poster",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/14-concert-layout.webp",shape:"small"},
 {title:"Happy Hours",type:"Hospitality / Social creative",image:"https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/10-happy-hours.webp",shape:"small"},
