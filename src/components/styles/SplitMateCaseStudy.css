@@ -68,3 +68,10 @@
 .sm-case .sm-settlement-receipt>div>span,
 .sm-case .sm-system-top>p,
 .sm-case .sm-decisions article>span{color:#38463e!important}
+
+/* WCAG retest: legible phone and design decisions. */
+.sm-case .sm-design-decisions article>span{color:#3b5a2c!important}
+.sm-case .sm-pair-panel>p,.sm-case .sm-private-panel>p,.sm-case .sm-or{color:#3b4640!important}
+.sm-case .sm-settlement-head>p{color:#3c493e!important}
+.sm-case .sm-system-top>span{color:#365c2b!important}
+.sm-case #sm-evidence{color:#3e4b41!important}
