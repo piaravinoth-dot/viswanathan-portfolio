@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/portfolio-final-accessibility.yml'
       - 'scripts/qa-accessibility.mjs'
+      - 'src/**'
   workflow_dispatch:
 
 permissions:
