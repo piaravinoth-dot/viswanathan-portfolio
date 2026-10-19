@@ -28,7 +28,7 @@ jobs:
           node-version: '20'
       - name: Install portfolio and browser test dependencies
         run: |
-          npm ci --no-audit
+          npm install --no-audit
           npm install --no-save --ignore-scripts playwright
       - name: Install Chromium, Firefox and WebKit
         run: npx playwright install --with-deps chromium firefox webkit
