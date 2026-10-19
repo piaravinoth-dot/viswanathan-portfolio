@@ -1,0 +1,38 @@
+name: Portfolio Dependency Audit
+on:
+  push:
+    branches: [malhotra-3d-rebuild]
+    paths:
+      - '.github/workflows/portfolio-dependency-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install locked project dependencies
+        run: npm install --no-audit
+      - name: Audit all direct and transitive dependencies
+        run: |
+          npm audit --json > qa-full-dependency-audit.json || true
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const a=JSON.parse(fs.readFileSync('qa-full-dependency-audit.json','utf8'));
+          console.log('All dependency vulnerabilities:',a.metadata?.vulnerabilities);
+          for(const [name,v] of Object.entries(a.vulnerabilities||{})){
+            console.log(JSON.stringify({name,severity:v.severity,isDirect:v.isDirect,via:v.via,effects:v.effects,range:v.range,fixAvailable:v.fixAvailable}).slice(0,2800));
+          }
+          JS
+      - name: Upload dependency audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-dependency-audit
+          path: qa-full-dependency-audit.json
+          if-no-files-found: ignore
