@@ -58,3 +58,32 @@
 .si-case .si-hero-stage-caption>span{color:#2a3c57}
 .si-case .si-hero-bottom>span{color:#3a454b}
 .si-case .si-kicker{color:#394fa3}
+
+/* Final measured WCAG contrast: all data labels in the showcase illustrations. */
+.si-case .si-intro-facts small,
+.si-case .si-feature-heading>span,
+.si-case .si-feature-detail>span,
+.si-case .si-fact-grid>div>p,
+.si-case .si-fact-note,
+.si-case .si-ui-page-toolbar>div,
+.si-case .si-ui-pages-note,
+.si-case .si-ui-table-row span,
+.si-case .si-ui-table-row small,
+.si-case .si-ui-table-row em,
+.si-case .si-ui-edit,
+.si-case .si-ui-compare-ctrl small,
+.si-case .si-ui-vs,
+.si-case .si-ui-record-hero small,
+.si-case .si-ui-record-hero p,
+.si-case .si-ui-record-hero span,
+.si-case .si-ui-record-row span,
+.si-case .si-ui-record-note,
+.si-case .si-architecture-head span,
+.si-case .si-architecture-head p,
+.si-case .si-architecture-caption span,
+.si-case .si-decision-list>div>span,
+.si-case .si-decision-list>div>p,
+.si-case .si-end-foot>span,
+.si-case .si-frame-sand>span{color:#303e58!important}
+.si-case .si-ui-table-row .checked{color:#265637!important}
+.si-case .si-process .si-kicker{color:#e0d7ff!important}
