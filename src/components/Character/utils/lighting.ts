@@ -5,8 +5,9 @@ import { gsap } from "gsap";
 const setLighting = (scene: THREE.Scene) => {
   let disposed = false;
   const tweens: gsap.core.Tween[] = [];
-  const directionalLight = new THREE.DirectionalLight(0xf6a66b, 0);
-  directionalLight.intensity = 0;
+  // Avoid an all-black model during its first rendered frame.
+  const directionalLight = new THREE.DirectionalLight(0xf6a66b, 0.72);
+  directionalLight.intensity = 0.72;
   directionalLight.position.set(-0.47, -0.32, -1);
   directionalLight.castShadow = true;
   directionalLight.shadow.mapSize.width = 1024;
@@ -20,7 +21,7 @@ const setLighting = (scene: THREE.Scene) => {
   pointLight.castShadow = true;
   scene.add(pointLight);
 
-  scene.environmentIntensity = 0;
+  scene.environmentIntensity = 0.55;
   new RGBELoader()
     .setPath("https://cdn.jsdelivr.net/gh/akashrmalhotra/3d-portfolio@main/public/models/")
     .load("char_enviorment.hdr", function (texture) {
@@ -37,7 +38,7 @@ const setLighting = (scene: THREE.Scene) => {
       pointLight.intensity = 0;
     }
   }
-  const duration = 2;
+  const duration = 0.7;
   const ease = "power2.inOut";
   function turnOnLights() {
     tweens.push(gsap.to(scene, {
@@ -53,8 +54,8 @@ const setLighting = (scene: THREE.Scene) => {
     tweens.push(gsap.to(".character-rim", {
       y: "55%",
       opacity: 1,
-      delay: 0.2,
-      duration: 2,
+      delay: 0,
+      duration: 0.7,
     }));
   }
 
