@@ -14,11 +14,15 @@ import { LoadingProvider } from "./context/LoadingProvider";
 const App = () => {
   // The interactive 3D character remains available on mobile on demand.
   // Avoid loading a multi-megabyte WebGL scene during the critical mobile load.
-  const [desktop3D,setDesktop3D]=useState(()=>window.matchMedia("(min-width: 1025px)").matches);
+  // Auto-render on capable desktops; avoid blocking interaction on modest CPUs.
+  const canAutoRender3D=()=>window.matchMedia("(min-width: 1025px)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+    (navigator.hardwareConcurrency||4)>4;
+  const [desktop3D,setDesktop3D]=useState(canAutoRender3D);
   const [mobile3DRequested,setMobile3DRequested]=useState(false);
   useEffect(()=>{
     const mq=window.matchMedia("(min-width: 1025px)");
-    const update=()=>setDesktop3D(mq.matches);
+    const update=()=>setDesktop3D(canAutoRender3D());
     mq.addEventListener("change",update);
     return()=>mq.removeEventListener("change",update);
   },[]);
