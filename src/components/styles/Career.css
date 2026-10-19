@@ -248,3 +248,10 @@
 .career-section{margin-bottom:100px}
 @media(max-width:1025px){.career-section{margin-top:0;padding-top:80px;margin-bottom:0}}
 @media(max-width:600px){.career-section{padding-top:65px}.career-info-box p{font-size:15px;line-height:1.7}.career-info h4{font-size:21px}.career-info-in{align-items:flex-start}.career-info h3{font-size:14px;padding-top:3px}}
+
+/* Semantic heading hierarchy: section h2 -> role h3; dates/organizations are text. */
+.career-info .career-role-title{font-size:clamp(21px,2.35vw,33px);line-height:1.14;letter-spacing:.02em;font-weight:500;white-space:normal;margin:0}
+.career-info .career-company{width:auto;padding:0;margin:10px 0 0;color:var(--accentColor);font-size:clamp(15px,1.4vw,20px);line-height:1.4;font-weight:400}
+.career-info .career-date{font-size:clamp(15px,1.8vw,26px);font-weight:500;line-height:1.3;letter-spacing:-.02em;white-space:nowrap}
+@media(max-width:900px){.career-info .career-role-title{font-size:22px}.career-info .career-date{font-size:16px}}
+@media(max-width:600px){.career-info .career-role-title{font-size:20px}.career-info .career-company{font-size:15px}.career-info .career-date{font-size:14px}}
