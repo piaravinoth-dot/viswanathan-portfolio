@@ -142,32 +142,6 @@ async function testViewport(browser, name, width) {
         log(name,width,'autoplay resumes after pointer selection',resumesAfterClick);
       }
     }
-    if(name==='chromium' && (width===375 || width===1440)){
-      const contact=page.locator('#contact');
-      const form=contact.locator('form.contact-form');
-      log(name,width,'minimal contact form has labelled fields',
-        await form.locator('label').count()===3 &&
-        await form.locator('input').count()===2 &&
-        await form.locator('textarea').count()===1);
-      log(name,width,'empty contact form cannot submit',
-        await form.evaluate(el=>!el.checkValidity()));
-      await form.locator('[name="name"]').fill('Test Visitor');
-      await form.locator('[name="email"]').fill('not-an-email');
-      await form.locator('[name="message"]').fill('I would like to discuss a portfolio collaboration.');
-      log(name,width,'contact form rejects invalid email',
-        await form.evaluate(el=>!el.checkValidity()));
-      await form.locator('[name="email"]').fill('visitor@example.com');
-      log(name,width,'valid contact form accepts required inputs',
-        await form.evaluate(el=>el.checkValidity()));
-      const rect=await form.evaluate(el=>({x:el.getBoundingClientRect().x,width:el.getBoundingClientRect().width,viewport:innerWidth}));
-      log(name,width,'contact form contained within viewport',
-        rect.x>=-2 && rect.x+rect.width<=rect.viewport+2,JSON.stringify(rect));
-      log(name,width,'contact has transparent email-app handoff notice',
-        await form.getByText('Opens your email app. Review and press Send there.').count()===1);
-      await form.locator('[name="name"]').fill('');
-      await form.locator('[name="email"]').fill('');
-      await form.locator('[name="message"]').fill('');
-    }
     if(width===375||width===1440){
       log(name,width,'no manual 3D switch',await page.locator('.hero-3d-trigger').count()===0);
       if(name==='chromium'){
@@ -221,6 +195,44 @@ async function testViewport(browser, name, width) {
     await page.close();
   }
 }
+async function testContact(browser,width) {
+  const page=await browser.newPage({viewport:{width,height:900}});
+  try {
+    await page.goto(base,{waitUntil:'domcontentloaded',timeout:60000});
+    await page.locator('.loading-screen').waitFor({state:'hidden',timeout:10000});
+    const name='chromium';
+    if(name==='chromium' && (width===375 || width===1440)){
+    const contact=page.locator('#contact');
+    const form=contact.locator('form.contact-form');
+    log(name,width,'minimal contact form has labelled fields',
+    await form.locator('label').count()===3 &&
+    await form.locator('input').count()===2 &&
+    await form.locator('textarea').count()===1);
+    log(name,width,'empty contact form cannot submit',
+    await form.evaluate(el=>!el.checkValidity()));
+    await form.locator('[name="name"]').fill('Test Visitor');
+    await form.locator('[name="email"]').fill('not-an-email');
+    await form.locator('[name="message"]').fill('I would like to discuss a portfolio collaboration.');
+    log(name,width,'contact form rejects invalid email',
+    await form.evaluate(el=>!el.checkValidity()));
+    await form.locator('[name="email"]').fill('visitor@example.com');
+    log(name,width,'valid contact form accepts required inputs',
+    await form.evaluate(el=>el.checkValidity()));
+    const rect=await form.evaluate(el=>({x:el.getBoundingClientRect().x,width:el.getBoundingClientRect().width,viewport:innerWidth}));
+    log(name,width,'contact form contained within viewport',
+    rect.x>=-2 && rect.x+rect.width<=rect.viewport+2,JSON.stringify(rect));
+    log(name,width,'contact has transparent email-app handoff notice',
+    await form.getByText('Opens your email app. Review and press Send there.').count()===1);
+    await form.locator('[name="name"]').fill('');
+    await form.locator('[name="email"]').fill('');
+    await form.locator('[name="message"]').fill('');
+  } catch(e) {
+    log('chromium',width,'contact form scenario completes',false,String(e));
+  } finally {
+    await page.close();
+  }
+}
+
 for (const [name,engine] of browsers) {
   let browser;
   try {browser=await engine.launch({headless:true});}
@@ -237,6 +249,7 @@ for (const [name,engine] of browsers) {
         }catch(e){log(name,1280,`case study ${slug}`,false,e.message);}
       }
       await page.close();
+      for (const width of [375,1440]) await testContact(browser,width);
     }
   }finally{await browser.close();}
 }
