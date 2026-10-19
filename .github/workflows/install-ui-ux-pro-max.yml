@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: install-ui-ux-pro-max
+  cancel-in-progress: true
+
 jobs:
   install-skill:
     runs-on: ubuntu-latest
