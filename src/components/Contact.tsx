@@ -1,3 +1,83 @@
-import {MdArrowOutward,MdCopyright} from "react-icons/md";import "./styles/Contact.css";
-const Contact=()=> <div className="contact-section section-container" id="contact"><div className="contact-container"><h2 className="contact-title">Contact</h2><div className="contact-flex"><div className="contact-box"><h3 className="contact-subheading">Let's collaborate</h3><p>Open to product and visual design roles, creative leadership opportunities and selected collaborations. Based in India; open to remote and international opportunities.</p><h3 className="contact-subheading">Email</h3><p><a href="mailto:piaravinoth@gmail.com" data-cursor="disable">piaravinoth@gmail.com</a></p></div><div className="contact-box"><h3 className="contact-subheading">Resume &amp; profiles</h3><a className="contact-social" href="/resume/Viswanathan_G_Resume.pdf" download>Download resume <span>PDF ↓</span></a><a className="contact-social" href="https://github.com/piaravinoth-dot" target="_blank" rel="noreferrer">GitHub <MdArrowOutward/></a><a className="contact-social" href="mailto:piaravinoth@gmail.com">Start a conversation <MdArrowOutward/></a></div><div className="contact-box"><h2>Art direction &amp; design<br/>by <span>Viswanathan G.</span></h2><p className="contact-copyright"><MdCopyright/> 2026</p></div></div></div></div>;
+import {useState,type FormEvent} from "react";
+import {MdArrowOutward,MdCopyright} from "react-icons/md";
+import "./styles/Contact.css";
+
+const contactEmail="piaravinoth@gmail.com";
+
+const Contact=()=>{
+  const [notice,setNotice]=useState("");
+  const [error,setError]=useState("");
+
+  const handleSubmit=(event:FormEvent<HTMLFormElement>)=>{
+    event.preventDefault();
+    const data=new FormData(event.currentTarget);
+    const name=String(data.get("name")||"").trim();
+    const email=String(data.get("email")||"").trim();
+    const message=String(data.get("message")||"").trim();
+    if(name.length<2||message.length<10){
+      setNotice("");
+      setError("Please add your name and a message of at least 10 characters.");
+      return;
+    }
+    setError("");
+    const subject=encodeURIComponent(`Portfolio inquiry from ${name}`);
+    const body=encodeURIComponent(`Hello Viswanathan,\n\n${message}\n\nFrom: ${name}\nReply to: ${email}`);
+    // No mail service is configured. Open a filled draft in the visitor's
+    // email application rather than falsely claiming a message was sent.
+    setNotice("Your email draft is ready. Please press Send in your email app to complete.");
+    window.location.href=`mailto:${contactEmail}?subject=${subject}&body=${body}`;
+  };
+
+  return <section className="contact-section section-container" id="contact" aria-labelledby="contact-title">
+    <div className="contact-container">
+      <div className="contact-heading">
+        <span className="contact-eyebrow">05 / GET IN TOUCH</span>
+        <h2 className="contact-title" id="contact-title">Have something <em>in mind?</em></h2>
+        <p>Open to thoughtful opportunities, product design roles and creative collaborations. Tell me what you're working on.</p>
+      </div>
+      <div className="contact-layout">
+        <div className="contact-form-column">
+          <h3 className="contact-form-title">Start a conversation.</h3>
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <div className="contact-fields-inline">
+              <div className="contact-field">
+                <label htmlFor="portfolio-contact-name">YOUR NAME</label>
+                <input id="portfolio-contact-name" name="name" type="text" autoComplete="name" placeholder="How should I address you?" minLength={2} maxLength={80} required onChange={()=>{setNotice("");setError("")}}/>
+              </div>
+              <div className="contact-field">
+                <label htmlFor="portfolio-contact-email">EMAIL ADDRESS</label>
+                <input id="portfolio-contact-email" name="email" type="email" autoComplete="email" placeholder="you@company.com" maxLength={120} required onChange={()=>{setNotice("");setError("")}}/>
+              </div>
+            </div>
+            <div className="contact-field">
+              <label htmlFor="portfolio-contact-message">YOUR MESSAGE</label>
+              <textarea id="portfolio-contact-message" name="message" rows={4} minLength={10} maxLength={1200} placeholder="A little about your opportunity or project..." required onChange={()=>{setNotice("");setError("")}}/>
+            </div>
+            {error&&<p className="contact-feedback contact-error" role="alert">{error}</p>}
+            {notice&&<p className="contact-feedback" role="status">{notice}</p>}
+            <div className="contact-submit-row">
+              <button className="contact-submit" type="submit">Prepare email <MdArrowOutward aria-hidden="true"/></button>
+              <p>Opens your email app. Review and press Send there.</p>
+            </div>
+          </form>
+        </div>
+        <aside className="contact-details" aria-label="Other ways to connect">
+          <span className="contact-details-kicker">DIRECT CONTACT</span>
+          <h3>Prefer to reach out directly?</h3>
+          <a className="contact-email-link" href={`mailto:${contactEmail}`}>{contactEmail} <MdArrowOutward aria-hidden="true"/></a>
+          <p>Based in India. Available for remote and international opportunities.</p>
+          <div className="contact-resource-links">
+            <a href="/resume/Viswanathan_G_Resume.pdf" download>Download résumé <span>PDF ↓</span></a>
+            <a href="https://github.com/piaravinoth-dot" target="_blank" rel="noopener noreferrer">GitHub <MdArrowOutward aria-hidden="true"/></a>
+          </div>
+        </aside>
+      </div>
+      <footer className="contact-footer">
+        <p>Art direction &amp; design by <span>Viswanathan G.</span></p>
+        <p className="contact-copyright"><MdCopyright aria-hidden="true"/> 2026</p>
+      </footer>
+    </div>
+  </section>;
+};
+
 export default Contact;
