@@ -24,16 +24,20 @@ export function useAIDesignMotion(){
         if(!compact){
           const intro=gsap.timeline({defaults:{ease:"power2.out"}});
           intro.fromTo(".ai-case-hero-title h1",
-            {opacity:0.35,y:32},{opacity:1,y:0,duration:0.88},0
+            {y:32},{y:0,duration:0.88},0
           ).fromTo(".ai-case-hero-side",
-            {opacity:0.55,y:22},{opacity:1,y:0,duration:0.78},0.13
+            {y:22},{y:0,duration:0.78},0.13
           ).fromTo(".ai-case-hero-stage",
-            {opacity:0.8,y:26},{opacity:1,y:0,duration:1.0},0.22
+            {y:26},{y:0,duration:1.0},0.22
           );
         }
 
         // Progressive reading rhythm; no full-screen pinning, video or heavy shader.
-        const revealTargets=[
+        const revealTargets=(compact?[
+          ".ai-case-flow-step",
+          ".ai-case-split-visual",
+          ".ai-showcase-card"
+        ]:[
           ".ai-case-intro-grid h2",
           ".ai-case-intro-grid>div",
           ".ai-case-section-head",
@@ -45,11 +49,11 @@ export function useAIDesignMotion(){
           ".ai-showcase-card",
           ".ai-case-system-grid",
           ".ai-case-end h2"
-        ].join(", ");
+        ]).join(", ");
         gsap.utils.toArray<HTMLElement>(revealTargets).forEach((element)=>{
           gsap.fromTo(element,
-            {opacity:compact?0.9:0.8,y:compact?14:28},
-            {opacity:1,y:0,duration:compact?0.45:0.75,ease:"power2.out",
+            {y:compact?14:28},
+            {y:0,duration:compact?0.45:0.75,ease:"power2.out",
               scrollTrigger:{trigger:element,start:"top 92%",once:true}}
           );
         });
