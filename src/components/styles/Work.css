@@ -350,3 +350,14 @@ html,body,#root{max-width:100%;overflow-x:clip}
 .product-art-label{color:#45484c}
 .orbit-card:focus-visible,.orbit-card-action:focus-visible,.orbit-controls button:focus-visible,.orbit-index button:focus-visible{outline:3px solid #e9a36a;outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.orbit-card,.orbit-card *{animation:none!important;transition:none!important}}
+
+/* WCAG AA contrast tune-up for small labels and calls to action. */
+.pv-screen-top,.pv-screen-top span{color:#344c43}
+.pv-filter>*{color:#34483d}
+.pv-clip-formats span{color:#403d39}
+.pv-url{color:#383b3d}
+.product-outro{color:#41454a}
+.product-outro a{color:#7a3222}
+.product-topline,.product-count span{color:#42484c}
+.product-topline>span:first-child{color:#823b29}
+.product-heading-grid p{color:#414448}
