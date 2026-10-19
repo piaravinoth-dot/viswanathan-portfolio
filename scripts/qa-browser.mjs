@@ -42,7 +42,7 @@ async function testViewport(browser, name, width) {
       // Wait for the actual state transition rather than a fixed 1.1 s.
       await page.waitForFunction(() =>
         document.querySelector('.orbit-card.orbit-active')?.textContent?.includes('Clip Studio'),
-        {timeout:20000}
+        null,{timeout:20000}
       ).catch(()=>null);
       const selected=await page.locator('.orbit-card.orbit-active').textContent();
       log(name,width,'index 06 selects Clip Studio',Boolean(selected?.includes('Clip Studio')));
