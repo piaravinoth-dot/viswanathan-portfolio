@@ -42,12 +42,33 @@ export function setCharTimeline(character: THREE.Object3D, camera: THREE.Perspec
 
 export function setAllTimeline() {
   const media = gsap.matchMedia();
-  // Keep the existing desktop animation completely unchanged.
+  // Match the mobile scroll-led reveal with a slower, ordered desktop sequence.
+  // All four experiences remain in the DOM and the layout never changes.
   media.add("(min-width: 901px)", () => {
     const context = gsap.context(() => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      const timeline = gsap.timeline({scrollTrigger:{trigger:".career-section",start:"top 80%",end:"bottom 65%",scrub:true,invalidateOnRefresh:true}});
-      timeline.fromTo(".career-timeline",{maxHeight:"10%",opacity:0},{maxHeight:"100%",opacity:1,duration:1},0);
+      const entries = gsap.utils.toArray<HTMLElement>(".career-info-box");
+      if (!entries.length) return;
+      const timeline = gsap.timeline({
+        scrollTrigger:{
+          trigger:".career-info",
+          start:"top 78%",
+          end:"bottom 55%",
+          scrub:1.15,
+          invalidateOnRefresh:true
+        }
+      });
+      // The timeline draws while jobs enter gently, one after another.
+      timeline.fromTo(".career-timeline",
+        {maxHeight:"0%",opacity:.7},
+        {maxHeight:"100%",opacity:1,duration:entries.length*1.25,ease:"none"},0);
+      entries.forEach((entry,index) => {
+        timeline.fromTo(entry,
+          {y:48,opacity:0},
+          {y:0,opacity:1,duration:1.25,ease:"power2.out",immediateRender:true},
+          index*1.25
+        );
+      });
     });
     return () => context.revert();
   });
