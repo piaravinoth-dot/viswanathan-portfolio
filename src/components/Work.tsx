@@ -39,8 +39,8 @@ const [orbitMobile,setOrbitMobile]=useState(()=>window.matchMedia("(max-width: 7
 const orbitHost=useRef<HTMLDivElement>(null);
 const [orbitInView,setOrbitInView]=useState(false);
 const [orbitPageVisible,setOrbitPageVisible]=useState(()=>!document.hidden);
-const [orbitHovered,setOrbitHovered]=useState(false);
 const [orbitFocused,setOrbitFocused]=useState(false);
+const orbitPointerMode=useRef(false);
 const orbitManuallyPaused=useRef(false);
 const orbitRefs=useRef<(HTMLDivElement|null)[]>([]);
 const touchStart=useRef<{x:number;y:number}|null>(null);
@@ -78,6 +78,13 @@ useEffect(()=>{
   document.addEventListener("visibilitychange",onVisibility);
   return()=>document.removeEventListener("visibilitychange",onVisibility);
 },[]);
+// Distinguish pointer focus from intentional keyboard navigation. Clicking
+// arrows/index buttons should resume automatic rotation after the 9s dwell.
+useEffect(()=>{
+  const onTab=(event:KeyboardEvent)=>{if(event.key==="Tab")orbitPointerMode.current=false;};
+  document.addEventListener("keydown",onTab,true);
+  return()=>document.removeEventListener("keydown",onTab,true);
+},[]);
 useEffect(()=>{
   const query=window.matchMedia("(max-width: 760px)");
   const update=()=>setOrbitMobile(query.matches);
@@ -112,13 +119,14 @@ useEffect(()=>()=>{
   orbitRefs.current.forEach(element=>{if(element)gsap.killTweensOf(element)});
 },[]);
 useEffect(()=>{
-  // Rotate on desktop as well as mobile only while visible and not interacted with.
-  // Desktop dwell time is slightly longer to make case studies easy to read.
-  if(!orbitPlaying||!orbitInView||!orbitPageVisible||orbitHovered||orbitFocused||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  // Passive mouse hover must not leave autoplay stuck when the visitor scrolls
+  // into this section with their cursor already above a card.
+  // Keyboard focus, explicit Pause, reduced motion and hidden pages still stop it.
+  if(!orbitPlaying||!orbitInView||!orbitPageVisible||orbitFocused||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   const interval=orbitMobile?4500:5500;
   const timer=window.setInterval(()=>setOrbitIndex(index=>(index+1)%products.length),interval);
   return()=>window.clearInterval(timer);
-},[orbitMobile,orbitPlaying,orbitInView,orbitPageVisible,orbitHovered,orbitFocused]);
+},[orbitMobile,orbitPlaying,orbitInView,orbitPageVisible,orbitFocused]);
 useEffect(()=>()=>{if(orbitUserPause.current!==null)window.clearTimeout(orbitUserPause.current)},[]);
 const [openImage,setOpenImage]=useState<number|null>(null);
 const dialogRef=useRef<HTMLDivElement>(null);
@@ -154,7 +162,7 @@ return <section className="work-section" id="work">
 <div className="product-section" id="products"><div className="product-inner section-container">
 <div className="product-heading"><div className="product-topline"><span><i/> 02 / DIGITAL PRODUCTS</span><span>SELECTED PRODUCT DESIGN / 2026</span></div><div className="product-heading-grid"><h2>Ideas, made<br/><em>interactive.</em></h2><p>Six products spanning creative AI, content operations, analytics and everyday utilities. Designed with an emphasis on usability, workflow and visual craft.</p></div><div className="product-count">06 <span>SELECTED PRODUCTS</span></div></div>
 <div className="product-showcase-hint"><span>EXPLORE THE COLLECTION</span><span>Select a product to open <MdArrowForward/></span></div>
-<div ref={orbitHost} className="mobile-product-orbit" role="region" aria-roledescription="carousel" aria-label="Selected digital products — use the left and right arrow keys to browse" tabIndex={0} onPointerEnter={event=>{if(event.pointerType==="mouse")setOrbitHovered(true)}} onPointerLeave={()=>setOrbitHovered(false)} onFocusCapture={()=>setOrbitFocused(true)} onBlurCapture={event=>{if(!event.relatedTarget||!event.currentTarget.contains(event.relatedTarget as Node))setOrbitFocused(false)}} onKeyDown={event=>{if(event.key==="ArrowLeft"||event.key==="ArrowRight"){event.preventDefault();orbitNext(event.key==="ArrowRight"?1:-1)}}}>
+<div ref={orbitHost} className="mobile-product-orbit" role="region" aria-roledescription="carousel" aria-label="Selected digital products — use the left and right arrow keys to browse" tabIndex={0} onPointerDownCapture={()=>{orbitPointerMode.current=true;setOrbitFocused(false)}} onFocusCapture={()=>{if(!orbitPointerMode.current)setOrbitFocused(true)}} onBlurCapture={event=>{if(!event.relatedTarget||!event.currentTarget.contains(event.relatedTarget as Node))setOrbitFocused(false)}} onKeyDownCapture={()=>{orbitPointerMode.current=false;setOrbitFocused(true)}} onKeyDown={event=>{if(event.key==="ArrowLeft"||event.key==="ArrowRight"){event.preventDefault();orbitNext(event.key==="ArrowRight"?1:-1)}}}>
   <div className="orbit-topline"><span>THE PRODUCT COLLECTION</span><span>{String(orbitIndex+1).padStart(2,"0")} / 06</span></div>
   <div className="orbit-stage" onTouchStart={event=>{touchStart.current={x:event.touches[0].clientX,y:event.touches[0].clientY};}} onTouchEnd={event=>{if(!touchStart.current)return;const dx=event.changedTouches[0].clientX-touchStart.current.x;const dy=event.changedTouches[0].clientY-touchStart.current.y;touchStart.current=null;if(Math.abs(dx)>38&&Math.abs(dx)>Math.abs(dy)*1.2){orbitSwipeAt.current=Date.now();orbitNext(dx<0?1:-1);}}}>
     {products.map((p,i)=><div key={p.id} ref={element=>{orbitRefs.current[i]=element;}} className={`orbit-card orbit-${p.accent}${orbitIndex===i?" orbit-active":""}`} aria-hidden={orbitIndex!==i} style={{pointerEvents:orbitIndex===i?"auto":"none"}} onClick={event=>{if(orbitIndex!==i||Date.now()-orbitSwipeAt.current<650||event.target instanceof Element&&event.target.closest("a"))return;window.location.assign(`/work/${p.slug}`);}}>
@@ -167,7 +175,7 @@ return <section className="work-section" id="work">
   <div className="orbit-controls"><button type="button" onClick={()=>orbitNext(-1)} aria-label="Previous product"><MdArrowBack/></button><span aria-live={orbitPlaying?"off":"polite"} aria-atomic="true">{products[orbitIndex].title}</span><button type="button" onClick={()=>orbitNext(1)} aria-label="Next product"><MdArrowForward/></button></div>
   <button type="button" className="orbit-autoplay" onPointerDown={event=>{if(event.button===0){event.stopPropagation();toggleOrbitPlayback();}}} onClick={event=>{if(event.detail===0)toggleOrbitPlayback();}} aria-pressed={orbitPlaying}>{orbitPlaying?"Pause rotation":"Play rotation"}</button>
   <div className="orbit-index" aria-label="Choose a product">{products.map((p,i)=><button type="button" key={p.id} aria-current={orbitIndex===i?"true":undefined} className={orbitIndex===i?"orbit-index-active":""} onClick={()=>orbitNext((i-orbitIndex+products.length)%products.length)}>{p.id} <span>{p.title}</span></button>)}</div>
-  <p className="orbit-note">{orbitMobile?"SWIPE CARDS OR USE ARROWS TO EXPLORE":"AUTOMATIC ROTATION · HOVER TO PAUSE · USE ARROWS"} · SIX PRODUCTS</p>
+  <p className="orbit-note">{orbitMobile?"SWIPE CARDS OR USE ARROWS TO EXPLORE":"AUTOMATIC ROTATION · USE ARROWS OR PAUSE"} · SIX PRODUCTS</p>
 </div>
 <div className="product-outro"><span>DESIGN THAT WORKS AS WELL AS IT LOOKS.</span><a href="#contact">Have a project in mind? <MdArrowOutward/></a></div>
 </div></div>

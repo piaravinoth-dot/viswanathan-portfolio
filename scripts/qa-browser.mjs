@@ -125,6 +125,21 @@ async function testViewport(browser, name, width) {
         await control.click();
         const resumed=await control.evaluate(el=>({text:el.textContent?.trim(),pressed:el.getAttribute('aria-pressed')}));
         log(name,width,'desktop Play control resumes rotation',resumed.pressed==='true'&&resumed.text==='Pause rotation',JSON.stringify(resumed));
+        // Real-world case: visitor scrolls into Products with a cursor on top
+        // of the carousel, then clicks a numbered card. Neither state should
+        // permanently suppress automatic rotation.
+        await page.mouse.move(orbit ? 700 : 700, 430);
+        const hoverBefore=await page.locator('.orbit-card.orbit-active').getAttribute('class');
+        const hoverAdvances=await page.waitForFunction(initial => 
+          document.querySelector('.orbit-card.orbit-active')?.className!==initial,
+          hoverBefore,{timeout:8000}).then(()=>true).catch(()=>false);
+        log(name,width,'autoplay continues with stationary pointer over products',hoverAdvances);
+        await page.locator('.orbit-index button').nth(2).click();
+        const selectedAfterClick=await page.locator('.orbit-card.orbit-active').getAttribute('class');
+        const resumesAfterClick=await page.waitForFunction(initial =>
+          document.querySelector('.orbit-card.orbit-active')?.className!==initial,
+          selectedAfterClick,{timeout:18000}).then(()=>true).catch(()=>false);
+        log(name,width,'autoplay resumes after pointer selection',resumesAfterClick);
       }
     }
     if(width===375||width===1440){
