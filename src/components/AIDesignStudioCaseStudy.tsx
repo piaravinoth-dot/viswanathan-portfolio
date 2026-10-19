@@ -3,7 +3,7 @@ import {MdArrowOutward,MdArrowBack,MdCheck,MdOutlineAutoAwesome,MdLayers,MdCropF
 import "./styles/AIDesignStudioCaseStudy.css";
 const APP="https://ai-image-studio-amber-three.vercel.app/";
 const FeatureTag=({children}:{children:React.ReactNode})=><span className="ai-feature-tag">{children}</span>;
-const StudioWindow=({mode="full"}:{mode?:"full"|"assistant"|"layers"|"elements"})=><div className={"ai-studio-window ai-studio-"+mode}>
+const StudioWindow=({mode="full"}:{mode?:"full"|"assistant"|"layers"|"elements"})=><div className={"ai-studio-window ai-studio-"+mode} aria-hidden="true">
   <div className="ai-ui-top"><div className="ai-ui-brand"><span className="ai-brand-mark">✳</span> AI Design Studio</div><div className="ai-ui-name">Untitled design <span>⌄</span></div><div className="ai-ui-actions"><span>Save project</span><span>Export Project</span><b>Export ↗</b></div></div>
   <div className="ai-ui-body">
     <div className="ai-ui-tools"><div className="ai-ui-sidebar-label">DESIGN TOOLS <span>•••</span></div><div className="ai-ui-section-title">CONTENT</div><div className="ai-ui-add">+ Add Text</div><div className="ai-ui-section-title">IMAGES</div><div className="ai-ui-add">+ Add Image</div><div className="ai-ui-section-title">ELEMENTS</div><div className="ai-ui-elements"><span>□</span><span>▢</span><span>◯</span><span>△</span><span>╱</span><span>▱</span></div><div className="ai-ui-section-title">BACKGROUND</div><div className="ai-ui-drop">Drop an image here</div></div>
