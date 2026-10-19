@@ -96,6 +96,30 @@ async function testViewport(browser, name, width) {
         `x=${before.x.toFixed(1)}→${after.x.toFixed(1)}, width=${before.width.toFixed(1)}→${after.width.toFixed(1)}`);
       await page.setViewportSize({width:375,height:900});
     }
+    if(name==='chromium' && width===1440) {
+      const orbit = page.locator('.mobile-product-orbit');
+      await orbit.scrollIntoViewIfNeeded();
+      await page.waitForFunction(() => {
+        const el = document.querySelector('.mobile-product-orbit');
+        if (!el) return false;
+        const box = el.getBoundingClientRect();
+        return box.top < innerHeight && box.bottom > 0;
+      },null,{timeout:5000});
+      const initialIndex = await page.locator('.orbit-card.orbit-active').getAttribute('class');
+      const changed = await page.waitForFunction(initial => {
+        const active = document.querySelector('.orbit-card.orbit-active');
+        return active && active.className !== initial;
+      },initialIndex,{timeout:8500}).then(()=>true).catch(()=>false);
+      log(name,width,'desktop products auto-rotate when visible',changed);
+      const control = page.getByRole('button',{name:'Pause rotation'});
+      log(name,width,'desktop pause rotation control visible',await control.isVisible());
+      await control.click();
+      const pausedIndex = await page.locator('.orbit-card.orbit-active').getAttribute('class');
+      await page.waitForTimeout(5900);
+      const stillPaused = await page.locator('.orbit-card.orbit-active').getAttribute('class');
+      log(name,width,'desktop rotation stays paused on request',pausedIndex===stillPaused);
+      await page.getByRole('button',{name:'Play rotation'}).click();
+    }
     if(width===375||width===1440){
       log(name,width,'no manual 3D switch',await page.locator('.hero-3d-trigger').count()===0);
       if(name==='chromium'){

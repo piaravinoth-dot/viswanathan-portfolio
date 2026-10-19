@@ -101,8 +101,11 @@ useEffect(()=>()=>{
   orbitRefs.current.forEach(element=>{if(element)gsap.killTweensOf(element)});
 },[]);
 useEffect(()=>{
-  if(!orbitMobile||!orbitPlaying||!orbitInView||!orbitPageVisible||orbitHovered||orbitFocused||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-  const timer=window.setInterval(()=>setOrbitIndex(index=>(index+1)%products.length),4500);
+  // Rotate on desktop as well as mobile only while visible and not interacted with.
+  // Desktop dwell time is slightly longer to make case studies easy to read.
+  if(!orbitPlaying||!orbitInView||!orbitPageVisible||orbitHovered||orbitFocused||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const interval=orbitMobile?4500:5500;
+  const timer=window.setInterval(()=>setOrbitIndex(index=>(index+1)%products.length),interval);
   return()=>window.clearInterval(timer);
 },[orbitMobile,orbitPlaying,orbitInView,orbitPageVisible,orbitHovered,orbitFocused]);
 useEffect(()=>()=>{if(orbitUserPause.current!==null)window.clearTimeout(orbitUserPause.current)},[]);
@@ -150,10 +153,10 @@ return <section className="work-section" id="work">
       <a className="orbit-card-action" href={`/work/${p.slug}`} aria-label={`View ${p.title} case study`} tabIndex={orbitIndex===i?0:-1}>View case study <MdArrowOutward/></a>
     </div>)}
   </div>
-  <div className="orbit-controls"><button type="button" onClick={()=>orbitNext(-1)} aria-label="Previous product"><MdArrowBack/></button><span aria-live={orbitPlaying&&orbitMobile?"off":"polite"} aria-atomic="true">{products[orbitIndex].title}</span><button type="button" onClick={()=>orbitNext(1)} aria-label="Next product"><MdArrowForward/></button></div>
+  <div className="orbit-controls"><button type="button" onClick={()=>orbitNext(-1)} aria-label="Previous product"><MdArrowBack/></button><span aria-live={orbitPlaying?"off":"polite"} aria-atomic="true">{products[orbitIndex].title}</span><button type="button" onClick={()=>orbitNext(1)} aria-label="Next product"><MdArrowForward/></button></div>
   <button type="button" className="orbit-autoplay" onClick={()=>{if(orbitUserPause.current!==null)window.clearTimeout(orbitUserPause.current);orbitManuallyPaused.current=orbitPlaying;setOrbitPlaying(current=>!current)}} aria-pressed={orbitPlaying}>{orbitPlaying?"Pause rotation":"Play rotation"}</button>
   <div className="orbit-index" aria-label="Choose a product">{products.map((p,i)=><button type="button" key={p.id} aria-current={orbitIndex===i?"true":undefined} className={orbitIndex===i?"orbit-index-active":""} onClick={()=>orbitNext((i-orbitIndex+products.length)%products.length)}>{p.id} <span>{p.title}</span></button>)}</div>
-  <p className="orbit-note">{orbitMobile?"SWIPE CARDS OR USE ARROWS TO EXPLORE":"USE ARROWS OR SELECT A PRODUCT"} · SIX PRODUCTS</p>
+  <p className="orbit-note">{orbitMobile?"SWIPE CARDS OR USE ARROWS TO EXPLORE":"AUTOMATIC ROTATION · HOVER TO PAUSE · USE ARROWS"} · SIX PRODUCTS</p>
 </div>
 <div className="product-outro"><span>DESIGN THAT WORKS AS WELL AS IT LOOKS.</span><a href="#contact">Have a project in mind? <MdArrowOutward/></a></div>
 </div></div>

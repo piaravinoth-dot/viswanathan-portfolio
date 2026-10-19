@@ -396,3 +396,24 @@ html,body,#root{max-width:100%;overflow-x:clip}
     transition:none!important;
   }
 }
+
+/* Desktop carousel now rotates automatically, with an accessible pause/play option. */
+@media (min-width:761px) {
+  .orbit-autoplay {
+    display:block;
+    margin:0 auto 20px;
+    padding:9px 16px;
+    min-height:44px;
+    background:transparent;
+    border:1px solid #65707c;
+    border-radius:22px;
+    color:#f0d1b8;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:.025em;
+    cursor:pointer;
+    transition:border-color .2s,color .2s;
+  }
+  .orbit-autoplay:hover {border-color:#e5ad86;color:#fff}
+  .orbit-autoplay:focus-visible {outline:3px solid #e5ad86;outline-offset:3px}
+}
