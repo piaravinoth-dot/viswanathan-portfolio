@@ -11,6 +11,21 @@ const CharacterModel = lazy(() => import("./components/Character"));
 const MainContainer = lazy(() => import("./components/MainContainer"));
 import { LoadingProvider } from "./context/LoadingProvider";
 
+const canUseHardwareWebGL=()=>{
+  // Never auto-start an expensive animated scene through a software renderer.
+  // SwiftShader/llvmpipe can freeze navigation and cause massive blocking time.
+  try{
+    const canvas=document.createElement("canvas");
+    const options:WebGLContextAttributes={failIfMajorPerformanceCaveat:true,powerPreference:"low-power"};
+    const gl=canvas.getContext("webgl2",options)||canvas.getContext("webgl",options);
+    if(!gl)return false;
+    const info=gl.getExtension("WEBGL_debug_renderer_info");
+    const name=String(info?gl.getParameter(info.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER));
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return !/swiftshader|llvmpipe|software|softpipe|basic render/i.test(name);
+  }catch{return false}
+};
+
 const App = () => {
   // Autostart the 3D character after critical content has painted.
   // Delay the costly WebGL bundle to keep navigation responsive and LCP fast.
@@ -25,10 +40,18 @@ const App = () => {
       if(disposed)return;
       timer=window.setTimeout(()=>{
         if(disposed)return;
-        const load=()=>{if(!disposed)setThreeDReady(true)};
+        const load=()=>{
+          if(disposed)return;
+          if(!canUseHardwareWebGL()){
+            document.documentElement.dataset.character3d="unsupported";
+            return;
+          }
+          document.documentElement.dataset.character3d="starting";
+          setThreeDReady(true);
+        };
         if("requestIdleCallback" in window)idleId=window.requestIdleCallback(load,{timeout:2500});
         else load();
-      },window.matchMedia("(max-width: 1024px)").matches?4000:1800);
+      },window.matchMedia("(max-width: 1024px)").matches?4000:2700);
     };
     if(document.readyState==="complete")start();
     else window.addEventListener("load",start,{once:true});
