@@ -1,0 +1,46 @@
+name: Final Full-Page Accessibility Verification
+on:
+  push:
+    branches: [malhotra-3d-rebuild]
+    paths:
+      - '.github/workflows/portfolio-final-accessibility.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+jobs:
+  wcag-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install project and accessibility auditor
+        run: |
+          npm install --no-audit
+          npm install --no-save --ignore-scripts playwright axe-core
+          npx playwright install --with-deps chromium
+      - name: Production build and SEO checks
+        run: npm run build
+      - name: Serve built portfolio
+        run: |
+          nohup npm run preview -- --host 127.0.0.1 --port 4173 >/tmp/qa-preview.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/qa-preview.log
+          exit 1
+      - name: Audit all seven routes at mobile and desktop widths
+        env:
+          QA_URL: http://127.0.0.1:4173
+        run: node scripts/qa-accessibility.mjs
+      - name: Archive accessible QA report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-page-wcag-audit
+          path: qa-accessibility-results.json
+          if-no-files-found: ignore
