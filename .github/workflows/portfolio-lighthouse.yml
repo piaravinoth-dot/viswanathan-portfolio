@@ -1,0 +1,70 @@
+name: Portfolio Lighthouse QA
+on:
+  push:
+    branches: [malhotra-3d-rebuild]
+    paths:
+      - '.github/workflows/portfolio-lighthouse.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install source dependencies and Lighthouse
+        run: |
+          npm install --no-audit
+          npm install --no-save --ignore-scripts playwright lighthouse@12.8.2
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build portfolio and verify SEO
+        run: npm run build
+      - name: Start local production preview
+        run: |
+          nohup npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/lighthouse-preview.log 2>&1 &
+          for i in $(seq 1 25); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/lighthouse-preview.log
+          exit 1
+      - name: Lighthouse mobile
+        continue-on-error: true
+        run: |
+          export CHROME_PATH=$(node --input-type=module -e "import {chromium} from 'playwright'; console.log(chromium.executablePath())")
+          npx lighthouse http://127.0.0.1:4173/ --chrome-flags="--headless=new --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=qa-lighthouse-mobile.json --quiet
+      - name: Lighthouse desktop
+        continue-on-error: true
+        run: |
+          export CHROME_PATH=$(node --input-type=module -e "import {chromium} from 'playwright'; console.log(chromium.executablePath())")
+          npx lighthouse http://127.0.0.1:4173/ --preset=desktop --chrome-flags="--headless=new --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=qa-lighthouse-desktop.json --quiet
+      - name: Summarize metrics
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          for(const mode of ['mobile','desktop']){
+            const path='qa-lighthouse-'+mode+'.json';
+            if(!fs.existsSync(path)){console.log(mode,'REPORT MISSING');continue;}
+            const x=JSON.parse(fs.readFileSync(path,'utf8'));
+            console.log(mode,JSON.stringify({runtimeError:x.runtimeError||null,
+              scores:Object.fromEntries(Object.entries(x.categories||{}).map(([k,c])=>[k,c.score===null?null:Math.round(c.score*100)])),
+              FCP:x.audits?.['first-contentful-paint']?.numericValue,
+              LCP:x.audits?.['largest-contentful-paint']?.numericValue,
+              TBT:x.audits?.['total-blocking-time']?.numericValue,
+              CLS:x.audits?.['cumulative-layout-shift']?.numericValue}));
+          }
+          JS
+      - name: Upload Lighthouse audits
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-lighthouse-report
+          path: qa-lighthouse-*.json
+          if-no-files-found: ignore
