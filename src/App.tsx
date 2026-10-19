@@ -12,10 +12,33 @@ const MainContainer = lazy(() => import("./components/MainContainer"));
 import { LoadingProvider } from "./context/LoadingProvider";
 
 const App = () => {
-  // Compile the 3D character only when the visitor opts in; automatic scene
-  // loading monopolized the main thread on desktops during carousel navigation.
-  const [threeDRequested,setThreeDRequested]=useState(false);
+  // Autostart the 3D character after critical content has painted.
+  // Delay the costly WebGL bundle to keep navigation responsive and LCP fast.
+  const [threeDReady,setThreeDReady]=useState(false);
   const route = window.location.pathname.replace(/\/$/, "");
+  useEffect(()=>{
+    if(route!=="" || window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+    let timer=0;
+    let idleId:number|undefined;
+    let disposed=false;
+    const start=()=>{
+      if(disposed)return;
+      timer=window.setTimeout(()=>{
+        if(disposed)return;
+        const load=()=>{if(!disposed)setThreeDReady(true)};
+        if("requestIdleCallback" in window)idleId=window.requestIdleCallback(load,{timeout:2500});
+        else load();
+      },window.matchMedia("(max-width: 1024px)").matches?4000:1800);
+    };
+    if(document.readyState==="complete")start();
+    else window.addEventListener("load",start,{once:true});
+    return()=>{
+      disposed=true;
+      window.removeEventListener("load",start);
+      window.clearTimeout(timer);
+      if(idleId!==undefined)window.cancelIdleCallback(idleId);
+    };
+  },[route]);
   const caseStudies = {
     "/work/ai-design-studio": AIDesignStudioCaseStudy,
     "/work/content-studio": ContentStudioCaseStudy,
@@ -58,8 +81,8 @@ const App = () => {
     <>
       <LoadingProvider>
         <Suspense>
-          <MainContainer onActivate3D={()=>setThreeDRequested(true)}>
-            {threeDRequested&&<Suspense fallback={null}>
+          <MainContainer>
+            {threeDReady&&<Suspense fallback={null}>
               <CharacterModel />
             </Suspense>}
           </MainContainer>
