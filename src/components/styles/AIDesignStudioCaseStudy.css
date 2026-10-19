@@ -211,3 +211,7 @@
 .ai-case .ai-case-meta small{color:#484844!important}
 .ai-case .ai-case-section-head>span{color:#724032!important}
 .ai-case .ai-case-section-head h2 em{color:#81502b!important}
+
+/* WCAG AA audit: step numbers and descriptions (both viewport widths). */
+.ai-case .ai-case-flow-step>span{color:#5e3a70}
+.ai-case .ai-case-flow-step>p{color:#444a4a}
