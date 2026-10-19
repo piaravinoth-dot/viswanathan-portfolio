@@ -375,6 +375,7 @@ html,body,#root{max-width:100%;overflow-x:clip}
 .pv-track-row b.pending{color:#6d3e10}
 
 /* UI UX Pro Max: intentional hover/focus feedback; no visual redesign. */
+.mobile-product-orbit:focus,
 .mobile-product-orbit:focus-visible{
   outline:3px solid #e9a36a;
   outline-offset:4px;
