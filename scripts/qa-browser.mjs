@@ -62,6 +62,22 @@ async function testViewport(browser, name, width) {
       ).catch(()=>null);
       const selected=await page.locator('.orbit-card.orbit-active').textContent();
       log(name,width,'index 06 selects Clip Studio',Boolean(selected?.includes('Clip Studio')));
+      // Skill-led UX: carousel must work without pointer input, with a focus
+      // indicator and the selected slide announced to assistive technology.
+      const orbit=page.locator('.mobile-product-orbit');
+      await orbit.focus();
+      log(name,width,'carousel has visible keyboard focus',await orbit.evaluate(el=>el.matches(':focus-visible')));
+      await page.keyboard.press('ArrowRight');
+      await page.waitForFunction(()=>document.querySelector('.orbit-card.orbit-active')?.textContent?.includes('AI Design Studio'),null,{timeout:4000});
+      log(name,width,'ArrowRight advances carousel',await page.locator('.orbit-card.orbit-active').textContent().then(t=>Boolean(t?.includes('AI Design Studio'))));
+      await page.keyboard.press('ArrowLeft');
+      await page.waitForFunction(()=>document.querySelector('.orbit-card.orbit-active')?.textContent?.includes('Clip Studio'),null,{timeout:4000});
+      log(name,width,'ArrowLeft reverses carousel',await page.locator('.orbit-card.orbit-active').textContent().then(t=>Boolean(t?.includes('Clip Studio'))));
+      if(name==='chromium'&&width===375){
+        await page.waitForTimeout(4750);
+        log(name,width,'mobile auto-rotation pauses on keyboard focus',await page.locator('.orbit-card.orbit-active').textContent().then(t=>Boolean(t?.includes('Clip Studio'))));
+      }
+      log(name,width,'selected title exposes live status',await page.locator('.orbit-controls span[aria-live]').count()===1);
       const href=await page.locator('.orbit-card.orbit-active a.orbit-card-action').getAttribute('href');
       log(name,width,'case study link target',href==='/work/clip-studio',href||'none');
       if(href==='/work/clip-studio'){
