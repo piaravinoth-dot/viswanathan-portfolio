@@ -34,3 +34,45 @@
 .ct-case .ct-ui-item-info>div:last-child>span{color:#38493d}
 .ct-case .ct-ui-search,
 .ct-case .ct-ui-toolbar span{color:#37483d}
+
+/* Final measured WCAG contrast: accessible editorial terracotta and UI labels. */
+.ct-case .ct-under>span,
+.ct-case .ct-two-top>div>span,
+.ct-case .ct-ui-gridhead>span,
+.ct-case .ct-ui-detail-copy>small,
+.ct-case .ct-ui-detail-copy>span,
+.ct-case .ct-ui-detail-side>p,
+.ct-case .ct-detail-caption>span,
+.ct-case .ct-queue .ct-chapter>div>span,
+.ct-case .ct-queue .ct-chapter>div>small,
+.ct-case .ct-queue .ct-chapter p,
+.ct-case .ct-ui-queue-pills>span,
+.ct-case .ct-ui-queue-stats>div>span,
+.ct-case .ct-ui-queue-row>span,
+.ct-case .ct-phone-app>small,
+.ct-case .ct-phone-tabs span,
+.ct-case .ct-phone-search,
+.ct-case .ct-phone-date>span,
+.ct-case .ct-phone-item small,
+.ct-case .ct-phone-item i,
+.ct-case .ct-phone-nav small,
+.ct-case .ct-phone-nav span small,
+.ct-case .ct-mobile-stage>span,
+.ct-case .ct-mobile-copy>span,
+.ct-case .ct-system-intro>span,
+.ct-case .ct-system-note{color:#3d483e!important}
+.ct-case .ct-two-top h2 em,
+.ct-case .ct-queue .ct-chapter h2 em,
+.ct-case .ct-mobile-copy h2 em,
+.ct-case .ct-ui-queue-row>span:last-child,
+.ct-case .ct-phone-tabs>b{color:#9e3424!important}
+.ct-case .ct-ui-queue-row.head>span{color:#38483e!important}
+.ct-case .ct-platform-missing,
+.ct-case .ct-platform-missing span,
+.ct-case .ct-platform-missing b{color:#374940!important}
+.ct-case .ct-ui-detail-status,
+.ct-case .ct-phone-add{background:#aa3525!important;color:#fff!important}
+.ct-case .ct-system-colors>div:first-child,
+.ct-case .ct-system-colors>div:first-child *{color:#391b17!important}
+.ct-case .ct-end{background:#b53624!important}
+.ct-case .ct-end a,.ct-case .ct-end>span,.ct-case .ct-end .ct-end-bottom span{color:#fff!important}
