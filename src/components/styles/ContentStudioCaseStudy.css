@@ -50,3 +50,8 @@
 .cs-ui-results small,.cs-ui-results>span,.cs-ui-story-badges span,.cs-ui-story p span{color:#434958}
 .cs-ui-story-badges b{color:#57336e}
 .cs-ui-page-heading small{color:#563970}
+
+
+/* AA readability for actions and meta labels in the editorial mockups. */
+.cs-case .cs-ui-story-actions span{color:#62416e!important}
+.cs-case .cs-intro-facts span{color:#454a40!important}
