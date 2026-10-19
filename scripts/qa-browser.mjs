@@ -111,14 +111,21 @@ async function testViewport(browser, name, width) {
         return active && active.className !== initial;
       },initialIndex,{timeout:8500}).then(()=>true).catch(()=>false);
       log(name,width,'desktop products auto-rotate when visible',changed);
-      const control = page.getByRole('button',{name:'Pause rotation'});
+      const control = page.locator('.orbit-autoplay');
       log(name,width,'desktop pause rotation control visible',await control.isVisible());
       await control.click();
+      await page.waitForFunction(() => document.querySelector('.orbit-autoplay')?.getAttribute('aria-pressed')==='false',null,{timeout:2000}).catch(()=>null);
+      const pauseState=await control.evaluate(el=>({text:el.textContent?.trim(),pressed:el.getAttribute('aria-pressed')}));
+      log(name,width,'desktop pause control switches to Play',pauseState.pressed==='false'&&pauseState.text==='Play rotation',JSON.stringify(pauseState));
       const pausedIndex = await page.locator('.orbit-card.orbit-active').getAttribute('class');
       await page.waitForTimeout(5900);
       const stillPaused = await page.locator('.orbit-card.orbit-active').getAttribute('class');
       log(name,width,'desktop rotation stays paused on request',pausedIndex===stillPaused);
-      await page.getByRole('button',{name:'Play rotation'}).click();
+      if(pauseState.pressed==='false'){
+        await control.click();
+        const resumed=await control.evaluate(el=>({text:el.textContent?.trim(),pressed:el.getAttribute('aria-pressed')}));
+        log(name,width,'desktop Play control resumes rotation',resumed.pressed==='true'&&resumed.text==='Pause rotation',JSON.stringify(resumed));
+      }
     }
     if(width===375||width===1440){
       log(name,width,'no manual 3D switch',await page.locator('.hero-3d-trigger').count()===0);
