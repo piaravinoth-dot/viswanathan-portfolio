@@ -13,17 +13,19 @@ const Loading = ({ percent }: { percent: number }) => {
   useEffect(() => {
     if (percent < 100) return;
     let exitTimer: number;
+    // Let the original Loading → Welcome transition play without trapping
+    // visitors for three extra seconds before the portfolio becomes usable.
     const completeTimer = window.setTimeout(() => {
       setLoaded(true);
-      exitTimer = window.setTimeout(() => setIsLoaded(true), 1000);
-    }, 600);
+      exitTimer = window.setTimeout(() => setIsLoaded(true), 600);
+    }, 180);
     return () => {window.clearTimeout(completeTimer);window.clearTimeout(exitTimer);};
   }, [percent >= 100]);
 
   useEffect(() => {
     if (!isLoaded) return;
     setClicked(true);
-    const timer = window.setTimeout(() => setIsLoading(false), 900);
+    const timer = window.setTimeout(() => setIsLoading(false), 550);
     return () => window.clearTimeout(timer);
   }, [isLoaded, setIsLoading]);
 
@@ -53,8 +55,8 @@ const Loading = ({ percent }: { percent: number }) => {
           </div>
         </div>
       </div>
-      <div className="loading-screen">
-        <div className="loading-marquee">
+      <div className="loading-screen" role="status" aria-label="Welcome, preparing portfolio">
+        <div className="loading-marquee" aria-hidden="true">
           <Marquee>
             <span> Art Director</span> <span>Product Designer</span>
             <span> Art Director</span> <span>Product Designer</span>
@@ -69,7 +71,7 @@ const Loading = ({ percent }: { percent: number }) => {
             <div className="loading-container">
               <div className="loading-content">
                 <div className="loading-content-in">
-                  Loading <span>{percent}%</span>
+                  Loading <span aria-hidden="true">{percent}%</span>
                 </div>
               </div>
               <div className="loading-box"></div>
