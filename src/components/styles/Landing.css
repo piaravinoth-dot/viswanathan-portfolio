@@ -456,3 +456,9 @@ h2.landing-info-h2 {
   }
   .mobile-3d-trigger:focus-visible{outline:3px solid #f6a66b;outline-offset:4px}
 }
+
+/* Prevent low-contrast intermediate animation frames and needless phone work. */
+@media(max-width:1024px){
+  .landing-role-word.role-first{animation:none!important;opacity:1!important;transform:none!important}
+  .landing-role-word.role-second{display:none!important;animation:none!important}
+}
