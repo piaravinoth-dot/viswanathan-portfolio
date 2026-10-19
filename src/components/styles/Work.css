@@ -361,3 +361,9 @@ html,body,#root{max-width:100%;overflow-x:clip}
 .product-topline,.product-count span{color:#42484c}
 .product-topline>span:first-child{color:#823b29}
 .product-heading-grid p{color:#414448}
+
+/* Lighthouse AA contrast: product card metadata and miniature interface labels. */
+.orbit-card-meta,.orbit-card-meta span{color:#303a3f}
+.pv-screen-top,.pv-screen-top span{color:#25372d}
+.pv-filter>span{color:#25372d}
+.pv-clip-formats span{color:#282724}
