@@ -59,7 +59,11 @@ try{
       const delta=metricsResult({original,pilot});
       states.push({type:"layout",width,delta});
       console.log("LAYOUT "+width+" "+JSON.stringify(delta));
-      // Compare stable first-viewport layout only. Offscreen elements may be translated\n      // 28px by ScrollTrigger before entering view and lazy images can resize later.\n      // Cross-browser QA separately asserts full layout, scroll completion and overflow.\n      const stable=delta.filter(x=>x.name==="hero"||x.name==="stage");\n      const largest=Math.max(...stable.map(x=>Math.max(Math.abs(x.widthDelta),Math.abs(x.heightDelta))));
+      // Compare stable first-viewport layout only. Offscreen elements may be translated
+      // 28px by ScrollTrigger before entering view and lazy images can resize later.
+      // Cross-browser QA separately asserts full layout, scroll completion and overflow.
+      const stable=delta.filter(x=>x.name==="hero"||x.name==="stage");
+      const largest=Math.max(...stable.map(x=>Math.max(Math.abs(x.widthDelta),Math.abs(x.heightDelta))));
       if(largest>3)process.exitCode=1;
     }finally{await page.close()}
   }
