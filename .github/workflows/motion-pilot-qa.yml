@@ -59,6 +59,8 @@ jobs:
           done
           cat /tmp/baseline-preview.log
           exit 1
+      - name: Capture matching original and pilot visuals plus timing
+        run: node scripts/qa-motion-visual-compare.mjs
       - name: Lighthouse baseline mobile
         run: npx lighthouse http://127.0.0.1:4174/work/ai-design-studio --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=baseline-lighthouse-mobile.json --quiet
       - name: Lighthouse baseline desktop
@@ -114,6 +116,9 @@ jobs:
           path: |
             motion-pilot-results.json
             motion-crossbrowser-results.json
+            motion-compare-*.png
+            motion-timing-*.png
+            motion-visual-comparison.json
             motion-crossbrowser-*.png
             motion-final-lighthouse-summary.json
             motion-lighthouse-mobile-2.json
