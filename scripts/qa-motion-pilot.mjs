@@ -20,8 +20,10 @@ try{
       await page.waitForTimeout(1600);
       check(`${width}px case study HTTP 200`,response?.status()===200,String(response?.status()));
       check(`${width}px pilot opt-in isolated to case study`,await page.locator("[data-motion-pilot]").count()===1);
+      check(`${width}px optional motion engine loaded only on desktop`,
+        await page.locator(".ai-case").getAttribute("data-motion-active") === (width>=761?"true":null));
       check(`${width}px all narrative sections preserved`,await page.locator(".ai-case-hero, .ai-case-intro, .ai-case-flow, .ai-case-feature, .ai-showcase, .ai-case-end").count()===9);
-      check(`${width}px hero heading visible`,await page.locator(".ai-case-hero-title h1").evaluate(el=>getComputedStyle(el).opacity>0.95));
+      check(`${width}px heading remains fully legible`,await page.locator(".ai-case-hero-title h1").evaluate(el=>getComputedStyle(el).opacity>0.95));
       check(`${width}px hero stage visible`,await page.locator(".ai-case-hero-stage").evaluate(el=>getComputedStyle(el).opacity>0.95));
       for(const selector of [".ai-case-flow-step",".ai-case-split-visual",".ai-showcase-card"]){
         const el=page.locator(selector).first();
