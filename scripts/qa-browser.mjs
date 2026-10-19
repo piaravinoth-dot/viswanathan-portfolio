@@ -37,6 +37,8 @@ async function testViewport(browser, name, width) {
     log(name,width,'index buttons within viewport',within,JSON.stringify(metrics.indexRects.map(r=>[Math.round(r.left),Math.round(r.right)])));
     log(name,width,'no document horizontal overflow',metrics.scrollWidth<=metrics.vw+tolerance,`scrollWidth=${metrics.scrollWidth} viewport=${metrics.vw}`);
     if(width===375||width===1440){
+      const optional3D = page.locator('.hero-3d-trigger');
+      log(name,width,'3D available on demand',await optional3D.isVisible().catch(()=>false));
       await page.locator('.orbit-index button').nth(5).click({timeout:12000});
       // WebKit can be busy compiling the desktop hero's 3D scene.
       // Wait for the actual state transition rather than a fixed 1.1 s.
@@ -48,6 +50,11 @@ async function testViewport(browser, name, width) {
       log(name,width,'index 06 selects Clip Studio',Boolean(selected?.includes('Clip Studio')));
       const href=await page.locator('.orbit-card.orbit-active a.orbit-card-action').getAttribute('href');
       log(name,width,'case study link target',href==='/work/clip-studio',href||'none');
+      if(href==='/work/clip-studio'){
+        await page.locator('.orbit-card.orbit-active .orbit-card-action').click({timeout:12000});
+        await page.waitForURL('**/work/clip-studio',{timeout:15000});
+        log(name,width,'case study opens on click',page.url().endsWith('/work/clip-studio'),page.url());
+      }
     }
   } catch(e) {
     log(name,width,'browser scenario completes',false,e.message);
