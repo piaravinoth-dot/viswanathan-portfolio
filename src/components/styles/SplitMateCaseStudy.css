@@ -38,3 +38,16 @@
 .sm-case .sm-journey-head p,.sm-case .sm-journey-step p,.sm-case .sm-balance-feature .sm-chapter p{color:#404941!important}
 .sm-case .sm-journey-step>span,.sm-case .sm-journey-head>span,.sm-case .sm-intro-meta span{color:#3f602e!important}
 .sm-case .sm-add-panel label{color:#394441!important}
+
+/* WCAG AA audit: balances, captions, peach headings, illustrative phone text. */
+.sm-case .sm-chapter-kicker>span,
+.sm-case .sm-balance-callout.second small{color:#315d38}
+.sm-case .sm-stage-caption>span{color:#2c5131}
+.sm-case .sm-expense-head>div>span{color:#42553b}
+.sm-case .sm-expense-head>p{color:#60413c}
+.sm-case .sm-amount-field>span{color:#3b4841}
+.sm-case .sm-example h2 em,
+.sm-case .sm-example .sm-wrap>div>span{color:#3f642d}
+.sm-case .sm-example p{color:#424c3e}
+.sm-case .sm-phone-content small,
+.sm-case .sm-phone-content label{color:#3a4640}
