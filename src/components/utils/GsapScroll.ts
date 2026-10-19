@@ -46,7 +46,11 @@ export function setAllTimeline() {
   // All four experiences remain in the DOM and the layout never changes.
   media.add("(min-width: 901px)", () => {
     const context = gsap.context(() => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        // Text stays visible and the progress line is fully drawn without motion.
+        gsap.set(".career-timeline",{maxHeight:"100%",opacity:1});
+        return;
+      }
       const entries = gsap.utils.toArray<HTMLElement>(".career-info-box");
       if (!entries.length) return;
       const timeline = gsap.timeline({
@@ -74,7 +78,11 @@ export function setAllTimeline() {
   });
   media.add("(max-width: 900px)", () => {
     const context = gsap.context(() => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        // Text stays visible and the progress line is fully drawn without motion.
+        gsap.set(".career-timeline",{maxHeight:"100%",opacity:1});
+        return;
+      }
       const entries = gsap.utils.toArray<HTMLElement>(".career-info-box");
       // Each job reveals independently when it enters the phone viewport.
       // Scroll back up to reverse naturally, without autoplaying offscreen items.
