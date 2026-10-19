@@ -2,10 +2,14 @@ import {chromium} from 'playwright';
 import fs from 'node:fs';
 const base=process.env.QA_URL||'http://127.0.0.1:4173';
 const browser=await chromium.launch({headless:true});
+const cases=['ai-design-studio','content-studio','social-media-intelligence','content-tracker','splitmate','clip-studio'];
 const tests=[
-  {name:'mobile 375px',width:375,path:'/'},
-  {name:'desktop 1440px',width:1440,path:'/'},
-  {name:'product case study 1440px',width:1440,path:'/work/clip-studio'}
+  {name:'mobile homepage 375px',width:375,path:'/'},
+  {name:'desktop homepage 1440px',width:1440,path:'/'},
+  ...cases.flatMap(slug=>[
+    {name:slug+' mobile 375px',width:375,path:'/work/'+slug},
+    {name:slug+' desktop 1440px',width:1440,path:'/work/'+slug}
+  ])
 ];
 const results=[];
 for(const t of tests){
@@ -28,6 +32,7 @@ for(const t of tests){
 await browser.close();
 fs.writeFileSync('qa-accessibility-results.json',JSON.stringify(results,null,2));
 const serious=results.flatMap(x=>x.violations||[]).filter(v=>['critical','serious'].includes(v.impact));
+const moderate=results.flatMap(x=>x.violations||[]).filter(v=>v.impact==='moderate');
 const errors=results.filter(x=>x.error);
-console.log('Accessibility QA complete: '+serious.length+' serious/critical instances; '+errors.length+' testing errors');
-if(serious.length||errors.length)process.exitCode=1;
+console.log('Accessibility QA complete: '+tests.length+' pages tested; '+serious.length+' serious/critical, '+moderate.length+' moderate violations; '+errors.length+' testing errors');
+if(serious.length||moderate.length||errors.length)process.exitCode=1;
