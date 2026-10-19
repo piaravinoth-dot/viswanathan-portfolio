@@ -175,7 +175,7 @@
   left: 0;
 }
 
-.landing-intro h2 {
+.landing-intro .landing-greeting {
   margin: 0;
   color: var(--accentColor);
   font-size: 22px;
@@ -275,7 +275,7 @@ h2.landing-info-h2 {
     font-size: 18px;
   }
 
-  .landing-intro h2 {
+  .landing-intro .landing-greeting {
     font-size: 18px;
   }
 
@@ -299,7 +299,7 @@ h2.landing-info-h2 {
     height: 80vh;
   }
 
-  .landing-intro h2 {
+  .landing-intro .landing-greeting {
     font-size: 25px;
   }
 
@@ -373,7 +373,7 @@ h2.landing-info-h2 {
 }
 
 @media screen and (min-width: 1600px) {
-  .landing-intro h2 {
+  .landing-intro .landing-greeting {
     font-size: 35px;
   }
 
@@ -409,7 +409,7 @@ h2.landing-info-h2 {
     right: 0;
     max-width: 460px;
   }
-  .landing-intro h2 {font-size:20px;line-height:1.4;margin-bottom:7px}
+  .landing-intro .landing-greeting {font-size:20px;line-height:1.4;margin-bottom:7px}
   .landing-intro h1 {font-size:clamp(26px,6.8vw,34px);line-height:1.08;letter-spacing:1.5px}
   .landing-summary {max-width:390px;font-size:13px;line-height:1.6;margin:14px 0 10px}
   .landing-actions {gap:24px}
