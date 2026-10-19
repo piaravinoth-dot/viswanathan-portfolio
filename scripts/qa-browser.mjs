@@ -42,8 +42,16 @@ async function testViewport(browser, name, width) {
     if(width===375||width===1440){
       log(name,width,'no manual 3D switch',await page.locator('.hero-3d-trigger').count()===0);
       if(name==='chromium'){
-        const auto3D=await page.locator('.character-model').waitFor({state:'attached',timeout:14000}).then(()=>true).catch(()=>false);
-        log(name,width,'3D starts automatically',auto3D);
+        const status=await page.waitForFunction(()=>
+          document.documentElement.dataset.character3d==='starting' ||
+          document.documentElement.dataset.character3d==='unsupported',
+          null,{timeout:14000}
+        ).then(handle=>handle.jsonValue()).catch(()=>null);
+        const mode=await page.evaluate(()=>document.documentElement.dataset.character3d||'not-started');
+        const mounted=await page.locator('.character-model').count()===1;
+        log(name,width,'automatic 3D starts with hardware or safely skips software renderer',
+          Boolean(status)&&(mode==='unsupported'||mounted),mode+(mounted?' mounted':''));
+        if(mode==='starting')log(name,width,'3D has mounted automatically',mounted);
       }
       await page.locator('.orbit-index button').nth(5).click({timeout:12000});
       // WebKit can be busy compiling the desktop hero's 3D scene.
