@@ -367,3 +367,9 @@ html,body,#root{max-width:100%;overflow-x:clip}
 .pv-screen-top,.pv-screen-top span{color:#25372d}
 .pv-filter>span{color:#25372d}
 .pv-clip-formats span{color:#282724}
+
+/* Lighthouse desktop AA contrast: small dashboard/chart labels and status chips. */
+.pv-chart-head span{color:#334257}
+.pv-track-head{color:#4b3b31}
+.pv-track-row b{color:#1c5630}
+.pv-track-row b.pending{color:#6d3e10}
