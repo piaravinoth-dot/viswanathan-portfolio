@@ -24,3 +24,11 @@
 @media(max-width:560px){.sm-pair-stage{padding-left:12px;padding-right:12px}.sm-pair-phone.first,.sm-pair-phone.second,.sm-pair-phone.third{flex-basis:min(300px,calc(100vw - 66px))}.sm-pair-stage .sm-device{width:100%}.sm-expense-phone{width:100%}.sm-expense-phone .sm-device{width:min(300px,100%)}}
 @media(max-width:360px){.sm-expense-stage{padding:25px 8px}.sm-add-panel{padding:12px}.sm-add-panel .sm-dark-button{font-size:10px}.sm-case-nav>a:last-child{font-size:11px}.sm-balance-callout b{font-size:14px}.sm-pair-stage .sm-panel{padding:13px}}
 @media(max-width:360px){.sm-hero-stage{height:600px}.sm-hero-phone-main{top:-55px;transform:translateX(-50%) scale(.74)}.sm-balance-stage{height:780px}.sm-balance-feature-phone{top:-40px;transform:translateX(-50%) scale(.74)}.sm-settlement-phone{top:-40px;transform:translateX(-50%) scale(.74)}}
+
+
+/* WCAG AA: secondary text in pale expense cards and the product narrative. */
+.sm-activity-date span,.sm-activity-foot,
+.sm-phone-head small,.sm-phone-eyebrow,.sm-phone-row-title span,
+.sm-activity-card small,.sm-phone-nav span:not(.active){color:#414c47}
+.sm-intro h2 em,.sm-intro-facts span{color:#45672f}
+.sm-phone-content p,.sm-phone-content small{color:#414c47}
