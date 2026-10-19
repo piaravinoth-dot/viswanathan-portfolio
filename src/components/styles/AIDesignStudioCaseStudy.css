@@ -230,3 +230,10 @@
 .ai-case .ai-case-system .ai-case-kicker{color:#e8bea8!important}
 .ai-case .ai-case-end h2 em{color:#49305b!important}
 .ai-case .ai-case-end-footer>span{color:#3c304a!important}
+
+/* Scoped motion-pilot micro-interaction: no layout or default-state changes. */
+@media (prefers-reduced-motion:no-preference){
+  .ai-case[data-motion-pilot] .ai-case-link svg{transition:transform .24s ease-out}
+  .ai-case[data-motion-pilot] .ai-case-link:hover svg,
+  .ai-case[data-motion-pilot] .ai-case-link:focus-visible svg{transform:translate(3px,-3px)}
+}
