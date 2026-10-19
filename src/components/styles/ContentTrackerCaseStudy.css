@@ -15,3 +15,7 @@
 .ct-ui-brand strong span{color:#a53222}
 .ct-ui-topnav span,.ct-ui-topright,.ct-ui-heading small,.ct-ui-heading p,.ct-ui-search{color:#3e4b43}
 .ct-ui-day,.ct-ui-toolbar{color:#3e4b43}
+
+
+/* Preserve the editorial two-tone heading on the deeper WCAG-compliant orange. */
+.ct-hero h1 em{color:#14100e}
