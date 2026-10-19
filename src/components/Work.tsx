@@ -46,6 +46,17 @@ const orbitRefs=useRef<(HTMLDivElement|null)[]>([]);
 const touchStart=useRef<{x:number;y:number}|null>(null);
 const orbitSwipeAt=useRef(0);
 const orbitUserPause=useRef<number|null>(null);
+// Pointer-down handles mouse/touch reliably even if scroll animation changes
+// the hovered card before click. Keyboard/assistive activation uses click.
+const toggleOrbitPlayback=()=>{
+  if(orbitUserPause.current!==null){
+    window.clearTimeout(orbitUserPause.current);
+    orbitUserPause.current=null;
+  }
+  const nextPlaying=!orbitPlaying;
+  orbitManuallyPaused.current=!nextPlaying;
+  setOrbitPlaying(nextPlaying);
+};
 const orbitNext=(delta:number)=>{
   setOrbitIndex(current=>(current+delta+products.length)%products.length);
   if(orbitUserPause.current!==null)window.clearTimeout(orbitUserPause.current);
@@ -154,7 +165,7 @@ return <section className="work-section" id="work">
     </div>)}
   </div>
   <div className="orbit-controls"><button type="button" onClick={()=>orbitNext(-1)} aria-label="Previous product"><MdArrowBack/></button><span aria-live={orbitPlaying?"off":"polite"} aria-atomic="true">{products[orbitIndex].title}</span><button type="button" onClick={()=>orbitNext(1)} aria-label="Next product"><MdArrowForward/></button></div>
-  <button type="button" className="orbit-autoplay" onClick={()=>{if(orbitUserPause.current!==null)window.clearTimeout(orbitUserPause.current);orbitManuallyPaused.current=orbitPlaying;setOrbitPlaying(current=>!current)}} aria-pressed={orbitPlaying}>{orbitPlaying?"Pause rotation":"Play rotation"}</button>
+  <button type="button" className="orbit-autoplay" onPointerDown={event=>{if(event.button===0){event.stopPropagation();toggleOrbitPlayback();}}} onClick={event=>{if(event.detail===0)toggleOrbitPlayback();}} aria-pressed={orbitPlaying}>{orbitPlaying?"Pause rotation":"Play rotation"}</button>
   <div className="orbit-index" aria-label="Choose a product">{products.map((p,i)=><button type="button" key={p.id} aria-current={orbitIndex===i?"true":undefined} className={orbitIndex===i?"orbit-index-active":""} onClick={()=>orbitNext((i-orbitIndex+products.length)%products.length)}>{p.id} <span>{p.title}</span></button>)}</div>
   <p className="orbit-note">{orbitMobile?"SWIPE CARDS OR USE ARROWS TO EXPLORE":"AUTOMATIC ROTATION · HOVER TO PAUSE · USE ARROWS"} · SIX PRODUCTS</p>
 </div>

@@ -417,3 +417,6 @@ html,body,#root{max-width:100%;overflow-x:clip}
   .orbit-autoplay:hover {border-color:#e5ad86;color:#fff}
   .orbit-autoplay:focus-visible {outline:3px solid #e5ad86;outline-offset:3px}
 }
+
+/* Keep the pause control above transformed orbit layers and pointer-interactive. */
+.orbit-autoplay{position:relative;z-index:30;pointer-events:auto;touch-action:manipulation}
