@@ -22,7 +22,7 @@ for(const t of tests){
       runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','best-practice']}
     }));
     const found=a.violations.map(v=>({id:v.id,impact:v.impact,description:v.description,
-      nodes:v.nodes.slice(0,8).map(n=>({target:n.target,summary:n.failureSummary}))}));
+      nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}));
     results.push({scenario:t.name,violations:found,passes:a.passes.length,incomplete:a.incomplete.length});
     console.log(t.name+' | '+a.passes.length+' checks passed, '+found.length+' violations');
     for(const v of found)console.log('  '+v.impact+' '+v.id+' '+JSON.stringify(v.nodes).slice(0,1000));
