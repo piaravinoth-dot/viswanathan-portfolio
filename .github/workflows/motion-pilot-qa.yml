@@ -11,7 +11,7 @@ permissions:
 jobs:
   motion-pilot:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -21,8 +21,8 @@ jobs:
         run: |
           npm install --no-audit
           npm install --no-save --ignore-scripts playwright lighthouse
-      - name: Install headless Chromium
-        run: npx playwright install --with-deps chromium
+      - name: Install three browser engines
+        run: npx playwright install --with-deps chromium firefox webkit
       - name: Build the isolated preview
         run: npm run build
       - name: Start preview server
@@ -36,6 +36,8 @@ jobs:
           exit 1
       - name: Validate animations, mobile and reduced motion
         run: node scripts/qa-motion-pilot.mjs
+      - name: Cross-browser and responsive visual QA
+        run: node scripts/qa-motion-crossbrowser.mjs
       - name: Lighthouse mobile
         run: npx lighthouse http://127.0.0.1:4173/work/ai-design-studio --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=motion-lighthouse-mobile.json --quiet
       - name: Lighthouse desktop
@@ -61,31 +63,48 @@ jobs:
         run: npx lighthouse http://127.0.0.1:4174/work/ai-design-studio --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=baseline-lighthouse-mobile.json --quiet
       - name: Lighthouse baseline desktop
         run: npx lighthouse http://127.0.0.1:4174/work/ai-design-studio --preset=desktop --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=baseline-lighthouse-desktop.json --quiet
-      - name: Compare pilot against original case-study Lighthouse
+      - name: Lighthouse repeat mobile baseline round 2
+        run: npx lighthouse http://127.0.0.1:4174/work/ai-design-studio --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=baseline-lighthouse-mobile-2.json --quiet
+      - name: Lighthouse repeat mobile pilot round 2
+        run: npx lighthouse http://127.0.0.1:4173/work/ai-design-studio --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=motion-lighthouse-mobile-2.json --quiet
+      - name: Lighthouse repeat mobile pilot round 3
+        run: npx lighthouse http://127.0.0.1:4173/work/ai-design-studio --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=motion-lighthouse-mobile-3.json --quiet
+      - name: Lighthouse repeat mobile baseline round 3
+        run: npx lighthouse http://127.0.0.1:4174/work/ai-design-studio --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=baseline-lighthouse-mobile-3.json --quiet
+      - name: Compare three mobile rounds and desktop against untouched baseline
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
-          for(const size of ['mobile','desktop']){
-            const p=JSON.parse(fs.readFileSync('motion-lighthouse-'+size+'.json'));
-            const b=JSON.parse(fs.readFileSync('baseline-lighthouse-'+size+'.json'));
-            const scores = r=>Object.fromEntries(Object.entries(r.categories).map(([k,v])=>[k,Math.round(v.score*100)]));
-            const audits=r=>r.categories.accessibility.auditRefs
-              .map(x=>({id:x.id,score:r.audits[x.id]?.score,title:r.audits[x.id]?.title,details:r.audits[x.id]?.details?.items?.slice(0,2)}))
-              .filter(x=>x.score!==null&&x.score<1);
-            const pilot=scores(p),baseline=scores(b);
-            console.log(size,JSON.stringify({
-              pilot,baseline,
-              pilotLCP:Math.round(p.audits['largest-contentful-paint'].numericValue),
-              baselineLCP:Math.round(b.audits['largest-contentful-paint'].numericValue),
-              pilotCLS:p.audits['cumulative-layout-shift'].numericValue,
-              baselineCLS:b.audits['cumulative-layout-shift'].numericValue,
-              pilotAccessibilityGaps:audits(p),
-              baselineAccessibilityGaps:audits(b)
-            }));
-            if(pilot.performance<baseline.performance-5)process.exitCode=1;
-            if(pilot.accessibility<baseline.accessibility)process.exitCode=1;
-            if(pilot.seo<baseline.seo)process.exitCode=1;
-          }
+          const median=a=>{const xs=[...a].sort((x,y)=>x-y);return xs[Math.floor(xs.length/2)]};
+          const read=(name)=>JSON.parse(fs.readFileSync(name+'.json','utf8'));
+          const p=read('motion-lighthouse-mobile'),b=read('baseline-lighthouse-mobile');
+          const pm=[p,read('motion-lighthouse-mobile-2'),read('motion-lighthouse-mobile-3')];
+          const bm=[b,read('baseline-lighthouse-mobile-2'),read('baseline-lighthouse-mobile-3')];
+          const score=(r,k)=>Math.round(r.categories[k].score*100);
+          const audit=(r,k)=>r.audits[k].numericValue;
+          const summarize=r=>({
+            performanceMedian:median(r.map(x=>score(x,'performance'))),
+            accessibilityMin:Math.min(...r.map(x=>score(x,'accessibility'))),
+            seoMin:Math.min(...r.map(x=>score(x,'seo'))),
+            lcpMedian:median(r.map(x=>audit(x,'largest-contentful-paint'))),
+            clsMedian:median(r.map(x=>audit(x,'cumulative-layout-shift'))),
+            tbtMedian:median(r.map(x=>audit(x,'total-blocking-time'))),
+            performanceSamples:r.map(x=>score(x,'performance'))
+          });
+          const pilot=summarize(pm),baseline=summarize(bm);
+          const d=read('motion-lighthouse-desktop'),bd=read('baseline-lighthouse-desktop');
+          const desktopPilot=Object.fromEntries(Object.keys(d.categories).map(k=>[k,score(d,k)]));
+          const desktopBaseline=Object.fromEntries(Object.keys(bd.categories).map(k=>[k,score(bd,k)]));
+          const report={mobile:{pilot,baseline},desktop:{pilot:desktopPilot,baseline:desktopBaseline}};
+          console.log(JSON.stringify(report,null,2));
+          fs.writeFileSync('motion-final-lighthouse-summary.json',JSON.stringify(report,null,2));
+          if(pilot.performanceMedian < baseline.performanceMedian-5)process.exitCode=1;
+          if(pilot.accessibilityMin < baseline.accessibilityMin)process.exitCode=1;
+          if(pilot.seoMin < baseline.seoMin)process.exitCode=1;
+          if(pilot.lcpMedian > baseline.lcpMedian+450)process.exitCode=1;
+          if(pilot.clsMedian > baseline.clsMedian+.01)process.exitCode=1;
+          if(desktopPilot.performance < desktopBaseline.performance-5)process.exitCode=1;
+          if(desktopPilot.accessibility < desktopBaseline.accessibility)process.exitCode=1;
           NODE
       - name: Save visual preview and QA results
         if: always()
@@ -94,6 +113,13 @@ jobs:
           name: ai-design-motion-pilot
           path: |
             motion-pilot-results.json
+            motion-crossbrowser-results.json
+            motion-crossbrowser-*.png
+            motion-final-lighthouse-summary.json
+            motion-lighthouse-mobile-2.json
+            motion-lighthouse-mobile-3.json
+            baseline-lighthouse-mobile-2.json
+            baseline-lighthouse-mobile-3.json
             motion-pilot-375.png
             motion-pilot-1440.png
             motion-lighthouse-mobile.json
