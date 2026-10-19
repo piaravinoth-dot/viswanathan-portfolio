@@ -12,20 +12,9 @@ const MainContainer = lazy(() => import("./components/MainContainer"));
 import { LoadingProvider } from "./context/LoadingProvider";
 
 const App = () => {
-  // The interactive 3D character remains available on mobile on demand.
-  // Avoid loading a multi-megabyte WebGL scene during the critical mobile load.
-  // Auto-render on capable desktops; avoid blocking interaction on modest CPUs.
-  const canAutoRender3D=()=>window.matchMedia("(min-width: 1025px)").matches &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-    (navigator.hardwareConcurrency||4)>4;
-  const [desktop3D,setDesktop3D]=useState(canAutoRender3D);
-  const [mobile3DRequested,setMobile3DRequested]=useState(false);
-  useEffect(()=>{
-    const mq=window.matchMedia("(min-width: 1025px)");
-    const update=()=>setDesktop3D(canAutoRender3D());
-    mq.addEventListener("change",update);
-    return()=>mq.removeEventListener("change",update);
-  },[]);
+  // Compile the 3D character only when the visitor opts in; automatic scene
+  // loading monopolized the main thread on desktops during carousel navigation.
+  const [threeDRequested,setThreeDRequested]=useState(false);
   const route = window.location.pathname.replace(/\/$/, "");
   const caseStudies = {
     "/work/ai-design-studio": AIDesignStudioCaseStudy,
@@ -69,8 +58,8 @@ const App = () => {
     <>
       <LoadingProvider>
         <Suspense>
-          <MainContainer onActivate3D={()=>setMobile3DRequested(true)}>
-            {(desktop3D||mobile3DRequested)&&<Suspense fallback={null}>
+          <MainContainer onActivate3D={()=>setThreeDRequested(true)}>
+            {threeDRequested&&<Suspense fallback={null}>
               <CharacterModel />
             </Suspense>}
           </MainContainer>
