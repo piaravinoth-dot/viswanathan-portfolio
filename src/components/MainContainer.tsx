@@ -44,6 +44,6 @@ const MainContainer=({children,onActivate3D}:PropsWithChildren<{onActivate3D:()=
     window.addEventListener("resize",resize);
     return()=>{disposed=true;window.clearTimeout(timer);window.removeEventListener("resize",resize);stopIntro?.();stopCareer?.();setSplitText(true);};
   },[isLoading]);
-  return <div className="container-main"><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&(children||<button type="button" className="mobile-3d-trigger" onClick={onActivate3D} aria-label="Load interactive 3D character">View 3D experience ↗</button>)}</Landing><About/><WhatIDo/><Career/><Work/><Contact/></div></div></div></div>;
+  return <div className="container-main"><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&children}{!children&&<button type="button" className="mobile-3d-trigger hero-3d-trigger" onClick={onActivate3D} aria-label="Load interactive 3D character">View 3D experience ↗</button>}</Landing><About/><WhatIDo/><Career/><Work/><Contact/></div></div></div></div>;
 };
 export default MainContainer;
