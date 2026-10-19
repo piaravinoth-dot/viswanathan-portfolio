@@ -215,3 +215,18 @@
 /* WCAG AA audit: step numbers and descriptions (both viewport widths). */
 .ai-case .ai-case-flow-step>span{color:#5e3a70}
 .ai-case .ai-case-flow-step>p{color:#444a4a}
+
+/* Final measured WCAG contrast: pastel feature canvases and microcopy. */
+.ai-case .ai-case-feature-head h2 em,
+.ai-case .ai-case-split-copy h2 em{color:#633773!important}
+.ai-case .ai-case-violet .ai-case-visual-label,
+.ai-case .ai-case-violet .ai-case-visual-foot,
+.ai-case .ai-case-peach .ai-case-visual-label,
+.ai-case .ai-case-peach .ai-case-visual-foot{color:#382e42!important}
+.ai-case .ai-case-split-copy p,
+.ai-case .ai-ui-layer-pop small,
+.ai-case .ai-ui-element-pop p,
+.ai-case .ai-ui-reference{color:#354154!important}
+.ai-case .ai-case-system .ai-case-kicker{color:#e8bea8!important}
+.ai-case .ai-case-end h2 em{color:#49305b!important}
+.ai-case .ai-case-end-footer>span{color:#3c304a!important}
