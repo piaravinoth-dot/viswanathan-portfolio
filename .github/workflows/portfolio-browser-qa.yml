@@ -1,0 +1,36 @@
+name: Portfolio Browser QA
+on:
+  push:
+    branches: [malhotra-3d-rebuild]
+    paths:
+      - 'scripts/qa-browser.mjs'
+      - '.github/workflows/portfolio-browser-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install isolated browser test dependency
+        run: npm install --no-save --ignore-scripts playwright
+      - name: Install Chromium, Firefox and WebKit
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Test live portfolio at 7 viewport widths
+        env:
+          QA_URL: https://viswanathan-portfolio-iota.vercel.app
+        run: node scripts/qa-browser.mjs
+      - name: Store browser QA results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-browser-qa
+          path: qa-browser-results.json
+          if-no-files-found: ignore
