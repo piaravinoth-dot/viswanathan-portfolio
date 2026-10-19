@@ -127,3 +127,33 @@ div.resume-button span {
 .resume-button:focus-visible {outline: 2px solid #f6a66b;outline-offset: 4px}
 .resume-button > span {display: flex;align-items: center;font-size: 17px}
 @media(max-width:499px){.resume-button{font-size:11px;letter-spacing:2px;padding:8px 10px;bottom:24px}}
+
+
+/* Desktop social links share the right edge; nothing floats on the left. */
+@media (min-width:900px){
+  .social-icons{
+    display:flex;
+    left:auto;
+    right:calc((100% - 100vw) / 2 + max(14px, env(safe-area-inset-right)));
+    bottom:186px;
+    padding:0;
+    gap:0;
+    border:1px solid #ffffff24;
+    border-radius:4px;
+    background:#0b1017ed;
+    align-items:center;
+  }
+  .social-icons span{width:40px;height:40px}
+  .social-icons a{font-size:19px;color:#c5c8ce}
+  .social-icons a:hover{color:var(--accentColor)}
+  .social-icons a:focus-visible{outline:2px solid var(--accentColor);outline-offset:4px}
+  .resume-button{
+    font-size:11px;
+    line-height:16px;
+    letter-spacing:2px;
+    padding:9px 10px;
+    gap:6px;
+    min-height:40px;
+  }
+  .resume-button > span{font-size:14px}
+}

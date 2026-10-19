@@ -50,6 +50,30 @@ async function testViewport(browser, name, width) {
     const linkedIn=page.locator('a[href*="linkedin.com/in/viswanathan-g-55a0176a"]');
     log(name,width,'exactly one LinkedIn link',await linkedIn.count()===1,`count=${await linkedIn.count()}`);
     log(name,width,'LinkedIn retained in right-hand rail',await page.locator('.icons-section .resume-button[href*="linkedin.com"]').count()===1);
+    if(width>=1025){
+      const desktop = await page.evaluate(() => {
+        const github = document.querySelector('.social-icons a[aria-label="GitHub"]');
+        const linkedIn = document.querySelector('.resume-button');
+        const about = document.querySelector('.about-section');
+        const aside = document.querySelector('.about-aside');
+        const cap = document.querySelector('.whatIDO');
+        const gh = github?.getBoundingClientRect();
+        const li = linkedIn?.getBoundingClientRect();
+        return {
+          ghLeft:gh?.left ?? -1,
+          liLeft:li?.left ?? -1,
+          viewport:window.innerWidth,
+          aboutHeight:about?.getBoundingClientRect().height ?? 99999,
+          viewportHeight:window.innerHeight,
+          asideVisible:Boolean(aside && getComputedStyle(aside).display!=='none'),
+          capPadding:cap ? parseFloat(getComputedStyle(cap).paddingTop) : 99999
+        };
+      });
+      log(name,width,'GitHub and LinkedIn both anchored on right',desktop.ghLeft>desktop.viewport*.83&&desktop.liLeft>desktop.viewport*.83,JSON.stringify([desktop.ghLeft,desktop.liLeft,desktop.viewport]));
+      log(name,width,'About left editorial panel visible',desktop.asideVisible);
+      log(name,width,'desktop About avoids forced full-screen spacer',desktop.aboutHeight<desktop.viewportHeight*.96,`about height=${desktop.aboutHeight}, viewport=${desktop.viewportHeight}`);
+      log(name,width,'About to capabilities top padding compact',desktop.capPadding<=76,`padding=${desktop.capPadding}`);
+    }
     if(width===375||width===1440){
       log(name,width,'no manual 3D switch',await page.locator('.hero-3d-trigger').count()===0);
       if(name==='chromium'){

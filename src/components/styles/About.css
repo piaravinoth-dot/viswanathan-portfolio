@@ -74,3 +74,55 @@
 
 .about-position{font-size:12px;line-height:1.8;letter-spacing:.02em;font-weight:400;color:#b4bdc8;max-width:570px;margin:0 0 23px}.about-position span{color:#a0795c;margin:0 5px}
 @media(max-width:767px){.about-me{max-width:100%;padding:52px 0 0}.about-me h2.title{font-size:18px;letter-spacing:4px}.about-position{font-size:11px;line-height:1.85;margin-bottom:21px}.about-me p{font-size:clamp(22px,5.5vw,29px);line-height:1.45;letter-spacing:-.02em;font-weight:450;margin:0}.about-actions{gap:10px 22px;margin-top:25px}.about-actions a{font-size:12px;min-height:44px;box-sizing:border-box}}
+
+
+/* Desktop About: content-led height instead of reserving a blank full viewport.
+   A subtle editorial stat fills the unused left column without replacing 3D. */
+.about-aside{display:none}
+@media (min-width:1025px){
+  .about-section{
+    display:grid;
+    grid-template-columns:minmax(0,44%) minmax(0,1fr);
+    column-gap:6%;
+    align-items:center;
+    justify-content:initial;
+    height:auto;
+    min-height:clamp(500px,66svh,700px);
+    padding:clamp(58px,8svh,100px) 0 32px;
+    box-sizing:border-box;
+  }
+  .about-me{width:100%;max-width:none;min-width:0}
+  .about-aside{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    min-width:0;
+    max-width:100%;
+    padding:0 clamp(12px,3vw,64px);
+    box-sizing:border-box;
+    pointer-events:none;
+  }
+  .about-aside-overline{
+    font-size:11px;
+    letter-spacing:.2em;
+    color:#e4a174;
+    line-height:1.5;
+  }
+  .about-aside-count{
+    display:block;
+    font-size:clamp(105px,11vw,190px);
+    font-weight:300;
+    line-height:1;
+    letter-spacing:-.095em;
+    color:#7f8793;
+    font-variant-numeric:tabular-nums;
+    margin:14px 0 2px;
+  }
+  .about-aside-count span{color:var(--accentColor)}
+  .about-aside-label{font-size:14px;line-height:1.5;letter-spacing:.14em;color:#e4e1df}
+  .about-aside-detail{font-size:10px;line-height:1.6;letter-spacing:.08em;color:#aab3c1;margin-top:16px}
+}
+@media (min-width:1025px) and (max-height:700px){
+  .about-section{min-height:0;padding-top:64px;padding-bottom:26px}
+}
