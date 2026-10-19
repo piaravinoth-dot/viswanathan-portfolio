@@ -343,3 +343,10 @@ html,body,#root{max-width:100%;overflow-x:clip}
 }
 @media(min-width:1440px){.orbit-index{grid-template-columns:repeat(6,minmax(0,1fr))!important}}
 @media(max-width:760px){.product-section .product-inner{max-width:calc(100% - 44px)}.mobile-product-orbit{max-width:calc(100% + 10px)}}
+
+/* Lighthouse contrast remediation for the embedded product UI on cream backgrounds. */
+.pv-clip-eyebrow{color:#71502f}
+.pv-clip h3 i{color:#81502c}
+.product-art-label{color:#45484c}
+.orbit-card:focus-visible,.orbit-card-action:focus-visible,.orbit-controls button:focus-visible,.orbit-index button:focus-visible{outline:3px solid #e9a36a;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.orbit-card,.orbit-card *{animation:none!important;transition:none!important}}
