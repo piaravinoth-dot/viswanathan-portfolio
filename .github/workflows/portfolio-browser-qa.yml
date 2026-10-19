@@ -5,6 +5,7 @@ on:
     paths:
       - 'src/**'
       - 'scripts/qa-browser.mjs'
+      - 'scripts/qa-accessibility.mjs'
       - '.github/workflows/portfolio-browser-qa.yml'
       - 'index.html'
       - 'vercel.json'
@@ -29,7 +30,7 @@ jobs:
       - name: Install portfolio and browser test dependencies
         run: |
           npm install --no-audit
-          npm install --no-save --ignore-scripts playwright
+          npm install --no-save --ignore-scripts playwright axe-core
       - name: Install Chromium, Firefox and WebKit
         run: npx playwright install --with-deps chromium firefox webkit
       - name: Build production source with SEO checks
@@ -47,10 +48,21 @@ jobs:
         env:
           QA_URL: http://127.0.0.1:4173
         run: node scripts/qa-browser.mjs
+      - name: WCAG accessibility checks for mobile, desktop and case study
+        env:
+          QA_URL: http://127.0.0.1:4173
+        run: node scripts/qa-accessibility.mjs
+      - name: Audit runtime dependency vulnerabilities
+        run: |
+          npm audit --omit=dev --json > qa-dependency-audit.json || true
+          node -e "const r=require('./qa-dependency-audit.json'); const v=r.metadata?.vulnerabilities; console.log('Runtime vulnerabilities:',v); if((v?.critical||0)+(v?.high||0)>0)process.exitCode=1"
       - name: Store browser QA results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: portfolio-browser-qa
-          path: qa-browser-results.json
+          path: |
+            qa-browser-results.json
+            qa-accessibility-results.json
+            qa-dependency-audit.json
           if-no-files-found: ignore
