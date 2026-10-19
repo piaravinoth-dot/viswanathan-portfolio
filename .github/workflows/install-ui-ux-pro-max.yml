@@ -1,0 +1,55 @@
+name: Install UI UX Pro Max Skill
+
+on:
+  push:
+    branches:
+      - malhotra-3d-rebuild
+    paths:
+      - .github/workflows/install-ui-ux-pro-max.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  install-skill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout portfolio
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install pinned upstream skill CLI
+        run: npm install --global --ignore-scripts --no-audit ui-ux-pro-max-cli@2.15.0
+      - name: Generate universal agent skill (offline templates)
+        run: uipro init --ai universal --offline
+      - name: Verify installed skill and search tool
+        run: |
+          test -s .agents/skills/ui-ux-pro-max/SKILL.md
+          test -s .agents/skills/ui-ux-pro-max/scripts/search.py
+          test -s .agents/skills/ui-ux-pro-max/data/products.csv
+          python3 .agents/skills/ui-ux-pro-max/scripts/search.py "portfolio" --domain product > /tmp/ui-ux-pro-max-search-result.txt
+          test -s /tmp/ui-ux-pro-max-search-result.txt
+          echo "Skill files: $(find .agents/skills/ui-ux-pro-max -type f | wc -l)"
+          head -c 400 /tmp/ui-ux-pro-max-search-result.txt
+          echo
+      - name: Commit only UI UX Pro Max to portfolio branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add .agents/skills/ui-ux-pro-max
+          if git diff --cached --quiet; then
+            echo "The requested skill is already installed and unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Install UI UX Pro Max agent skill v2.15.0 [skip ci]"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push origin HEAD:malhotra-3d-rebuild
+          echo "Installed skill was committed to malhotra-3d-rebuild."
