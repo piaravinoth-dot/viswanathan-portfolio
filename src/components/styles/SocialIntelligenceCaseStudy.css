@@ -43,3 +43,8 @@
 .si-ui-nav{color:#374253}
 .si-ui-page-head p,.si-ui-topbar{color:#414c5c}
 .si-ui-side-bottom span{color:#326241}
+
+
+/* AA readability in the small social intelligence report interface. */
+.si-case .si-ui-warning span,.si-case .si-ui-warning b{color:#614116!important}
+.si-case .si-ui-saved span,.si-case .si-ui-tabs span,.si-case .si-ui-kpi small,.si-case .si-ui-kpi span{color:#37455a!important}
