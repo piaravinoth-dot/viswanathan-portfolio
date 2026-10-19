@@ -59,7 +59,15 @@ const Scene=()=>{
     const onMouseMove=(event:MouseEvent)=>handleMouseMove(event,(x,y)=>{mouse={x,y};});
     const onTouchMove=(event:TouchEvent)=>handleTouchMove(event,(x,y)=>{mouse={x,y};});
     const onTouchEnd=()=>{stopTouchReset?.();stopTouchReset=handleTouchEnd((x,y,ix,iy)=>{mouse={x,y};interpolation={x:ix,y:iy};});};
-    const onResize=()=>{if(!disposed)handleResize(renderer,camera,canvasDiv);};
+    let previousWidth=window.innerWidth;
+    const onResize=()=>{
+      const width=window.innerWidth;
+      // Phone browser UI height shifts do not resize this width-based canvas;
+      // rescaling WebGL on every scroll-induced resize causes visible jitter.
+      if(width<=1024 && width===previousWidth)return;
+      previousWidth=width;
+      if(!disposed)handleResize(renderer,camera,canvasDiv);
+    };
     const landing=document.getElementById("landingDiv");
     document.addEventListener("mousemove",onMouseMove,{passive:true});
     landing?.addEventListener("touchmove",onTouchMove,{passive:true});

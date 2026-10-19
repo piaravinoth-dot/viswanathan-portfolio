@@ -20,6 +20,7 @@ const Navbar = () => {
       wrapper: "#smooth-wrapper",
       content: "#smooth-content",
       smooth: 1.7,
+      smoothTouch: 0, // Native touch scrolling: avoid transform interpolation on mobile.
       speed: 1,
       effects: true,
       autoResize: true,
@@ -29,7 +30,16 @@ const Navbar = () => {
     smoother.scrollTop(0);
     smoother.paused(false);
 
-    const onResize = () => ScrollSmoother.refresh(true);
+    // Mobile browser chrome raises height-only resize events while scrolling.
+    // Rebuilding the smoother on each event visibly shakes the About content.
+    // True width/orientation changes still refresh the layout.
+    let previousWidth = window.innerWidth;
+    const onResize = () => {
+      const width = window.innerWidth;
+      if (width <= 1024 && width === previousWidth) return;
+      previousWidth = width;
+      ScrollSmoother.refresh(true);
+    };
     window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("resize", onResize);

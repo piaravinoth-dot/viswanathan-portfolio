@@ -70,9 +70,31 @@ async function testViewport(browser, name, width) {
         };
       });
       log(name,width,'GitHub and LinkedIn both anchored on right',desktop.ghLeft>desktop.viewport*.83&&desktop.liLeft>desktop.viewport*.83,JSON.stringify([desktop.ghLeft,desktop.liLeft,desktop.viewport]));
-      log(name,width,'About left editorial panel visible',desktop.asideVisible);
+      log(name,width,'No copy overlaps the 3D character',!desktop.asideVisible);
       log(name,width,'desktop About avoids forced full-screen spacer',desktop.aboutHeight<desktop.viewportHeight*.96,`about height=${desktop.aboutHeight}, viewport=${desktop.viewportHeight}`);
       log(name,width,'About to capabilities top padding compact',desktop.capPadding<=76,`padding=${desktop.capPadding}`);
+    }
+    if(name==='chromium' && width===375) {
+      const about = page.locator('.about-me');
+      await about.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(250);
+      const before = await about.evaluate(el => {
+        const r = el.getBoundingClientRect();
+        return {x:r.x,width:r.width,transform:getComputedStyle(el).transform,text:el.textContent?.trim()};
+      });
+      // Simulates mobile address-bar expansion without changing layout width.
+      await page.setViewportSize({width:375,height:830});
+      await page.waitForTimeout(450);
+      const after = await about.evaluate(el => {
+        const r = el.getBoundingClientRect();
+        return {x:r.x,width:r.width,transform:getComputedStyle(el).transform,text:el.textContent?.trim()};
+      });
+      log(name,width,'mobile About text remains stable on height-only resize',
+        before.text===after.text && Math.abs(before.x-after.x)<2 &&
+        Math.abs(before.width-after.width)<2 &&
+        before.transform===after.transform,
+        `x=${before.x.toFixed(1)}→${after.x.toFixed(1)}, width=${before.width.toFixed(1)}→${after.width.toFixed(1)}`);
+      await page.setViewportSize({width:375,height:900});
     }
     if(width===375||width===1440){
       log(name,width,'no manual 3D switch',await page.locator('.hero-3d-trigger').count()===0);

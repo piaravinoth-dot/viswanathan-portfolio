@@ -30,7 +30,13 @@ const MainContainer=({children}:PropsWithChildren)=>{
     let stopIntro:(()=>void)|undefined;
     let stopCareer:(()=>void)|undefined;
     let timer:number;
+    let previousWidth=window.innerWidth;
     const resize=()=>{
+      const width=window.innerWidth;
+      // Address-bar hide/show changes the phone's viewport height, not its
+      // layout width. Avoid re-splitting headings and refreshing scroll triggers.
+      if(width<=1024 && width===previousWidth)return;
+      previousWidth=width;
       window.clearTimeout(timer);
       timer=window.setTimeout(()=>{setSplitText();ScrollTrigger.refresh();},150);
     };
