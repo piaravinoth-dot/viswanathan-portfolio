@@ -76,3 +76,9 @@
 .ct-case .ct-system-colors>div:first-child *{color:#391b17!important}
 .ct-case .ct-end{background:#b53624!important}
 .ct-case .ct-end a,.ct-case .ct-end>span,.ct-case .ct-end .ct-end-bottom span{color:#fff!important}
+
+/* WCAG retest: restore white on selected dark pill, dark text on ivory. */
+.ct-case .ct-detail .ct-chapter>div>span{color:#a63a26!important}
+.ct-case .ct-ui-queue-pills .selected{color:#fff!important}
+.ct-case .ct-ui-queue-foot{color:#3b4b40!important}
+.ct-case .ct-end h2 em{color:#fff!important}
