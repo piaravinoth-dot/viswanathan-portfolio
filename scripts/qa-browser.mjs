@@ -18,8 +18,19 @@ async function testViewport(browser, name, width) {
   try {
     const response = await page.goto(base, {waitUntil:'domcontentloaded',timeout:60000});
     log(name,width,'homepage HTTP',response?.status()===200,response?.status()||'no response');
+    const welcome = page.locator('.loading-screen');
+    if(width===375 || width===1440){
+      // The original welcome screen must appear on homepage entry, then exit
+      // without blocking keyboard, carousel or case-study navigation.
+      await welcome.waitFor({state:'visible',timeout:15000});
+      log(name,width,'Welcome intro appears',await page.locator('.loading-content2').getByText('Welcome').count()===1);
+    }
+    await welcome.waitFor({state:'hidden',timeout:10000});
+    if(width===375 || width===1440){
+      log(name,width,'Welcome intro dismisses automatically',await welcome.count()===0);
+    }
     await page.locator('.orbit-index').waitFor({state:'attached',timeout:30000});
-    await page.waitForTimeout(700);
+    await page.waitForTimeout(250);
     const metrics = await page.evaluate(() => {
       const buttons = [...document.querySelectorAll('.orbit-index button')];
       const element = document.querySelector('.mobile-product-orbit');
