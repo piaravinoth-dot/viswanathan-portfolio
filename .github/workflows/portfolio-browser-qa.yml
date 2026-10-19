@@ -3,12 +3,19 @@ on:
   push:
     branches: [malhotra-3d-rebuild]
     paths:
+      - 'src/**'
       - 'scripts/qa-browser.mjs'
       - '.github/workflows/portfolio-browser-qa.yml'
+      - 'index.html'
+      - 'vercel.json'
   workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: portfolio-qa-rebuild
+  cancel-in-progress: true
 
 jobs:
   browser-regression:
@@ -19,13 +26,26 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install isolated browser test dependency
-        run: npm install --no-save --ignore-scripts playwright
+      - name: Install portfolio and browser test dependencies
+        run: |
+          npm ci --no-audit
+          npm install --no-save --ignore-scripts playwright
       - name: Install Chromium, Firefox and WebKit
         run: npx playwright install --with-deps chromium firefox webkit
-      - name: Test live portfolio at 7 viewport widths
+      - name: Build production source with SEO checks
+        run: npm run build
+      - name: Start isolated local production preview
+        run: |
+          nohup npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/portfolio-preview.log 2>&1 &
+          for i in $(seq 1 25); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/portfolio-preview.log
+          exit 1
+      - name: Test built portfolio in 3 engines and 7 viewport widths
         env:
-          QA_URL: https://viswanathan-portfolio-iota.vercel.app
+          QA_URL: http://127.0.0.1:4173
         run: node scripts/qa-browser.mjs
       - name: Store browser QA results
         if: always()
