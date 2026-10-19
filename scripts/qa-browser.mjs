@@ -36,9 +36,15 @@ async function testViewport(browser, name, width) {
     const within=metrics.indexRects.every(r=>r.width>0&&r.left>=-tolerance&&r.right<=metrics.vw+tolerance);
     log(name,width,'index buttons within viewport',within,JSON.stringify(metrics.indexRects.map(r=>[Math.round(r.left),Math.round(r.right)])));
     log(name,width,'no document horizontal overflow',metrics.scrollWidth<=metrics.vw+tolerance,`scrollWidth=${metrics.scrollWidth} viewport=${metrics.vw}`);
+    const linkedIn=page.locator('a[href*="linkedin.com/in/viswanathan-g-55a0176a"]');
+    log(name,width,'exactly one LinkedIn link',await linkedIn.count()===1,`count=${await linkedIn.count()}`);
+    log(name,width,'LinkedIn retained in right-hand rail',await page.locator('.icons-section .resume-button[href*="linkedin.com"]').count()===1);
     if(width===375||width===1440){
-      const optional3D = page.locator('.hero-3d-trigger');
-      log(name,width,'3D available on demand',await optional3D.isVisible().catch(()=>false));
+      log(name,width,'no manual 3D switch',await page.locator('.hero-3d-trigger').count()===0);
+      if(name==='chromium'){
+        const auto3D=await page.locator('.character-model').waitFor({state:'attached',timeout:14000}).then(()=>true).catch(()=>false);
+        log(name,width,'3D starts automatically',auto3D);
+      }
       await page.locator('.orbit-index button').nth(5).click({timeout:12000});
       // WebKit can be busy compiling the desktop hero's 3D scene.
       // Wait for the actual state transition rather than a fixed 1.1 s.
