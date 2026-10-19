@@ -34,7 +34,7 @@ const Scene=()=>{
     try {renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});}
     catch(error){console.warn("3D rendering unavailable; continuing with portfolio content.",error);host.style.pointerEvents="none";host.classList.add("character-unavailable");setLoading(100);return;}
     renderer.setSize(box.width,box.height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,window.matchMedia("(max-width: 1024px)").matches?1.2:1.5));
     renderer.toneMapping=THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure=1;
     host.appendChild(renderer.domElement);
@@ -45,6 +45,12 @@ const Scene=()=>{
     if(window.matchMedia("(max-width: 1024px)").matches){camera.position.y=10.8;camera.zoom=.78;}
     camera.updateProjectionMatrix();
     const light=setLighting(scene),progress=setProgress(setLoading),clock=new THREE.Clock();
+    // Pause expensive WebGL drawing off-screen or in background tabs.
+    let onScreen=true;
+    const visibilityObserver=new IntersectionObserver(entries=>{onScreen=entries.some(entry=>entry.isIntersecting);},{threshold:0.01});
+    visibilityObserver.observe(host);
+    const frameInterval=window.matchMedia("(max-width: 1024px)").matches?1000/30:1000/45;
+    let lastDraw=0;
     let disposed=false,frame=0;
     let introTimer:ReturnType<typeof setTimeout>;
     let model:THREE.Object3D|undefined,head:THREE.Object3D|undefined,screen:THREE.Object3D|undefined;
@@ -80,17 +86,20 @@ const Scene=()=>{
         introTimer=setTimeout(()=>{if(!disposed){light.turnOnLights();animations?.startIntro();}},2500);
       });
     }).catch(error=>{if(!disposed){console.warn("3D model unavailable",error);host.style.pointerEvents="none";host.classList.add("character-unavailable");progress.clear();}});
-    const animate=()=>{
+    const animate=(now:number)=>{
       if(disposed)return;
       frame=requestAnimationFrame(animate);
+      if(document.hidden||!onScreen)return;
+      if(now-lastDraw<frameInterval)return;
+      lastDraw=now;
       if(head)handleHeadRotation(head,mouse.x,mouse.y,interpolation.x,interpolation.y,THREE.MathUtils.lerp);
       light.setPointLight(screen);
-      animations?.mixer.update(clock.getDelta());
+      animations?.mixer.update(Math.min(clock.getDelta(),0.05));
       renderer.render(scene,camera);
     };
     animate();
     return()=>{
-      disposed=true;cancelAnimationFrame(frame);clearTimeout(introTimer);progress.cancel();
+      disposed=true;cancelAnimationFrame(frame);clearTimeout(introTimer);progress.cancel();visibilityObserver.disconnect();
       window.removeEventListener("resize",onResize);document.removeEventListener("mousemove",onMouseMove);
       landing?.removeEventListener("touchmove",onTouchMove);landing?.removeEventListener("touchend",onTouchEnd);
       stopTouchReset?.();stopHover?.();stopTimeline?.();animations?.dispose();light.dispose();
