@@ -19,19 +19,18 @@ export function useAIDesignMotion(){
     media.add("(prefers-reduced-motion: no-preference)",()=>{
       const scope=gsap.context(()=>{
         const compact=window.matchMedia("(max-width: 760px)").matches;
-        const duration=compact?0.58:0.92;
-        // Editorial title enters first; the existing product illustration follows.
-        const intro=gsap.timeline({defaults:{ease:"power2.out"}});
-        intro.fromTo(".ai-case-hero-title h1",
-          {opacity:0.35,y:compact?16:32},
-          {opacity:1,y:0,duration},0
-        ).fromTo(".ai-case-hero-side",
-          {opacity:0.55,y:compact?10:22},
-          {opacity:1,y:0,duration:duration*0.9},0.13
-        ).fromTo(".ai-case-hero-stage",
-          {opacity:0.8,y:compact?10:26},
-          {opacity:1,y:0,duration:duration*1.2},0.22
-        );
+        // First viewport on phones stays instantly readable: animating LCP
+        // headline/UI during a cold load hurts mobile perception and scoring.
+        if(!compact){
+          const intro=gsap.timeline({defaults:{ease:"power2.out"}});
+          intro.fromTo(".ai-case-hero-title h1",
+            {opacity:0.35,y:32},{opacity:1,y:0,duration:0.88},0
+          ).fromTo(".ai-case-hero-side",
+            {opacity:0.55,y:22},{opacity:1,y:0,duration:0.78},0.13
+          ).fromTo(".ai-case-hero-stage",
+            {opacity:0.8,y:26},{opacity:1,y:0,duration:1.0},0.22
+          );
+        }
 
         // Progressive reading rhythm; no full-screen pinning, video or heavy shader.
         const revealTargets=[

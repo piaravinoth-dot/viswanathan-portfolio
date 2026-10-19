@@ -40,9 +40,53 @@ jobs:
         run: npx lighthouse http://127.0.0.1:4173/work/ai-design-studio --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=motion-lighthouse-mobile.json --quiet
       - name: Lighthouse desktop
         run: npx lighthouse http://127.0.0.1:4173/work/ai-design-studio --preset=desktop --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=motion-lighthouse-desktop.json --quiet
-      - name: Summarize Lighthouse performance
+      - name: Check out untouched production baseline for an apples-to-apples comparison
+        uses: actions/checkout@v4
+        with:
+          ref: cb55eb3a1b85d87ae6128a5d749b5488909d0e6c
+          path: baseline
+      - name: Build baseline case study on separate local port
         run: |
-          node --input-type=module -e "import fs from 'node:fs';for(const size of ['mobile','desktop']){const r=JSON.parse(fs.readFileSync('motion-lighthouse-'+size+'.json'));console.log(size,JSON.stringify({scores:Object.fromEntries(Object.entries(r.categories).map(([k,v])=>[k,Math.round(v.score*100)])),LCP:r.audits['largest-contentful-paint'].numericValue,CLS:r.audits['cumulative-layout-shift'].numericValue,TBT:r.audits['total-blocking-time'].numericValue})); if(r.categories.accessibility.score<0.95 || r.categories.seo.score<0.95)process.exitCode=1;}"
+          cd baseline
+          npm install --no-audit
+          npm run build
+          nohup npm run preview -- --host 127.0.0.1 --port 4174 >/tmp/baseline-preview.log 2>&1 &
+          for i in $(seq 1 25); do
+            if curl -fsS http://127.0.0.1:4174/work/ai-design-studio >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/baseline-preview.log
+          exit 1
+      - name: Lighthouse baseline mobile
+        run: npx lighthouse http://127.0.0.1:4174/work/ai-design-studio --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=baseline-lighthouse-mobile.json --quiet
+      - name: Lighthouse baseline desktop
+        run: npx lighthouse http://127.0.0.1:4174/work/ai-design-studio --preset=desktop --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=baseline-lighthouse-desktop.json --quiet
+      - name: Compare pilot against original case-study Lighthouse
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          for(const size of ['mobile','desktop']){
+            const p=JSON.parse(fs.readFileSync('motion-lighthouse-'+size+'.json'));
+            const b=JSON.parse(fs.readFileSync('baseline-lighthouse-'+size+'.json'));
+            const scores = r=>Object.fromEntries(Object.entries(r.categories).map(([k,v])=>[k,Math.round(v.score*100)]));
+            const audits=r=>r.categories.accessibility.auditRefs
+              .map(x=>({id:x.id,score:r.audits[x.id]?.score,title:r.audits[x.id]?.title,details:r.audits[x.id]?.details?.items?.slice(0,2)}))
+              .filter(x=>x.score!==null&&x.score<1);
+            const pilot=scores(p),baseline=scores(b);
+            console.log(size,JSON.stringify({
+              pilot,baseline,
+              pilotLCP:Math.round(p.audits['largest-contentful-paint'].numericValue),
+              baselineLCP:Math.round(b.audits['largest-contentful-paint'].numericValue),
+              pilotCLS:p.audits['cumulative-layout-shift'].numericValue,
+              baselineCLS:b.audits['cumulative-layout-shift'].numericValue,
+              pilotAccessibilityGaps:audits(p),
+              baselineAccessibilityGaps:audits(b)
+            }));
+            if(pilot.performance<baseline.performance-5)process.exitCode=1;
+            if(pilot.accessibility<baseline.accessibility)process.exitCode=1;
+            if(pilot.seo<baseline.seo)process.exitCode=1;
+          }
+          NODE
       - name: Save visual preview and QA results
         if: always()
         uses: actions/upload-artifact@v4
@@ -54,4 +98,6 @@ jobs:
             motion-pilot-1440.png
             motion-lighthouse-mobile.json
             motion-lighthouse-desktop.json
+            baseline-lighthouse-mobile.json
+            baseline-lighthouse-desktop.json
           if-no-files-found: ignore
