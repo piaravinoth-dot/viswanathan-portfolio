@@ -16,7 +16,7 @@ interface LoadingType {
 export const LoadingContext = createContext<LoadingType | null>(null);
 
 export const LoadingProvider = ({ children }: PropsWithChildren) => {
-  const [isLoading, setIsLoading] = useState(()=>window.matchMedia("(min-width: 1025px)").matches);
+  const [isLoading, setIsLoading] = useState(false);
   const [loading, setLoading] = useState(0);
 
   const value = {
