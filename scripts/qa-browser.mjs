@@ -201,7 +201,6 @@ async function testContact(browser,width) {
     await page.goto(base,{waitUntil:'domcontentloaded',timeout:60000});
     await page.locator('.loading-screen').waitFor({state:'hidden',timeout:10000});
     const name='chromium';
-    if(name==='chromium' && (width===375 || width===1440)){
     const contact=page.locator('#contact');
     const form=contact.locator('form.contact-form');
     log(name,width,'minimal contact form has labelled fields',
