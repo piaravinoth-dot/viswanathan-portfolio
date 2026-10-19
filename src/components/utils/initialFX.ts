@@ -6,6 +6,12 @@ export function initialFX() {
   document.body.style.overflowY = "auto";
   smoother?.paused(false);
   const main = document.querySelector(".main-body");
+  // A page-wide opacity animation can prevent Lighthouse from finding mobile
+  // Largest Contentful Paint. Paint the hero text immediately on small screens.
+  const mobile = window.matchMedia("(max-width: 1024px)").matches;
+  if (mobile || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return () => {};
+  }
   main?.classList.add("main-active");
   let text: SplitText | undefined;
   const context = gsap.context(() => {
