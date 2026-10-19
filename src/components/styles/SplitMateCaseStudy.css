@@ -51,3 +51,20 @@
 .sm-case .sm-example p{color:#424c3e}
 .sm-case .sm-phone-content small,
 .sm-case .sm-phone-content label{color:#3a4640}
+
+/* Final measured WCAG contrast: bright on dark balances, muted on light details. */
+.sm-case .sm-balance-card small{color:#ecf6ea!important}
+.sm-case .sm-pair-feature .sm-chapter h2 em,
+.sm-case .sm-settlement-head h2 em,
+.sm-case .sm-settlement-head>span,
+.sm-case .sm-system-top .sm-chapter h2 em{color:#42602d!important}
+.sm-case .sm-pair-feature .sm-chapter p,
+.sm-case .sm-login-lead,
+.sm-case .sm-login-panel>p,
+.sm-case .sm-login-foot,
+.sm-case .sm-settle-panel>p,
+.sm-case .sm-settle-line>span,
+.sm-case .sm-settlement-receipt>p,
+.sm-case .sm-settlement-receipt>div>span,
+.sm-case .sm-system-top>p,
+.sm-case .sm-decisions article>span{color:#38463e!important}
