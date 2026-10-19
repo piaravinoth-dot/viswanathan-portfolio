@@ -203,3 +203,11 @@
 /* WCAG AA for narrative text outside the illustrative interface preview. */
 .ai-case-kicker,.ai-case-hero-footer>span{color:#694437}
 .ai-case-hero-note{color:#403348}
+
+
+/* Final AA contrast pass for illustrative studio controls and editorial labels. */
+.ai-case .ai-ui-textarea,.ai-case .ai-ui-field span{color:#475265!important}
+.ai-case .ai-case-intro-grid h2 em{color:#705185!important}
+.ai-case .ai-case-meta small{color:#484844!important}
+.ai-case .ai-case-section-head>span{color:#724032!important}
+.ai-case .ai-case-section-head h2 em{color:#81502b!important}
