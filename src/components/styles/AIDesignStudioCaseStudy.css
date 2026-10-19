@@ -198,3 +198,8 @@
 .ai-case-hero-index span{color:#4f514d}
 .ai-ui-name,.ai-ui-section-title,.ai-ui-canvas-head span,.ai-ui-canvas-bar,.ai-ui-bottom,.ai-ui-assistant-head small{color:#475160}
 .ai-ui-drop{color:#475160}
+
+
+/* WCAG AA for narrative text outside the illustrative interface preview. */
+.ai-case-kicker,.ai-case-hero-footer>span{color:#694437}
+.ai-case-hero-note{color:#403348}
