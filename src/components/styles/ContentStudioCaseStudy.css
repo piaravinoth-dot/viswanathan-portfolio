@@ -65,3 +65,12 @@
 .cs-case .cs-ui-header>span{color:#3d4557}
 .cs-case .cs-ui-content .cs-ui-page-heading p,
 .cs-case .cs-ui-content .cs-ui-story-actions span{color:#4c4160}
+
+/* Final measured WCAG contrast: chapter metadata and editorial board. */
+.cs-case .cs-stage-coral .cs-stage-caption,
+.cs-case .cs-stage-blue .cs-stage-caption{color:#343e38!important}
+.cs-case .cs-editorial-card-label>span{color:#3d4b40!important}
+.cs-case .cs-editorial-stage-foot>span{color:#304a28!important}
+.cs-case .cs-principles-list>div>span{color:#553278!important}
+.cs-case .cs-principles-list>div>p{color:#3d493f!important}
+.cs-case .cs-end-foot>span{color:#35472a!important}
