@@ -16,7 +16,13 @@ for(const t of tests){
   const page=await browser.newPage({viewport:{width:t.width,height:900}});
   try{
     await page.goto(base+t.path,{waitUntil:'domcontentloaded',timeout:35000});
-    await page.waitForTimeout(750);
+    // Case studies are lazy-loaded. Audit the actual document, not Suspense's
+    // transient Loading case study placeholder (which has no heading).
+    await page.waitForFunction(() => {
+      const main=document.querySelector('main');
+      return Boolean(main && main.getAttribute('role')!=='status' && document.querySelector('h1'));
+    },null,{timeout:20000});
+    await page.waitForTimeout(250);
     await page.addScriptTag({path:'node_modules/axe-core/axe.min.js'});
     const a=await page.evaluate(async()=>await window.axe.run(document,{
       runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','best-practice']}
