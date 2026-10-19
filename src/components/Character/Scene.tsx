@@ -51,8 +51,7 @@ const Scene=()=>{
     visibilityObserver.observe(host);
     const frameInterval=window.matchMedia("(max-width: 1024px)").matches?1000/30:1000/45;
     let lastDraw=0;
-    let disposed=false,frame=0;
-    let introTimer:ReturnType<typeof setTimeout>;
+    let disposed=false,frame=0,visibleReported=false;
     let model:THREE.Object3D|undefined,head:THREE.Object3D|undefined,screen:THREE.Object3D|undefined;
     let animations:ReturnType<typeof setAnimations>|undefined;
     let stopTimeline:(()=>void)|undefined,stopHover:(()=>void)|undefined,stopTouchReset:(()=>void)|undefined;
@@ -81,10 +80,11 @@ const Scene=()=>{
       if(hoverDivRef.current)stopHover=animations.hover(gltf,hoverDivRef.current);
       head=model.getObjectByName("spine006");screen=model.getObjectByName("screenlight");
       stopTimeline=setCharTimeline(model,camera);
-      progress.loaded().then(()=>{
-        if(disposed)return;
-        introTimer=setTimeout(()=>{if(!disposed){light.turnOnLights();animations?.startIntro();}},2500);
-      });
+      // Begin the reveal as soon as the model exists. The old 2.5s timer
+      // delayed the most memorable element even after downloading had finished.
+      progress.clear();
+      light.turnOnLights();
+      animations?.startIntro();
     }).catch(error=>{if(!disposed){console.warn("3D model unavailable",error);host.style.pointerEvents="none";host.classList.add("character-unavailable");progress.clear();}});
     const animate=(now:number)=>{
       if(disposed)return;
@@ -96,10 +96,16 @@ const Scene=()=>{
       light.setPointLight(screen);
       animations?.mixer.update(Math.min(clock.getDelta(),0.05));
       renderer.render(scene,camera);
+      if(model&&!visibleReported){
+        visibleReported=true;
+        document.documentElement.dataset.character3d="visible";
+        performance.mark("portfolio-3d-visible");
+        try {performance.measure("portfolio-3d-first-frame","portfolio-3d-start","portfolio-3d-visible");} catch { /* mark may not exist in direct previews */ }
+      }
     };
     animate();
     return()=>{
-      disposed=true;cancelAnimationFrame(frame);clearTimeout(introTimer);progress.cancel();visibilityObserver.disconnect();
+      disposed=true;cancelAnimationFrame(frame);progress.cancel();visibilityObserver.disconnect();
       window.removeEventListener("resize",onResize);document.removeEventListener("mousemove",onMouseMove);
       landing?.removeEventListener("touchmove",onTouchMove);landing?.removeEventListener("touchend",onTouchEnd);
       stopTouchReset?.();stopHover?.();stopTimeline?.();animations?.dispose();light.dispose();
