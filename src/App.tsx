@@ -27,39 +27,35 @@ const canUseHardwareWebGL=()=>{
 };
 
 const App = () => {
-  // Autostart the 3D character after critical content has painted.
-  // Delay the costly WebGL bundle to keep navigation responsive and LCP fast.
+  // Let the first hero frame paint, then begin the 3D scene right away.
+  // The previous load-event + 2.7s timer + idle callback caused visitors
+  // to leave before the character appeared. Keep the hardware WebGL check.
   const [threeDReady,setThreeDReady]=useState(false);
   const route = window.location.pathname.replace(/\/$/, "");
   useEffect(()=>{
     if(route!=="" || window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-    let timer=0;
-    let idleId:number|undefined;
-    let disposed=false;
-    const start=()=>{
-      if(disposed)return;
-      timer=window.setTimeout(()=>{
-        if(disposed)return;
-        const load=()=>{
-          if(disposed)return;
+    let cancelled=false;
+    let paintFrame=0,loadFrame=0,timer=0;
+    paintFrame=window.requestAnimationFrame(()=>{
+      loadFrame=window.requestAnimationFrame(()=>{
+        // Give the visible hero a short head start, not multiple seconds.
+        timer=window.setTimeout(()=>{
+          if(cancelled)return;
           if(!canUseHardwareWebGL()){
             document.documentElement.dataset.character3d="unsupported";
             return;
           }
           document.documentElement.dataset.character3d="starting";
+          performance.mark("portfolio-3d-start");
           setThreeDReady(true);
-        };
-        if("requestIdleCallback" in window)idleId=window.requestIdleCallback(load,{timeout:2500});
-        else load();
-      },window.matchMedia("(max-width: 1024px)").matches?4000:2700);
-    };
-    if(document.readyState==="complete")start();
-    else window.addEventListener("load",start,{once:true});
+        },window.matchMedia("(max-width: 1024px)").matches?420:160);
+      });
+    });
     return()=>{
-      disposed=true;
-      window.removeEventListener("load",start);
+      cancelled=true;
+      window.cancelAnimationFrame(paintFrame);
+      window.cancelAnimationFrame(loadFrame);
       window.clearTimeout(timer);
-      if(idleId!==undefined)window.cancelIdleCallback(idleId);
     };
   },[route]);
   const caseStudies = {
