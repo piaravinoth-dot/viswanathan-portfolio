@@ -4,10 +4,18 @@ on:
     branches: [malhotra-3d-rebuild]
     paths:
       - '.github/workflows/portfolio-lighthouse.yml'
+      - 'src/**'
+      - 'index.html'
+      - 'package.json'
+      - 'scripts/**'
   workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: portfolio-lighthouse
+  cancel-in-progress: true
 
 jobs:
   lighthouse:
