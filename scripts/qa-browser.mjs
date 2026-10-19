@@ -38,7 +38,12 @@ async function testViewport(browser, name, width) {
     log(name,width,'no document horizontal overflow',metrics.scrollWidth<=metrics.vw+tolerance,`scrollWidth=${metrics.scrollWidth} viewport=${metrics.vw}`);
     if(width===375||width===1440){
       await page.locator('.orbit-index button').nth(5).click({timeout:12000});
-      await page.waitForTimeout(1100);
+      // WebKit can be busy compiling the desktop hero's 3D scene.
+      // Wait for the actual state transition rather than a fixed 1.1 s.
+      await page.waitForFunction(() =>
+        document.querySelector('.orbit-card.orbit-active')?.textContent?.includes('Clip Studio'),
+        {timeout:20000}
+      ).catch(()=>null);
       const selected=await page.locator('.orbit-card.orbit-active').textContent();
       log(name,width,'index 06 selects Clip Studio',Boolean(selected?.includes('Clip Studio')));
       const href=await page.locator('.orbit-card.orbit-active a.orbit-card-action').getAttribute('href');
