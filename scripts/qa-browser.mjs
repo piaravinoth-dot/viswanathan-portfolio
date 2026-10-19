@@ -50,6 +50,12 @@ async function testViewport(browser, name, width) {
     const linkedIn=page.locator('a[href*="linkedin.com/in/viswanathan-g-55a0176a"]');
     log(name,width,'exactly one LinkedIn link',await linkedIn.count()===1,`count=${await linkedIn.count()}`);
     log(name,width,'LinkedIn retained in right-hand rail',await page.locator('.icons-section .resume-button[href*="linkedin.com"]').count()===1);
+    if(name==='chromium' && (width===375||width===1440)){
+      log(name,width,'portfolio footer credits Viswanathan G',
+        await page.locator('.contact-footer .contact-copyright').getByText('2026 Viswanathan G').count()===1);
+      log(name,width,'no inherited template brand in homepage text',
+        await page.locator('body').evaluate(el=>!/Malhotra Dev|Akash Malhotra/i.test(el.innerText)));
+    }
     if(width>=1025){
       const desktop = await page.evaluate(() => {
         const github = document.querySelector('.social-icons a[aria-label="GitHub"]');

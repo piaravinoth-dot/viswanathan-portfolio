@@ -74,7 +74,7 @@ const Contact=()=>{
       </div>
       <footer className="contact-footer">
         <p>Art direction &amp; design by <span>Viswanathan G.</span></p>
-        <p className="contact-copyright"><MdCopyright aria-hidden="true"/> 2026</p>
+        <p className="contact-copyright"><MdCopyright aria-hidden="true"/> 2026 Viswanathan G</p>
       </footer>
     </div>
   </section>;

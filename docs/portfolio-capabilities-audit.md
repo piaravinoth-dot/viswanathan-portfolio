@@ -2,7 +2,7 @@
 
 ## Scope and baseline
 
-Repository: piaravinoth-dot/viswanathan-portfolio. Branch: malhotra-3d-rebuild.
+Repository: piaravinoth-dot/viswanathan-portfolio. Development branch: see the repository's current GitHub branch configuration.
 Baseline: 935100c154b204078ff4097752d5f4bb9dd2e58a.
 
 The live homepage had two capability groups inside `.what-box-in` with computed `display: none`. The six product accordion panels and six individual case-study routes were already present and remain intact.
