@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import "./App.css";
 const AIDesignStudioCaseStudy = lazy(() => import("./components/AIDesignStudioCaseStudy"));
 const ContentStudioCaseStudy = lazy(() => import("./components/ContentStudioCaseStudy"));
@@ -12,6 +12,16 @@ const MainContainer = lazy(() => import("./components/MainContainer"));
 import { LoadingProvider } from "./context/LoadingProvider";
 
 const App = () => {
+  // The interactive 3D character remains available on mobile on demand.
+  // Avoid loading a multi-megabyte WebGL scene during the critical mobile load.
+  const [desktop3D,setDesktop3D]=useState(()=>window.matchMedia("(min-width: 1025px)").matches);
+  const [mobile3DRequested,setMobile3DRequested]=useState(false);
+  useEffect(()=>{
+    const mq=window.matchMedia("(min-width: 1025px)");
+    const update=()=>setDesktop3D(mq.matches);
+    mq.addEventListener("change",update);
+    return()=>mq.removeEventListener("change",update);
+  },[]);
   const route = window.location.pathname.replace(/\/$/, "");
   const caseStudies = {
     "/work/ai-design-studio": AIDesignStudioCaseStudy,
@@ -55,10 +65,10 @@ const App = () => {
     <>
       <LoadingProvider>
         <Suspense>
-          <MainContainer>
-            <Suspense>
+          <MainContainer onActivate3D={()=>setMobile3DRequested(true)}>
+            {(desktop3D||mobile3DRequested)&&<Suspense fallback={null}>
               <CharacterModel />
-            </Suspense>
+            </Suspense>}
           </MainContainer>
         </Suspense>
       </LoadingProvider>
