@@ -87,3 +87,9 @@
 .si-case .si-frame-sand>span{color:#303e58!important}
 .si-case .si-ui-table-row .checked{color:#265637!important}
 .si-case .si-process .si-kicker{color:#e0d7ff!important}
+
+/* WCAG retest: labels on sky, lilac, peach and white research panels. */
+.si-case .si-frame-sky>span,
+.si-case .si-frame-lilac>span,
+.si-case .si-frame-peach>span{color:#293c51!important}
+.si-case .si-ui-compare-empty>p{color:#3e4d62!important}
