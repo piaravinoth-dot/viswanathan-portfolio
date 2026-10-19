@@ -4,6 +4,7 @@ on:
     branches: [malhotra-3d-rebuild]
     paths:
       - '.github/workflows/portfolio-final-accessibility.yml'
+      - 'scripts/qa-accessibility.mjs'
   workflow_dispatch:
 
 permissions:
