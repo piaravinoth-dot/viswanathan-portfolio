@@ -373,3 +373,25 @@ html,body,#root{max-width:100%;overflow-x:clip}
 .pv-track-head{color:#4b3b31}
 .pv-track-row b{color:#1c5630}
 .pv-track-row b.pending{color:#6d3e10}
+
+/* UI UX Pro Max: intentional hover/focus feedback; no visual redesign. */
+.mobile-product-orbit:focus-visible{
+  outline:3px solid #e9a36a;
+  outline-offset:4px;
+}
+.orbit-controls button,.orbit-index button,.orbit-card-action{
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  .orbit-controls button:hover,.orbit-index button:hover{
+    border-color:#e5ad86;
+    filter:brightness(1.12);
+  }
+  .orbit-card-action:hover{background:#3a4350;}
+}
+@media(prefers-reduced-motion:reduce){
+  .orbit-controls button,.orbit-index button,.orbit-card-action{
+    transition:none!important;
+  }
+}
