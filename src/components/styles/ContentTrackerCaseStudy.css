@@ -19,3 +19,9 @@
 
 /* Preserve the editorial two-tone heading on the deeper WCAG-compliant orange. */
 .ct-hero h1 em{color:#14100e}
+
+
+/* AA status information against white and cream tracker panels. */
+.ct-case .ct-ui-day>span,.ct-case .ct-opening-info small{color:#3d4b41!important}
+.ct-case .ct-platform-found span,.ct-case .ct-platform-found b{color:#31583c!important}
+.ct-case .ct-platform-pending span,.ct-case .ct-platform-pending b{color:#74501d!important}
