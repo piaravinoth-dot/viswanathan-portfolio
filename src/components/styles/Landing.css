@@ -442,19 +442,8 @@ h2.landing-info-h2 {
 
 /* Preserve visual hierarchy while using accessible h1 -> h2 semantics. */
 .landing-info .landing-lead{font-size:22px;letter-spacing:2px;font-weight:300;color:var(--accentColor);margin:0}
-.mobile-3d-trigger{display:none}
 @media(max-width:1024px){
   .landing-info .landing-lead{font-size:clamp(14px,3.8vw,20px);line-height:1.3}
-  .mobile-3d-trigger{
-    display:inline-flex;position:absolute;z-index:12;
-    left:50%;bottom:clamp(116px,18vh,210px);transform:translateX(-50%);
-    align-items:center;justify-content:center;
-    padding:12px 18px;border:1px solid #d9aa84;border-radius:40px;
-    background:#222830;color:#f3e9de;font:600 12px Geist,Arial,sans-serif;
-    letter-spacing:.03em;min-height:44px;white-space:nowrap;cursor:pointer;
-    box-shadow:0 8px 28px #0007;
-  }
-  .mobile-3d-trigger:focus-visible{outline:3px solid #f6a66b;outline-offset:4px}
 }
 
 /* Prevent low-contrast intermediate animation frames and needless phone work. */
@@ -463,16 +452,3 @@ h2.landing-info-h2 {
   .landing-role-word.role-second{display:none!important;animation:none!important}
 }
 
-/* Desktop fallback keeps the visual hero accessible without blocking on slow CPUs. */
-@media(min-width:1025px){
-  .landing-section .hero-3d-trigger{
-    display:inline-flex;position:absolute;z-index:12;
-    left:50%;top:49%;transform:translate(-50%,-50%);
-    min-height:48px;align-items:center;justify-content:center;
-    padding:14px 24px;border:1px solid #d9aa84;border-radius:40px;
-    background:#222830;color:#f3e9de;cursor:pointer;
-    font:600 13px Geist,Arial,sans-serif;letter-spacing:.04em;
-    box-shadow:0 12px 38px #0007;white-space:nowrap;
-  }
-  .landing-section .hero-3d-trigger:focus-visible{outline:3px solid #f6a66b;outline-offset:4px}
-}
