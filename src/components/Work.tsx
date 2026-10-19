@@ -86,7 +86,7 @@ useEffect(()=>{
       rotationY:reduced?0:-side*Math.min(abs*18,48),
       rotationZ:reduced?0:-offset*1.2,
       scale:1-abs*.085,
-      opacity:abs>=3?.16:abs===2?.42:abs===1?.78:1,
+      opacity:1,
       zIndex:10-abs,
       duration:reduced?0:.95,
       ease:"power2.inOut",
