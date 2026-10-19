@@ -1,0 +1,57 @@
+name: Isolated AI Design Motion Pilot QA
+on:
+  push:
+    branches:
+      - 'pilot/ai-design-studio-motion-2026'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  motion-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install existing app and preview test tools
+        run: |
+          npm install --no-audit
+          npm install --no-save --ignore-scripts playwright lighthouse
+      - name: Install headless Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build the isolated preview
+        run: npm run build
+      - name: Start preview server
+        run: |
+          nohup npm run preview -- --host 127.0.0.1 --port 4173 >/tmp/motion-preview.log 2>&1 &
+          for i in $(seq 1 25); do
+            if curl -fsS http://127.0.0.1:4173/work/ai-design-studio >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/motion-preview.log
+          exit 1
+      - name: Validate animations, mobile and reduced motion
+        run: node scripts/qa-motion-pilot.mjs
+      - name: Lighthouse mobile
+        run: npx lighthouse http://127.0.0.1:4173/work/ai-design-studio --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=motion-lighthouse-mobile.json --quiet
+      - name: Lighthouse desktop
+        run: npx lighthouse http://127.0.0.1:4173/work/ai-design-studio --preset=desktop --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=motion-lighthouse-desktop.json --quiet
+      - name: Summarize Lighthouse performance
+        run: |
+          node --input-type=module -e "import fs from 'node:fs';for(const size of ['mobile','desktop']){const r=JSON.parse(fs.readFileSync('motion-lighthouse-'+size+'.json'));console.log(size,JSON.stringify({scores:Object.fromEntries(Object.entries(r.categories).map(([k,v])=>[k,Math.round(v.score*100)])),LCP:r.audits['largest-contentful-paint'].numericValue,CLS:r.audits['cumulative-layout-shift'].numericValue,TBT:r.audits['total-blocking-time'].numericValue})); if(r.categories.accessibility.score<0.95 || r.categories.seo.score<0.95)process.exitCode=1;}"
+      - name: Save visual preview and QA results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-design-motion-pilot
+          path: |
+            motion-pilot-results.json
+            motion-pilot-375.png
+            motion-pilot-1440.png
+            motion-lighthouse-mobile.json
+            motion-lighthouse-desktop.json
+          if-no-files-found: ignore

@@ -1,6 +1,7 @@
 import {useEffect} from "react";
 import {MdArrowOutward,MdArrowBack,MdCheck,MdOutlineAutoAwesome,MdLayers,MdCropFree,MdDownload} from "react-icons/md";
 import "./styles/AIDesignStudioCaseStudy.css";
+import {useAIDesignMotion} from "./useAIDesignMotion";
 const APP="https://ai-image-studio-amber-three.vercel.app/";
 const FeatureTag=({children}:{children:React.ReactNode})=><span className="ai-feature-tag">{children}</span>;
 const StudioWindow=({mode="full"}:{mode?:"full"|"assistant"|"layers"|"elements"})=><div className={"ai-studio-window ai-studio-"+mode} aria-hidden="true">
@@ -15,8 +16,9 @@ const StudioWindow=({mode="full"}:{mode?:"full"|"assistant"|"layers"|"elements"}
   <div className="ai-ui-recreation">INTERFACE STUDY — RECREATED FROM THE LIVE PRODUCT</div>
 </div>;
 const AIDesignStudioCaseStudy=()=>{
+ const motionRef=useAIDesignMotion();
  useEffect(()=>{document.body.style.overflowY="auto";document.body.style.background="#efede7";document.title="AI Design Studio — Product Case Study | Viswanathan G";window.scrollTo(0,0);return()=>{document.body.style.background="";document.body.style.overflowY=""}},[]);
- return <main className="ai-case">
+ return <main ref={motionRef} className="ai-case" data-motion-pilot="ai-studio-v1">
  <header className="ai-case-nav"><a className="ai-case-monogram" href="/">VG<span>®</span></a><div className="ai-case-nav-center">SELECTED WORK <span>/</span> PRODUCT 01 OF 06</div><a href="/#products" className="ai-case-nav-back"><MdArrowBack/> All products</a></header>
  <section className="ai-case-hero"><div className="ai-case-hero-top"><div className="ai-case-eyebrow"><span className="ai-case-dot"/> INDEPENDENT DIGITAL PRODUCT &nbsp; / &nbsp; 2026</div><div className="ai-case-hero-index">01 <span>/ 06</span></div></div><div className="ai-case-hero-title"><h1>AI Design<br/><em>Studio.</em></h1><div className="ai-case-hero-side"><p>Where AI-assisted creation meets the control of a real design workspace.</p><a href={APP} target="_blank" rel="noreferrer" className="ai-case-link">Explore live studio <MdArrowOutward/></a></div></div><div className="ai-case-hero-stage"><div className="ai-case-hero-halo"/><StudioWindow/><div className="ai-case-hero-note">01 / AN EDITABLE CREATIVE WORKSPACE</div></div><div className="ai-case-hero-footer"><span>PRODUCT DESIGN &nbsp; · &nbsp; CREATIVE TECHNOLOGY &nbsp; · &nbsp; UI/UX</span><span>SCROLL TO EXPLORE &nbsp; ↓</span></div></section>
  <section className="ai-case-intro"><div className="ai-case-inner"><div className="ai-case-kicker">01 / THE IDEA</div><div className="ai-case-intro-grid"><h2>Generation<br/>is only the <em>beginning.</em></h2><div><p>AI can help create a first visual. But professional design rarely ends with the first result. Text needs correction. Images need adjustment. Layouts need rethinking. And the final piece must be ready to use.</p><p>AI Design Studio explores a more practical approach: bring AI-assisted generation and familiar designer controls into one connected workflow.</p><div className="ai-case-meta"><div><small>PRODUCT TYPE</small><b>AI-assisted design workspace</b></div><div><small>FOCUS</small><b>Editable, production-oriented creation</b></div><div><small>PLATFORM</small><b>Web application</b></div></div></div></div></div></section>
