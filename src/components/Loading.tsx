@@ -40,7 +40,7 @@ const Loading = ({ percent }: { percent: number }) => {
 
   return (
     <>
-      <div className="loading-header">
+      <div className="loading-header" role="banner">
         <a href="/#" className="loader-title" data-cursor="disable">
           VG
         </a>
