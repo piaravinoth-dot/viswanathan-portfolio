@@ -55,3 +55,13 @@
 /* AA readability for actions and meta labels in the editorial mockups. */
 .cs-case .cs-ui-story-actions span{color:#62416e!important}
 .cs-case .cs-intro-facts span{color:#454a40!important}
+
+/* WCAG AA audit: improve lavender, metadata and cream-on-dark editorial cues. */
+.cs-case .cs-hero-base>span{color:#454c43}
+.cs-case .cs-feature-heading>span{color:#593572}
+.cs-case .cs-feature-foot>span{color:#3e4841}
+.cs-case .cs-stage-purple .cs-stage-caption{color:#293c36}
+.cs-case .cs-flow .cs-kicker{color:#e5cef9}
+.cs-case .cs-ui-header>span{color:#3d4557}
+.cs-case .cs-ui-content .cs-ui-page-heading p,
+.cs-case .cs-ui-content .cs-ui-story-actions span{color:#4c4160}
