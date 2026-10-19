@@ -7,7 +7,7 @@
   background-color: var(--backgroundColor);
 }
 
-.contact-section h3 {
+.contact-section .contact-title {
   font-size: 60px;
   font-weight: 400;
   text-transform: uppercase;
@@ -19,7 +19,7 @@
   justify-content: space-between;
 }
 
-.contact-flex h4 {
+.contact-flex .contact-subheading {
   font-weight: 500;
   margin: 0;
   opacity: 0.6;
@@ -50,7 +50,7 @@ a.contact-social {
   color: var(--accentColor);
 }
 
-.contact-box h5 {
+.contact-box .contact-copyright {
   font-size: 20px;
   font-weight: 500;
   line-height: 20px;
@@ -60,7 +60,7 @@ a.contact-social {
 }
 
 @media only screen and (max-width: 1600px) {
-  .contact-section h3 {
+  .contact-section .contact-title {
     font-size: 50px;
   }
 
@@ -74,7 +74,7 @@ a.contact-social {
 }
 
 @media only screen and (max-width: 1300px) {
-  .contact-section h3 {
+  .contact-section .contact-title {
     font-size: 40px;
   }
 
@@ -101,7 +101,7 @@ a.contact-social {
     margin-bottom: 0px;
   }
 
-  .contact-flex h4 {
+  .contact-flex .contact-subheading {
     margin-top: 20px;
   }
 
