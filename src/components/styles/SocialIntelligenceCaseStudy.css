@@ -48,3 +48,13 @@
 /* AA readability in the small social intelligence report interface. */
 .si-case .si-ui-warning span,.si-case .si-ui-warning b{color:#614116!important}
 .si-case .si-ui-saved span,.si-case .si-ui-tabs span,.si-case .si-ui-kpi small,.si-case .si-ui-kpi span{color:#37455a!important}
+
+/* WCAG AA audit: tiny reporting labels and section metadata. */
+.si-case .si-ui-date small,
+.si-case .si-ui-widget-heading span,
+.si-case .si-ui-cross-row span,
+.si-case .si-ui-cross-row.head,
+.si-case .si-ui-chart-empty span{color:#364359}
+.si-case .si-hero-stage-caption>span{color:#2a3c57}
+.si-case .si-hero-bottom>span{color:#3a454b}
+.si-case .si-kicker{color:#394fa3}
