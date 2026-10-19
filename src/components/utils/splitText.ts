@@ -29,33 +29,22 @@ export default function setSplitText(cleanupOnly = false) {
   const TriggerStart = window.innerWidth <= 1024 ? "top 60%" : "20% 60%";
   const ToggleAction = "play pause resume reverse";
 
+  // Animate paragraphs as semantic elements rather than splitting every word.
+  // SplitText adds aria-label to <p>, which is prohibited on a generic paragraph.
+  // Keeping the text nodes intact also reduces DOM work for assistive technology.
   paras.forEach((para: ParaElement) => {
     ownedElements.add(para);
     para.classList.add("visible");
-    if (para.anim) {
-      para.anim.progress(1).kill();
-      para.split?.revert();
-    }
-
-    para.split = new SplitText(para, {
-      type: "lines,words",
-      linesClass: "split-line",
-    });
-
-    para.anim = gsap.fromTo(
-      para.split.words,
-      { autoAlpha: 0, y: 80 },
+    para.removeAttribute("aria-label");
+    para.anim = gsap.fromTo(para,
+      { y: 18 },
       {
-        autoAlpha: 1,
+        y: 0, duration: 0.7, ease: "power2.out",
         scrollTrigger: {
           trigger: para.parentElement?.parentElement,
           toggleActions: ToggleAction,
-          start: TriggerStart,
-        },
-        duration: 1,
-        ease: "power3.out",
-        y: 0,
-        stagger: 0.02,
+          start: TriggerStart
+        }
       }
     );
   });
