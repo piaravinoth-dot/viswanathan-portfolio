@@ -192,3 +192,9 @@
 .ai-showcase-bottom{display:flex;justify-content:space-between;gap:20px;border-top:1px solid #4e5568;padding-top:22px;margin-top:70px;font-size:10px;letter-spacing:.14em;color:#a7b0c2;font-weight:700}
 @media(max-width:760px){.ai-showcase{padding:80px 20px 35px}.ai-showcase-heading{grid-template-columns:1fr;gap:25px;margin-bottom:35px}.ai-showcase-heading h2{font-size:clamp(53px,10vw,76px)}.ai-showcase-heading p{font-size:16px}.ai-showcase-gallery{gap:10px}.ai-showcase-card{padding:12px;gap:13px}.ai-showcase-art{padding:7px;min-height:150px}.ai-showcase-card-a .ai-showcase-art{min-height:200px}.ai-showcase-card-b{margin-top:40px}.ai-showcase-card-c{margin-top:-40px}.ai-showcase-card figcaption b{font-size:20px}.ai-showcase-card figcaption span{font-size:8px}.ai-showcase-card figcaption small{font-size:11px}.ai-showcase-bottom{margin-top:40px;font-size:8px}}
 @media(max-width:460px){.ai-showcase-gallery{grid-template-columns:1fr}.ai-showcase-card-a .ai-showcase-art,.ai-showcase-art{min-height:210px}.ai-showcase-card-b,.ai-showcase-card-c{margin-top:0}.ai-showcase-card figcaption b{font-size:26px}.ai-showcase-bottom{flex-wrap:wrap}}
+
+
+/* WCAG AA: legible microcopy inside illustrative creative workspace previews. */
+.ai-case-hero-index span{color:#4f514d}
+.ai-ui-name,.ai-ui-section-title,.ai-ui-canvas-head span,.ai-ui-canvas-bar,.ai-ui-bottom,.ai-ui-assistant-head small{color:#475160}
+.ai-ui-drop{color:#475160}
