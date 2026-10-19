@@ -25,3 +25,12 @@
 .ct-case .ct-ui-day>span,.ct-case .ct-opening-info small{color:#3d4b41!important}
 .ct-case .ct-platform-found span,.ct-case .ct-platform-found b{color:#31583c!important}
 .ct-case .ct-platform-pending span,.ct-case .ct-platform-pending b{color:#74501d!important}
+
+/* WCAG AA audit: ledger numbers and UI rows on pale grey. */
+.ct-case .ct-ledger .ct-chapter>div>span{color:#a63720}
+.ct-case .ct-mock-browserbar>span{color:#34493e}
+.ct-case .ct-ui-day span,
+.ct-case .ct-ui-item-info small,
+.ct-case .ct-ui-item-info>div:last-child>span{color:#38493d}
+.ct-case .ct-ui-search,
+.ct-case .ct-ui-toolbar span{color:#37483d}
