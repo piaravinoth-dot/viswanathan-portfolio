@@ -2,7 +2,6 @@ import {useEffect,useRef,useState} from "react";
 import {MdArrowOutward,MdClose,MdArrowBack,MdArrowForward} from "react-icons/md";
 import "./styles/Work.css";
 import {createPortal} from "react-dom";
-import {ScrollTrigger} from "gsap/ScrollTrigger";
 import gsap from "gsap";
 import {smoother} from "./Navbar";
 
@@ -34,31 +33,38 @@ if(type==="split")return <div className="pv-split"><div className="pv-phone"><di
 return <div className="pv-clip"><div className="pv-clip-window"><div className="pv-clip-top">CLIP STUDIO <span>● &nbsp; WORKSPACE</span></div><div className="pv-clip-inner"><span className="pv-clip-eyebrow">VIDEO WORKFLOW, SIMPLIFIED</span><h3>Save what<br/><i>inspires.</i></h3><div className="pv-url">https://video-link.example <span>↗</span></div><div className="pv-clip-formats"><span>MP4</span><span>HD</span><span>ORIGINAL</span></div><div className="pv-clip-action">Continue &nbsp; ↗</div></div></div><div className="pv-clip-circle">▶</div></div>
 };
 const Work=()=>{
-const [activeProduct,setActiveProduct]=useState<number|null>(null);
-const selectProduct=(index:number)=>{
-  setActiveProduct(current=>current===index?null:index);
-  requestAnimationFrame(()=>ScrollTrigger.refresh());
-  if(window.innerWidth>760)return;
-  requestAnimationFrame(()=>{
-    const panel=document.getElementById(`product-trigger-${products[index].id}`)?.closest<HTMLElement>(".product-panel");
-    if(!panel||!smoother)return;
-    const headerHeight=document.querySelector<HTMLElement>(".header")?.offsetHeight||0;
-    smoother.scrollTop(Math.max(0,smoother.offset(panel,"top top")-headerHeight-12));
-  });
-};
 const [orbitIndex,setOrbitIndex]=useState(0);
 const [orbitPlaying,setOrbitPlaying]=useState(true);
 const [orbitMobile,setOrbitMobile]=useState(()=>window.matchMedia("(max-width: 760px)").matches);
+const orbitHost=useRef<HTMLDivElement>(null);
+const [orbitInView,setOrbitInView]=useState(false);
+const [orbitPageVisible,setOrbitPageVisible]=useState(()=>!document.hidden);
+const orbitManuallyPaused=useRef(false);
 const orbitRefs=useRef<(HTMLDivElement|null)[]>([]);
 const touchStart=useRef<{x:number;y:number}|null>(null);
 const orbitSwipeAt=useRef(0);
 const orbitUserPause=useRef<number|null>(null);
 const orbitNext=(delta:number)=>{
   setOrbitIndex(current=>(current+delta+products.length)%products.length);
-  setOrbitPlaying(false);
   if(orbitUserPause.current!==null)window.clearTimeout(orbitUserPause.current);
-  orbitUserPause.current=window.setTimeout(()=>setOrbitPlaying(true),9000);
+  if(!orbitManuallyPaused.current){
+    setOrbitPlaying(false);
+    orbitUserPause.current=window.setTimeout(()=>setOrbitPlaying(true),9000);
+  }
 };
+useEffect(()=>{
+  const observer=new IntersectionObserver(entries=>{
+    setOrbitInView(entries.some(e=>e.isIntersecting));
+  },{threshold:0.05});
+  const element=orbitHost.current;
+  if(element)observer.observe(element);
+  return()=>observer.disconnect();
+},[]);
+useEffect(()=>{
+  const onVisibility=()=>setOrbitPageVisible(!document.hidden);
+  document.addEventListener("visibilitychange",onVisibility);
+  return()=>document.removeEventListener("visibilitychange",onVisibility);
+},[]);
 useEffect(()=>{
   const query=window.matchMedia("(max-width: 760px)");
   const update=()=>setOrbitMobile(query.matches);
@@ -93,12 +99,10 @@ useEffect(()=>()=>{
   orbitRefs.current.forEach(element=>{if(element)gsap.killTweensOf(element)});
 },[]);
 useEffect(()=>{
-  if(!orbitMobile||!orbitPlaying||document.hidden||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  if(!orbitMobile||!orbitPlaying||!orbitInView||!orbitPageVisible||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   const timer=window.setInterval(()=>setOrbitIndex(index=>(index+1)%products.length),4500);
-  const stop=()=>{if(document.hidden)setOrbitPlaying(false)};
-  document.addEventListener("visibilitychange",stop);
-  return()=>{window.clearInterval(timer);document.removeEventListener("visibilitychange",stop)};
-},[orbitMobile,orbitPlaying]);
+  return()=>window.clearInterval(timer);
+},[orbitMobile,orbitPlaying,orbitInView,orbitPageVisible]);
 useEffect(()=>()=>{if(orbitUserPause.current!==null)window.clearTimeout(orbitUserPause.current)},[]);
 const [openImage,setOpenImage]=useState<number|null>(null);
 const dialogRef=useRef<HTMLDivElement>(null);
@@ -134,7 +138,7 @@ return <section className="work-section" id="work">
 <div className="product-section" id="products"><div className="product-inner section-container">
 <div className="product-heading"><div className="product-topline"><span><i/> 02 / DIGITAL PRODUCTS</span><span>SELECTED PRODUCT DESIGN / 2026</span></div><div className="product-heading-grid"><h2>Ideas, made<br/><em>interactive.</em></h2><p>Six products spanning creative AI, content operations, analytics and everyday utilities. Designed with an emphasis on usability, workflow and visual craft.</p></div><div className="product-count">06 <span>SELECTED PRODUCTS</span></div></div>
 <div className="product-showcase-hint"><span>EXPLORE THE COLLECTION</span><span>Select a product to open <MdArrowForward/></span></div>
-<div className="mobile-product-orbit" aria-label="Interactive six-product carousel">
+<div ref={orbitHost} className="mobile-product-orbit" role="region" aria-roledescription="carousel" aria-label="Selected digital products">
   <div className="orbit-topline"><span>THE PRODUCT COLLECTION</span><span>{String(orbitIndex+1).padStart(2,"0")} / 06</span></div>
   <div className="orbit-stage" onTouchStart={event=>{touchStart.current={x:event.touches[0].clientX,y:event.touches[0].clientY};}} onTouchEnd={event=>{if(!touchStart.current)return;const dx=event.changedTouches[0].clientX-touchStart.current.x;const dy=event.changedTouches[0].clientY-touchStart.current.y;touchStart.current=null;if(Math.abs(dx)>38&&Math.abs(dx)>Math.abs(dy)*1.2){orbitSwipeAt.current=Date.now();orbitNext(dx<0?1:-1);}}}>
     {products.map((p,i)=><div key={p.id} ref={element=>{orbitRefs.current[i]=element;}} className={`orbit-card orbit-${p.accent}${orbitIndex===i?" orbit-active":""}`} aria-hidden={orbitIndex!==i} style={{pointerEvents:orbitIndex===i?"auto":"none"}} onClick={event=>{if(orbitIndex!==i||Date.now()-orbitSwipeAt.current<650||event.target instanceof Element&&event.target.closest("a"))return;window.location.assign(`/work/${p.slug}`);}}>
@@ -145,16 +149,10 @@ return <section className="work-section" id="work">
     </div>)}
   </div>
   <div className="orbit-controls"><button type="button" onClick={()=>orbitNext(-1)} aria-label="Previous product"><MdArrowBack/></button><span>{products[orbitIndex].title}</span><button type="button" onClick={()=>orbitNext(1)} aria-label="Next product"><MdArrowForward/></button></div>
-  <button type="button" className="orbit-autoplay" onClick={()=>setOrbitPlaying(current=>!current)} aria-pressed={orbitPlaying}>{orbitPlaying?"Pause rotation":"Play rotation"}</button>
+  <button type="button" className="orbit-autoplay" onClick={()=>{if(orbitUserPause.current!==null)window.clearTimeout(orbitUserPause.current);orbitManuallyPaused.current=orbitPlaying;setOrbitPlaying(current=>!current)}} aria-pressed={orbitPlaying}>{orbitPlaying?"Pause rotation":"Play rotation"}</button>
   <div className="orbit-index" aria-label="Choose a product">{products.map((p,i)=><button type="button" key={p.id} aria-current={orbitIndex===i?"true":undefined} className={orbitIndex===i?"orbit-index-active":""} onClick={()=>orbitNext((i-orbitIndex+products.length)%products.length)}>{p.id} <span>{p.title}</span></button>)}</div>
   <p className="orbit-note">SWIPE CARDS OR USE ARROWS TO EXPLORE · SIX PRODUCTS</p>
 </div>
-<div className="product-deck">{products.map((p,i)=>{const active=activeProduct===i;return <article className={`product-panel product-${p.accent}${active?" is-active":""}`} key={p.id}>
-<button type="button" className="product-rail" id={`product-trigger-${p.id}`} aria-expanded={active} aria-controls={`product-panel-${p.id}`} onClick={()=>selectProduct(i)} data-cursor="disable"><span className="product-rail-number">{p.id}</span><span className="product-rail-title">{p.title}</span><span className="product-rail-category">{p.note}</span><span className="product-rail-icon" aria-hidden="true">{active?"−":"+"}</span><span className="product-sr-only">{active?"Selected product":"Explore product"}</span></button>
-<div className="product-panel-body" id={`product-panel-${p.id}`} role="region" aria-labelledby={`product-trigger-${p.id}`} hidden={!active}>
-<div className="product-copy"><div className="product-copy-main"><span className="product-detail-eyebrow">PRODUCT DESIGN / {p.id} OF 06</span><h3>{p.title}</h3><h4>{p.subtitle}</h4><p>{p.description}</p><div className="product-skills">{p.skills.map(s=><Chip key={s}>{s}</Chip>)}</div></div><div className="product-copy-foot"><a className="product-case-link" href={`/work/${p.slug}`}>View case study <MdArrowOutward/></a><span className="product-bottom-note">STRATEGY · INTERFACE · EXPERIENCE</span></div></div>
-<div className="product-art"><span className="product-art-label">RECONSTRUCTED UI · SAMPLE CONTENT</span><ProductVisual type={p.visual}/><span className="product-art-corner">{p.id} / 06 <MdArrowOutward/></span></div>
-</div></article>})}</div>
 <div className="product-outro"><span>DESIGN THAT WORKS AS WELL AS IT LOOKS.</span><a href="#contact">Have a project in mind? <MdArrowOutward/></a></div>
 </div></div>
 {openImage!==null&&createPortal(<div ref={dialogRef} className="art-lightbox" role="dialog" aria-modal="true" aria-label="Portfolio image viewer" onClick={()=>setOpenImage(null)}><button type="button" className="art-lightbox-close" aria-label="Close image" onClick={()=>setOpenImage(null)}><MdClose/></button><button type="button" className="art-lightbox-prev" aria-label="Previous image" onClick={e=>{e.stopPropagation();setOpenImage((openImage+artworks.length-1)%artworks.length)}}><MdArrowBack/></button><figure onClick={e=>e.stopPropagation()}><img src={artworks[openImage].image} alt={artworks[openImage].title}/><figcaption>{artworks[openImage].title} <span>{artworks[openImage].type}</span></figcaption></figure><button type="button" className="art-lightbox-next" aria-label="Next image" onClick={e=>{e.stopPropagation();setOpenImage((openImage+1)%artworks.length)}}><MdArrowForward/></button></div>,document.body)}
