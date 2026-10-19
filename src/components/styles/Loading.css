@@ -411,3 +411,33 @@
     font-size: 18px;
   }
 }
+/* Welcome screen restored: short, GPU-friendly exit that retains the
+   original mint marquee, black pill, cursor highlight and expanding reveal. */
+.loading-screen{
+  overflow:hidden;
+  contain:layout paint;
+}
+.loading-container{
+  transition:max-width .45s ease-in-out;
+}
+.loading-wrap{
+  transform-origin:center;
+  transition:transform .55s cubic-bezier(.32,.08,.85,.54),box-shadow .4s ease;
+}
+.loading-clicked{
+  /* Scale on the compositor instead of animating huge min-width/min-height. */
+  min-width:0;
+  min-height:0;
+  transform:scale(48);
+  border-radius:100px;
+  box-shadow:none;
+}
+@media(prefers-reduced-motion:reduce){
+  .loading-wrap,.loading-container,.loading-content,.loading-content2{
+    transition:none!important;
+    animation:none!important;
+  }
+  .loaderGame-in,.loaderGame-ball,.loading-box{
+    animation:none!important;
+  }
+}
