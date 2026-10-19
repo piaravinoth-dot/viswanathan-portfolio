@@ -66,7 +66,7 @@ async function testViewport(browser, name, width) {
       // indicator and the selected slide announced to assistive technology.
       const orbit=page.locator('.mobile-product-orbit');
       await orbit.focus();
-      log(name,width,'carousel has visible keyboard focus',await orbit.evaluate(el=>el.matches(':focus-visible')));
+      log(name,width,'carousel has visible keyboard focus',await orbit.evaluate(el=>el===document.activeElement&&getComputedStyle(el).outlineStyle!=='none'&&parseFloat(getComputedStyle(el).outlineWidth)>=2));
       await page.keyboard.press('ArrowRight');
       await page.waitForFunction(()=>document.querySelector('.orbit-card.orbit-active')?.textContent?.includes('AI Design Studio'),null,{timeout:4000});
       log(name,width,'ArrowRight advances carousel',await page.locator('.orbit-card.orbit-active').textContent().then(t=>Boolean(t?.includes('AI Design Studio'))));
