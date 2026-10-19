@@ -31,3 +31,10 @@
 .sm-phone-head small,.sm-phone-eyebrow,.sm-phone-row-title span,
 .sm-activity-card small,.sm-phone-nav span:not(.active){color:#414c47}
 .sm-intro h2 em,.sm-intro-facts span{color:#45672f}
+
+
+/* AA editorial green and subdued expense microcopy. */
+.sm-case .sm-journey-head h2 em,.sm-case .sm-balance-feature h2 em{color:#47682e!important}
+.sm-case .sm-journey-head p,.sm-case .sm-journey-step p,.sm-case .sm-balance-feature .sm-chapter p{color:#404941!important}
+.sm-case .sm-journey-step>span,.sm-case .sm-journey-head>span,.sm-case .sm-intro-meta span{color:#3f602e!important}
+.sm-case .sm-add-panel label{color:#394441!important}
