@@ -54,6 +54,21 @@
         "height": 950,
         "caption": "Selected applications brought together as a family."
       }
+    ],
+    "role": "Visual communication & merchandise adaptation",
+    "decisions": [
+      {
+        "title": "A recognisable anchor",
+        "text": "The Nation Building name and typographic treatment connect the digital artwork with the physical applications."
+      },
+      {
+        "title": "Composed for the format",
+        "text": "Layouts change between posters, fabric, circular buttons and a narrow key fob, while keeping the identity recognisable."
+      },
+      {
+        "title": "Shown in context",
+        "text": "The presentation pairs artwork with applications so the relationship between the graphic and the object is easy to see."
+      }
     ]
   },
   {
@@ -110,6 +125,21 @@
         "width": 1400,
         "height": 1710,
         "caption": "Selected pages show the publication\u2019s overall rhythm."
+      }
+    ],
+    "role": "Publication layout & information hierarchy",
+    "decisions": [
+      {
+        "title": "Hierarchy before detail",
+        "text": "Headings, colour bands and grouping separate the promises and policy content into a readable sequence."
+      },
+      {
+        "title": "A consistent page structure",
+        "text": "Repeated type relationships and margins connect sections with different amounts of text."
+      },
+      {
+        "title": "Room for a change of pace",
+        "text": "Photographs and larger visual moments interrupt dense pages and give the publication a more varied rhythm."
       }
     ]
   },
@@ -168,6 +198,21 @@
         "height": 1450,
         "caption": "The vehicle system shown across multiple views."
       }
+    ],
+    "role": "Vehicle graphics & multilingual adaptation",
+    "decisions": [
+      {
+        "title": "Design around the screen",
+        "text": "The LED aperture is treated as a fixed constraint. Typography, portraits and message areas occupy the surrounding surfaces."
+      },
+      {
+        "title": "A system across elevations",
+        "text": "Side, front and rear views continue the same visual language while responding to different proportions."
+      },
+      {
+        "title": "Hierarchy across scripts",
+        "text": "Language variants retain the structure and emphasis of the composition while accommodating different scripts."
+      }
     ]
   },
   {
@@ -224,6 +269,21 @@
         "width": 1400,
         "height": 1940,
         "caption": "Selected slides demonstrate continuity across the deck."
+      }
+    ],
+    "role": "Presentation layout & narrative sequencing",
+    "decisions": [
+      {
+        "title": "Structure first",
+        "text": "The contents page and section openers make the sequence of the presentation visible before the detailed slides."
+      },
+      {
+        "title": "A clear focal point",
+        "text": "Portraits, quotations and supporting text use changes in scale and position to establish a reading order."
+      },
+      {
+        "title": "Contrast as a chapter cue",
+        "text": "Light and dark backgrounds, colour changes and image-led pauses distinguish sections without losing continuity."
       }
     ]
   }

@@ -1,15 +1,19 @@
 import type { Plugin } from "vite";
 import pages from "../src/data/sitePages.json";
+import communicationProjects from "../src/data/communicationProjects.json";
 const origin = "https://viswanathan-portfolio-iota.vercel.app";
 const escapeHtml = (value: string) => value.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 function metadata(html: string, page: typeof pages[number]) {
   const url = origin + page.path;
   const image = `${origin}/social/${page.slug}.png`;
+  const project = communicationProjects.find(project=>project.slug===page.slug);
+  const heroPreload = project ? `<link rel="preload" as="image" href="${project.hero.src}" imagesrcset="${project.hero.src.replace('.webp','-800.webp')} 800w, ${project.hero.src} ${project.hero.width}w" imagesizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1333px) 90vw, 1200px" fetchpriority="high" />` : "";
   const schema = page.path === "/" ? {
     "@context":"https://schema.org", "@type":"ProfilePage", "url":url,
     "mainEntity":{"@type":"Person","name":"Viswanathan G","url":origin,"jobTitle":"Senior Product & Visual Designer","sameAs":["https://www.linkedin.com/in/viswanathan-g-55a0176a/","https://github.com/piaravinoth-dot"]}
   } : {"@context":"https://schema.org","@type":"CreativeWork","name":page.title.split(" — ")[0],"description":page.description,"url":url,"image":image,"author":{"@type":"Person","name":"Viswanathan G","url":origin}};
   const block = `<!--seo:start-->
+${heroPreload}
 <link rel="canonical" href="${url}" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta property="og:type" content="${page.path === "/" ? "website" : "article"}" />

@@ -1,0 +1,816 @@
+[
+  {
+    "slug": "nation-building",
+    "viewport": 375,
+    "scrollWidth": 360,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Nation Building.",
+        "fontSize": "49px",
+        "width": 320
+      },
+      {
+        "text": "One identity. Different ways to meet people.",
+        "fontSize": "30px",
+        "width": 317
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 317
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 317
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/nation-building/hero-800.webp",
+      "width": 335
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "telangana-manifesto",
+    "viewport": 375,
+    "scrollWidth": 360,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Telangana Manifesto.",
+        "fontSize": "49px",
+        "width": 320
+      },
+      {
+        "text": "A publication, seen as a whole.",
+        "fontSize": "30px",
+        "width": 317
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 317
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 317
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/telangana-manifesto/cover-800.webp",
+      "width": 335
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "led-rath-yatra",
+    "viewport": 375,
+    "scrollWidth": 360,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "LED Rath Yatra.",
+        "fontSize": "49px",
+        "width": 320
+      },
+      {
+        "text": "Graphics across a moving surface.",
+        "fontSize": "30px",
+        "width": 317
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 317
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 317
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/led-rath-yatra/cover-800.webp",
+      "width": 335
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "samvidhan",
+    "viewport": 375,
+    "scrollWidth": 360,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Samvidhan Gaurav Abhiyaan.",
+        "fontSize": "49px",
+        "width": 320
+      },
+      {
+        "text": "A deck with a visual rhythm.",
+        "fontSize": "30px",
+        "width": 317
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 317
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 317
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/samvidhan/cover-800.webp",
+      "width": 335
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "nation-building",
+    "viewport": 320,
+    "scrollWidth": 305,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Nation Building.",
+        "fontSize": "49px",
+        "width": 265
+      },
+      {
+        "text": "One identity. Different ways to meet people.",
+        "fontSize": "30px",
+        "width": 268
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 268
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 268
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/nation-building/hero-800.webp",
+      "width": 280
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "telangana-manifesto",
+    "viewport": 320,
+    "scrollWidth": 305,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Telangana Manifesto.",
+        "fontSize": "49px",
+        "width": 265
+      },
+      {
+        "text": "A publication, seen as a whole.",
+        "fontSize": "30px",
+        "width": 268
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 268
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 268
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/telangana-manifesto/cover-800.webp",
+      "width": 280
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "led-rath-yatra",
+    "viewport": 320,
+    "scrollWidth": 305,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "LED Rath Yatra.",
+        "fontSize": "49px",
+        "width": 265
+      },
+      {
+        "text": "Graphics across a moving surface.",
+        "fontSize": "30px",
+        "width": 268
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 268
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 268
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/led-rath-yatra/cover-800.webp",
+      "width": 280
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "samvidhan",
+    "viewport": 320,
+    "scrollWidth": 305,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Samvidhan Gaurav Abhiyaan.",
+        "fontSize": "49px",
+        "width": 265
+      },
+      {
+        "text": "A deck with a visual rhythm.",
+        "fontSize": "30px",
+        "width": 268
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 268
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 268
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/samvidhan/cover-800.webp",
+      "width": 280
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "nation-building",
+    "viewport": 425,
+    "scrollWidth": 410,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Nation Building.",
+        "fontSize": "49px",
+        "width": 368
+      },
+      {
+        "text": "One identity. Different ways to meet people.",
+        "fontSize": "30px",
+        "width": 361
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 361
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 361
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/nation-building/hero-800.webp",
+      "width": 385
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "telangana-manifesto",
+    "viewport": 425,
+    "scrollWidth": 410,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Telangana Manifesto.",
+        "fontSize": "49px",
+        "width": 368
+      },
+      {
+        "text": "A publication, seen as a whole.",
+        "fontSize": "30px",
+        "width": 361
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 361
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 361
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/telangana-manifesto/cover-800.webp",
+      "width": 385
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "led-rath-yatra",
+    "viewport": 425,
+    "scrollWidth": 410,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "LED Rath Yatra.",
+        "fontSize": "49px",
+        "width": 368
+      },
+      {
+        "text": "Graphics across a moving surface.",
+        "fontSize": "30px",
+        "width": 361
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 361
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 361
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/led-rath-yatra/cover-800.webp",
+      "width": 385
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "samvidhan",
+    "viewport": 425,
+    "scrollWidth": 410,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Samvidhan Gaurav Abhiyaan.",
+        "fontSize": "49px",
+        "width": 368
+      },
+      {
+        "text": "A deck with a visual rhythm.",
+        "fontSize": "30px",
+        "width": 361
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 361
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 361
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/samvidhan/cover-800.webp",
+      "width": 385
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "nation-building",
+    "viewport": 768,
+    "scrollWidth": 753,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Nation Building.",
+        "fontSize": "61.44px",
+        "width": 676
+      },
+      {
+        "text": "One identity. Different ways to meet people.",
+        "fontSize": "30px",
+        "width": 313
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 705
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 705
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/nation-building/hero-800.webp",
+      "width": 691
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "telangana-manifesto",
+    "viewport": 768,
+    "scrollWidth": 753,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Telangana Manifesto.",
+        "fontSize": "61.44px",
+        "width": 676
+      },
+      {
+        "text": "A publication, seen as a whole.",
+        "fontSize": "30px",
+        "width": 313
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 705
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 705
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/telangana-manifesto/cover-800.webp",
+      "width": 691
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "led-rath-yatra",
+    "viewport": 768,
+    "scrollWidth": 753,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "LED Rath Yatra.",
+        "fontSize": "61.44px",
+        "width": 676
+      },
+      {
+        "text": "Graphics across a moving surface.",
+        "fontSize": "30px",
+        "width": 313
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 705
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 705
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/led-rath-yatra/cover-800.webp",
+      "width": 691
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "samvidhan",
+    "viewport": 768,
+    "scrollWidth": 753,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Samvidhan Gaurav Abhiyaan.",
+        "fontSize": "61.44px",
+        "width": 676
+      },
+      {
+        "text": "A deck with a visual rhythm.",
+        "fontSize": "30px",
+        "width": 313
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "30px",
+        "width": 705
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "32px",
+        "width": 705
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/samvidhan/cover-800.webp",
+      "width": 691
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "nation-building",
+    "viewport": 1440,
+    "scrollWidth": 1425,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Nation Building.",
+        "fontSize": "112px",
+        "width": 1100
+      },
+      {
+        "text": "One identity. Different ways to meet people.",
+        "fontSize": "48px",
+        "width": 460
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "48px",
+        "width": 1100
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "55px",
+        "width": 1377
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/nation-building/hero.webp",
+      "width": 1200
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "telangana-manifesto",
+    "viewport": 1440,
+    "scrollWidth": 1425,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Telangana Manifesto.",
+        "fontSize": "112px",
+        "width": 1100
+      },
+      {
+        "text": "A publication, seen as a whole.",
+        "fontSize": "48px",
+        "width": 460
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "48px",
+        "width": 1100
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "55px",
+        "width": 1377
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/telangana-manifesto/cover.webp",
+      "width": 1199
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "led-rath-yatra",
+    "viewport": 1440,
+    "scrollWidth": 1425,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "LED Rath Yatra.",
+        "fontSize": "112px",
+        "width": 1100
+      },
+      {
+        "text": "Graphics across a moving surface.",
+        "fontSize": "48px",
+        "width": 460
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "48px",
+        "width": 1100
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "55px",
+        "width": 1377
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/led-rath-yatra/cover.webp",
+      "width": 1199
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "samvidhan",
+    "viewport": 1440,
+    "scrollWidth": 1425,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "Samvidhan Gaurav Abhiyaan.",
+        "fontSize": "112px",
+        "width": 1100
+      },
+      {
+        "text": "A deck with a visual rhythm.",
+        "fontSize": "48px",
+        "width": 460
+      },
+      {
+        "text": "Design decisions.",
+        "fontSize": "48px",
+        "width": 1100
+      },
+      {
+        "text": "The complete collection.",
+        "fontSize": "55px",
+        "width": 1377
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/samvidhan/cover.webp",
+      "width": 1199
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "homepage",
+    "communicationCards": 4,
+    "digitalDuplicates": 0,
+    "productCards": 6,
+    "viewport": 375,
+    "scrollWidth": 360,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "VISWANATHANG.",
+        "fontSize": "26px",
+        "width": 330
+      },
+      {
+        "text": "VisualProduct",
+        "fontSize": "36px",
+        "width": 320
+      },
+      {
+        "text": "DesignerCreator",
+        "fontSize": "30px",
+        "width": 320
+      },
+      {
+        "text": "About Me",
+        "fontSize": "18px",
+        "width": 330
+      },
+      {
+        "text": "A considered idea.A useful experience.",
+        "fontSize": "43px",
+        "width": 316
+      },
+      {
+        "text": "My career &experience",
+        "fontSize": "45px",
+        "width": 305
+      },
+      {
+        "text": "Ideas in context.Design in use.",
+        "fontSize": "42px",
+        "width": 324
+      },
+      {
+        "text": "Work thatspeaks.",
+        "fontSize": "61px",
+        "width": 330
+      },
+      {
+        "text": "Ideas, madeinteractive.",
+        "fontSize": "55px",
+        "width": 316
+      },
+      {
+        "text": "Have something in mind?",
+        "fontSize": "40px",
+        "width": 330
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/nation-building/cover-800.webp",
+      "width": 345
+    },
+    "axeViolations": []
+  },
+  {
+    "slug": "homepage",
+    "communicationCards": 4,
+    "digitalDuplicates": 0,
+    "productCards": 6,
+    "viewport": 1440,
+    "scrollWidth": 1425,
+    "noHorizontalOverflow": true,
+    "headings": [
+      {
+        "text": "VISWANATHANG.",
+        "fontSize": "40px",
+        "width": 319
+      },
+      {
+        "text": "VisualProduct",
+        "fontSize": "55px",
+        "width": 402
+      },
+      {
+        "text": "DesignerCreator",
+        "fontSize": "45px",
+        "width": 402
+      },
+      {
+        "text": "About Me",
+        "fontSize": "25px",
+        "width": 670
+      },
+      {
+        "text": "A considered idea.A useful experience.",
+        "fontSize": "60.48px",
+        "width": 429
+      },
+      {
+        "text": "My career &experience",
+        "fontSize": "70px",
+        "width": 1200
+      },
+      {
+        "text": "Ideas in context.Design in use.",
+        "fontSize": "77.76px",
+        "width": 798
+      },
+      {
+        "text": "Work thatspeaks.",
+        "fontSize": "129.6px",
+        "width": 741
+      },
+      {
+        "text": "Ideas, madeinteractive.",
+        "fontSize": "105.12px",
+        "width": 859
+      },
+      {
+        "text": "Have something in mind?",
+        "fontSize": "92.16px",
+        "width": 900
+      }
+    ],
+    "smallTargets": [],
+    "hero": {
+      "src": "http://terminal.local:4173/behance/nation-building/cover-800.webp",
+      "width": 648
+    },
+    "axeViolations": []
+  }
+]
