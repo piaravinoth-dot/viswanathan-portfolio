@@ -111,7 +111,7 @@ const Scene=()=>{
         try {performance.measure("portfolio-3d-first-frame","portfolio-3d-start","portfolio-3d-visible");} catch { /* mark may not exist in direct previews */ }
       }
     };
-    animate();
+    frame=requestAnimationFrame(animate);
     return()=>{
       disposed=true;cancelAnimationFrame(frame);progress.cancel();visibilityObserver.disconnect();
       window.removeEventListener("resize",onResize);document.removeEventListener("mousemove",onMouseMove);

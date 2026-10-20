@@ -33,9 +33,9 @@ const App = () => {
   // The previous load-event + 2.7s timer + idle callback caused visitors
   // to leave before the character appeared. Keep the hardware WebGL check.
   const [threeDReady,setThreeDReady]=useState(false);
-  const route = window.location.pathname.replace(/\/$/, "");
+  const route = window.location.pathname.replace(/\/$/, "") || "/";
   useEffect(()=>{
-    if(route!=="" || window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+    if(route!=="/" || window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
     let cancelled=false;
     let paintFrame=0,loadFrame=0,timer=0;
     paintFrame=window.requestAnimationFrame(()=>{
