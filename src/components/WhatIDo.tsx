@@ -23,9 +23,9 @@ const capabilities = [
   },
   {
     title: "Creative Development",
-    focus: "Design that moves into code.",
-    description: "I bring interfaces to life through frontend development and creative coding. This portfolio uses React, TypeScript, GSAP and Three.js to connect responsive layouts, motion and an interactive 3D experience.",
-    skills: ["React", "TypeScript", "CSS", "GSAP", "Three.js", "Creative coding"],
+    focus: "Vibe coding. Ideas into working products.",
+    description: "I use AI-assisted development to turn design ideas into working products. I shape the flows and interfaces, guide implementation, test the experience and refine it through iteration. This portfolio brings that approach into React, TypeScript, GSAP and Three.js.",
+    skills: ["React", "TypeScript", "CSS", "GSAP", "Three.js", "Vibe coding"],
     links: [{label: "Content Tracker", href: "/work/content-tracker"}, {label: "Clip Studio prototype", href: "/work/clip-studio"}],
     note: "Interactive experiences · Frontend implementation · Motion",
   },

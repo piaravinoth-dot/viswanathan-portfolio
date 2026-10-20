@@ -452,3 +452,6 @@ h2.landing-info-h2 {
   .landing-role-word.role-second{display:none!important;animation:none!important}
 }
 
+
+/* Keep the builder identity visible within the existing introduction. */
+.landing-summary .vibe-coder-highlight{color:var(--accentColor);font-weight:650}
