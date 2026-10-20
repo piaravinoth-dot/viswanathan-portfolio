@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 const root="dist";
-const slugs=["ai-design-studio","content-studio","social-media-intelligence","content-tracker","splitmate","clip-studio"];
+const slugs=["ai-design-studio","content-studio","social-media-intelligence","content-tracker","splitmate","clip-studio","nation-building","telangana-manifesto","led-rath-yatra","samvidhan"];
 const pages=[["index.html","/"],...slugs.map(s=>[`case-study-pages/${s}.html`,`/work/${s}`])];
 const origin="https://viswanathan-portfolio-iota.vercel.app";
 const errors=[];
@@ -25,4 +25,4 @@ else{
   for(const [,route] of pages)if(!sitemap.includes("<loc>"+origin+route+"</loc>"))errors.push("Sitemap missing "+route);
 }
 if(errors.length){console.error("SEO BUILD QA FAILED\n"+errors.join("\n"));process.exit(1)}
-console.log("SEO BUILD QA PASSED: 7 prerendered HTML pages, metadata and discovery files verified.");
+console.log("SEO BUILD QA PASSED: 11 prerendered HTML pages, metadata and discovery files verified.");

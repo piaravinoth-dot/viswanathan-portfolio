@@ -8,6 +8,7 @@ import Navbar,{smoother} from "./Navbar";
 import SocialIcons from "./SocialIcons";
 import WhatIDo from "./WhatIDo";
 import Work from "./Work";
+import SelectedCases from "./SelectedCases";
 import setSplitText from "./utils/splitText";
 import {setAllTimeline} from "./utils/GsapScroll";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
@@ -50,6 +51,6 @@ const MainContainer=({children}:PropsWithChildren)=>{
     window.addEventListener("resize",resize);
     return()=>{disposed=true;window.clearTimeout(timer);window.removeEventListener("resize",resize);stopIntro?.();stopCareer?.();setSplitText(true);};
   },[isLoading]);
-  return <div className="container-main"><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&children}</Landing><About/><WhatIDo/><Career/><Work/><Contact/></div></div></div></div>;
+  return <div className="container-main"><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&children}</Landing><About/><WhatIDo/><Career/><SelectedCases/><Work/><Contact/></div></div></div></div>;
 };
 export default MainContainer;

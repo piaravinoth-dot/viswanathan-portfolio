@@ -50,6 +50,38 @@
     {
       "source": "/work/clip-studio/",
       "destination": "/case-study-pages/clip-studio.html"
+    },
+    {
+      "source": "/work/nation-building",
+      "destination": "/case-study-pages/nation-building.html"
+    },
+    {
+      "source": "/work/nation-building/",
+      "destination": "/case-study-pages/nation-building.html"
+    },
+    {
+      "source": "/work/telangana-manifesto",
+      "destination": "/case-study-pages/telangana-manifesto.html"
+    },
+    {
+      "source": "/work/telangana-manifesto/",
+      "destination": "/case-study-pages/telangana-manifesto.html"
+    },
+    {
+      "source": "/work/led-rath-yatra",
+      "destination": "/case-study-pages/led-rath-yatra.html"
+    },
+    {
+      "source": "/work/led-rath-yatra/",
+      "destination": "/case-study-pages/led-rath-yatra.html"
+    },
+    {
+      "source": "/work/samvidhan",
+      "destination": "/case-study-pages/samvidhan.html"
+    },
+    {
+      "source": "/work/samvidhan/",
+      "destination": "/case-study-pages/samvidhan.html"
     }
   ],
   "headers": [

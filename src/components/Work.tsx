@@ -153,7 +153,7 @@ useEffect(()=>{
   window.addEventListener("keydown",fn);
   return()=>{window.removeEventListener("keydown",fn);document.body.style.overflowY=previousOverflow;smoother?.paused(Boolean(wasPaused));previousFocus?.focus({preventScroll:true})};
 },[openImage!==null]);
-return <section className="work-section" id="work">
+return <section className="work-section" id="visual-archive">
 <div className="work-container section-container">
 <div className="work-intro"><div><span className="work-eyebrow"><i/> 01 / SELECTED VISUAL WORK</span><h2>Work that<br/><em>speaks.</em></h2></div><div className="work-intro-right"><p>From the first idea to the final frame. A selection of commercial, campaign, editorial and visual storytelling projects.</p><span>SCROLL TO EXPLORE &nbsp; ↓</span></div></div>
 <div className="art-grid">{artworks.map((a,i)=><button type="button" className={`art-piece art-${a.shape}`} key={a.title} onClick={()=>setOpenImage(i)} aria-label={`View ${a.title} image`} data-cursor="disable"><div className="art-image"><img src={a.image} alt={a.title+" — original portfolio artwork"} loading="lazy"/><span className="art-open"><MdArrowOutward/></span></div><div className="art-caption"><span><b>{a.title}</b><small>{a.type}</small></span><span className="art-index">{String(i+1).padStart(2,"0")} / {String(artworks.length).padStart(2,"0")}</span></div></button>)}</div>

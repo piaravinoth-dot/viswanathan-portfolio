@@ -1,0 +1,21 @@
+import {useEffect} from 'react';
+import projects from '../data/communicationProjects.json';
+import './styles/CommunicationCases.css';
+
+export default function CommunicationCaseStudy(){
+  const slug=window.location.pathname.replace(/\/$/,'').split('/').pop();
+  const project=projects.find(p=>p.slug===slug)!;
+  const next=projects[(projects.indexOf(project)+1)%projects.length];
+  useEffect(()=>{const prior=document.body.style.overflowY;document.body.style.overflowY='auto';return()=>{document.body.style.overflowY=prior}},[]);
+  return <div className={'communication-case comm-'+project.slug}>
+    <a className="comm-skip" href="#case-content">Skip to case study</a>
+    <header className="comm-nav"><a href="/" aria-label="Viswanathan G home">VG<span>®</span></a><nav aria-label="Case study navigation"><a href="/#work">All work <span aria-hidden="true">↗</span></a><a href="/#contact">Let’s talk <span aria-hidden="true">↗</span></a></nav></header>
+    <main id="case-content">
+      <section className="comm-hero"><span className="comm-kicker">SELECTED COMMUNICATION DESIGN / {project.discipline}</span><h1>{project.title}<span>.</span></h1><p>{project.headline}</p><figure><img src={project.hero.src} width={project.hero.width} height={project.hero.height} alt={project.slug==='nation-building'?'Nation Building identity applied to an orange mug':project.title+' — project opening'} fetchPriority="high" decoding="async"/></figure></section>
+      <section className="comm-brief" aria-labelledby="comm-brief-title"><div><span className="comm-kicker">THE PROJECT</span><h2 id="comm-brief-title">{project.headline}</h2></div><div><p>{project.description}</p><dl><div><dt>Design</dt><dd>Viswanathan G</dd></div><div><dt>Scope</dt><dd>{project.scope}</dd></div></dl></div></section>
+      <section className="comm-story" aria-label="Selected artwork and applications">{project.story.map((image,i)=><figure className={'comm-figure comm-figure-'+i} key={image.src}><img src={image.src} srcSet={`${image.src.replace('.webp','-800.webp')} 800w, ${image.src} ${image.width}w`} sizes="(max-width: 700px) 100vw, (max-width: 1300px) 92vw, 1200px" width={image.width} height={image.height} alt={image.caption} loading="lazy" decoding="async"/><figcaption><span>0{i+1}</span>{image.caption}</figcaption></figure>)}</section>
+      <section className="comm-links"><span className="comm-kicker">MORE OF THE PROJECT</span><h2>The complete collection.</h2><p>Explore the full project and original artwork on Behance.</p><a href={project.behance} target="_blank" rel="noopener noreferrer">View on Behance <span aria-hidden="true">↗</span><span className="comm-sr"> (opens in a new tab)</span></a></section>
+      <a className="comm-next" href={'/work/'+next.slug}><span className="comm-kicker">NEXT CASE STUDY</span><strong>{next.title}</strong><span aria-hidden="true">↗</span></a>
+    </main><footer className="comm-footer"><a href="/#work">Back to all work</a><span>© 2026 Viswanathan G</span></footer>
+  </div>;
+}

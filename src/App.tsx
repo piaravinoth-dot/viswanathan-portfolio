@@ -7,6 +7,8 @@ const ContentTrackerCaseStudy = lazy(() => import("./components/ContentTrackerCa
 const SplitMateCaseStudy = lazy(() => import("./components/SplitMateCaseStudy"));
 const ClipStudioCaseStudy = lazy(() => import("./components/ClipStudioCaseStudy"));
 
+const CommunicationCaseStudy = lazy(() => import("./components/CommunicationCaseStudy"));
+
 const CharacterModel = lazy(() => import("./components/Character"));
 const MainContainer = lazy(() => import("./components/MainContainer"));
 import { LoadingProvider } from "./context/LoadingProvider";
@@ -59,6 +61,10 @@ const App = () => {
     };
   },[route]);
   const caseStudies = {
+    "/work/nation-building": CommunicationCaseStudy,
+    "/work/telangana-manifesto": CommunicationCaseStudy,
+    "/work/led-rath-yatra": CommunicationCaseStudy,
+    "/work/samvidhan": CommunicationCaseStudy,
     "/work/ai-design-studio": AIDesignStudioCaseStudy,
     "/work/content-studio": ContentStudioCaseStudy,
     "/work/social-media-intelligence": SocialIntelligenceCaseStudy,
@@ -69,6 +75,10 @@ const App = () => {
   useEffect(() => {
     const canonicalBase = "https://viswanathan-portfolio-iota.vercel.app";
     const seo: Record<string, [string,string]> = {
+      "/work/nation-building": ["Nation Building \u2014 Case Study | Viswanathan G", "Selected digital communication and merchandise applications brought together as a single visual system."],
+      "/work/telangana-manifesto": ["Telangana Manifesto \u2014 Case Study | Viswanathan G", "A visual study of publication structure, information hierarchy and the rhythm between text, colour and imagery."],
+      "/work/led-rath-yatra": ["LED Rath Yatra \u2014 Case Study | Viswanathan G", "A communication system adapted to the side, front and rear of an LED vehicle, with space for the screen and multiple language treatments."],
+      "/work/samvidhan": ["Samvidhan Gaurav Abhiyaan \u2014 Case Study | Viswanathan G", "A presentation system using section openers, portraits, quotations and changes in contrast to organise a long narrative."],
       "/": ["Viswanathan G — Senior Product & Visual Designer", "Explore Viswanathan G's product design, visual direction, creative technology projects and six detailed digital product case studies."],
       "/work/ai-design-studio": ["AI Design Studio — Case Study | Viswanathan G", "AI-assisted creative workspace design case study covering image creation, layers, production flows and export experience."],
       "/work/content-studio": ["Content Studio — Case Study | Viswanathan G", "Content operations and news intelligence platform: source monitoring, translation, editorial review and collaborative workflows."],
