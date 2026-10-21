@@ -28,7 +28,6 @@ const MainContainer=({children}:PropsWithChildren)=>{
     document.body.style.overflowY="auto";
     smoother?.paused(false);
     let disposed=false;
-    let stopIntro:(()=>void)|undefined;
     let stopCareer:(()=>void)|undefined;
     let timer:number;
     let previousWidth=window.innerWidth;
@@ -41,15 +40,14 @@ const MainContainer=({children}:PropsWithChildren)=>{
       window.clearTimeout(timer);
       timer=window.setTimeout(()=>{setSplitText();ScrollTrigger.refresh();},150);
     };
-    Promise.all([document.fonts.ready,import("./utils/initialFX")]).then(([,module])=>{
+    document.fonts.ready.then(()=>{
       if(disposed)return;
-      stopIntro=module.initialFX();
       setSplitText();
       stopCareer=setAllTimeline();
       ScrollTrigger.refresh();
     });
     window.addEventListener("resize",resize);
-    return()=>{disposed=true;window.clearTimeout(timer);window.removeEventListener("resize",resize);stopIntro?.();stopCareer?.();setSplitText(true);};
+    return()=>{disposed=true;window.clearTimeout(timer);window.removeEventListener("resize",resize);stopCareer?.();setSplitText(true);};
   },[isLoading]);
   return <div className="container-main"><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&children}</Landing><About/><WhatIDo/><Career/><SelectedCases/><Work/><Contact/></div></div></div></div>;
 };

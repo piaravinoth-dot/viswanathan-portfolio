@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import "./App.css";
+import OpeningShell from "./components/OpeningShell";
 const AIDesignStudioCaseStudy = lazy(() => import("./components/AIDesignStudioCaseStudy"));
 const ContentStudioCaseStudy = lazy(() => import("./components/ContentStudioCaseStudy"));
 const SocialIntelligenceCaseStudy = lazy(() => import("./components/SocialIntelligenceCaseStudy"));
@@ -109,7 +110,7 @@ const App = () => {
   return (
     <>
       <LoadingProvider>
-        <Suspense>
+        <Suspense fallback={<OpeningShell />}>
           <MainContainer>
             {threeDReady&&<Suspense fallback={null}>
               <CharacterModel />

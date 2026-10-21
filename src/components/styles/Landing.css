@@ -38,7 +38,7 @@
       var(--backgroundColor) 70%);
   pointer-events: none;
   z-index: 12;
-  opacity: 0;
+  opacity: 1;
   left: 0;
 }
 
