@@ -13,8 +13,11 @@ import setSplitText from "./utils/splitText";
 import {setAllTimeline} from "./utils/GsapScroll";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useLoading} from "../context/LoadingProvider";
+import {useHomeMotion} from "./useHomeMotion";
+import "./styles/HomeMotion.css";
 
 const MainContainer=({children}:PropsWithChildren)=>{
+  const motionRef=useHomeMotion();
   const [isDesktopView,setIsDesktopView]=useState(false);
   const {isLoading}=useLoading();
   useEffect(()=>{
@@ -50,6 +53,6 @@ const MainContainer=({children}:PropsWithChildren)=>{
     window.addEventListener("resize",resize);
     return()=>{disposed=true;window.clearTimeout(timer);window.removeEventListener("resize",resize);stopCareer?.();setSplitText(true);};
   },[isLoading]);
-  return <div className="container-main"><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&children}</Landing><About/><SelectedCases/><Work/><WhatIDo/><Career/><VisualArchive/><Contact/></div></div></div></div>;
+  return <div className="container-main" ref={motionRef}><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&children}</Landing><About/><SelectedCases/><Work/><WhatIDo/><Career/><VisualArchive/><Contact/></div></div></div></div>;
 };
 export default MainContainer;

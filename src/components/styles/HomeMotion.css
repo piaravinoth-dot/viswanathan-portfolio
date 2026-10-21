@@ -1,0 +1,26 @@
+/* Refined interactions belong to the homepage motion preview only. */
+[data-home-motion="active"] .landing-actions a{position:relative}
+[data-home-motion="active"] .landing-actions a::after{content:"";position:absolute;bottom:-1px;left:0;width:100%;height:1px;background:var(--accentColor);transform:scaleX(0);transform-origin:left;transition:transform .32s cubic-bezier(.16,1,.3,1)}
+[data-home-motion="active"] .landing-actions a svg,
+[data-home-motion="active"] .selected-case-caption>span,
+[data-home-motion="active"] .contact-submit svg,
+[data-home-motion="active"] .contact-direct-action svg{transition:transform .28s cubic-bezier(.16,1,.3,1)}
+[data-home-motion="active"] .selected-case-image img{transition:transform .65s cubic-bezier(.16,1,.3,1)}
+[data-home-motion="active"] .landing-actions a:focus-visible::after{transform:scaleX(1)}
+[data-home-motion="active"] .selected-case:focus-visible .selected-case-caption>span{transform:translate(3px,-3px)}
+@media(hover:hover) and (pointer:fine){
+ [data-home-motion="active"] .landing-actions a:hover::after{transform:scaleX(1)}
+ [data-home-motion="active"] .landing-actions a:hover svg,
+ [data-home-motion="active"] .selected-case:hover .selected-case-caption>span,
+ [data-home-motion="active"] .contact-submit:hover svg,
+ [data-home-motion="active"] .contact-direct-action:hover svg{transform:translate(3px,-3px)}
+ [data-home-motion="active"] .selected-case:hover img{transform:scale(1.025)}
+}
+@media(prefers-reduced-motion:reduce){
+ [data-home-motion] .landing-actions a::after,
+ [data-home-motion] .landing-actions a svg,
+ [data-home-motion] .selected-case-caption>span,
+ [data-home-motion] .selected-case-image img,
+ [data-home-motion] .contact-submit svg,
+ [data-home-motion] .contact-direct-action svg{transition:none;transform:none}
+}

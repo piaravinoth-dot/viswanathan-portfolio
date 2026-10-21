@@ -13,7 +13,7 @@ const ownedElements = new Set<ParaElement>();
 
 export default function setSplitText(cleanupOnly = false) {
   ScrollTrigger.config({ ignoreMobileResize: true });
-  const paras: NodeListOf<ParaElement> = document.querySelectorAll(".para");
+  const paras = [...document.querySelectorAll<ParaElement>(".para")].filter(element=>!element.closest(".about-copy"));
   const titles: NodeListOf<ParaElement> = document.querySelectorAll(".title");
 
   new Set([...ownedElements, ...paras, ...titles]).forEach(element => {
