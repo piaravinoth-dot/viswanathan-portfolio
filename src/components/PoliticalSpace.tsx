@@ -1,32 +1,38 @@
 import {useEffect,useRef,useState} from "react";
-import {MdArrowOutward,MdClose,MdArrowBack,MdArrowForward} from "react-icons/md";
+import {MdArrowOutward,MdClose,MdArrowBack,MdArrowForward,MdZoomIn,MdZoomOut} from "react-icons/md";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {smoother} from "./Navbar";
 import pieces from "../data/politicalProjects.json";
 import "./styles/PoliticalSpace.css";
-const categories=[{id:"all",label:"Selected",count:26},{id:"budget",label:"Gujarat Budget Basics",count:7},{id:"content",label:"Content Posters",count:10},{id:"creative",label:"Creative Posters",count:9}];
-const featured=["budget-1","creative-6","content-9","budget-2","content-7","creative-1"];
-const ordered=[...featured.map(id=>pieces.find(p=>p.id===id)!),...pieces.filter(p=>!featured.includes(p.id))];
+const collections=[
+ {id:"budget",label:"Gujarat Budget Basics",discipline:"01 / EDITORIAL & INFORMATION DESIGN",title:"Making policy\nmake sense.",description:"A budget is more than a set of numbers. Explore a publication that turns complex public information into a clear visual story."},
+ {id:"content",label:"Content Posters",discipline:"02 / CONTENT & CAMPAIGN COMMUNICATION",title:"A message.\nMade visible.",description:"Content-led political communication, where hierarchy, language and imagery work together to bring the message into focus."},
+ {id:"creative",label:"Creative Posters",discipline:"03 / CONCEPT & ART DIRECTION",title:"Ideas that\nhold attention.",description:"Concept-driven posters exploring how a strong visual idea can give political communication an unmistakable presence."}
+];
 export default function PoliticalSpace(){
- const [category,setCategory]=useState("all"),[expanded,setExpanded]=useState(false),[active,setActive]=useState<string|null>(null);
- const dialog=useRef<HTMLDialogElement>(null),opener=useRef<HTMLElement|null>(null);
- const collection=category==="all"?ordered:pieces.filter(p=>p.category===category);
- const visible=expanded?collection:collection.slice(0,6),artwork=pieces.find(p=>p.id===active),isOpen=active!==null;
- const move=(step:number)=>setActive(id=>collection[(collection.findIndex(p=>p.id===id)+step+collection.length)%collection.length].id);
- useEffect(()=>{const frame=requestAnimationFrame(()=>ScrollTrigger.refresh());return()=>cancelAnimationFrame(frame)},[category,expanded]);
+ const [category,setCategory]=useState("budget"),[index,setIndex]=useState(0),[open,setOpen]=useState(false),[zoom,setZoom]=useState(false);
+ const dialog=useRef<HTMLDialogElement>(null),opener=useRef<HTMLElement|null>(null),strip=useRef<HTMLDivElement>(null),stage=useRef<HTMLDivElement>(null);
+ const collection=collections.find(c=>c.id===category)!,artworks=pieces.filter(p=>p.category===category),artwork=artworks[index];
+ const move=(step:number)=>{setIndex(i=>(i+step+artworks.length)%artworks.length);setZoom(false)};
+ useEffect(()=>{const row=strip.current,thumb=row?.querySelector<HTMLElement>('[aria-pressed="true"]');if(row&&thumb)row.scrollLeft=thumb.offsetLeft-row.offsetLeft-row.clientWidth/2+thumb.clientWidth/2;},[index,category]);
+ useEffect(()=>{stage.current?.scrollTo(0,0)},[index,zoom]);
+ useEffect(()=>{const frame=requestAnimationFrame(()=>ScrollTrigger.refresh());return()=>cancelAnimationFrame(frame)},[category]);
  useEffect(()=>{
-  if(!isOpen)return;
+  if(!open)return;
   const node=dialog.current,overflow=document.body.style.overflowY,paused=smoother?.paused();
   document.body.style.overflowY="hidden";smoother?.paused(true);node?.showModal();
   return()=>{node?.close();document.body.style.overflowY=overflow;smoother?.paused(Boolean(paused));opener.current?.focus({preventScroll:true})};
- },[isOpen]);
+ },[open]);
+ const keys=(e:React.KeyboardEvent)=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();move(e.key==="ArrowRight"?1:-1)}};
  return <section id="political-space" className="political-space" aria-labelledby="political-title"><div className="section-container political-inner">
- <div className="political-topline"><span>POLITICAL SPACE</span><span>03 COLLECTIONS / 26 ARTWORKS</span></div>
- <div className="political-intro"><h2 id="political-title">Public ideas.<br/><em>Visual impact.</em></h2><div><p>Political communication, through a designer’s lens. Budget storytelling, content-led posters and concept-driven creative work, brought together in one visual archive.</p><span>EDITORIAL DESIGN · CAMPAIGN CREATIVE · VISUAL STORYTELLING</span></div></div>
- <div className="political-filters" role="group" aria-label="Filter political artwork">{categories.map(c=><button type="button" key={c.id} aria-pressed={category===c.id} onClick={()=>{setCategory(c.id);setExpanded(false)}}>{c.label}<span>{String(c.count).padStart(2,"0")}</span></button>)}</div>
- <p className="political-status" role="status">{category==="all"?"A curated opening selection":categories.find(c=>c.id===category)?.label} — showing {visible.length} of {collection.length}. Select an artwork to view it larger.</p>
- <div className="political-grid">{visible.map((p,i)=><button type="button" className="political-piece" key={p.id} aria-label={`View ${p.title}`} onClick={e=>{opener.current=e.currentTarget;setActive(p.id)}} data-cursor="disable"><div className="political-image"><img src={p.image} srcSet={`${p.preview} 640w, ${p.image} ${p.width}w`} sizes="(max-width:600px) calc(100vw - 40px), (max-width:1024px) 44vw, 28vw" width={p.width} height={p.height} loading="lazy" decoding="async" alt={p.alt}/><span><MdArrowOutward aria-hidden="true"/></span></div><div className="political-caption"><span><strong>{p.collection}</strong><small>{p.caption}</small></span><span>{String(i+1).padStart(2,"0")}</span></div></button>)}</div>
- {collection.length>6&&<button className="political-more" type="button" aria-expanded={expanded} onClick={()=>setExpanded(v=>!v)}>{expanded?"Show selected works":`Explore all ${collection.length} artworks`}<MdArrowOutward aria-hidden="true"/></button>}
- <div className="political-foot"><span>DESIGN ARCHIVE</span><p>Original project artwork. Dates, figures and messages belong to the campaigns and publications shown.</p></div>
- </div><dialog className="political-viewer" ref={dialog} aria-labelledby="political-viewer-title" onCancel={()=>setActive(null)} onKeyDown={e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();move(e.key==="ArrowRight"?1:-1)}}}>{artwork&&<><header><div><strong id="political-viewer-title">{artwork.collection}</strong><span aria-live="polite">{artwork.caption} · {collection.findIndex(p=>p.id===active)+1} / {collection.length}</span></div><button type="button" aria-label="Close political artwork" onClick={()=>setActive(null)}><MdClose aria-hidden="true"/></button></header><div className="political-viewer-stage"><button type="button" aria-label="Previous political artwork" onClick={()=>move(-1)}><MdArrowBack aria-hidden="true"/></button><figure><img src={artwork.image} width={artwork.width} height={artwork.height} alt={artwork.alt}/></figure><button type="button" aria-label="Next political artwork" onClick={()=>move(1)}><MdArrowForward aria-hidden="true"/></button></div><footer><span>{artwork.width} × {artwork.height} px</span><a href={artwork.image} target="_blank" rel="noopener noreferrer">Open full resolution <MdArrowOutward aria-hidden="true"/></a></footer></>}</dialog></section>;
+ <div className="political-topline"><span>POLITICAL SPACE</span><span>VISWANATHAN G / DESIGN ARCHIVE</span></div>
+ <div className="political-intro"><h2 id="political-title">Politics.<br/><em>Through design.</em></h2><p>Public ideas, shaped into visual stories.<br/>Three collections. Twenty-six original artworks.<br/><span>Choose a collection. Take a closer look.</span></p></div>
+ <div className="political-collections" role="group" aria-label="Choose political collection">{collections.map((c,i)=><button type="button" key={c.id} aria-pressed={category===c.id} onClick={()=>{setCategory(c.id);setIndex(0)}}><span>0{i+1}</span><strong>{c.label}</strong><small>{pieces.filter(p=>p.category===c.id).length} works</small><MdArrowOutward aria-hidden="true"/></button>)}</div>
+ <div className="political-exhibition" onKeyDown={keys}>
+ <div className="political-curatorial"><span className="political-discipline">{collection.discipline}</span><h3>{collection.title}</h3><p>{collection.description}</p><div className="political-pagination"><button type="button" aria-label="Previous artwork" onClick={()=>move(-1)}><MdArrowBack aria-hidden="true"/></button><span role="status">{String(index+1).padStart(2,"0")} <span>/ {String(artworks.length).padStart(2,"0")}</span></span><button type="button" aria-label="Next artwork" onClick={()=>move(1)}><MdArrowForward aria-hidden="true"/></button></div><div className="political-progress" aria-hidden="true"><span style={{width:`${(index+1)/artworks.length*100}%`}}/></div><p className="political-help">Browse the strip or use the arrows.<br/>Open an artwork to explore every detail.</p></div>
+ <div className="political-display"><button type="button" className="political-feature" aria-label={`View ${artwork.title} full screen`} onClick={e=>{opener.current=e.currentTarget;setZoom(false);setOpen(true)}} data-cursor="disable"><img key={artwork.id} src={artwork.image} width={artwork.width} height={artwork.height} loading="lazy" decoding="async" alt={artwork.alt}/><span className="political-view-label"><MdZoomIn aria-hidden="true"/> View artwork</span></button><div className="political-feature-caption"><strong>{artwork.caption}</strong><span>{artwork.width} × {artwork.height}</span></div></div>
+ </div>
+ <div className="political-filmstrip" ref={strip} role="group" aria-label={`${collection.label} artworks`}>{artworks.map((p,i)=><button type="button" key={p.id} aria-pressed={index===i} aria-label={`Select ${p.title}`} onClick={()=>setIndex(i)}><img src={p.preview} width={p.width} height={p.height} loading="lazy" decoding="async" alt=""/><span>{String(i+1).padStart(2,"0")}</span></button>)}</div>
+ <div className="political-foot"><span>03 COLLECTIONS / 26 ORIGINAL WORKS</span><p>Original project artwork. Dates, figures and messages belong to the campaigns and publications shown.</p></div>
+ </div><dialog className="political-viewer" ref={dialog} aria-labelledby="political-viewer-title" onCancel={()=>setOpen(false)} onKeyDown={keys}>{open&&<><header><div><strong id="political-viewer-title">{collection.label}</strong><span aria-live="polite">{artwork.caption} · {index+1} / {artworks.length}</span></div><button type="button" aria-label="Close political artwork" onClick={()=>setOpen(false)}><MdClose aria-hidden="true"/></button></header><div className={`political-viewer-stage${zoom?" is-zoomed":""}`} ref={stage}><img src={artwork.image} width={artwork.width} height={artwork.height} alt={artwork.alt}/></div><footer><button type="button" aria-label="Previous political artwork" onClick={()=>move(-1)}><MdArrowBack aria-hidden="true"/></button><button type="button" className="political-zoom" aria-pressed={zoom} onClick={()=>setZoom(v=>!v)}>{zoom?<MdZoomOut aria-hidden="true"/>:<MdZoomIn aria-hidden="true"/>}{zoom?"Fit artwork":"Zoom to detail"}</button><button type="button" aria-label="Next political artwork" onClick={()=>move(1)}><MdArrowForward aria-hidden="true"/></button></footer></>}</dialog></section>;
 }
