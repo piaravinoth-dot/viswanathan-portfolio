@@ -59,7 +59,7 @@ const Navbar = () => {
       if (id && !target) return;
       ScrollTrigger.refresh();
       const headerHeight = document.querySelector<HTMLElement>(".header")?.offsetHeight || 0;
-      const position = target ? Math.max(0, smoother.offset(target, "top top") - headerHeight - 12) : 0;
+      const position = target ? Math.max(0, smoother.offset(target, "top top") - headerHeight) : 0;
       gsap.killTweensOf(smoother, "scrollTop");
       if (animate) gsap.to(smoother, {scrollTop: position, duration: 0.7, ease: "power2.out", overwrite: "auto"});
       else smoother.scrollTop(position);
