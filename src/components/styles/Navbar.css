@@ -91,3 +91,10 @@
 .nav-fade{display:none}
 @media(min-width:768px){.header{padding-inline:max(3%,calc((100% - var(--cMaxWidth))/2))}}
 @media(max-width:499px){.header{width:100%;padding:18px 15px}.header ul{flex-direction:row;align-items:center;column-gap:12px;row-gap:0;font-size:9px}.header ul li{letter-spacing:.4px}.nav-fade{height:70px}}
+
+/* Keep compact navigation targets usable with a finger. */
+@media(max-width:1024px){
+ .header{padding-block:8px}
+ .header ul a{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
+ .navbar-title{display:flex;align-items:center;min-width:44px;min-height:44px}
+}

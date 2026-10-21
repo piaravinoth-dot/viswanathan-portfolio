@@ -1,0 +1,280 @@
+{
+  "baseCommit": "e24c39552a6a759aaea64ed43d162831963505dc",
+  "checks": [
+    {
+      "path": "/",
+      "width": 320,
+      "overflow": false,
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 51.96875,
+          "height": 44
+        },
+        {
+          "width": 44.78125,
+          "height": 44
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 51.96875,
+          "height": 44
+        },
+        {
+          "width": 44.78125,
+          "height": 44
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 390,
+      "overflow": false,
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 51.96875,
+          "height": 44
+        },
+        {
+          "width": 44.78125,
+          "height": 44
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 430,
+      "overflow": false,
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 51.96875,
+          "height": 44
+        },
+        {
+          "width": 44.78125,
+          "height": 44
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 768,
+      "overflow": false,
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 52.828125,
+          "height": 44
+        },
+        {
+          "width": 46.96875,
+          "height": 44
+        },
+        {
+          "width": 83.859375,
+          "height": 44
+        },
+        {
+          "width": 72.296875,
+          "height": 44
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 844,
+      "overflow": false,
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 52.828125,
+          "height": 44
+        },
+        {
+          "width": 46.96875,
+          "height": 44
+        },
+        {
+          "width": 83.859375,
+          "height": 44
+        },
+        {
+          "width": 72.296875,
+          "height": 44
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 25.96875,
+          "height": 27
+        },
+        {
+          "width": 59.65625,
+          "height": 24
+        },
+        {
+          "width": 53.109375,
+          "height": 24
+        },
+        {
+          "width": 94.6875,
+          "height": 24
+        },
+        {
+          "width": 81.625,
+          "height": 24
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/work/ai-design-studio/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "navTargets": [],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/work/ai-design-studio/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "navTargets": [],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/work/content-tracker/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "navTargets": [],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/work/content-tracker/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "navTargets": [],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    }
+  ],
+  "physicalIPhoneVerified": false,
+  "pageSpeed": {
+    "mobile": 429,
+    "desktop": 429,
+    "reason": "Google shared API daily quota exceeded"
+  },
+  "productionDependencyVulnerabilities": 0
+}

@@ -420,3 +420,6 @@ html,body,#root{max-width:100%;overflow-x:clip}
 
 /* Keep the pause control above transformed orbit layers and pointer-interactive. */
 .orbit-autoplay{position:relative;z-index:30;pointer-events:auto;touch-action:manipulation}
+
+/* The phone image viewer keeps full-size tap areas for its close and arrow controls. */
+@media(max-width:760px){.art-lightbox button{width:44px;height:44px}.art-lightbox{padding-inline:52px}}
