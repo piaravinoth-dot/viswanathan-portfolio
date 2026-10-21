@@ -48,6 +48,24 @@ async function testViewport(browser, name, width) {
     log(name,width,'visual gallery retains six non-political artworks',
       await page.locator('.visual-edit-index>button').count()===6 &&
       await page.locator('#visual-archive').evaluate(el=>!el.textContent.includes('Telangana Manifesto')));
+    // Decode first: a portrait's intrinsic dimensions must never escape its
+    // thumbnail or paint over its label, especially in Safari's grid sizing.
+    const thumbnailBounds=await page.locator('.visual-edit-index>button').evaluateAll(async buttons=>{
+      return Promise.all(buttons.map(async button=>{
+        const image=button.querySelector('.visual-edit-thumb img');
+        await image.decode();
+        const box=button.querySelector('.visual-edit-thumb').getBoundingClientRect();
+        const rect=image.getBoundingClientRect();
+        const text=button.querySelector('.visual-edit-index-copy').getBoundingClientRect();
+        const card=button.getBoundingClientRect();
+        return {title:button.getAttribute('aria-label'),contained:rect.left>=box.left-1&&rect.right<=box.right+1&&rect.top>=box.top-1&&rect.bottom<=box.bottom+1,
+          labelClear:innerWidth<=760?rect.bottom<=text.top:rect.right<=text.left,
+          withinCard:box.top>=card.top&&box.bottom<=card.bottom};
+      }));
+    });
+    log(name,width,'decoded visual thumbnails stay inside frames and clear of labels',
+      thumbnailBounds.length===6&&thumbnailBounds.every(x=>x.contained&&x.labelClear&&x.withinCard),JSON.stringify(thumbnailBounds));
+
     if(width<=1024){
       const layout=await page.evaluate(()=>{
         const box=s=>document.querySelector(s).getBoundingClientRect();
