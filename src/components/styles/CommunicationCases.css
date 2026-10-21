@@ -63,3 +63,13 @@
 .comm-evidence dd{margin:0;font-size:16px;line-height:1.7}
 .comm-evidence>p{margin:28px 0 0;font-size:14px;line-height:1.7;max-width:780px}
 @media(max-width:700px){.comm-evidence{padding:0 6% 50px}.comm-evidence dl{grid-template-columns:1fr;gap:24px}}
+
+/* Homepage gallery shares the portfolio shell; artwork keeps its own colours. */
+.selected-cases{
+  --comm-paper:var(--backgroundColor);--comm-ink:#f1eee9;--comm-accent:var(--accentColor);
+  background:var(--comm-paper);color:var(--comm-ink);color-scheme:dark;
+}
+.selected-cases-intro p,.selected-case-caption .comm-kicker{color:#b4bdc8}
+.selected-case-image{background:#161c27}
+.selected-case-end{border-color:#353940;color:#b4bdc8}
+@media(max-width:1024px){.selected-cases{padding:40px 0 52px}.selected-cases-intro{grid-template-columns:1fr;gap:24px}.selected-cases-intro p{font-size:16px;max-width:530px}}

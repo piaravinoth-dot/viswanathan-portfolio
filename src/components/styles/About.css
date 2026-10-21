@@ -97,3 +97,11 @@
 @media (min-width:1025px) and (max-height:700px) {
   .about-section {min-height:0;padding-top:64px;padding-bottom:26px}
 }
+
+/* A compact, explicit transition into Selected Work on touch layouts. */
+@media(max-width:1024px){
+  .about-section{height:auto;min-height:0;padding:32px 0 0;box-sizing:border-box}
+  .about-me{width:100%;max-width:100%;padding:0}
+  .about-me h2.title{margin-top:0}
+  .about-actions{margin-top:20px}
+}

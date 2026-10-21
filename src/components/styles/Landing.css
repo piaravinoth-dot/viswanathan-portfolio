@@ -401,29 +401,50 @@ h2.landing-info-h2 {
 }
 .landing-summary{font-size:14px;line-height:1.65;font-weight:400;letter-spacing:0;color:#c0c5ca;max-width:270px;margin:20px 0}.landing-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.landing-actions a{font-size:12px;padding:10px 0;border-bottom:1px solid #8b6e55;color:#f1e9de}.landing-actions a:focus-visible{outline:2px solid var(--accentColor);outline-offset:5px}@media(max-width:1199px){.landing-summary{max-width:300px;font-size:13px;line-height:1.55;margin:14px 0}.landing-actions{gap:20px}}@media(max-height:650px) and (max-width:1199px){.landing-summary{font-size:12px;max-width:280px;margin:10px 0}.landing-actions a{padding:6px 0}}
 
-/* Phone and tablet hero: separate the introduction, character and role. */
-@media (max-width: 1024px) {
-  .landing-section {
-    height: calc(470px + min(110vw, 480px));
-    min-height: 100svh;
+/* The mobile figure gets its own row after the complete introduction.
+   Text growth and wrapped actions move the scene down naturally. */
+.landing-character-slot {display:contents}
+.landing-actions a {gap:6px}
+.landing-actions svg {width:15px;height:15px;flex-shrink:0}
+@media (max-width:1024px) {
+  .landing-section {height:auto;min-height:0}
+  .landing-section .landing-container {
+    height:auto;display:flex;flex-direction:column;align-items:center;
+    padding:104px 0 32px;box-sizing:border-box;
   }
-  .landing-intro {
-    top: 88px;
-    left: 0;
-    right: 0;
-    max-width: 460px;
+  .landing-section .landing-intro {
+    position:relative;inset:auto;transform:none;width:100%;max-width:none;
   }
   .landing-intro .landing-greeting {font-size:20px;line-height:1.4;margin-bottom:7px}
-  .landing-intro h1 {font-size:clamp(26px,6.8vw,34px);line-height:1.08;letter-spacing:1.5px}
-  .landing-summary {max-width:390px;font-size:13px;line-height:1.6;margin:14px 0 10px}
-  .landing-actions {gap:24px}
+  .landing-section .landing-intro h1 {font-size:clamp(26px,6.8vw,34px);line-height:1.08;letter-spacing:1.5px}
+  .landing-summary {max-width:460px;font-size:13px;line-height:1.6;margin:14px 0 10px}
+  .landing-actions {gap:12px 24px;max-width:460px}
   .landing-actions a {min-height:44px;box-sizing:border-box;display:inline-flex;align-items:center;padding:8px 0;font-size:12px}
-  .character-model {height:min(110vw,480px);max-height:none;bottom:140px}
-  .landing-info {bottom:22px;text-align:center;width:max-content;max-width:100%}
+  .landing-character-slot {
+    display:block;position:relative;isolation:isolate;overflow:clip;
+    width:100%;height:min(110vw,480px);flex:none;margin-top:24px;
+  }
+  .landing-character-slot .character-container {width:100%;height:100%}
+  .landing-character-slot .character-model {
+    position:absolute;top:0;bottom:auto;height:100%;width:100%;max-height:none;
+    left:50%;transform:translateX(-50%);z-index:0;
+  }
+  .landing-character-slot .character-model::before,
+  .landing-character-slot .character-model::after {display:none}
+  .landing-character-slot .character-rim {display:none}
+  .landing-section .landing-info {
+    position:relative;inset:auto;transform:none;text-align:center;
+    width:min(320px,100%);max-width:100%;margin-top:20px;
+  }
   .landing-info h3 {font-size:18px;line-height:1.4;letter-spacing:1.3px;margin-bottom:3px}
   .landing-info h2 {font-size:30px;line-height:34px;margin:0;justify-content:center;letter-spacing:1px}
   h2.landing-info-h2 {font-size:36px;line-height:40px;height:40px;width:auto;margin:0}
   .landing-h2-1,.landing-h2-2,.landing-h2-info,.landing-h2-info-1 {left:0;right:0;text-align:center}
+  html[data-character3d="unsupported"] .landing-character-slot,
+  .landing-character-slot:has(.character-unavailable) {display:none}
+}
+@media(max-width:1024px) and (prefers-reduced-motion:reduce) {
+  .landing-character-slot {display:none}
 }
 
 /* Each role occupies its own clipping track; words never share a baseline. */

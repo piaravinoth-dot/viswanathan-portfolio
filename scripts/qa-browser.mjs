@@ -40,6 +40,22 @@ async function testViewport(browser, name, width) {
     log(name,width,'one product section',await page.locator('#products').count()===1);
     const sectionOrder=await page.evaluate(()=>['landingDiv','about','work','products'].map(id=>document.getElementById(id)?.getBoundingClientRect().top??-1));
     log(name,width,'About follows opening before work and products',sectionOrder.every((top,i)=>i===0||top>sectionOrder[i-1]),JSON.stringify(sectionOrder));
+    const galleryBackground=await page.locator('#work').evaluate(el=>getComputedStyle(el).backgroundColor);
+    log(name,width,'selected work matches dark portfolio shell',galleryBackground==='rgb(11, 16, 23)',galleryBackground);
+    if(width<=1024){
+      const layout=await page.evaluate(()=>{
+        const box=s=>document.querySelector(s).getBoundingClientRect();
+        const intro=box('.landing-intro'),slot=box('.landing-character-slot'),role=box('.landing-info');
+        return {
+          clearHero:slot.height===0?intro.bottom<=role.top:intro.bottom+20<=slot.top&&slot.bottom<=role.top,
+          aboutGap:box('#work .comm-kicker').top-box('.about-actions').bottom,
+          slotClips:getComputedStyle(document.querySelector('.landing-character-slot')).overflowX==='clip'
+        };
+      });
+      log(name,width,'mobile hero text and scene occupy separate rows',layout.clearHero);
+      log(name,width,'mobile character cannot paint over following content',layout.slotClips);
+      log(name,width,'About to Work uses compact spacing',layout.aboutGap>=24&&layout.aboutGap<=56,layout.aboutGap);
+    }
     const tolerance=3;
     const within=metrics.indexRects.every(r=>r.width>0&&r.left>=-tolerance&&r.right<=metrics.vw+tolerance);
     log(name,width,'index buttons within viewport',within,JSON.stringify(metrics.indexRects.map(r=>[Math.round(r.left),Math.round(r.right)])));

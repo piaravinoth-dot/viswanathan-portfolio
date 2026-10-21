@@ -1,0 +1,260 @@
+{
+  "build": "TypeScript, Vite and 11 SEO pages passed",
+  "browser": "Chrome, responsive iframe via CUA",
+  "scope": "Mobile hero flow, About spacing, Selected Work dark theme",
+  "limitations": [
+    "Hardware WebGL rendering unavailable in review browser; checked reserved 3D area bounds and clipping separately.",
+    "Physical iPhone Safari not tested."
+  ],
+  "scenarios": [
+    {
+      "width": 320,
+      "height": 800,
+      "reserved3DArea": false,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 413,
+        "slotTop": 0,
+        "slotBottom": 0,
+        "roleTop": 433,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 320,
+      "height": 800,
+      "reserved3DArea": true,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 413,
+        "slotTop": 437,
+        "slotBottom": 789,
+        "roleTop": 809,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 375,
+      "height": 800,
+      "reserved3DArea": false,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 413,
+        "slotTop": 0,
+        "slotBottom": 0,
+        "roleTop": 433,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 375,
+      "height": 800,
+      "reserved3DArea": true,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 413,
+        "slotTop": 437,
+        "slotBottom": 850,
+        "roleTop": 870,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 390,
+      "height": 800,
+      "reserved3DArea": false,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 414,
+        "slotTop": 0,
+        "slotBottom": 0,
+        "roleTop": 434,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 390,
+      "height": 800,
+      "reserved3DArea": true,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 414,
+        "slotTop": 438,
+        "slotBottom": 867,
+        "roleTop": 887,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 425,
+      "height": 800,
+      "reserved3DArea": false,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 419,
+        "slotTop": 0,
+        "slotBottom": 0,
+        "roleTop": 439,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 425,
+      "height": 800,
+      "reserved3DArea": true,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 419,
+        "slotTop": 443,
+        "slotBottom": 911,
+        "roleTop": 931,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 768,
+      "height": 800,
+      "reserved3DArea": false,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 410,
+        "slotTop": 0,
+        "slotBottom": 0,
+        "roleTop": 430,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 768,
+      "height": 800,
+      "reserved3DArea": true,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 410,
+        "slotTop": 434,
+        "slotBottom": 914,
+        "roleTop": 934,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "reserved3DArea": false,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 410,
+        "slotTop": 0,
+        "slotBottom": 0,
+        "roleTop": 430,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "reserved3DArea": true,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 410,
+        "slotTop": 434,
+        "slotBottom": 914,
+        "roleTop": 934,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 1024,
+      "height": 800,
+      "reserved3DArea": false,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 410,
+        "slotTop": 0,
+        "slotBottom": 0,
+        "roleTop": 430,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 1024,
+      "height": 800,
+      "reserved3DArea": true,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 46,
+      "heroToAboutGap": 0,
+      "heroGeometry": {
+        "introBottom": 410,
+        "slotTop": 434,
+        "slotBottom": 914,
+        "roleTop": 934,
+        "noOverlap": true
+      },
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "height": 800,
+      "reserved3DArea": false,
+      "overflow": false,
+      "darkGallery": "rgb(11, 16, 23)",
+      "aboutToWorkGap": 154,
+      "heroToAboutGap": 0,
+      "heroGeometry": null,
+      "violations": []
+    }
+  ]
+}
