@@ -38,23 +38,30 @@ async function testViewport(browser, name, width) {
     log(name,width,'no duplicate product directory',await page.locator('.product-directory').count()===0);
     log(name,width,'six carousel cards',await page.locator('.orbit-card').count()===6);
     log(name,width,'one product section',await page.locator('#products').count()===1);
-    const sectionOrder=await page.evaluate(()=>['landingDiv','about','work','products'].map(id=>document.getElementById(id)?.getBoundingClientRect().top??-1));
-    log(name,width,'About follows opening before work and products',sectionOrder.every((top,i)=>i===0||top>sectionOrder[i-1]),JSON.stringify(sectionOrder));
-    const galleryBackground=await page.locator('#work').evaluate(el=>getComputedStyle(el).backgroundColor);
-    log(name,width,'selected work matches dark portfolio shell',galleryBackground==='rgb(11, 16, 23)',galleryBackground);
+    const sectionOrder=await page.evaluate(()=>['landingDiv','about','political-space','products','visual-archive'].map(id=>document.getElementById(id)?.getBoundingClientRect().top??-1));
+    log(name,width,'homepage sections retain the intended order',sectionOrder.every((top,i)=>i===0||top>sectionOrder[i-1]),JSON.stringify(sectionOrder));
+    // #work is a navigation anchor inside Political Space, not a painted section.
+    for (const selector of ['#political-space', '#visual-archive']) {
+      const background=await page.locator(selector).evaluate(el=>getComputedStyle(el).backgroundColor);
+      log(name,width,`${selector} matches dark portfolio shell`,background==='rgb(11, 16, 23)',background);
+    }
+    log(name,width,'visual gallery retains six non-political artworks',
+      await page.locator('.visual-edit-index>button').count()===6 &&
+      await page.locator('#visual-archive').evaluate(el=>!el.textContent.includes('Telangana Manifesto')));
     if(width<=1024){
       const layout=await page.evaluate(()=>{
         const box=s=>document.querySelector(s).getBoundingClientRect();
         const intro=box('.landing-intro'),slot=box('.landing-character-slot'),role=box('.landing-info');
         return {
           clearHero:slot.height===0?intro.bottom<=role.top:intro.bottom+20<=slot.top&&slot.bottom<=role.top,
-          aboutGap:box('#work .comm-kicker').top-box('.about-actions').bottom,
+          // Measure the current section boundary and its deliberate inset.
+          aboutGap:box('.political-topline').top-box('.about-section').bottom,
           slotClips:getComputedStyle(document.querySelector('.landing-character-slot')).overflowX==='clip'
         };
       });
       log(name,width,'mobile hero text and scene occupy separate rows',layout.clearHero);
       log(name,width,'mobile character cannot paint over following content',layout.slotClips);
-      log(name,width,'About to Work uses compact spacing',layout.aboutGap>=24&&layout.aboutGap<=56,layout.aboutGap);
+      log(name,width,'About to Political Space uses compact spacing',layout.aboutGap>=24&&layout.aboutGap<=76,layout.aboutGap);
     }
     const tolerance=3;
     const within=metrics.indexRects.every(r=>r.width>0&&r.left>=-tolerance&&r.right<=metrics.vw+tolerance);
