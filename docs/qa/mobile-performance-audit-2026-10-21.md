@@ -19,4 +19,25 @@ The visitor journey is opening → selected projects → résumé → contact. T
 Google PageSpeed API returned HTTP 429 for both strategies, but its public interface completed a lab report: mobile performance 76, desktop 99, with accessibility, best practices and SEO all 100. Mobile FCP 2.8s, LCP 3.1s, TBT 0ms and CLS 0.222. Google identified About as the shifting element. Report: https://pagespeed.web.dev/analysis/https-viswanathan-portfolio-iota-vercel-app/60imecrqjf?form_factor=mobile. No real-user Core Web Vitals pass is claimed. Physical iPhone/Safari, hardware WebGL speed and end-to-end sending from a visitor’s mail application remain unverified. The existing optional 3D chunk warning remains.
 
 ## Layout stability follow-up
-A mobile WebGL capability check now resolves before first paint. Unsupported/software-rendered devices hide the reserved character row before it can shift About. Supported devices reuse that result and retain automatic scene startup. Case-study routes skip the early probe. QA-only layout-shift observers are not included in production. Final Google rerun follows publication.
+A mobile WebGL capability check now resolves before first paint. Unsupported/software-rendered devices hide the reserved character row before it can shift About. Supported devices reuse that result and retain automatic scene startup. Case-study routes skip the early probe. QA-only layout-shift observers are not included in production. The final Google rerun confirmed mobile 88 and desktop 99.
+
+## Final production verification
+Published frontend commit: eb641bcb9b6f5078db53f1d47df1985b348c3177. Vercel deployment dpl_66GZiWPXmcB3gnHUknaZCpZjjS7b is READY and serves the public alias.
+
+Google report: https://pagespeed.web.dev/analysis/https-viswanathan-portfolio-iota-vercel-app/dulbv3txtg?form_factor=mobile
+
+| Lab metric | Mobile | Desktop |
+|---|---:|---:|
+| Performance | 88 | 99 |
+| Accessibility | 100 | 100 |
+| Best practices | 100 | 100 |
+| SEO | 100 | 100 |
+| FCP | 2.7 s | 0.7 s |
+| LCP | 3.2 s | 0.7 s |
+| TBT | 0 ms | 0 ms |
+| CLS | 0.025 | 0.001 |
+| Speed Index | 3.1 s | 0.7 s |
+
+The prior public-interface mobile run was 76 performance with CLS 0.222. Scores vary between runs. Google has no real-user dataset for this site, so these are lab results, not a field Core Web Vitals pass. Remaining optimization opportunities include render-blocking CSS and responsive image delivery; no claim is made that every performance opportunity is eliminated.
+
+All 26 HTTP checks passed: eleven HTML pages and canonicals, twelve byte-identical media files and their one-year immutable caching, robots, sitemap and valid résumé PDF. Local startup regression scenarios passed again; observed CLS was zero on the tested 375–844px devices and 0.0024 at 320px. Mock capability tests passed for hardware/software/unavailable contexts, desktop skip, reduced motion and case-study skip. Physical iPhone/Safari, hardware 3D speed and final mail sending remain unverified.

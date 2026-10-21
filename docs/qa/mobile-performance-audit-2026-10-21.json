@@ -283,7 +283,311 @@
       "seo": 100,
       "mobileCLS": 0.222,
       "report": "https://pagespeed.web.dev/analysis/https-viswanathan-portfolio-iota-vercel-app/60imecrqjf?form_factor=mobile"
+    },
+    "publicInterfaceFinal": {
+      "mobile": 88,
+      "desktop": 99,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "mobileFCP": 2.7,
+      "mobileLCP": 3.2,
+      "mobileTBT": 0,
+      "mobileCLS": 0.025,
+      "desktopFCP": 0.7,
+      "desktopLCP": 0.7,
+      "desktopTBT": 0,
+      "desktopCLS": 0.001,
+      "report": "https://pagespeed.web.dev/analysis/https-viswanathan-portfolio-iota-vercel-app/dulbv3txtg?form_factor=mobile"
     }
   },
-  "productionDependencyVulnerabilities": 0
+  "productionDependencyVulnerabilities": 0,
+  "finalChecks": [
+    {
+      "path": "/",
+      "width": 320,
+      "overflow": false,
+      "layoutShift": 0.0023889046457541553,
+      "sceneProbe": "unsupported",
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 51.96875,
+          "height": 44
+        },
+        {
+          "width": 44.78125,
+          "height": 44
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 375,
+      "overflow": false,
+      "layoutShift": 0,
+      "sceneProbe": "unsupported",
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 51.96875,
+          "height": 44
+        },
+        {
+          "width": 44.78125,
+          "height": 44
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 390,
+      "overflow": false,
+      "layoutShift": 0,
+      "sceneProbe": "unsupported",
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 51.96875,
+          "height": 44
+        },
+        {
+          "width": 44.78125,
+          "height": 44
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 430,
+      "overflow": false,
+      "layoutShift": 0,
+      "sceneProbe": "unsupported",
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 51.96875,
+          "height": 44
+        },
+        {
+          "width": 44.78125,
+          "height": 44
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 768,
+      "overflow": false,
+      "layoutShift": 0,
+      "sceneProbe": "unsupported",
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 52.828125,
+          "height": 44
+        },
+        {
+          "width": 46.96875,
+          "height": 44
+        },
+        {
+          "width": 83.859375,
+          "height": 44
+        },
+        {
+          "width": 72.296875,
+          "height": 44
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 844,
+      "overflow": false,
+      "layoutShift": 0,
+      "sceneProbe": "unsupported",
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 52.828125,
+          "height": 44
+        },
+        {
+          "width": 46.96875,
+          "height": 44
+        },
+        {
+          "width": 83.859375,
+          "height": 44
+        },
+        {
+          "width": 72.296875,
+          "height": 44
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 1440,
+      "overflow": false,
+      "layoutShift": 0,
+      "h1": 1,
+      "navTargets": [
+        {
+          "width": 25.96875,
+          "height": 27
+        },
+        {
+          "width": 59.65625,
+          "height": 24
+        },
+        {
+          "width": 53.109375,
+          "height": 24
+        },
+        {
+          "width": 94.6875,
+          "height": 24
+        },
+        {
+          "width": 81.625,
+          "height": 24
+        }
+      ],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/work/ai-design-studio/",
+      "width": 375,
+      "overflow": false,
+      "layoutShift": 0,
+      "h1": 1,
+      "navTargets": [],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/work/ai-design-studio/",
+      "width": 1440,
+      "overflow": false,
+      "layoutShift": 0,
+      "h1": 1,
+      "navTargets": [],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/work/content-tracker/",
+      "width": 375,
+      "overflow": false,
+      "layoutShift": 0,
+      "h1": 1,
+      "navTargets": [],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    },
+    {
+      "path": "/work/content-tracker/",
+      "width": 1440,
+      "overflow": false,
+      "layoutShift": 0,
+      "h1": 1,
+      "navTargets": [],
+      "remoteGithubImages": 0,
+      "missingLoadedImages": 0,
+      "galleryDimensions": true,
+      "violations": []
+    }
+  ],
+  "publishedCommit": "eb641bcb9b6f5078db53f1d47df1985b348c3177"
 }

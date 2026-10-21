@@ -1,0 +1,152 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "h1": 1,
+    "canonical": "https://viswanathan-portfolio-iota.vercel.app/"
+  },
+  {
+    "path": "/work/ai-design-studio",
+    "status": 200,
+    "h1": 1,
+    "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/ai-design-studio"
+  },
+  {
+    "path": "/work/content-studio",
+    "status": 200,
+    "h1": 1,
+    "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/content-studio"
+  },
+  {
+    "path": "/work/social-media-intelligence",
+    "status": 200,
+    "h1": 1,
+    "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/social-media-intelligence"
+  },
+  {
+    "path": "/work/content-tracker",
+    "status": 200,
+    "h1": 1,
+    "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/content-tracker"
+  },
+  {
+    "path": "/work/splitmate",
+    "status": 200,
+    "h1": 1,
+    "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/splitmate"
+  },
+  {
+    "path": "/work/clip-studio",
+    "status": 200,
+    "h1": 1,
+    "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/clip-studio"
+  },
+  {
+    "path": "/work/nation-building",
+    "status": 200,
+    "h1": 1,
+    "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/nation-building"
+  },
+  {
+    "path": "/work/telangana-manifesto",
+    "status": 200,
+    "h1": 1,
+    "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/telangana-manifesto"
+  },
+  {
+    "path": "/work/led-rath-yatra",
+    "status": 200,
+    "h1": 1,
+    "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/led-rath-yatra"
+  },
+  {
+    "path": "/work/samvidhan",
+    "status": 200,
+    "h1": 1,
+    "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/samvidhan"
+  },
+  {
+    "path": "/sitemap.xml",
+    "status": 200
+  },
+  {
+    "path": "/robots.txt",
+    "status": 200
+  },
+  {
+    "path": "/resume/Viswanathan_G_Resume.pdf",
+    "status": 200
+  },
+  {
+    "path": "/portfolio-media/06-ganesh-chaturthi-71566ff8f17f.webp",
+    "status": 200,
+    "sameBytes": true,
+    "cacheControl": "public, max-age=31536000, immutable"
+  },
+  {
+    "path": "/portfolio-media/ai-studio-background-removal-38c4598fd9b8.svg",
+    "status": 200,
+    "sameBytes": true,
+    "cacheControl": "public, max-age=31536000, immutable"
+  },
+  {
+    "path": "/portfolio-media/ai-studio-transform-35023d881f18.svg",
+    "status": 200,
+    "sameBytes": true,
+    "cacheControl": "public, max-age=31536000, immutable"
+  },
+  {
+    "path": "/portfolio-media/14-concert-layout-338c7ed4999a.webp",
+    "status": 200,
+    "sameBytes": true,
+    "cacheControl": "public, max-age=31536000, immutable"
+  },
+  {
+    "path": "/portfolio-media/15-concert-poster-110e1d11e4d4.webp",
+    "status": 200,
+    "sameBytes": true,
+    "cacheControl": "public, max-age=31536000, immutable"
+  },
+  {
+    "path": "/portfolio-media/telangana-manifesto-51e2ef6f913f.webp",
+    "status": 200,
+    "sameBytes": true,
+    "cacheControl": "public, max-age=31536000, immutable"
+  },
+  {
+    "path": "/portfolio-media/03-quartzites-3dddf161324c.webp",
+    "status": 200,
+    "sameBytes": true,
+    "cacheControl": "public, max-age=31536000, immutable"
+  },
+  {
+    "path": "/portfolio-media/ai-studio-typography-6bd5fd080fd4.svg",
+    "status": 200,
+    "sameBytes": true,
+    "cacheControl": "public, max-age=31536000, immutable"
+  },
+  {
+    "path": "/portfolio-media/ai-studio-workspace-82af406d5583.svg",
+    "status": 200,
+    "sameBytes": true,
+    "cacheControl": "public, max-age=31536000, immutable"
+  },
+  {
+    "path": "/portfolio-media/10-happy-hours-3847686b15a0.webp",
+    "status": 200,
+    "sameBytes": true,
+    "cacheControl": "public, max-age=31536000, immutable"
+  },
+  {
+    "path": "/portfolio-media/ai-studio-layers-fe237b8b92c0.svg",
+    "status": 200,
+    "sameBytes": true,
+    "cacheControl": "public, max-age=31536000, immutable"
+  },
+  {
+    "path": "/portfolio-media/04-onam-brunch-3f210a27df22.webp",
+    "status": 200,
+    "sameBytes": true,
+    "cacheControl": "public, max-age=31536000, immutable"
+  }
+]
