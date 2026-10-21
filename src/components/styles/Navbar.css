@@ -1,14 +1,14 @@
 .header {
   display: flex;
-  max-width: var(--cMaxWidth);
-  width: var(--cWidth);
+  max-width: none;
+  width: 100%;
   justify-content: space-between;
   padding: 20px 0px;
   margin-bottom: -100px;
   box-sizing: border-box;
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  transform: none;
   top: 0;
   z-index: 9999;
 }
@@ -86,6 +86,8 @@
 @media(min-width:500px){.header ul{column-gap:clamp(20px,4vw,60px)}}
 @media(min-width:900px) and (max-width:1399px){.navbar-connect{display:none}}
 @media(min-width:1400px){.navbar-connect{font-size:13px}}
-/* Keep navigation legible over both dark artwork and light product sections. */
-.header{background:#0b1017f5}
+/* Full-width opaque header; keep navigation aligned to the existing content gutters. */
+.header{background:#0b1017;padding-inline:15px}
+.nav-fade{display:none}
+@media(min-width:768px){.header{padding-inline:max(3%,calc((100% - var(--cMaxWidth))/2))}}
 @media(max-width:499px){.header{width:100%;padding:18px 15px}.header ul{flex-direction:row;align-items:center;column-gap:12px;row-gap:0;font-size:9px}.header ul li{letter-spacing:.4px}.nav-fade{height:70px}}
