@@ -7,7 +7,7 @@ const contactEmail="piaravinoth@gmail.com";
 const Contact=()=>{
   const [notice,setNotice]=useState("");
   const [copyState,setCopyState]=useState("");
-  const copyEmail=async()=>{try{await navigator.clipboard.writeText(contactEmail);setCopyState("Email address copied.")}catch{setCopyState("Please select and copy piaravinoth@gmail.com.")}};
+  const copyEmail=async()=>{setCopyState("You can also select and copy the email address above.");try{await navigator.clipboard.writeText(contactEmail);setCopyState("Email address copied.")}catch{setCopyState("Please select and copy piaravinoth@gmail.com.")}};
   const [error,setError]=useState("");
 
   const handleSubmit=(event:FormEvent<HTMLFormElement>)=>{
