@@ -1,4 +1,8 @@
 /* Contact — restrained editorial form, integrated with the existing dark palette. */
+.contact-direct-action{display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px;width:fit-content;max-width:100%;box-sizing:border-box;min-height:52px;padding:15px 20px;margin:0 0 30px;background:#f6a66b;color:#181c22;font-size:17px;font-weight:550}
+.contact-direct-action span{font-size:13px;font-weight:400;overflow-wrap:anywhere}
+.contact-direct-action:hover{background:#ffd0a8;color:#181c22}
+.contact-direct-action:focus-visible{outline:3px solid #f6a66b;outline-offset:5px}
 .contact-section{
   position:relative;
   z-index:2;

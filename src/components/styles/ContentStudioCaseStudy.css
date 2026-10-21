@@ -74,3 +74,18 @@
 .cs-case .cs-principles-list>div>span{color:#553278!important}
 .cs-case .cs-principles-list>div>p{color:#3d493f!important}
 .cs-case .cs-end-foot>span{color:#35472a!important}
+.cs-evidence{padding:90px 0;background:#f5f3e9;color:#282432}
+.cs-evidence-intro{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin:28px 0 55px}
+.cs-evidence h2{font-size:clamp(38px,5vw,70px);line-height:1.05;letter-spacing:-.055em;font-weight:500;margin:0}
+.cs-evidence h2 em{font-family:Georgia,serif;font-weight:400}
+.cs-evidence-intro p,.cs-evidence dd{font-size:16px;line-height:1.75;margin:0}
+.cs-evidence dl{margin:24px 0 0}.cs-evidence dl>div{padding:16px 0;border-top:1px solid #bdb8b8}
+.cs-evidence dt{font-size:11px;font-weight:650;text-transform:uppercase;letter-spacing:.09em;margin-bottom:8px}
+.cs-evidence figure{margin:0 0 45px}.cs-evidence figure img{display:block;width:100%;height:auto;border:1px solid #c8c5c8;box-sizing:border-box}
+.cs-evidence figcaption{display:flex;flex-wrap:wrap;gap:12px 25px;align-items:center;font-size:12px;line-height:1.7;padding:15px 0}
+.cs-evidence figcaption b{font-size:11px;letter-spacing:.08em}.cs-evidence figcaption>span{flex:1;min-width:180px}
+.cs-evidence a{display:inline-flex;align-items:center;min-height:44px;color:#493376;text-decoration:underline;text-underline-offset:5px}
+.cs-evidence a:focus-visible{outline:3px solid #493376;outline-offset:4px}
+.cs-evidence-note{padding-top:20px;border-top:1px solid #bdb8b8;max-width:850px}.cs-evidence-note p{font-size:14px;line-height:1.75}
+.cs-evidence-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media(max-width:700px){.cs-evidence{padding:55px 0}.cs-evidence-intro{grid-template-columns:1fr;gap:26px;margin-bottom:35px}.cs-evidence figure{margin-bottom:28px}.cs-evidence figcaption{align-items:flex-start;flex-direction:column;gap:6px}}

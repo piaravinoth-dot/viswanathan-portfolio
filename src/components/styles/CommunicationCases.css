@@ -55,3 +55,11 @@
 .comm-samvidhan .comm-hero h1{font-family:Georgia,serif;letter-spacing:-.05em}.comm-telangana-manifesto .comm-hero h1{font-family:Georgia,serif;font-weight:600}
 @media(max-width:700px){.selected-cases{padding:65px 0}.selected-cases-inner{width:90%}.selected-cases-intro{grid-template-columns:1fr;gap:24px}.selected-cases-intro p{font-size:16px;max-width:100%}.selected-case-grid{grid-template-columns:1fr;gap:35px}.case-filters{gap:8px}.case-filters button{font-size:12px;padding:10px 13px}.selected-case-end{flex-direction:column}.comm-nav nav{gap:20px}.comm-hero{padding-top:45px}.comm-hero .comm-kicker{font-size:10px}.comm-hero h1{overflow-wrap:anywhere}.comm-brief{grid-template-columns:1fr;gap:22px;padding:50px 6%}.comm-figure{margin-bottom:25px}.comm-figure figcaption{padding:14px 6%;gap:18px}.comm-links{padding:45px 6% 60px}.comm-footer{gap:20px;flex-wrap:wrap}.comm-hero>p{margin-bottom:28px}.selected-case-caption .comm-kicker{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.selected-case-image img{transition:none}.selected-case:hover img{transform:none}}
+.comm-evidence{max-width:1100px;margin:0 auto;padding:0 24px 75px}
+.comm-evidence h2{font-size:clamp(30px,3.5vw,48px);font-weight:500;letter-spacing:-.04em;line-height:1.15;margin:18px 0 32px}
+.comm-evidence dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:28px 40px}
+.comm-evidence dl>div{border-top:1px solid #bbb4a7;padding-top:17px}
+.comm-evidence dt{font-size:13px;font-weight:600;margin-bottom:12px}
+.comm-evidence dd{margin:0;font-size:16px;line-height:1.7}
+.comm-evidence>p{margin:28px 0 0;font-size:14px;line-height:1.7;max-width:780px}
+@media(max-width:700px){.comm-evidence{padding:0 6% 50px}.comm-evidence dl{grid-template-columns:1fr;gap:24px}}

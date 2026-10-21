@@ -97,7 +97,7 @@ const Scene=()=>{
     const animate=(now:number)=>{
       if(disposed)return;
       frame=requestAnimationFrame(animate);
-      if(document.hidden||!onScreen)return;
+      if(document.hidden||!onScreen||host.style.visibility==="hidden")return;
       if(now-lastDraw<frameInterval)return;
       lastDraw=now;
       if(head)handleHeadRotation(head,mouse.x,mouse.y,interpolation.x,interpolation.y,THREE.MathUtils.lerp);

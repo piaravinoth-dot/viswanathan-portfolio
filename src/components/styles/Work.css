@@ -1,4 +1,14 @@
 /* Work 2026 / Editorial gallery + six product stories */
+.product-directory{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:28px 0 16px;border-top:1px solid #a4a391;gap:0 36px}
+.product-directory>a{display:grid;grid-template-columns:25px minmax(0,1fr) 20px;gap:14px;align-items:start;min-height:110px;padding:23px 4px;border-bottom:1px solid #a4a391;color:#20251e;box-sizing:border-box}
+.product-directory>a:hover{color:#74412e;background:#ffffff40}
+.product-directory>a:focus-visible{outline:3px solid #74412e;outline-offset:3px}
+.directory-number{font-size:11px;padding-top:6px}
+.product-directory h3{font-size:clamp(19px,2vw,25px);letter-spacing:-.035em;line-height:1.2;margin:0 0 6px;font-weight:550}
+.product-directory p{font-size:14px;line-height:1.5;margin:0 0 8px}
+.directory-evidence{display:block;font-size:11px;line-height:1.6;color:#535847}
+.product-visual-note{font-size:12px;line-height:1.7;max-width:680px;color:#535847;margin:18px 0 45px}
+@media(max-width:700px){.product-directory{grid-template-columns:1fr;gap:0}.product-directory>a{min-height:100px;padding:20px 2px}.product-visual-note{margin-bottom:30px}}
 .work-section{position:relative;z-index:3;background:#0b1017;color:#f1eee9;padding:0;overflow:clip}
 .work-container{margin:auto;padding:120px 0 130px}
 .work-intro{display:grid;grid-template-columns:1.3fr .7fr;gap:60px;align-items:end;margin-bottom:82px}

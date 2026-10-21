@@ -35,9 +35,10 @@ const Contact=()=>{
         <h2 className="contact-title" id="contact-title">Have something <em>in mind?</em></h2>
         <p>Open to thoughtful opportunities, product design roles and creative collaborations. Tell me what you're working on.</p>
       </div>
+      <a className="contact-direct-action" href={`mailto:${contactEmail}`}>Email me directly <MdArrowOutward aria-hidden="true"/><span>{contactEmail}</span></a>
       <div className="contact-layout">
         <div className="contact-form-column">
-          <h3 className="contact-form-title">Start a conversation.</h3>
+          <h3 className="contact-form-title">Or prepare an email draft.</h3>
           <form className="contact-form" onSubmit={handleSubmit}>
             <div className="contact-fields-inline">
               <div className="contact-field">
@@ -51,7 +52,7 @@ const Contact=()=>{
             </div>
             <div className="contact-field">
               <label htmlFor="portfolio-contact-message">YOUR MESSAGE</label>
-              <textarea id="portfolio-contact-message" name="message" rows={4} minLength={10} maxLength={1200} placeholder="A little about your opportunity or project..." required onChange={()=>{setNotice("");setError("")}}/>
+              <textarea id="portfolio-contact-message" name="message" rows={4} minLength={10} maxLength={1200} placeholder="A little about your opportunity or project…" required onChange={()=>{setNotice("");setError("")}}/>
             </div>
             {error&&<p className="contact-feedback contact-error" role="alert">{error}</p>}
             {notice&&<p className="contact-feedback" role="status">{notice}</p>}
@@ -61,7 +62,7 @@ const Contact=()=>{
             </div>
           </form>
         </div>
-        <aside className="contact-details" aria-label="Other ways to connect">
+        <section className="contact-details" aria-label="Other ways to connect">
           <span className="contact-details-kicker">DIRECT CONTACT</span>
           <h3>Prefer to reach out directly?</h3>
           <a className="contact-email-link" href={`mailto:${contactEmail}`}>{contactEmail} <MdArrowOutward aria-hidden="true"/></a>
@@ -70,7 +71,7 @@ const Contact=()=>{
             <a href="/resume/Viswanathan_G_Resume.pdf" download>Download résumé <span>PDF ↓</span></a>
             <a href="https://github.com/piaravinoth-dot" target="_blank" rel="noopener noreferrer">GitHub <MdArrowOutward aria-hidden="true"/></a>
           </div>
-        </aside>
+        </section>
       </div>
       <footer className="contact-footer">
         <p>Art direction &amp; design by <span>Viswanathan G.</span></p>

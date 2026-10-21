@@ -1,5 +1,6 @@
 import type * as THREE from "three";
 import gsap from "gsap";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
 
 export function setCharTimeline(character: THREE.Object3D, camera: THREE.PerspectiveCamera) {
   const media = gsap.matchMedia();
@@ -29,11 +30,24 @@ export function setCharTimeline(character: THREE.Object3D, camera: THREE.Perspec
       }
       intro.to(".character-hover",{pointerEvents:"none",duration:0},.3);
       intro.to(".character-rim",{opacity:0,scale:.6,duration:.6},.4);
-      // The 3D scene belongs to the hero/About, never the capabilities content.
-      gsap.to(".character-model", {opacity:0, ease:"none", scrollTrigger:{
-        trigger:"#capabilities", start:"top 95%", end:"top 75%", scrub:true,
-        invalidateOnRefresh:true,
-      }});
+      // Work now separates the hero and About. Clip the fixed canvas to the
+      // visible portion of those two sections so it never covers the projects.
+      const host = document.querySelector<HTMLElement>(".character-model");
+      const landing = document.getElementById("landingDiv");
+      const about = document.getElementById("about");
+      const updateWindow = () => {
+        if (!host || !landing || !about) return;
+        const heroBox = landing.getBoundingClientRect();
+        const aboutBox = about.getBoundingClientRect();
+        const box = heroBox.bottom > 0 ? heroBox : aboutBox;
+        const visible = box.top < window.innerHeight && box.bottom > 0;
+        gsap.set(host, {
+          visibility: visible ? "visible" : "hidden",
+          clipPath: visible ? `inset(${Math.max(0, box.top)}px 0 ${Math.max(0, window.innerHeight-box.bottom)}px 0)` : "inset(100% 0 0 0)",
+        });
+      };
+      ScrollTrigger.create({start:0,end:"max",onUpdate:updateWindow,onRefresh:updateWindow});
+      updateWindow();
     });
     return () => context.revert();
   });

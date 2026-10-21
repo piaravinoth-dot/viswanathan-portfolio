@@ -23,7 +23,6 @@ const products:Product[]=[
 {slug:"splitmate",id:"05",title:"SplitMate",subtitle:"Shared expenses, minus the friction.",description:"A private two-person expense experience with encrypted records, flexible splits, balances and settlements.",skills:["Mobile UX","PWA","Financial interactions"],accent:"mint",visual:"split",note:"Expense splitting application"},
 {slug:"clip-studio",id:"06",title:"Clip Studio",subtitle:"One link. A simpler video workflow.",description:"A responsive video utility concept for working with supported social video links, with a focused input flow and straightforward save options.",skills:["Web product","Responsive UI","Creator workflows"],accent:"sand",visual:"clip",note:"Video workflow prototype"}
 ];
-const Chip=({children}:{children:React.ReactNode})=><span className="product-chip">{children}</span>;
 const ProductVisual=({type}:{type:string})=>{
 if(type==="studio")return <div className="pv-studio"><div className="pv-bar"><span className="pv-dots">● ● ●</span><span>AI DESIGN STUDIO</span><span>EXPORT ↗</span></div><div className="pv-studio-main"><div className="pv-tools"><span>✦</span><span>▧</span><span>◫</span><span>◈</span></div><div className="pv-canvas"><img src="https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/portfolio-visuals/ai-studio-workspace.svg" alt="AI Design Studio visual workspace illustration"/><div className="pv-float">✦ &nbsp; Create with intention</div></div><div className="pv-properties"><b>Layers</b><span>01 &nbsp; Artwork</span><span>02 &nbsp; Typography</span><span>03 &nbsp; Background</span></div></div></div>;
 if(type==="news")return <div className="pv-dashboard pv-news"><div className="pv-side"><b>C<span>●</span></b><span>⌂</span><span>▤</span><span>◷</span></div><div className="pv-screen"><div className="pv-screen-top">CONTENT STUDIO <span>LIVE FEED <i>●</i></span></div><h3>Today's stories<span>.</span></h3><div className="pv-filter"><b>All sources</b><span>Telangana</span><span>National</span><span>Video</span></div>{["Morning briefing / Top stories","Editorial watch / Developing","Video monitor / New coverage"].map((t,i)=><div className="pv-news-row" key={t}><span className="pv-news-thumb" style={{background:["#b9cbb7","#d6c1a9","#a7bfc0"][i]}}></span><div><small>0{i+1} / SOURCE MONITOR</small><strong>{t}</strong><em>Review &nbsp; · &nbsp; Translate &nbsp; · &nbsp; Save</em></div><span>↗</span></div>)}</div></div>;
@@ -128,6 +127,35 @@ useEffect(()=>{
   return()=>window.clearInterval(timer);
 },[orbitMobile,orbitPlaying,orbitInView,orbitPageVisible,orbitFocused]);
 useEffect(()=>()=>{if(orbitUserPause.current!==null)window.clearTimeout(orbitUserPause.current)},[]);
+return <section className="work-section">
+<div className="product-section" id="products"><div className="product-inner section-container">
+<div className="product-heading"><div className="product-topline"><span><i/> 02 / DIGITAL PRODUCTS</span><span>SELECTED PRODUCT DESIGN / 2026</span></div><div className="product-heading-grid"><h2>Ideas, made<br/><em>interactive.</em></h2><p>Six products spanning creative AI, content operations, analytics and everyday utilities. Designed with an emphasis on usability, workflow and visual craft.</p></div><div className="product-count">06 <span>SELECTED PRODUCTS</span></div></div>
+<nav className="product-directory" aria-label="All six product case studies">
+{products.map(p=><a href={`/work/${p.slug}`} key={p.slug}><span className="directory-number">{p.id}</span><div><h3>{p.title}</h3><p>{p.subtitle}</p><span className="directory-evidence">{p.slug==="content-studio"?"Product design · Actual screens included":p.slug==="clip-studio"?"Video utility · Prototype case study":p.note+" · Design case study"}</span></div><MdArrowOutward aria-hidden="true"/></a>)}
+</nav>
+<p className="product-visual-note">Explore each case study for scope, design decisions and project evidence. Carousel previews are illustrative interface studies.</p>
+<div className="product-showcase-hint"><span>EXPLORE THE COLLECTION</span><span>Select a product to open <MdArrowForward/></span></div>
+<div ref={orbitHost} className="mobile-product-orbit" role="region" aria-roledescription="carousel" aria-label="Selected digital products — use the left and right arrow keys to browse" tabIndex={0} onPointerDownCapture={()=>{orbitPointerMode.current=true;setOrbitFocused(false)}} onFocusCapture={()=>{if(!orbitPointerMode.current)setOrbitFocused(true)}} onBlurCapture={event=>{if(!event.relatedTarget||!event.currentTarget.contains(event.relatedTarget as Node))setOrbitFocused(false)}} onKeyDownCapture={()=>{orbitPointerMode.current=false;setOrbitFocused(true)}} onKeyDown={event=>{if(event.key==="ArrowLeft"||event.key==="ArrowRight"){event.preventDefault();orbitNext(event.key==="ArrowRight"?1:-1)}}}>
+  <div className="orbit-topline"><span>THE PRODUCT COLLECTION</span><span>{String(orbitIndex+1).padStart(2,"0")} / 06</span></div>
+  <div className="orbit-stage" onTouchStart={event=>{touchStart.current={x:event.touches[0].clientX,y:event.touches[0].clientY};}} onTouchEnd={event=>{if(!touchStart.current)return;const dx=event.changedTouches[0].clientX-touchStart.current.x;const dy=event.changedTouches[0].clientY-touchStart.current.y;touchStart.current=null;if(Math.abs(dx)>38&&Math.abs(dx)>Math.abs(dy)*1.2){orbitSwipeAt.current=Date.now();orbitNext(dx<0?1:-1);}}}>
+    {products.map((p,i)=><div key={p.id} ref={element=>{orbitRefs.current[i]=element;}} className={`orbit-card orbit-${p.accent}${orbitIndex===i?" orbit-active":""}`} aria-hidden={orbitIndex!==i} style={{pointerEvents:orbitIndex===i?"auto":"none"}} onClick={event=>{if(orbitIndex!==i||Date.now()-orbitSwipeAt.current<650||event.target instanceof Element&&event.target.closest("a"))return;window.location.assign(`/work/${p.slug}`);}}>
+      <div className="orbit-card-meta"><span>{p.id} / 06</span><span>{p.note}</span></div>
+      <div className="orbit-card-image"><ProductVisual type={p.visual}/></div>
+      <div className="orbit-card-copy"><h3>{p.title}</h3><p>{p.subtitle}</p></div>
+      <a className="orbit-card-action" href={`/work/${p.slug}`} aria-label={`View ${p.title} case study`} tabIndex={orbitIndex===i?0:-1}>View case study <MdArrowOutward/></a>
+    </div>)}
+  </div>
+  <div className="orbit-controls"><button type="button" onClick={()=>orbitNext(-1)} aria-label="Previous product"><MdArrowBack/></button><span aria-live={orbitPlaying?"off":"polite"} aria-atomic="true">{products[orbitIndex].title}</span><button type="button" onClick={()=>orbitNext(1)} aria-label="Next product"><MdArrowForward/></button></div>
+  <button type="button" className="orbit-autoplay" onPointerDown={event=>{if(event.button===0){event.stopPropagation();toggleOrbitPlayback();}}} onClick={event=>{if(event.detail===0)toggleOrbitPlayback();}} aria-pressed={orbitPlaying}>{orbitPlaying?"Pause rotation":"Play rotation"}</button>
+  <div className="orbit-index" aria-label="Choose a product">{products.map((p,i)=><button type="button" key={p.id} aria-current={orbitIndex===i?"true":undefined} className={orbitIndex===i?"orbit-index-active":""} onClick={()=>orbitNext((i-orbitIndex+products.length)%products.length)}>{p.id} <span>{p.title}</span></button>)}</div>
+  <p className="orbit-note">{orbitMobile?"SWIPE CARDS OR USE ARROWS TO EXPLORE":"AUTOMATIC ROTATION · USE ARROWS OR PAUSE"} · SIX PRODUCTS</p>
+</div>
+<div className="product-outro"><span>DESIGN THAT WORKS AS WELL AS IT LOOKS.</span><a href="#contact">Have a project in mind? <MdArrowOutward/></a></div>
+</div></div>
+</section>;
+};
+
+export const VisualArchive=()=>{
 const [openImage,setOpenImage]=useState<number|null>(null);
 const dialogRef=useRef<HTMLDivElement>(null);
 useEffect(()=>{
@@ -159,26 +187,7 @@ return <section className="work-section" id="visual-archive">
 <div className="art-grid">{artworks.map((a,i)=><button type="button" className={`art-piece art-${a.shape}`} key={a.title} onClick={()=>setOpenImage(i)} aria-label={`View ${a.title} image`} data-cursor="disable"><div className="art-image"><img src={a.image} alt={a.title+" — original portfolio artwork"} loading="lazy"/><span className="art-open"><MdArrowOutward/></span></div><div className="art-caption"><span><b>{a.title}</b><small>{a.type}</small></span><span className="art-index">{String(i+1).padStart(2,"0")} / {String(artworks.length).padStart(2,"0")}</span></div></button>)}</div>
 <div className="work-gallery-end"><span>VISUAL DESIGN / ART DIRECTION / CREATIVE SYSTEMS</span></div>
 </div>
-<div className="product-section" id="products"><div className="product-inner section-container">
-<div className="product-heading"><div className="product-topline"><span><i/> 02 / DIGITAL PRODUCTS</span><span>SELECTED PRODUCT DESIGN / 2026</span></div><div className="product-heading-grid"><h2>Ideas, made<br/><em>interactive.</em></h2><p>Six products spanning creative AI, content operations, analytics and everyday utilities. Designed with an emphasis on usability, workflow and visual craft.</p></div><div className="product-count">06 <span>SELECTED PRODUCTS</span></div></div>
-<div className="product-showcase-hint"><span>EXPLORE THE COLLECTION</span><span>Select a product to open <MdArrowForward/></span></div>
-<div ref={orbitHost} className="mobile-product-orbit" role="region" aria-roledescription="carousel" aria-label="Selected digital products — use the left and right arrow keys to browse" tabIndex={0} onPointerDownCapture={()=>{orbitPointerMode.current=true;setOrbitFocused(false)}} onFocusCapture={()=>{if(!orbitPointerMode.current)setOrbitFocused(true)}} onBlurCapture={event=>{if(!event.relatedTarget||!event.currentTarget.contains(event.relatedTarget as Node))setOrbitFocused(false)}} onKeyDownCapture={()=>{orbitPointerMode.current=false;setOrbitFocused(true)}} onKeyDown={event=>{if(event.key==="ArrowLeft"||event.key==="ArrowRight"){event.preventDefault();orbitNext(event.key==="ArrowRight"?1:-1)}}}>
-  <div className="orbit-topline"><span>THE PRODUCT COLLECTION</span><span>{String(orbitIndex+1).padStart(2,"0")} / 06</span></div>
-  <div className="orbit-stage" onTouchStart={event=>{touchStart.current={x:event.touches[0].clientX,y:event.touches[0].clientY};}} onTouchEnd={event=>{if(!touchStart.current)return;const dx=event.changedTouches[0].clientX-touchStart.current.x;const dy=event.changedTouches[0].clientY-touchStart.current.y;touchStart.current=null;if(Math.abs(dx)>38&&Math.abs(dx)>Math.abs(dy)*1.2){orbitSwipeAt.current=Date.now();orbitNext(dx<0?1:-1);}}}>
-    {products.map((p,i)=><div key={p.id} ref={element=>{orbitRefs.current[i]=element;}} className={`orbit-card orbit-${p.accent}${orbitIndex===i?" orbit-active":""}`} aria-hidden={orbitIndex!==i} style={{pointerEvents:orbitIndex===i?"auto":"none"}} onClick={event=>{if(orbitIndex!==i||Date.now()-orbitSwipeAt.current<650||event.target instanceof Element&&event.target.closest("a"))return;window.location.assign(`/work/${p.slug}`);}}>
-      <div className="orbit-card-meta"><span>{p.id} / 06</span><span>{p.note}</span></div>
-      <div className="orbit-card-image"><ProductVisual type={p.visual}/></div>
-      <div className="orbit-card-copy"><h3>{p.title}</h3><p>{p.subtitle}</p></div>
-      <a className="orbit-card-action" href={`/work/${p.slug}`} aria-label={`View ${p.title} case study`} tabIndex={orbitIndex===i?0:-1}>View case study <MdArrowOutward/></a>
-    </div>)}
-  </div>
-  <div className="orbit-controls"><button type="button" onClick={()=>orbitNext(-1)} aria-label="Previous product"><MdArrowBack/></button><span aria-live={orbitPlaying?"off":"polite"} aria-atomic="true">{products[orbitIndex].title}</span><button type="button" onClick={()=>orbitNext(1)} aria-label="Next product"><MdArrowForward/></button></div>
-  <button type="button" className="orbit-autoplay" onPointerDown={event=>{if(event.button===0){event.stopPropagation();toggleOrbitPlayback();}}} onClick={event=>{if(event.detail===0)toggleOrbitPlayback();}} aria-pressed={orbitPlaying}>{orbitPlaying?"Pause rotation":"Play rotation"}</button>
-  <div className="orbit-index" aria-label="Choose a product">{products.map((p,i)=><button type="button" key={p.id} aria-current={orbitIndex===i?"true":undefined} className={orbitIndex===i?"orbit-index-active":""} onClick={()=>orbitNext((i-orbitIndex+products.length)%products.length)}>{p.id} <span>{p.title}</span></button>)}</div>
-  <p className="orbit-note">{orbitMobile?"SWIPE CARDS OR USE ARROWS TO EXPLORE":"AUTOMATIC ROTATION · USE ARROWS OR PAUSE"} · SIX PRODUCTS</p>
-</div>
-<div className="product-outro"><span>DESIGN THAT WORKS AS WELL AS IT LOOKS.</span><a href="#contact">Have a project in mind? <MdArrowOutward/></a></div>
-</div></div>
 {openImage!==null&&createPortal(<div ref={dialogRef} className="art-lightbox" role="dialog" aria-modal="true" aria-label="Portfolio image viewer" onClick={()=>setOpenImage(null)}><button type="button" className="art-lightbox-close" aria-label="Close image" onClick={()=>setOpenImage(null)}><MdClose/></button><button type="button" className="art-lightbox-prev" aria-label="Previous image" onClick={e=>{e.stopPropagation();setOpenImage((openImage+artworks.length-1)%artworks.length)}}><MdArrowBack/></button><figure onClick={e=>e.stopPropagation()}><img src={artworks[openImage].image} alt={artworks[openImage].title}/><figcaption>{artworks[openImage].title} <span>{artworks[openImage].type}</span></figcaption></figure><button type="button" className="art-lightbox-next" aria-label="Next image" onClick={e=>{e.stopPropagation();setOpenImage((openImage+1)%artworks.length)}}><MdArrowForward/></button></div>,document.body)}
-</section>};
+</section>;
+};
 export default Work;

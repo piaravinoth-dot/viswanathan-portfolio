@@ -5,7 +5,7 @@
     "discipline": "Communication & merchandise",
     "headline": "One identity. Different ways to meet people.",
     "description": "Selected digital communication and merchandise applications brought together as a single visual system.",
-    "scope": "Digital communication \u00b7 Merchandise applications \u00b7 Presentation",
+    "scope": "Digital communication · Merchandise applications · Presentation",
     "behance": "https://www.behance.net/gallery/252830539/Nation-Building-Communication-Merchandise",
     "cover": {
       "src": "/behance/nation-building/cover.webp",
@@ -77,7 +77,7 @@
     "discipline": "Editorial & publication",
     "headline": "A publication, seen as a whole.",
     "description": "A visual study of publication structure, information hierarchy and the rhythm between text, colour and imagery.",
-    "scope": "Publication design \u00b7 Information hierarchy \u00b7 Editorial layout",
+    "scope": "Publication design · Information hierarchy · Editorial layout",
     "behance": "https://www.behance.net/gallery/252833713/Telangana-Manifesto",
     "cover": {
       "src": "/behance/telangana-manifesto/cover.webp",
@@ -124,7 +124,7 @@
         "src": "/behance/telangana-manifesto/08-folio.webp",
         "width": 1400,
         "height": 1710,
-        "caption": "Selected pages show the publication\u2019s overall rhythm."
+        "caption": "Selected pages show the publication’s overall rhythm."
       }
     ],
     "role": "Publication layout & information hierarchy",
@@ -141,7 +141,14 @@
         "title": "Room for a change of pace",
         "text": "Photographs and larger visual moments interrupt dense pages and give the publication a more varied rhythm."
       }
-    ]
+    ],
+    "caseBrief": {
+      "challenge": "Organise dense policy content into a publication with a clear reading order, while keeping long text passages and imagery within a consistent page system.",
+      "contribution": "Publication layout and information hierarchy: heading scale, text grouping, section colour and the relationship between copy, photographs and page furniture.",
+      "constraints": "Different text lengths, repeated policy lists and a recognisable page structure. Colour can vary by section while margins, folios and type relationships remain consistent.",
+      "deliverable": "An editorial system demonstrated through the opening, policy pages, text-and-image spreads and the selected page collection below.",
+      "evidence": "The original artwork shows the delivered layout and its consistency across sections. Readership, comprehension and campaign-effectiveness results have not been measured for this case study."
+    }
   },
   {
     "slug": "led-rath-yatra",
@@ -149,7 +156,7 @@
     "discipline": "Environmental & vehicle graphics",
     "headline": "Graphics across a moving surface.",
     "description": "A communication system adapted to the side, front and rear of an LED vehicle, with space for the screen and multiple language treatments.",
-    "scope": "Vehicle graphics \u00b7 Surface adaptation \u00b7 Multilingual composition",
+    "scope": "Vehicle graphics · Surface adaptation · Multilingual composition",
     "behance": "https://www.behance.net/gallery/252832103/LED-Rath-Yatra-Designs",
     "cover": {
       "src": "/behance/led-rath-yatra/cover.webp",
@@ -221,7 +228,7 @@
     "discipline": "Presentation & narrative",
     "headline": "A deck with a visual rhythm.",
     "description": "A presentation system using section openers, portraits, quotations and changes in contrast to organise a long narrative.",
-    "scope": "Presentation design \u00b7 Story sequencing \u00b7 Editorial composition",
+    "scope": "Presentation design · Story sequencing · Editorial composition",
     "behance": "https://www.behance.net/gallery/252835901/Samvidhan-Gaurav-Abhiyaan_Presentation",
     "cover": {
       "src": "/behance/samvidhan/cover.webp",

@@ -192,6 +192,10 @@
   font-family: "Geist", sans-serif;
 }
 
+.landing-primary-role{font-size:clamp(14px,1.2vw,18px);line-height:1.4;font-weight:600;max-width:300px;margin:18px 0 8px;text-wrap:balance}
+.landing-primary-role+.landing-summary{margin-top:0}
+.landing-actions{flex-wrap:wrap}
+
 /* .landing-intro h1 span {
    font-weight: 200; 
 } */
@@ -455,3 +459,4 @@ h2.landing-info-h2 {
 
 /* Keep the builder identity visible within the existing introduction. */
 .landing-summary .vibe-coder-highlight{color:var(--accentColor);font-weight:650}
+.landing-actions{max-width:310px}
