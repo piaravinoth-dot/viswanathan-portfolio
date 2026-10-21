@@ -1,0 +1,275 @@
+{
+  "date": "2026-10-21",
+  "baseCommit": "4cde7b6e98918ca8a27997a603cb32664f186023",
+  "browser": "Chrome responsive iframe through CUA",
+  "checks": [
+    {
+      "path": "/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Viswanathan G \u2014 Senior Product & Visual Designer",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Viswanathan G \u2014 Senior Product & Visual Designer",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/ai-design-studio/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "AI Design Studio \u2014 Product Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/ai-design-studio",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/ai-design-studio/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "AI Design Studio \u2014 Product Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/ai-design-studio",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/content-studio/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Content Studio \u2014 Product Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/content-studio",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/content-studio/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Content Studio \u2014 Product Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/content-studio",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/social-media-intelligence/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Social Media Intelligence \u2014 Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/social-media-intelligence",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/social-media-intelligence/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Social Media Intelligence \u2014 Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/social-media-intelligence",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/content-tracker/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Content Tracker \u2014 Product Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/content-tracker",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/content-tracker/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Content Tracker \u2014 Product Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/content-tracker",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/splitmate/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "SplitMate \u2014 Private Shared Expenses | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/splitmate",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/splitmate/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "SplitMate \u2014 Private Shared Expenses | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/splitmate",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/clip-studio/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Clip Studio \u2014 The Download Desk | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/clip-studio",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/clip-studio/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Clip Studio \u2014 The Download Desk | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/clip-studio",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/nation-building/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Nation Building \u2014 Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/nation-building",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/nation-building/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Nation Building \u2014 Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/nation-building",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/telangana-manifesto/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Telangana Manifesto \u2014 Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/telangana-manifesto",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/telangana-manifesto/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Telangana Manifesto \u2014 Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/telangana-manifesto",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/led-rath-yatra/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "LED Rath Yatra \u2014 Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/led-rath-yatra",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/led-rath-yatra/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "LED Rath Yatra \u2014 Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/led-rath-yatra",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/samvidhan/",
+      "width": 375,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Samvidhan Gaurav Abhiyaan \u2014 Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/samvidhan",
+      "mainCount": 1,
+      "violations": []
+    },
+    {
+      "path": "/work/samvidhan/",
+      "width": 1440,
+      "overflow": false,
+      "h1": 1,
+      "overlays": 0,
+      "title": "Samvidhan Gaurav Abhiyaan \u2014 Case Study | Viswanathan G",
+      "canonical": "https://viswanathan-portfolio-iota.vercel.app/work/samvidhan",
+      "mainCount": 1,
+      "violations": []
+    }
+  ],
+  "interactiveChecks": {
+    "mobileAboutDeepLink": {
+      "aboutTop": 69.207,
+      "headerBottom": 57,
+      "passed": true
+    },
+    "carouselClipStudioSelection": true,
+    "capabilitiesAccordion": true,
+    "imageViewerOpenAndEscapeClose": true,
+    "emptyContactValidation": {
+      "invalidFields": 3,
+      "emailDraftOpened": false
+    },
+    "caseStudyNavigation": true,
+    "clipStudioSquareRatioControl": true
+  },
+  "runtimeErrors": "No site errors observed on final candidate; extension metadata errors excluded",
+  "dependencyAudit": {
+    "knownVulnerabilities": 0
+  },
+  "limitations": [
+    "PageSpeed Insights API returned HTTP 429; no new Lighthouse score available.",
+    "Google Search Console indexing and Rich Results eligibility not verified.",
+    "Physical Safari, Firefox and hardware WebGL rendering not tested.",
+    "Four Behance URLs returned 403 to HEAD checks; LinkedIn returned 405. These are inconclusive external checks, not confirmed broken links."
+  ]
+}

@@ -34,10 +34,10 @@ return <div className="pv-clip"><div className="pv-clip-window"><div className="
 const Work=()=>{
 const [orbitIndex,setOrbitIndex]=useState(0);
 const [orbitPlaying,setOrbitPlaying]=useState(true);
-const [orbitMobile,setOrbitMobile]=useState(()=>window.matchMedia("(max-width: 760px)").matches);
+const [orbitMobile,setOrbitMobile]=useState(false);
 const orbitHost=useRef<HTMLDivElement>(null);
 const [orbitInView,setOrbitInView]=useState(false);
-const [orbitPageVisible,setOrbitPageVisible]=useState(()=>!document.hidden);
+const [orbitPageVisible,setOrbitPageVisible]=useState(true);
 const [orbitFocused,setOrbitFocused]=useState(false);
 const orbitPointerMode=useRef(false);
 const orbitManuallyPaused=useRef(false);
@@ -74,6 +74,7 @@ useEffect(()=>{
 },[]);
 useEffect(()=>{
   const onVisibility=()=>setOrbitPageVisible(!document.hidden);
+  onVisibility();
   document.addEventListener("visibilitychange",onVisibility);
   return()=>document.removeEventListener("visibilitychange",onVisibility);
 },[]);
@@ -87,6 +88,7 @@ useEffect(()=>{
 useEffect(()=>{
   const query=window.matchMedia("(max-width: 760px)");
   const update=()=>setOrbitMobile(query.matches);
+  update();
   query.addEventListener("change",update);
   return()=>query.removeEventListener("change",update);
 },[]);

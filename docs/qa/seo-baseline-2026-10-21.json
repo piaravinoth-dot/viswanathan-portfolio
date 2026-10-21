@@ -1,0 +1,380 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3111,
+    "seconds": 4.48,
+    "xRobotsTag": null,
+    "title": [
+      "Viswanathan G \u2014 Senior Product &amp; Visual Designer"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/work/ai-design-studio",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/work/ai-design-studio",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3085,
+    "seconds": 4.67,
+    "xRobotsTag": null,
+    "title": [
+      "AI Design Studio \u2014 Product Case Study | Viswanathan G"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/work/ai-design-studio"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/work/content-studio",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/work/content-studio",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3115,
+    "seconds": 4.61,
+    "xRobotsTag": null,
+    "title": [
+      "Content Studio \u2014 Product Case Study | Viswanathan G"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/work/content-studio"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/work/social-media-intelligence",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/work/social-media-intelligence",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3124,
+    "seconds": 4.56,
+    "xRobotsTag": null,
+    "title": [
+      "Social Media Intelligence \u2014 Case Study | Viswanathan G"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/work/social-media-intelligence"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/work/content-tracker",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/work/content-tracker",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3074,
+    "seconds": 4.61,
+    "xRobotsTag": null,
+    "title": [
+      "Content Tracker \u2014 Product Case Study | Viswanathan G"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/work/content-tracker"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/work/splitmate",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/work/splitmate",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3124,
+    "seconds": 4.61,
+    "xRobotsTag": null,
+    "title": [
+      "SplitMate \u2014 Private Shared Expenses | Viswanathan G"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/work/splitmate"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/work/clip-studio",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/work/clip-studio",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3135,
+    "seconds": 7.07,
+    "xRobotsTag": null,
+    "title": [
+      "Clip Studio \u2014 The Download Desk | Viswanathan G"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/work/clip-studio"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/work/nation-building",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/work/nation-building",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3242,
+    "seconds": 6.99,
+    "xRobotsTag": null,
+    "title": [
+      "Nation Building \u2014 Case Study | Viswanathan G"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/work/nation-building"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/work/telangana-manifesto",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/work/telangana-manifesto",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3329,
+    "seconds": 6.99,
+    "xRobotsTag": null,
+    "title": [
+      "Telangana Manifesto \u2014 Case Study | Viswanathan G"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/work/telangana-manifesto"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/work/led-rath-yatra",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/work/led-rath-yatra",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3372,
+    "seconds": 6.89,
+    "xRobotsTag": null,
+    "title": [
+      "LED Rath Yatra \u2014 Case Study | Viswanathan G"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/work/led-rath-yatra"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/work/samvidhan",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/work/samvidhan",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3306,
+    "seconds": 6.99,
+    "xRobotsTag": null,
+    "title": [
+      "Samvidhan Gaurav Abhiyaan \u2014 Case Study | Viswanathan G"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/work/samvidhan"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/robots.txt",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/robots.txt",
+    "contentType": "text/plain; charset=utf-8",
+    "bytes": 119,
+    "seconds": 6.88,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/sitemap.xml",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/sitemap.xml",
+    "contentType": "application/xml",
+    "bytes": 1088,
+    "seconds": 4.47,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/favicon.svg",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/favicon.svg",
+    "contentType": "image/svg+xml",
+    "bytes": 313,
+    "seconds": 4.43,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/resume/Viswanathan_G_Resume.pdf",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/resume/Viswanathan_G_Resume.pdf",
+    "contentType": "application/pdf",
+    "bytes": 86833,
+    "seconds": 4.53,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/__seo-audit-missing-page__",
+    "status": 404,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/__seo-audit-missing-page__",
+    "contentType": "text/plain; charset=utf-8",
+    "bytes": 79,
+    "seconds": 4.42,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/work/content-studio/",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/work/content-studio/",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3115,
+    "seconds": 4.36,
+    "xRobotsTag": null,
+    "title": [
+      "Content Studio \u2014 Product Case Study | Viswanathan G"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/work/content-studio"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/case-study-pages/content-studio.html",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/case-study-pages/content-studio.html",
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 3115,
+    "seconds": 4.36,
+    "xRobotsTag": null,
+    "title": [
+      "Content Studio \u2014 Product Case Study | Viswanathan G"
+    ],
+    "canonical": [
+      "https://viswanathan-portfolio-iota.vercel.app/work/content-studio"
+    ],
+    "h1": 0,
+    "bodyText": 0,
+    "emptyRoot": true
+  },
+  {
+    "path": "/social/portfolio.png",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/social/portfolio.png",
+    "contentType": "image/png",
+    "bytes": 48348,
+    "seconds": 4.49,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/social/ai-design-studio.png",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/social/ai-design-studio.png",
+    "contentType": "image/png",
+    "bytes": 33714,
+    "seconds": 4.53,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/social/content-studio.png",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/social/content-studio.png",
+    "contentType": "image/png",
+    "bytes": 30865,
+    "seconds": 4.51,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/social/social-media-intelligence.png",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/social/social-media-intelligence.png",
+    "contentType": "image/png",
+    "bytes": 35965,
+    "seconds": 4.49,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/social/content-tracker.png",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/social/content-tracker.png",
+    "contentType": "image/png",
+    "bytes": 30463,
+    "seconds": 4.48,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/social/splitmate.png",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/social/splitmate.png",
+    "contentType": "image/png",
+    "bytes": 35383,
+    "seconds": 4.42,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/social/clip-studio.png",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/social/clip-studio.png",
+    "contentType": "image/png",
+    "bytes": 38530,
+    "seconds": 5.02,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/social/nation-building.png",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/social/nation-building.png",
+    "contentType": "image/png",
+    "bytes": 245312,
+    "seconds": 5.13,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/social/telangana-manifesto.png",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/social/telangana-manifesto.png",
+    "contentType": "image/png",
+    "bytes": 255496,
+    "seconds": 5.14,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/social/led-rath-yatra.png",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/social/led-rath-yatra.png",
+    "contentType": "image/png",
+    "bytes": 352307,
+    "seconds": 5.2,
+    "xRobotsTag": null
+  },
+  {
+    "path": "/social/samvidhan.png",
+    "status": 200,
+    "url": "https://viswanathan-portfolio-iota.vercel.app/social/samvidhan.png",
+    "contentType": "image/png",
+    "bytes": 478163,
+    "seconds": 5.28,
+    "xRobotsTag": null
+  }
+]

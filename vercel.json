@@ -8,15 +8,7 @@
       "destination": "/case-study-pages/ai-design-studio.html"
     },
     {
-      "source": "/work/ai-design-studio/",
-      "destination": "/case-study-pages/ai-design-studio.html"
-    },
-    {
       "source": "/work/content-studio",
-      "destination": "/case-study-pages/content-studio.html"
-    },
-    {
-      "source": "/work/content-studio/",
       "destination": "/case-study-pages/content-studio.html"
     },
     {
@@ -24,15 +16,7 @@
       "destination": "/case-study-pages/social-media-intelligence.html"
     },
     {
-      "source": "/work/social-media-intelligence/",
-      "destination": "/case-study-pages/social-media-intelligence.html"
-    },
-    {
       "source": "/work/content-tracker",
-      "destination": "/case-study-pages/content-tracker.html"
-    },
-    {
-      "source": "/work/content-tracker/",
       "destination": "/case-study-pages/content-tracker.html"
     },
     {
@@ -40,15 +24,7 @@
       "destination": "/case-study-pages/splitmate.html"
     },
     {
-      "source": "/work/splitmate/",
-      "destination": "/case-study-pages/splitmate.html"
-    },
-    {
       "source": "/work/clip-studio",
-      "destination": "/case-study-pages/clip-studio.html"
-    },
-    {
-      "source": "/work/clip-studio/",
       "destination": "/case-study-pages/clip-studio.html"
     },
     {
@@ -56,15 +32,7 @@
       "destination": "/case-study-pages/nation-building.html"
     },
     {
-      "source": "/work/nation-building/",
-      "destination": "/case-study-pages/nation-building.html"
-    },
-    {
       "source": "/work/telangana-manifesto",
-      "destination": "/case-study-pages/telangana-manifesto.html"
-    },
-    {
-      "source": "/work/telangana-manifesto/",
       "destination": "/case-study-pages/telangana-manifesto.html"
     },
     {
@@ -72,15 +40,7 @@
       "destination": "/case-study-pages/led-rath-yatra.html"
     },
     {
-      "source": "/work/led-rath-yatra/",
-      "destination": "/case-study-pages/led-rath-yatra.html"
-    },
-    {
       "source": "/work/samvidhan",
-      "destination": "/case-study-pages/samvidhan.html"
-    },
-    {
-      "source": "/work/samvidhan/",
       "destination": "/case-study-pages/samvidhan.html"
     }
   ],
@@ -126,6 +86,64 @@
           "value": "public, max-age=3600"
         }
       ]
+    }
+  ],
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-pages/ai-design-studio.html",
+      "destination": "/work/ai-design-studio",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-pages/content-studio.html",
+      "destination": "/work/content-studio",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-pages/social-media-intelligence.html",
+      "destination": "/work/social-media-intelligence",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-pages/content-tracker.html",
+      "destination": "/work/content-tracker",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-pages/splitmate.html",
+      "destination": "/work/splitmate",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-pages/clip-studio.html",
+      "destination": "/work/clip-studio",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-pages/nation-building.html",
+      "destination": "/work/nation-building",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-pages/telangana-manifesto.html",
+      "destination": "/work/telangana-manifesto",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-pages/led-rath-yatra.html",
+      "destination": "/work/led-rath-yatra",
+      "permanent": true
+    },
+    {
+      "source": "/case-study-pages/samvidhan.html",
+      "destination": "/work/samvidhan",
+      "permanent": true
     }
   ]
 }

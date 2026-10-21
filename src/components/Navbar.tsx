@@ -81,10 +81,12 @@ const Navbar = () => {
     const frame = window.requestAnimationFrame(() => followHash(false));
     document.addEventListener("click", onAnchorClick);
     window.addEventListener("hashchange", onHashChange);
+    window.addEventListener("portfolio:layout-ready", onHashChange);
     return () => {
       window.cancelAnimationFrame(frame);
       document.removeEventListener("click", onAnchorClick);
       window.removeEventListener("hashchange", onHashChange);
+      window.removeEventListener("portfolio:layout-ready", onHashChange);
     };
   }, [isLoading]);
   return (

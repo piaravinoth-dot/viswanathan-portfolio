@@ -1,0 +1,112 @@
+[
+  {
+    "url": "https://ai-image-studio-amber-three.vercel.app/",
+    "status": 200,
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://github.com/piaravinoth-dot",
+    "status": 200,
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/44b5a9252833713.6a58f729ec818.jpg",
+    "status": 200,
+    "type": "image/webp"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/03-quartzites.webp",
+    "status": 200,
+    "type": "image/webp"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/04-onam-brunch.webp",
+    "status": 200,
+    "type": "image/webp"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/06-ganesh-chaturthi.webp",
+    "status": 200,
+    "type": "image/webp"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/10-happy-hours.webp",
+    "status": 200,
+    "type": "image/webp"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/14-concert-layout.webp",
+    "status": 200,
+    "type": "image/webp"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/freelance/15-concert-poster.webp",
+    "status": 200,
+    "type": "image/webp"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/main/assets/portfolio-visuals/ai-studio-workspace.svg",
+    "status": 200,
+    "type": "image/svg+xml"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/malhotra-3d-rebuild/assets/portfolio-visuals/ai-studio-background-removal.svg",
+    "status": 200,
+    "type": "image/svg+xml"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/malhotra-3d-rebuild/assets/portfolio-visuals/ai-studio-layers.svg",
+    "status": 200,
+    "type": "image/svg+xml"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/malhotra-3d-rebuild/assets/portfolio-visuals/ai-studio-transform.svg",
+    "status": 200,
+    "type": "image/svg+xml"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/piaravinoth-dot/viswanathan-portfolio/malhotra-3d-rebuild/assets/portfolio-visuals/ai-studio-typography.svg",
+    "status": 200,
+    "type": "image/svg+xml"
+  },
+  {
+    "url": "https://splitmate-v1-vg.floot.app",
+    "status": 200,
+    "type": "text/html"
+  },
+  {
+    "url": "https://telangana-content-studio.vimad.chatgpt.site",
+    "status": 200,
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://telangana-content-studio.vimad.chatgpt.site/",
+    "status": 200,
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://telangana-content-tracker.vimad.chatgpt.site",
+    "status": 200,
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "url": "https://www.behance.net/gallery/252830539/Nation-Building-Communication-Merchandise",
+    "status": 403
+  },
+  {
+    "url": "https://www.behance.net/gallery/252832103/LED-Rath-Yatra-Designs",
+    "status": 403
+  },
+  {
+    "url": "https://www.behance.net/gallery/252833713/Telangana-Manifesto",
+    "status": 403
+  },
+  {
+    "url": "https://www.behance.net/gallery/252835901/Samvidhan-Gaurav-Abhiyaan_Presentation",
+    "status": 403
+  },
+  {
+    "url": "https://www.linkedin.com/in/viswanathan-g-55a0176a/",
+    "status": 405
+  }
+]

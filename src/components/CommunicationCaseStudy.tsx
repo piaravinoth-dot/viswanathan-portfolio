@@ -2,8 +2,8 @@ import {useEffect} from 'react';
 import projects from '../data/communicationProjects.json';
 import './styles/CommunicationCases.css';
 
-export default function CommunicationCaseStudy(){
-  const slug=window.location.pathname.replace(/\/$/,'').split('/').pop();
+export default function CommunicationCaseStudy({projectSlug}: {projectSlug?:string}){
+  const slug=projectSlug ?? (typeof window==='undefined' ? '' : window.location.pathname.replace(/\/$/,'').split('/').pop());
   const project=projects.find(p=>p.slug===slug)!;
   const next=projects[(projects.indexOf(project)+1)%projects.length];
   useEffect(()=>{const prior=document.body.style.overflowY;document.body.style.overflowY='auto';return()=>{document.body.style.overflowY=prior}},[]);

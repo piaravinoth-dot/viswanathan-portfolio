@@ -15,11 +15,12 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useLoading} from "../context/LoadingProvider";
 
 const MainContainer=({children}:PropsWithChildren)=>{
-  const [isDesktopView,setIsDesktopView]=useState(window.innerWidth>1024);
+  const [isDesktopView,setIsDesktopView]=useState(false);
   const {isLoading}=useLoading();
   useEffect(()=>{
     const media=window.matchMedia("(min-width:1025px)");
     const change=()=>setIsDesktopView(media.matches);
+    change();
     media.addEventListener("change",change);
     return()=>media.removeEventListener("change",change);
   },[]);
