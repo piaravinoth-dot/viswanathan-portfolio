@@ -1,7 +1,7 @@
 import {useEffect,useRef,useState} from "react";
-import {MdArrowOutward,MdClose,MdArrowBack,MdArrowForward} from "react-icons/md";
+import {MdArrowOutward,MdClose,MdArrowBack,MdArrowForward,MdZoomIn,MdZoomOut} from "react-icons/md";
 import "./styles/Work.css";
-import {createPortal} from "react-dom";
+import "./styles/VisualEdit.css";
 import gsap from "gsap";
 import {smoother} from "./Navbar";
 
@@ -9,7 +9,6 @@ const artworks=[
 {title:"Concert Campaign",width:675,height:1200,type:"Event / Visual storytelling",image:"/portfolio-media/15-concert-poster-110e1d11e4d4.webp",shape:"large"},
 {title:"Natural Stone",width:900,height:900,type:"Brand / Commercial",image:"/portfolio-media/03-quartzites-3dddf161324c.webp",shape:"small"},
 {title:"Onam Brunch",width:848,height:1200,type:"Hospitality / Campaign",image:"/portfolio-media/04-onam-brunch-3f210a27df22.webp",shape:"small"},
-{title:"Telangana Manifesto",width:724,height:1024,type:"Editorial / Publication",image:"/portfolio-media/telangana-manifesto-51e2ef6f913f.webp",shape:"large"},
 {title:"Ganesh Chaturthi",width:900,height:1050,type:"Festive / Art direction",image:"/portfolio-media/06-ganesh-chaturthi-71566ff8f17f.webp",shape:"large"},
 {title:"Live Music",width:675,height:1200,type:"Entertainment / Poster",image:"/portfolio-media/14-concert-layout-338c7ed4999a.webp",shape:"small"},
 {title:"Happy Hours",width:848,height:1200,type:"Hospitality / Social creative",image:"/portfolio-media/10-happy-hours-3847686b15a0.webp",shape:"small"}
@@ -154,38 +153,29 @@ return <section className="work-section">
 };
 
 export const VisualArchive=()=>{
-const [openImage,setOpenImage]=useState<number|null>(null);
-const dialogRef=useRef<HTMLDivElement>(null);
-useEffect(()=>{
-  if(openImage===null)return;
-  const previousFocus=document.activeElement as HTMLElement|null;
-  const previousOverflow=document.body.style.overflowY;
-  const wasPaused=smoother?.paused();
-  document.body.style.overflowY="hidden";
-  smoother?.paused(true);
-  dialogRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
-  const fn=(e:KeyboardEvent)=>{
-    if(e.key==="Escape"){e.preventDefault();setOpenImage(null)}
-    if(e.key==="ArrowRight"){e.preventDefault();setOpenImage(v=>v===null?null:(v+1)%artworks.length)}
-    if(e.key==="ArrowLeft"){e.preventDefault();setOpenImage(v=>v===null?null:(v+artworks.length-1)%artworks.length)}
-    if(e.key==="Tab"){
-      const controls=dialogRef.current?.querySelectorAll<HTMLButtonElement>("button");
-      if(!controls?.length)return;
-      const first=controls[0],last=controls[controls.length-1];
-      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
-      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
-    }
-  };
-  window.addEventListener("keydown",fn);
-  return()=>{window.removeEventListener("keydown",fn);document.body.style.overflowY=previousOverflow;smoother?.paused(Boolean(wasPaused));previousFocus?.focus({preventScroll:true})};
-},[openImage!==null]);
-return <section className="work-section" id="visual-archive">
-<div className="work-container section-container">
-<div className="work-intro"><div><span className="work-eyebrow"><i/> 01 / SELECTED VISUAL WORK</span><h2>Work that<br/><em>speaks.</em></h2></div><div className="work-intro-right"><p>From the first idea to the final frame. A selection of commercial, campaign, editorial and visual storytelling projects.</p><span>SCROLL TO EXPLORE &nbsp; ↓</span></div></div>
-<div className="art-grid">{artworks.map((a,i)=><button type="button" className={`art-piece art-${a.shape}`} key={a.title} onClick={()=>setOpenImage(i)} aria-label={`View ${a.title} image`} data-cursor="disable"><div className="art-image"><img src={a.image} width={a.width} height={a.height} alt={a.title+" — original portfolio artwork"} loading="lazy" decoding="async"/><span className="art-open"><MdArrowOutward/></span></div><div className="art-caption"><span><b>{a.title}</b><small>{a.type}</small></span><span className="art-index">{String(i+1).padStart(2,"0")} / {String(artworks.length).padStart(2,"0")}</span></div></button>)}</div>
-<div className="work-gallery-end"><span>VISUAL DESIGN / ART DIRECTION / CREATIVE SYSTEMS</span><a className="political-jump" href="#political-space">Explore Political Space <MdArrowOutward aria-hidden="true"/></a></div>
-</div>
-{openImage!==null&&createPortal(<div ref={dialogRef} className="art-lightbox" role="dialog" aria-modal="true" aria-label="Portfolio image viewer" onClick={()=>setOpenImage(null)}><button type="button" className="art-lightbox-close" aria-label="Close image" onClick={()=>setOpenImage(null)}><MdClose/></button><button type="button" className="art-lightbox-prev" aria-label="Previous image" onClick={e=>{e.stopPropagation();setOpenImage((openImage+artworks.length-1)%artworks.length)}}><MdArrowBack/></button><figure onClick={e=>e.stopPropagation()}><img src={artworks[openImage].image} alt={artworks[openImage].title}/><figcaption>{artworks[openImage].title} <span>{artworks[openImage].type}</span></figcaption></figure><button type="button" className="art-lightbox-next" aria-label="Next image" onClick={e=>{e.stopPropagation();setOpenImage((openImage+1)%artworks.length)}}><MdArrowForward/></button></div>,document.body)}
-</section>;
+ const [selected,setSelected]=useState(0),[open,setOpen]=useState(false),[zoom,setZoom]=useState(false);
+ const dialog=useRef<HTMLDialogElement>(null),opener=useRef<HTMLElement|null>(null),stage=useRef<HTMLDivElement>(null),indexRef=useRef<HTMLDivElement>(null);
+ const artwork=artworks[selected];
+ const move=(step:number)=>{setSelected(i=>(i+step+artworks.length)%artworks.length);setZoom(false)};
+ const show=(button:HTMLElement)=>{opener.current=button;setZoom(false);setOpen(true)};
+ useEffect(()=>{const row=indexRef.current,item=row?.querySelector<HTMLElement>('[aria-pressed="true"]');if(row&&item&&window.matchMedia('(max-width:760px)').matches)row.scrollLeft=item.offsetLeft-row.offsetLeft-row.clientWidth/2+item.clientWidth/2},[selected]);
+ useEffect(()=>{stage.current?.scrollTo(0,0);if(zoom)stage.current?.focus({preventScroll:true})},[selected,zoom]);
+ useEffect(()=>{
+  if(!open)return;
+  const node=dialog.current,overflow=document.body.style.overflowY,paused=smoother?.paused();
+  document.body.style.overflowY="hidden";smoother?.paused(true);node?.showModal();
+  return()=>{node?.close();document.body.style.overflowY=overflow;smoother?.paused(Boolean(paused));opener.current?.focus({preventScroll:true})};
+ },[open]);
+ const keys=(e:React.KeyboardEvent)=>{if(zoom&&e.target===stage.current)return;if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();move(e.key==='ArrowRight'?1:-1)}};
+ return <section className="visual-edit" id="visual-archive" aria-labelledby="visual-edit-title"><div className="visual-edit-inner">
+ <div className="visual-edit-topline"><span>THE VISUAL EDIT</span><span>06 ORIGINAL ARTWORKS / VISWANATHAN G</span></div>
+ <div className="visual-edit-intro"><h2 id="visual-edit-title">Work that<br/><em>speaks.</em></h2><p>A selection of event, hospitality and commercial design. Different briefs, each with its own visual voice.<span>Pick a work from the index. Explore it in full.</span></p></div>
+ <div className="visual-edit-board" onKeyDown={keys}>
+ <div className="visual-edit-display"><button type="button" className="visual-edit-artboard" aria-label={`View ${artwork.title} artwork`} onClick={e=>show(e.currentTarget)} data-cursor="disable"><img key={artwork.image} src={artwork.image} width={artwork.width} height={artwork.height} loading="lazy" decoding="async" alt={`${artwork.title} — original portfolio artwork`}/></button>
+ <div className="visual-edit-caption"><div><span>{artwork.type}</span><h3>{artwork.title}</h3></div><div className="visual-edit-controls"><button type="button" aria-label="Previous visual artwork" onClick={()=>move(-1)}><MdArrowBack aria-hidden="true"/></button><span role="status">{String(selected+1).padStart(2,'0')} / 06</span><button type="button" aria-label="Next visual artwork" onClick={()=>move(1)}><MdArrowForward aria-hidden="true"/></button></div></div>
+ <button type="button" className="visual-edit-open" onClick={e=>show(e.currentTarget)}><MdZoomIn aria-hidden="true"/> View full artwork</button></div>
+ <div className="visual-edit-index" ref={indexRef} role="group" aria-label="Choose visual artwork">{artworks.map((a,i)=><button type="button" key={a.title} aria-pressed={selected===i} aria-label={`Select ${a.title}`} onClick={()=>{setSelected(i);setZoom(false)}}><span className="visual-edit-thumb"><img src={a.image} width={a.width} height={a.height} alt="" loading="lazy" decoding="async"/></span><span className="visual-edit-index-copy"><small>0{i+1}</small><strong>{a.title}</strong><span>{a.type}</span></span><MdArrowOutward aria-hidden="true"/></button>)}</div>
+ </div><div className="visual-edit-foot"><span>VISUAL DESIGN / ART DIRECTION</span><a href="#political-space">Explore Political Space <MdArrowOutward aria-hidden="true"/></a></div>
+ </div><dialog className="visual-edit-viewer" ref={dialog} aria-labelledby="visual-edit-viewer-title" onCancel={()=>setOpen(false)} onKeyDown={keys}>{open&&<><header><div><strong id="visual-edit-viewer-title">{artwork.title}</strong><span aria-live="polite">{artwork.type} · {selected+1} / 6</span></div><button type="button" aria-label="Close visual artwork" onClick={()=>setOpen(false)}><MdClose aria-hidden="true"/></button></header><div className={`visual-edit-viewer-stage${zoom?' is-zoomed':''}`} ref={stage} tabIndex={0} role="region" aria-label="Visual artwork detail — scroll when zoomed"><img src={artwork.image} width={artwork.width} height={artwork.height} alt={`${artwork.title} — original portfolio artwork`}/></div><footer><button type="button" aria-label="Previous image" onClick={()=>move(-1)}><MdArrowBack aria-hidden="true"/></button><button type="button" className="visual-edit-zoom" aria-pressed={zoom} onClick={()=>setZoom(v=>!v)}>{zoom?<MdZoomOut aria-hidden="true"/>:<MdZoomIn aria-hidden="true"/>}{zoom?'Fit artwork':'Zoom to detail'}</button><button type="button" aria-label="Next image" onClick={()=>move(1)}><MdArrowForward aria-hidden="true"/></button></footer></>}</dialog></section>;
 };
 export default Work;
