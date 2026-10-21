@@ -274,7 +274,16 @@
   "pageSpeed": {
     "mobile": 429,
     "desktop": 429,
-    "reason": "Google shared API daily quota exceeded"
+    "reason": "Google shared API daily quota exceeded",
+    "publicInterfaceBaseline": {
+      "mobile": 76,
+      "desktop": 99,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100,
+      "mobileCLS": 0.222,
+      "report": "https://pagespeed.web.dev/analysis/https-viswanathan-portfolio-iota-vercel-app/60imecrqjf?form_factor=mobile"
+    }
   },
   "productionDependencyVulnerabilities": 0
 }

@@ -16,4 +16,7 @@ The visitor journey is opening → selected projects → résumé → contact. T
 - Initial readable server-rendered content and navigation remain independent of optional 3D loading. No new JavaScript dependency or startup gate was added.
 
 ## Limits
-Google PageSpeed API returned HTTP 429 for both strategies: shared project daily query quota exceeded. No new Google performance score or Core Web Vitals pass is claimed. Physical iPhone/Safari, hardware WebGL speed and end-to-end sending from a visitor’s mail application remain unverified. The existing optional 3D chunk warning remains.
+Google PageSpeed API returned HTTP 429 for both strategies, but its public interface completed a lab report: mobile performance 76, desktop 99, with accessibility, best practices and SEO all 100. Mobile FCP 2.8s, LCP 3.1s, TBT 0ms and CLS 0.222. Google identified About as the shifting element. Report: https://pagespeed.web.dev/analysis/https-viswanathan-portfolio-iota-vercel-app/60imecrqjf?form_factor=mobile. No real-user Core Web Vitals pass is claimed. Physical iPhone/Safari, hardware WebGL speed and end-to-end sending from a visitor’s mail application remain unverified. The existing optional 3D chunk warning remains.
+
+## Layout stability follow-up
+A mobile WebGL capability check now resolves before first paint. Unsupported/software-rendered devices hide the reserved character row before it can shift About. Supported devices reuse that result and retain automatic scene startup. Case-study routes skip the early probe. QA-only layout-shift observers are not included in production. Final Google rerun follows publication.

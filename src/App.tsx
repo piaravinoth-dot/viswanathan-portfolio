@@ -45,7 +45,8 @@ const App = ({initialRoute}: {initialRoute?:string}) => {
         // Give the visible hero a short head start, not multiple seconds.
         timer=window.setTimeout(()=>{
           if(cancelled)return;
-          if(!canUseHardwareWebGL()){
+          const capability=document.documentElement.dataset.character3d;
+          if(capability==="unsupported"||(capability!=="supported"&&!canUseHardwareWebGL())){
             document.documentElement.dataset.character3d="unsupported";
             // The unused mobile scene row collapses. Realign deep links after layout settles.
             layoutFrame=window.requestAnimationFrame(()=>window.dispatchEvent(new Event("portfolio:layout-ready")));
