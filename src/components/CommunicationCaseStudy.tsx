@@ -1,3 +1,4 @@
+import {CaseContact} from "./CaseBrief";
 import {useCaseMotion} from "./useCaseMotion";
 import {useEffect} from 'react';
 import projects from '../data/communicationProjects.json';
@@ -19,6 +20,7 @@ export default function CommunicationCaseStudy({projectSlug}: {projectSlug?:stri
       <section className="comm-decisions" aria-labelledby="comm-decisions-title"><span className="comm-kicker">THE APPROACH</span><h2 id="comm-decisions-title">Design decisions.</h2><div>{project.decisions.map((decision,i)=><article key={decision.title}><span className="comm-kicker">0{i+1}</span><h3>{decision.title}</h3><p>{decision.text}</p></article>)}</div></section>
       <section className="comm-story" aria-label="Selected artwork and applications">{project.story.map((image,i)=><figure className={'comm-figure comm-figure-'+i} key={image.src}><img src={image.src} srcSet={`${image.src.replace('.webp','-800.webp')} 800w, ${image.src} ${image.width}w`} sizes="(max-width: 700px) 100vw, (max-width: 1300px) 92vw, 1200px" width={image.width} height={image.height} alt={image.caption} loading="lazy" decoding="async"/><figcaption><span>0{i+1}</span><div>{image.caption}<a className="comm-artwork-link" href={image.src} target="_blank" rel="noopener noreferrer">Open full-resolution artwork <span aria-hidden="true">↗</span><span className="comm-sr"> (opens in a new tab)</span></a></div></figcaption></figure>)}</section>
       <section className="comm-links"><span className="comm-kicker">MORE OF THE PROJECT</span><h2>The complete collection.</h2><p>Explore the full project and original artwork on Behance.</p><a href={project.behance} target="_blank" rel="noopener noreferrer">View on Behance <span aria-hidden="true">↗</span><span className="comm-sr"> (opens in a new tab)</span></a></section>
+      <CaseContact/>
       <a className="comm-next" href={'/work/'+next.slug}><span className="comm-kicker">NEXT CASE STUDY</span><strong>{next.title}</strong><span aria-hidden="true">↗</span></a>
     </main><footer className="comm-footer"><a href="/#political-case-studies">Back to Political Space</a><span>© 2026 Viswanathan G</span></footer>
   </div>;

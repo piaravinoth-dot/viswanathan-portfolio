@@ -6,6 +6,8 @@ const contactEmail="piaravinoth@gmail.com";
 
 const Contact=()=>{
   const [notice,setNotice]=useState("");
+  const [copyState,setCopyState]=useState("");
+  const copyEmail=async()=>{try{await navigator.clipboard.writeText(contactEmail);setCopyState("Email address copied.")}catch{setCopyState("Please select and copy piaravinoth@gmail.com.")}};
   const [error,setError]=useState("");
 
   const handleSubmit=(event:FormEvent<HTMLFormElement>)=>{
@@ -64,8 +66,9 @@ const Contact=()=>{
         </div>
         <section className="contact-details" aria-label="Other ways to connect">
           <span className="contact-details-kicker">DIRECT CONTACT</span>
-          <h3>Prefer to reach out directly?</h3>
+          <h3>A role or project to discuss?</h3>
           <a className="contact-email-link" href={`mailto:${contactEmail}`}>{contactEmail} <MdArrowOutward aria-hidden="true"/></a>
+          <button className="contact-copy-email" type="button" onClick={copyEmail}>Copy email address</button><p className="contact-copy-status" role="status">{copyState}</p>
           <p>Based in India. Available for remote and international opportunities.</p>
           <div className="contact-resource-links">
             <a href="/resume/Viswanathan_G_Resume.pdf" download>Download résumé <span>PDF ↓</span></a>

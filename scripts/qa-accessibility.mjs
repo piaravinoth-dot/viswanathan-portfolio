@@ -2,7 +2,7 @@ import {chromium} from 'playwright';
 import fs from 'node:fs';
 const base=process.env.QA_URL||'http://127.0.0.1:4173';
 const browser=await chromium.launch({headless:true});
-const cases=['ai-design-studio','content-studio','social-media-intelligence','content-tracker','splitmate','clip-studio'];
+const cases=['ai-design-studio','content-studio','social-media-intelligence','content-tracker','splitmate','clip-studio','nation-building','telangana-manifesto','led-rath-yatra','samvidhan'];
 const tests=[
   {name:'mobile homepage 375px',width:375,path:'/'},
   {name:'desktop homepage 1440px',width:1440,path:'/'},

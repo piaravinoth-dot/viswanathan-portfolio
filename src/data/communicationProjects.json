@@ -69,7 +69,14 @@
         "title": "Shown in context",
         "text": "The presentation pairs artwork with applications so the relationship between the graphic and the object is easy to see."
       }
-    ]
+    ],
+    "caseBrief": {
+      "challenge": "Connect digital communication and everyday merchandise through one recognisable visual identity.",
+      "contribution": "Visual communication and merchandise adaptation: carry the name, typographic hierarchy and graphic language across screen and physical formats.",
+      "constraints": "Tall posters, a fabric tote, circular buttons and a narrow key fob need different compositions while remaining recognisably related.",
+      "deliverable": "A connected family of digital artwork and merchandise applications, shown in the original project images below.",
+      "evidence": "The artwork documents the visual system and its applications. The case study focuses on delivered design rather than campaign-reach claims."
+    }
   },
   {
     "slug": "telangana-manifesto",
@@ -220,7 +227,14 @@
         "title": "Hierarchy across scripts",
         "text": "Language variants retain the structure and emphasis of the composition while accommodating different scripts."
       }
-    ]
+    ],
+    "caseBrief": {
+      "challenge": "Make one communication system work across the side, front and rear of a vehicle with a fixed LED screen opening.",
+      "contribution": "Vehicle graphic composition, surface adaptation and multilingual layout, balancing typography, imagery and message areas around the screen.",
+      "constraints": "Different surface proportions, a fixed screen aperture and scripts with different shapes and text lengths.",
+      "deliverable": "A set of vehicle elevations and language treatments, with consistent hierarchy across views.",
+      "evidence": "The original layouts demonstrate surface adaptation and visual continuity. They are design evidence, not a claim about field deployment or audience reach."
+    }
   },
   {
     "slug": "samvidhan",
@@ -292,6 +306,13 @@
         "title": "Contrast as a chapter cue",
         "text": "Light and dark backgrounds, colour changes and image-led pauses distinguish sections without losing continuity."
       }
-    ]
+    ],
+    "caseBrief": {
+      "challenge": "Give a long presentation a readable sequence, with clear chapter changes and a consistent relationship between portraits, quotations and supporting text.",
+      "contribution": "Presentation layout and narrative sequencing: contents structure, section openers, slide hierarchy and changes in visual rhythm.",
+      "constraints": "Dense passages and prominent quotations need different pacing without breaking the continuity of the deck.",
+      "deliverable": "A presentation system with contents, chapter openers and text-and-image slide compositions, illustrated by the original selected slides.",
+      "evidence": "The selected slides show the delivered composition and narrative structure. Audience engagement is not presented as a measured result."
+    }
   }
 ]

@@ -32,7 +32,7 @@ const Scene=()=>{
     const box=host.getBoundingClientRect();
     let renderer:THREE.WebGLRenderer;
     try {renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});}
-    catch(error){console.warn("3D rendering unavailable; continuing with portfolio content.",error);host.style.pointerEvents="none";host.classList.add("character-unavailable");setLoading(100);return;}
+    catch(error){console.warn("3D rendering unavailable; continuing with portfolio content.",error);host.style.pointerEvents="none";host.classList.add("character-unavailable");document.documentElement.dataset.character3d="unsupported";window.dispatchEvent(new Event("portfolio:layout-ready"));setLoading(100);return;}
     renderer.setSize(box.width,box.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio,window.matchMedia("(max-width: 1024px)").matches?1.2:1.5));
     renderer.toneMapping=THREE.ACESFilmicToneMapping;
@@ -93,7 +93,7 @@ const Scene=()=>{
       progress.clear();
       light.turnOnLights();
       animations?.startIntro();
-    }).catch(error=>{if(!disposed){console.warn("3D model unavailable",error);host.style.pointerEvents="none";host.classList.add("character-unavailable");progress.clear();}});
+    }).catch(error=>{if(!disposed){console.warn("3D model unavailable",error);host.style.pointerEvents="none";host.classList.add("character-unavailable");document.documentElement.dataset.character3d="unsupported";onScreen=false;window.dispatchEvent(new Event("portfolio:layout-ready"));progress.clear();}});
     const animate=(now:number)=>{
       if(disposed)return;
       frame=requestAnimationFrame(animate);

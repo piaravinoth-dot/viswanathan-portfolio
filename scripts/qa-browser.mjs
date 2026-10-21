@@ -266,15 +266,26 @@ for (const [name,engine] of browsers) {
     for(const width of name==='chromium'?widths:[375,1440])await testViewport(browser,name,width);
     if(name==='chromium'){
       const page=await browser.newPage({viewport:{width:1280,height:800}});
-      for(const slug of slugs){
+      for(const slug of [...slugs,'nation-building','telangana-manifesto','led-rath-yatra','samvidhan']){
         try {
           const res=await page.goto(`${base}/work/${slug}`,{waitUntil:'domcontentloaded',timeout:45000});
           const heading=await page.locator('h1,h2').first().textContent({timeout:15000});
           log(name,1280,`case study ${slug}`,res?.status()===200&&Boolean(heading),`status=${res?.status()} title=${heading?.trim().slice(0,75)}`);
+          await page.locator('.case-contact').waitFor();
+          log(name,1280,`${slug} leads to a hiring conversation`,await page.locator('.case-contact a[href="/#contact"]').count()===1);
+          log(name,1280,`${slug} explains contribution and decisions`,await page.locator(slugs.includes(slug)?'.case-brief dl>div':'.comm-evidence dl>div').count()===4);
         }catch(e){log(name,1280,`case study ${slug}`,false,e.message);}
       }
       await page.close();
       for (const width of [375,1440]) await testContact(browser,width);
+      const reducedPage=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
+      try{
+        await reducedPage.goto(base,{waitUntil:'domcontentloaded'});
+        await reducedPage.locator('.landing-fallback').waitFor({state:'visible'});
+        const layout=await reducedPage.evaluate(()=>{const a=document.querySelector('.landing-intro').getBoundingClientRect(),b=document.querySelector('.landing-fallback').getBoundingClientRect();return {separate:a.right+20<=b.left,fits:a.top>=65&&b.top>=65&&a.bottom<=innerHeight&&b.bottom<=innerHeight}});
+        log(name,1440,'reduced-motion opening has a complete non-overlapping composition',layout.separate&&layout.fits,JSON.stringify(layout));
+        log(name,1440,'reduced-motion opening avoids loading a 3D canvas',await reducedPage.locator('.character-model canvas').count()===0);
+      }finally{await reducedPage.close()}
     }
   }finally{await browser.close();}
 }

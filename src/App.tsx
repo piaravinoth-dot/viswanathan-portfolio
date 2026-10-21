@@ -37,7 +37,11 @@ const App = ({initialRoute}: {initialRoute?:string}) => {
   const [threeDReady,setThreeDReady]=useState(false);
   const route = initialRoute ?? (typeof window === "undefined" ? "/" : window.location.pathname.replace(/\/$/, "") || "/");
   useEffect(()=>{
-    if(route!=="/" || window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+    if(route!=="/")return;
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+      document.documentElement.dataset.character3d="unsupported";
+      return;
+    }
     let cancelled=false;
     let paintFrame=0,loadFrame=0,layoutFrame=0,timer=0;
     paintFrame=window.requestAnimationFrame(()=>{
