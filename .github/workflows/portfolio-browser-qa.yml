@@ -1,7 +1,7 @@
 name: Portfolio Browser QA
 on:
   push:
-    branches: [malhotra-3d-rebuild]
+    branches: [viswanathan-g]
     paths:
       - 'src/**'
       - 'scripts/qa-browser.mjs'

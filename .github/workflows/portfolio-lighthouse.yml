@@ -1,7 +1,7 @@
 name: Portfolio Lighthouse QA
 on:
   push:
-    branches: [malhotra-3d-rebuild]
+    branches: [viswanathan-g]
     paths:
       - '.github/workflows/portfolio-lighthouse.yml'
       - 'src/**'

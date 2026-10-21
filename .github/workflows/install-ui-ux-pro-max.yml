@@ -3,7 +3,7 @@ name: Install UI UX Pro Max Skill
 on:
   push:
     branches:
-      - malhotra-3d-rebuild
+      - viswanathan-g
     paths:
       - .github/workflows/install-ui-ux-pro-max.yml
   workflow_dispatch:
@@ -55,5 +55,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Install UI UX Pro Max agent skill v2.15.0 [skip ci]"
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git push origin HEAD:malhotra-3d-rebuild
-          echo "Installed skill was committed to malhotra-3d-rebuild."
+          git push origin HEAD:viswanathan-g
+          echo "Installed skill was committed to viswanathan-g."
