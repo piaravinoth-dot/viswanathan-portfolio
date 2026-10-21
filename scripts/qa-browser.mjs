@@ -53,6 +53,7 @@ async function testViewport(browser, name, width) {
     const thumbnailBounds=await page.locator('.visual-edit-index>button').evaluateAll(async buttons=>{
       return Promise.all(buttons.map(async button=>{
         const image=button.querySelector('.visual-edit-thumb img');
+        image.loading='eager';
         await image.decode();
         const box=button.querySelector('.visual-edit-thumb').getBoundingClientRect();
         const rect=image.getBoundingClientRect();
