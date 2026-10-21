@@ -1,13 +1,15 @@
+import {useCaseMotion} from "./useCaseMotion";
 import {useEffect} from 'react';
 import projects from '../data/communicationProjects.json';
 import './styles/CommunicationCases.css';
 
 export default function CommunicationCaseStudy({projectSlug}: {projectSlug?:string}){
+  const motionRef=useCaseMotion<HTMLDivElement>();
   const slug=projectSlug ?? (typeof window==='undefined' ? '' : window.location.pathname.replace(/\/$/,'').split('/').pop());
   const project=projects.find(p=>p.slug===slug)!;
   const next=projects[(projects.indexOf(project)+1)%projects.length];
   useEffect(()=>{const prior=document.body.style.overflowY;document.body.style.overflowY='auto';return()=>{document.body.style.overflowY=prior}},[]);
-  return <div className={'communication-case comm-'+project.slug}>
+  return <div ref={motionRef} className={'communication-case comm-'+project.slug}>
     <a className="comm-skip" href="#case-content">Skip to case study</a>
     <header className="comm-nav"><a href="/" aria-label="VG — Viswanathan G home">VG<span aria-hidden="true">®</span></a><nav aria-label="Case study navigation"><a href="/#work">All work <span aria-hidden="true">↗</span></a><a href="/#contact">Let’s talk <span aria-hidden="true">↗</span></a></nav></header>
     <main id="case-content">
