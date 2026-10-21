@@ -7,7 +7,7 @@ export default function OpeningShell() {
   return <div className="container-main">
     <nav className="header" aria-label="Portfolio navigation">
       <a href="/#" className="navbar-title" aria-label="VG — Viswanathan G home">VG</a>
-      <ul>{["work", "products", "about", "contact"].map(section =>
+      <ul>{["about", "work", "products", "contact"].map(section =>
         <li key={section}><a href={`#${section}`}>{section.toUpperCase()}</a></li>
       )}</ul>
     </nav>

@@ -35,10 +35,11 @@ async function testViewport(browser, name, width) {
       };
     });
     log(name,width,'six index buttons',metrics.indexCount===6,`count=${metrics.indexCount}`);
-    log(name,width,'six direct product overview links',await page.locator('.product-directory a').count()===6);
+    log(name,width,'no duplicate product directory',await page.locator('.product-directory').count()===0);
+    log(name,width,'six carousel cards',await page.locator('.orbit-card').count()===6);
     log(name,width,'one product section',await page.locator('#products').count()===1);
-    const sectionOrder=await page.evaluate(()=>['landingDiv','work','products','about'].map(id=>document.getElementById(id)?.getBoundingClientRect().top??-1));
-    log(name,width,'selected work and products precede About',sectionOrder.every((top,i)=>i===0||top>sectionOrder[i-1]),JSON.stringify(sectionOrder));
+    const sectionOrder=await page.evaluate(()=>['landingDiv','about','work','products'].map(id=>document.getElementById(id)?.getBoundingClientRect().top??-1));
+    log(name,width,'About follows opening before work and products',sectionOrder.every((top,i)=>i===0||top>sectionOrder[i-1]),JSON.stringify(sectionOrder));
     const tolerance=3;
     const within=metrics.indexRects.every(r=>r.width>0&&r.left>=-tolerance&&r.right<=metrics.vw+tolerance);
     log(name,width,'index buttons within viewport',within,JSON.stringify(metrics.indexRects.map(r=>[Math.round(r.left),Math.round(r.right)])));

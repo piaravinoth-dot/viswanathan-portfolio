@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-21",
+  "scope": "Remove repeated product directory and restore About after hero",
+  "build": "passed: TypeScript, Vite, 11 SEO pages",
+  "browser": "Chrome via CUA; responsive iframe",
+  "viewports": [
+    {
+      "width": 375,
+      "overflow": false,
+      "axeViolations": []
+    },
+    {
+      "width": 1440,
+      "overflow": false,
+      "axeViolations": []
+    }
+  ],
+  "mobileAssertions": {
+    "sectionOrder": [
+      "landingDiv",
+      "about",
+      "work",
+      "products"
+    ],
+    "productSections": 1,
+    "productDirectories": 0,
+    "carouselCards": 6,
+    "selector06": "Clip Studio",
+    "nextWrap": "AI Design Studio",
+    "aboutNavigation": "passed"
+  },
+  "limitations": [
+    "Physical iPhone Safari and hardware 3D rendering not tested"
+  ]
+}

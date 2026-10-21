@@ -95,6 +95,11 @@ const Navbar = () => {
         </a>
         <ul>
           <li>
+            <a data-href="#about" href="#about">
+              <HoverLinks text="ABOUT" />
+            </a>
+          </li>
+          <li>
             <a data-href="#work" href="#work">
               <HoverLinks text="WORK" />
             </a>
@@ -102,11 +107,6 @@ const Navbar = () => {
           <li>
             <a data-href="#products" href="#products">
               <HoverLinks text="PRODUCTS" />
-            </a>
-          </li>
-          <li>
-            <a data-href="#about" href="#about">
-              <HoverLinks text="ABOUT" />
             </a>
           </li>
           <li>

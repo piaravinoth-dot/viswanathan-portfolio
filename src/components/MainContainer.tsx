@@ -49,6 +49,6 @@ const MainContainer=({children}:PropsWithChildren)=>{
     window.addEventListener("resize",resize);
     return()=>{disposed=true;window.clearTimeout(timer);window.removeEventListener("resize",resize);stopCareer?.();setSplitText(true);};
   },[isLoading]);
-  return <div className="container-main"><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&children}</Landing><SelectedCases/><Work/><About/><WhatIDo/><Career/><VisualArchive/><Contact/></div></div></div></div>;
+  return <div className="container-main"><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&children}</Landing><About/><SelectedCases/><Work/><WhatIDo/><Career/><VisualArchive/><Contact/></div></div></div></div>;
 };
 export default MainContainer;
