@@ -39,16 +39,22 @@ try{
     await space.locator(".ps-featured-heading").innerText(),
     await space.locator(".ps-gate-copy").innerText(),
     await space.locator(".ps-gate-folio").innerText(),
-    await space.locator(".political-view-context").innerText()
+    (await space.locator(".political-view-context").count())?await space.locator(".political-view-context").innerText():""
   ].join(" ");
   assert.doesNotMatch(labels,/\b(?:26|04|03)\b|(?:projects|works|artworks)\s*[:/–-]?\s*\d+/i);
   assert.equal(await space.locator(".ps-index-number,.ps-preview-folio,.ps-featured-count").count(),0);
+ });
+ await verify("No political artwork gallery is open before visitor chooses a collection",async()=>{
+  assert.equal(await space.locator(".ps-gate-art[aria-pressed=true]").count(),0);
+  assert.equal(await space.locator(".political-view-switch,.political-exhibition,.political-index-grid").count(),0);
  });
  await verify("Only one artwork-collection selector is presented",async()=>{
   assert.equal(await space.locator(".ps-gate-artworks").count(),1);
   assert.equal(await space.locator(".ps-gate-art").count(),3);
   assert.equal(await space.locator(".political-collections").count(),0);
-  assert.equal(await space.locator("#political-artwork-gallery").count(),1);
+  assert.equal(await space.locator("#political-artwork-gallery").count(),0);
+  assert.equal(await space.locator(".political-exhibition,.political-index-grid,.political-filmstrip").count(),0);
+  assert.equal(await space.locator(".ps-gate-art[aria-pressed=true]").count(),0);
   assert.equal(await space.locator(".political-archive-heading").count(),0);
  });
  await verify("Artwork archive has three original, linked cover previews",async()=>{
@@ -59,6 +65,7 @@ try{
   if(previews.some(img=>!img.loaded))await space.locator(".ps-gate-art img").first().waitFor({state:"visible"});
   assert(previews.every(img=>img.src.includes("political-")));
   await space.locator(".ps-gate-art-creative").click();
+  assert.equal(await space.locator("#political-artwork-gallery").count(),1);
   assert.equal(await space.locator(".ps-gate-art[aria-pressed=true]").innerText().then(x=>x.includes("Creative Posters")),true);
  });
  await verify("26 original works in source manifest",async()=>{
@@ -104,10 +111,12 @@ try{
   assert.equal(await section.locator(".ps-index-row").count(),4);
   assert.equal(await section.locator(".ps-gate-art").count(),3);
   assert.equal(await section.locator(".ps-featured-preview").isVisible(),false);
+  assert.equal(await section.locator(".political-exhibition,.political-index-grid,.political-filmstrip").count(),0);
   assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+2),true);
  });
  await verify("Mobile grid stays within viewport and keeps work intact",async()=>{
   const panel=mobile.locator("#political-space");
+  await panel.locator(".ps-gate-art-budget").click();
   await panel.getByRole("button",{name:"All works grid"}).click();
   assert.equal(await panel.locator(".political-index-card").count(),7);
   assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+2),true);
