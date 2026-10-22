@@ -4,7 +4,7 @@
     "challenge": "Move beyond a generated image to a composition a designer can revise and prepare for use.",
     "decision": "Keep the canvas central and separate generation from layer and element controls, so refinement stays in the same workspace.",
     "delivery": "A web design workspace combining brief input, formats, layers, elements and export controls.",
-    "status": "Independent product \u00b7 2026",
+    "status": "Independent product · 2026",
     "evidence": "The live studio is linked below. Interface reconstructions and feature illustrations are identified throughout the story."
   },
   "content-studio": {
@@ -12,7 +12,7 @@
     "challenge": "Bring regional news and video sources into a workspace that preserves the context behind each report.",
     "decision": "Keep region, date and source selection visible, with news and video monitoring organised around distinct editorial tasks.",
     "delivery": "A news and video workspace with regional navigation, search, filtering and original-source access.",
-    "status": "Web workspace \u00b7 2026",
+    "status": "Web workspace · 2026",
     "evidence": "Actual News and Videos captures from 21 October 2026 appear below, alongside labelled interface reconstructions."
   },
   "social-media-intelligence": {
@@ -20,15 +20,15 @@
     "challenge": "Make platform, account and reporting context understandable before asking people to interpret performance.",
     "decision": "Keep filters explicit and distinguish checked account identities and available data from missing or unconnected metrics.",
     "delivery": "An analytics workspace organised around account context, comparison, reporting periods and data availability.",
-    "status": "Analytics product \u00b7 2026",
+    "status": "Analytics product · 2026",
     "evidence": "The linked workspace and illustrated interface studies show the workflow. Sample visuals do not represent measured campaign results."
   },
   "content-tracker": {
     "role": "Product design, content operations and cross-platform workflow design.",
     "challenge": "Connect a submitted creative to its published links across Facebook, Instagram and X.",
-    "decision": "Treat the creative as the shared record, while keeping each platform\u2019s link and verification state separate.",
+    "decision": "Treat the creative as the shared record, while keeping each platform’s link and verification state separate.",
     "delivery": "A content ledger with creative previews, platform records and a visible queue for saved, checking and unavailable links.",
-    "status": "Content operations product \u00b7 2026",
+    "status": "Content operations product · 2026",
     "evidence": "The product is linked below. Reconstructed screens use sample records to explain the workflow."
   },
   "splitmate": {
@@ -36,7 +36,7 @@
     "challenge": "Help two people understand shared expenses and balances without turning a simple agreement into a complex finance tool.",
     "decision": "Lead with who owes whom, explain the split, and keep settlement records distinct from money transfers.",
     "delivery": "A mobile-first expense ledger with split methods, a shared balance and privacy-aware joining.",
-    "status": "Independent product \u00b7 2026",
+    "status": "Independent product · 2026",
     "evidence": "Source-informed screen reconstructions and an interactive split example explain the decisions. People and balances are fictional."
   },
   "clip-studio": {
@@ -44,7 +44,7 @@
     "challenge": "Connect link input, output choices, job progress and short-clip editing in one understandable production workflow.",
     "decision": "Separate resolution from compatibility, and give queued, processing, completed and failed jobs distinct states.",
     "delivery": "A desktop-oriented media utility interface with output modes, job history and Quick Clip controls.",
-    "status": "Source-based implementation study \u00b7 2026",
-    "evidence": "This story documents the supplied implementation. Interactive examples demonstrate the interface; live extraction and device saving require separate validation."
+    "status": "Windows V10.5 release documented · V10.6 isolated QA · 2026",
+    "evidence": "The V10.5 package and release manifest were checked on 20 October 2026. A Windows 4K download was reported by the user. V10.6 acceptance on Windows remains unverified. On-page visuals are reconstructions."
   }
 }
