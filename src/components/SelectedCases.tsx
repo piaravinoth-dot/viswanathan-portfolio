@@ -21,7 +21,7 @@ export default function SelectedCases(){
       </div>
       <div className="ps-editorial-layout">
         <div className="ps-index-list" aria-label="Political project index">
-          {projects.map(p=><a className={`selected-case ps-index-row${active===i?' is-active':''}`} href={'/work/'+p.slug} key={p.slug}
+          {projects.map((p,i)=><a className={`selected-case ps-index-row${active===i?' is-active':''}`} href={'/work/'+p.slug} key={p.slug}
             onMouseEnter={()=>setActive(i)}
             onFocus={()=>setActive(i)}
             aria-label={`Explore case study: ${p.title}`}>
