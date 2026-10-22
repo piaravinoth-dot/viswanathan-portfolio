@@ -32,6 +32,18 @@ try{
   assert.equal(await space.locator(".ps-featured-stage").getAttribute("href"),"/work/led-rath-yatra");
   for(let i=0;i<4;i++)assert.match(await rows.nth(i).getAttribute("href"),/^\/work\//);
  });
+ await verify("Project and artwork totals are not displayed as creative claims",async()=>{
+  const labels=[
+    await space.locator(".political-topline").innerText(),
+    await space.locator(".political-chapters").innerText(),
+    await space.locator(".ps-featured-heading").innerText(),
+    await space.locator(".ps-gate-copy").innerText(),
+    await space.locator(".ps-gate-folio").innerText(),
+    await space.locator(".political-view-context").innerText()
+  ].join(" ");
+  assert.doesNotMatch(labels,/\\b(?:26|04|03)\\b|(?:projects|works|artworks)\\s*[:/–-]?\\s*\\d+/i);
+  assert.equal(await space.locator(".ps-index-number,.ps-preview-folio,.ps-featured-count").count(),0);
+ });
  await verify("Only one artwork-collection selector is presented",async()=>{
   assert.equal(await space.locator(".ps-gate-artworks").count(),1);
   assert.equal(await space.locator(".ps-gate-art").count(),3);
@@ -42,7 +54,7 @@ try{
  await verify("Artwork archive has three original, linked cover previews",async()=>{
   assert.equal(await space.locator(".ps-gate-art").count(),3);
   assert.equal(await space.locator(".ps-gate-art img").count(),3);
-  assert.match((await space.locator(".ps-gate-figure").innerText()).replace(/\s+/g,""),/26ORIGINALARTWORKS/);
+  assert.match((await space.locator(".ps-gate-figure").innerText()).replace(/\s+/g,""),/WORKWITHPURPOSE/);
   const previews=await space.locator(".ps-gate-art img").evaluateAll(elements=>elements.map(img=>({src:img.getAttribute("src"),loaded:img.complete&&img.naturalWidth>0})));
   if(previews.some(img=>!img.loaded))await space.locator(".ps-gate-art img").first().waitFor({state:"visible"});
   assert(previews.every(img=>img.src.includes("political-")));
