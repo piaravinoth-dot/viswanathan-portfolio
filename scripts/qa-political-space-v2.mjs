@@ -35,7 +35,7 @@ try{
  await verify("Artwork archive has three original, linked cover previews",async()=>{
   assert.equal(await space.locator(".ps-gate-art").count(),3);
   assert.equal(await space.locator(".ps-gate-art img").count(),3);
-  assert.match((await space.locator(".ps-gate-figure").innerText()).replace(/\\s+/g,""),/26ORIGINALARTWORKS/);
+  assert.match((await space.locator(".ps-gate-figure").innerText()).replace(/\s+/g,""),/26ORIGINALARTWORKS/);
   const previews=await space.locator(".ps-gate-art img").evaluateAll(elements=>elements.map(img=>({src:img.getAttribute("src"),loaded:img.complete&&img.naturalWidth>0})));
   if(previews.some(img=>!img.loaded))await space.locator(".ps-gate-art img").first().waitFor({state:"visible"});
   assert(previews.every(img=>img.src.includes("political-")));
@@ -48,6 +48,7 @@ try{
   assert.deepEqual(["budget","content","creative"].map(c=>data.filter(p=>p.category===c).length),[7,10,9]);
  });
  await verify("Grid reveals all seven budget designs",async()=>{
+  await space.locator(".political-collections button").first().click();
   await space.getByRole("button",{name:"All works grid"}).click();
   assert.equal(await space.locator(".political-index-card").count(),7);
   assert.equal(await space.locator(".political-filmstrip").count(),0);
