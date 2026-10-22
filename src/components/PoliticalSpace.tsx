@@ -11,12 +11,12 @@ const collections=[
  {id:"creative",label:"Creative Posters",discipline:"CONCEPT & ART DIRECTION",title:"Ideas that\nhold attention.",description:"Concept-driven posters exploring how a strong visual idea can give political communication an unmistakable presence."}
 ];
 export default function PoliticalSpace(){
- const [category,setCategory]=useState("budget"),[index,setIndex]=useState(0),[open,setOpen]=useState(false),[zoom,setZoom]=useState(false);
+ const [category,setCategory]=useState<string|null>(null),[index,setIndex]=useState(0),[open,setOpen]=useState(false),[zoom,setZoom]=useState(false);
  const [displayMode,setDisplayMode]=useState<"exhibition"|"index">("exhibition");
  const [copyNotice,setCopyNotice]=useState("");
  const swipeStart=useRef<{x:number;y:number}|null>(null);
  const dialog=useRef<HTMLDialogElement>(null),opener=useRef<HTMLElement|null>(null),strip=useRef<HTMLDivElement>(null),stage=useRef<HTMLDivElement>(null);
- const collection=collections.find(c=>c.id===category)!,artworks=pieces.filter(p=>p.category===category),artwork=artworks[index];
+ const collection=collections.find(c=>c.id===category)??collections[0],artworks=pieces.filter(p=>p.category===category),artwork=artworks[index];
  const move=(step:number)=>{setIndex(i=>(i+step+artworks.length)%artworks.length);setZoom(false);setCopyNotice("")};
  const openArtwork=(event:React.MouseEvent<HTMLElement>,itemIndex:number)=>{opener.current=event.currentTarget;setIndex(itemIndex);setZoom(false);setCopyNotice("");setOpen(true)};
  const copyArtworkLink=async()=>{
@@ -63,6 +63,7 @@ export default function PoliticalSpace(){
   </div>
   <div className="ps-gate-folio"><span>VISWANATHAN G / ORIGINAL POLITICAL COMMUNICATION</span><span>EXPLORE THE WORK</span></div>
  </section>
+ {category!==null&&<>
  <div id="political-artwork-gallery" className="political-view-switch" role="group" aria-label="Artwork browsing mode">
   <div className="political-view-context"><span>THE SELECTED COLLECTION</span><strong>{collection.label}</strong></div>
   <div className="political-view-options"><button type="button" aria-pressed={displayMode==="exhibition"} onClick={()=>setDisplayMode("exhibition")}>Exhibition view</button><button type="button" aria-pressed={displayMode==="index"} onClick={()=>setDisplayMode("index")}>All works grid</button></div>
@@ -82,5 +83,6 @@ export default function PoliticalSpace(){
  </button>)}
  </div>}
  <div className="political-foot"><span>ORIGINAL WORK / FULL-RESOLUTION VIEWER</span><p>Original project artwork. Dates, figures and messages belong to the campaigns and publications shown.</p></div>
+ </>}
  </div><dialog className="political-viewer" ref={dialog} aria-labelledby="political-viewer-title" onCancel={()=>setOpen(false)} onKeyDown={keys}>{open&&<><header><div><strong id="political-viewer-title">{collection.label}</strong><span aria-live="polite">{artwork.caption}</span></div><button type="button" aria-label="Close political artwork" onClick={()=>setOpen(false)}><MdClose aria-hidden="true"/></button></header><div className={`political-viewer-stage${zoom?" is-zoomed":""}`} ref={stage} tabIndex={0} role="region" aria-label="Artwork detail — scroll to explore when zoomed" onTouchStart={e=>{if(zoom)return;const t=e.touches[0];swipeStart.current={x:t.clientX,y:t.clientY}}} onTouchEnd={e=>{const start=swipeStart.current;swipeStart.current=null;if(!start||zoom)return;const t=e.changedTouches[0],dx=t.clientX-start.x,dy=t.clientY-start.y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.3)move(dx<0?1:-1)}}><img src={artwork.image} width={artwork.width} height={artwork.height} alt={artwork.alt}/></div><footer><button type="button" aria-label="Previous political artwork" onClick={()=>move(-1)}><MdArrowBack aria-hidden="true"/></button><button type="button" className="political-zoom" aria-pressed={zoom} onClick={()=>setZoom(v=>!v)}>{zoom?<MdZoomOut aria-hidden="true"/>:<MdZoomIn aria-hidden="true"/>}{zoom?"Fit artwork":"Zoom to detail"}</button><button type="button" className="political-copy-link" onClick={copyArtworkLink} aria-label={"Copy link to "+artwork.title}>Copy link <MdArrowOutward aria-hidden="true"/></button><button type="button" aria-label="Next political artwork" onClick={()=>move(1)}><MdArrowForward aria-hidden="true"/></button><span className="political-copy-notice" role="status">{copyNotice}</span></footer></>}</dialog></section>;
 }
