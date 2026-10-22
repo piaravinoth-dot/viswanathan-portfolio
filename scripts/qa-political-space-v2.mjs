@@ -21,6 +21,27 @@ try{
  await verify("Four original featured case studies are preserved",async()=>{
   assert.equal(await space.locator(".selected-case").count(),4);
  });
+ await verify("Editorial index preview responds to hover and keyboard focus",async()=>{
+  assert.equal(await space.locator(".ps-index-row").count(),4);
+  assert.equal(await space.locator(".ps-featured-stage img").count(),1);
+  const rows=space.locator(".ps-index-row");
+  await rows.nth(1).hover();
+  assert.match(await space.locator(".ps-featured-stage img").getAttribute("src"),/telangana-manifesto/);
+  await rows.nth(2).focus();
+  assert.match(await space.locator(".ps-featured-stage img").getAttribute("src"),/led-rath-yatra/);
+  assert.equal(await space.locator(".ps-featured-stage").getAttribute("href"),"/work/led-rath-yatra");
+  for(let i=0;i<4;i++)assert.match(await rows.nth(i).getAttribute("href"),/^\/work\//);
+ });
+ await verify("Artwork archive has three original, linked cover previews",async()=>{
+  assert.equal(await space.locator(".ps-gate-art").count(),3);
+  assert.equal(await space.locator(".ps-gate-art img").count(),3);
+  assert.match((await space.locator(".ps-gate-figure").innerText()).replace(/\\s+/g,""),/26ORIGINALARTWORKS/);
+  const previews=await space.locator(".ps-gate-art img").evaluateAll(elements=>elements.map(img=>({src:img.getAttribute("src"),loaded:img.complete&&img.naturalWidth>0})));
+  if(previews.some(img=>!img.loaded))await space.locator(".ps-gate-art img").first().waitFor({state:"visible"});
+  assert(previews.every(img=>img.src.includes("political-")));
+  await space.locator(".ps-gate-art-creative").click();
+  assert.equal(await space.locator(".political-collections button[aria-pressed=true]").innerText().then(x=>x.includes("Creative Posters")),true);
+ });
  await verify("26 original works in source manifest",async()=>{
   const data=JSON.parse((await (await import("node:fs/promises")).readFile("src/data/politicalProjects.json","utf8")));
   assert.equal(data.length,26);assert.equal(new Set(data.map(p=>p.id)).size,26);
@@ -58,6 +79,13 @@ try{
  });
  const mobileContext=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true});
  const mobile=await openSite(mobileContext);
+ await verify("Mobile featured chapter and archive entry remain usable",async()=>{
+  const section=mobile.locator("#political-space");
+  assert.equal(await section.locator(".ps-index-row").count(),4);
+  assert.equal(await section.locator(".ps-gate-art").count(),3);
+  assert.equal(await section.locator(".ps-featured-preview").isVisible(),false);
+  assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+2),true);
+ });
  await verify("Mobile grid stays within viewport and keeps work intact",async()=>{
   const panel=mobile.locator("#political-space");
   await panel.getByRole("button",{name:"All works grid"}).click();
