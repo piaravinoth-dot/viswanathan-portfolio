@@ -13,6 +13,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: political-space-v2-preview
+  cancel-in-progress: true
+
 jobs:
   political-space-v2:
     runs-on: ubuntu-latest
