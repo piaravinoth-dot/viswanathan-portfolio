@@ -12,3 +12,14 @@
 
 /* Ensure the colored large heading meets WCAG 3:1 on the queue section. */
 .cl-queue .cl-section-head h2 i{color:#c43b25}
+
+/* Release evidence, using Clip Studio's existing typographic identity. */
+.cl-hero-status>div{min-width:0}
+.cl-hero-status a{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:10px;border-bottom:1px solid var(--cl-ink);font:700 11px/1.5 'IBM Plex Mono',monospace}
+.cl-hero-status a svg,.cl-evidence-followup a svg{font-size:17px;flex-shrink:0}
+.cl-evidence-followup{border-top:1px solid #7f8b6e;margin-top:50px;padding-top:26px;display:flex;align-items:start;justify-content:space-between;gap:30px}
+.cl-evidence-followup p{font-size:13px;line-height:1.7;color:#bfc9b3;max-width:660px}
+.cl-evidence-followup strong{color:var(--cl-paper)}
+.cl-evidence-followup a{display:inline-flex;align-items:center;gap:12px;min-height:44px;color:var(--cl-lime);font:700 11px/1.6 'IBM Plex Mono',monospace;border-bottom:1px solid var(--cl-lime);flex-shrink:0}
+.cl-hero-status a:focus-visible,.cl-evidence-followup a:focus-visible{outline:3px solid var(--cl-lime);outline-offset:5px}
+@media(max-width:760px){.cl-evidence-followup{display:block;margin-top:34px}.cl-evidence-followup a{margin-top:20px}}
