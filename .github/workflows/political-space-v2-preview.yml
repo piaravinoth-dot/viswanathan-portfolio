@@ -25,7 +25,7 @@ jobs:
       - name: Install project and browser test dependencies
         run: |
           npm install --no-audit
-          npm install --no-save --ignore-scripts playwright
+          npm install --no-save --ignore-scripts playwright axe-core
           npx playwright install --with-deps chromium
       - name: Build preview and check source
         run: npm run build
@@ -42,3 +42,7 @@ jobs:
         env:
           QA_URL: http://127.0.0.1:4173
         run: node scripts/qa-political-space-v2.mjs
+      - name: WCAG audit across portfolio routes and devices
+        env:
+          QA_URL: http://127.0.0.1:4173
+        run: node scripts/qa-accessibility.mjs
