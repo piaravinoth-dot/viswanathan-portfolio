@@ -2,7 +2,7 @@
   {
     "path": "/",
     "slug": "portfolio",
-    "title": "Viswanathan G \u2014 Senior Product & Visual Designer",
+    "title": "Viswanathan G — Senior Product & Visual Designer",
     "description": "Senior Product & Visual Designer, Creative Lead and Vibe Coder with 10+ years in visual communication. Explore digital products and selected design work.",
     "lines": [
       "Viswanathan G.",
@@ -17,13 +17,13 @@
   {
     "path": "/work/ai-design-studio",
     "slug": "ai-design-studio",
-    "title": "AI Design Studio \u2014 Product Case Study | Viswanathan G",
+    "title": "AI Design Studio — Product Case Study | Viswanathan G",
     "description": "A product case study exploring an editable AI-assisted creative workspace: generation, refinement, layer controls, review and export.",
     "lines": [
       "AI Design",
       "Studio."
     ],
-    "tag": "01 / 06 \u2014 CREATIVE PRODUCTION",
+    "tag": "01 / 06 — CREATIVE PRODUCTION",
     "background": "#efede7",
     "ink": "#171b24",
     "accent": "#bda5d5"
@@ -31,13 +31,13 @@
   {
     "path": "/work/content-studio",
     "slug": "content-studio",
-    "title": "Content Studio \u2014 Product Case Study | Viswanathan G",
+    "title": "Content Studio — Product Case Study | Viswanathan G",
     "description": "A product case study on news and content operations, bringing source discovery, filtering, AI-assisted writing and team review into one workspace.",
     "lines": [
       "Content",
       "Studio."
     ],
-    "tag": "02 / 06 \u2014 CONTENT OPERATIONS",
+    "tag": "02 / 06 — CONTENT OPERATIONS",
     "background": "#f1f1ed",
     "ink": "#1c2524",
     "accent": "#a7c4aa"
@@ -45,13 +45,13 @@
   {
     "path": "/work/social-media-intelligence",
     "slug": "social-media-intelligence",
-    "title": "Social Media Intelligence \u2014 Case Study | Viswanathan G",
+    "title": "Social Media Intelligence — Case Study | Viswanathan G",
     "description": "A UI/UX case study exploring social-account comparison, reporting and readable data workflows for social media intelligence.",
     "lines": [
       "Social Media",
       "Intelligence."
     ],
-    "tag": "03 / 06 \u2014 ANALYTICS & REPORTING",
+    "tag": "03 / 06 — ANALYTICS & REPORTING",
     "background": "#e7edf2",
     "ink": "#192630",
     "accent": "#9ab6d7"
@@ -59,13 +59,13 @@
   {
     "path": "/work/content-tracker",
     "slug": "content-tracker",
-    "title": "Content Tracker \u2014 Product Case Study | Viswanathan G",
+    "title": "Content Tracker — Product Case Study | Viswanathan G",
     "description": "A product case study on capturing published Facebook, Instagram and X links, organizing team submissions and following up on content.",
     "lines": [
       "Content",
       "Tracker."
     ],
-    "tag": "04 / 06 \u2014 CONTENT WORKFLOWS",
+    "tag": "04 / 06 — CONTENT WORKFLOWS",
     "background": "#f5f2e9",
     "ink": "#1d2527",
     "accent": "#f15a3c"
@@ -73,13 +73,13 @@
   {
     "path": "/work/splitmate",
     "slug": "splitmate",
-    "title": "SplitMate \u2014 Private Shared Expenses | Viswanathan G",
+    "title": "SplitMate — Private Shared Expenses | Viswanathan G",
     "description": "A mobile-first expense-splitting case study: private two-person pairing, INR expenses, flexible splits, encrypted events, balances and settlement records.",
     "lines": [
       "SplitMate.",
       "Better together."
     ],
-    "tag": "05 / 06 \u2014 PRIVATE SHARED EXPENSES",
+    "tag": "05 / 06 — PRIVATE SHARED EXPENSES",
     "background": "#c5e4a5",
     "ink": "#1c2230",
     "accent": "#6b9855"
@@ -87,13 +87,13 @@
   {
     "path": "/work/clip-studio",
     "slug": "clip-studio",
-    "title": "Clip Studio \u2014 The Download Desk | Viswanathan G",
-    "description": "A source-grounded UI/UX case study of the Clip Studio prototype: link input, output choices, job states and Quick Clip. Live extraction remains unverified.",
+    "title": "Clip Studio — The Download Desk | Viswanathan G",
+    "description": "Clip Studio is a Windows V10.5 hybrid media utility. Explore the product's download workflow, format decisions, Quick Clip and release-test evidence.",
     "lines": [
       "CLIP / STUDIO",
       "The download desk."
     ],
-    "tag": "06 / 06 \u2014 VIDEO WORKFLOW PROTOTYPE",
+    "tag": "06 / 06 — WINDOWS MEDIA UTILITY",
     "background": "#e9e7df",
     "ink": "#151713",
     "accent": "#ec462c"
@@ -101,7 +101,7 @@
   {
     "path": "/work/nation-building",
     "slug": "nation-building",
-    "title": "Nation Building \u2014 Case Study | Viswanathan G",
+    "title": "Nation Building — Case Study | Viswanathan G",
     "description": "Selected digital communication and merchandise applications brought together as a single visual system.",
     "lines": [
       "Nation Building",
@@ -115,7 +115,7 @@
   {
     "path": "/work/telangana-manifesto",
     "slug": "telangana-manifesto",
-    "title": "Telangana Manifesto \u2014 Case Study | Viswanathan G",
+    "title": "Telangana Manifesto — Case Study | Viswanathan G",
     "description": "A visual study of publication structure, information hierarchy and the rhythm between text, colour and imagery.",
     "lines": [
       "Telangana Manifesto",
@@ -129,7 +129,7 @@
   {
     "path": "/work/led-rath-yatra",
     "slug": "led-rath-yatra",
-    "title": "LED Rath Yatra \u2014 Case Study | Viswanathan G",
+    "title": "LED Rath Yatra — Case Study | Viswanathan G",
     "description": "A communication system adapted to the side, front and rear of an LED vehicle, with space for the screen and multiple language treatments.",
     "lines": [
       "LED Rath Yatra",
@@ -143,7 +143,7 @@
   {
     "path": "/work/samvidhan",
     "slug": "samvidhan",
-    "title": "Samvidhan Gaurav Abhiyaan \u2014 Case Study | Viswanathan G",
+    "title": "Samvidhan Gaurav Abhiyaan — Case Study | Viswanathan G",
     "description": "A presentation system using section openers, portraits, quotations and changes in contrast to organise a long narrative.",
     "lines": [
       "Samvidhan Gaurav Abhiyaan",
