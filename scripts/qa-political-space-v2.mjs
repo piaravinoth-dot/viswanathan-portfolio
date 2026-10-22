@@ -11,7 +11,7 @@ async function verify(label,run){
 async function openSite(context,url=base+"/"){
  const page=await context.newPage();
  await page.goto(url,{waitUntil:"domcontentloaded",timeout:45000});
- await page.locator("#political-space .political-collections").waitFor({timeout:30000});
+ await page.locator("#political-space .ps-gate-artworks").waitFor({timeout:30000});
  return page;
 }
 try{
@@ -32,6 +32,13 @@ try{
   assert.equal(await space.locator(".ps-featured-stage").getAttribute("href"),"/work/led-rath-yatra");
   for(let i=0;i<4;i++)assert.match(await rows.nth(i).getAttribute("href"),/^\/work\//);
  });
+ await verify("Only one artwork-collection selector is presented",async()=>{
+  assert.equal(await space.locator(".ps-gate-artworks").count(),1);
+  assert.equal(await space.locator(".ps-gate-art").count(),3);
+  assert.equal(await space.locator(".political-collections").count(),0);
+  assert.equal(await space.locator("#political-artwork-gallery").count(),1);
+  assert.equal(await space.locator(".political-archive-heading").count(),0);
+ });
  await verify("Artwork archive has three original, linked cover previews",async()=>{
   assert.equal(await space.locator(".ps-gate-art").count(),3);
   assert.equal(await space.locator(".ps-gate-art img").count(),3);
@@ -40,7 +47,7 @@ try{
   if(previews.some(img=>!img.loaded))await space.locator(".ps-gate-art img").first().waitFor({state:"visible"});
   assert(previews.every(img=>img.src.includes("political-")));
   await space.locator(".ps-gate-art-creative").click();
-  assert.equal(await space.locator(".political-collections button[aria-pressed=true]").innerText().then(x=>x.includes("Creative Posters")),true);
+  assert.equal(await space.locator(".ps-gate-art[aria-pressed=true]").innerText().then(x=>x.includes("Creative Posters")),true);
  });
  await verify("26 original works in source manifest",async()=>{
   const data=JSON.parse((await (await import("node:fs/promises")).readFile("src/data/politicalProjects.json","utf8")));
@@ -48,15 +55,15 @@ try{
   assert.deepEqual(["budget","content","creative"].map(c=>data.filter(p=>p.category===c).length),[7,10,9]);
  });
  await verify("Grid reveals all seven budget designs",async()=>{
-  await space.locator(".political-collections button").first().click();
+  await space.locator(".ps-gate-art").first().click();
   await space.getByRole("button",{name:"All works grid"}).click();
   assert.equal(await space.locator(".political-index-card").count(),7);
   assert.equal(await space.locator(".political-filmstrip").count(),0);
  });
  await verify("Content and Creative collections show 10 and 9 designs",async()=>{
-  await space.locator(".political-collections button").nth(1).click();
+  await space.locator(".ps-gate-art").nth(1).click();
   assert.equal(await space.locator(".political-index-card").count(),10);
-  await space.locator(".political-collections button").nth(2).click();
+  await space.locator(".ps-gate-art").nth(2).click();
   assert.equal(await space.locator(".political-index-card").count(),9);
  });
  await verify("Grid opens original viewer and closes by Escape",async()=>{
