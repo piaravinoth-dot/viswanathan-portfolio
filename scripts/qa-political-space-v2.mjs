@@ -1,0 +1,86 @@
+import assert from "node:assert/strict";
+import { chromium } from "playwright";
+
+const base=process.env.QA_URL||"http://127.0.0.1:4173";
+const browser=await chromium.launch({headless:true});
+const checks=[];
+async function verify(label,run){
+ try{await run();checks.push({label,passed:true});console.log("PASS",label)}
+ catch(error){checks.push({label,passed:false,error:String(error)});console.error("FAIL",label,error);throw error}
+}
+async function openSite(context,url=base+"/"){
+ const page=await context.newPage();
+ await page.goto(url,{waitUntil:"domcontentloaded",timeout:45000});
+ await page.locator("#political-space .political-collections").waitFor({timeout:30000});
+ return page;
+}
+try{
+ const desktopContext=await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:1});
+ const page=await openSite(desktopContext);
+ const space=page.locator("#political-space");
+ await verify("Four original featured case studies are preserved",async()=>{
+  assert.equal(await space.locator(".selected-case").count(),4);
+ });
+ await verify("26 original works in source manifest",async()=>{
+  const data=JSON.parse((await (await import("node:fs/promises")).readFile("src/data/politicalProjects.json","utf8")));
+  assert.equal(data.length,26);assert.equal(new Set(data.map(p=>p.id)).size,26);
+  assert.deepEqual(["budget","content","creative"].map(c=>data.filter(p=>p.category===c).length),[7,10,9]);
+ });
+ await verify("Grid reveals all seven budget designs",async()=>{
+  await space.getByRole("button",{name:"All works grid"}).click();
+  assert.equal(await space.locator(".political-index-card").count(),7);
+  assert.equal(await space.locator(".political-filmstrip").count(),0);
+ });
+ await verify("Content and Creative collections show 10 and 9 designs",async()=>{
+  await space.locator(".political-collections button").nth(1).click();
+  assert.equal(await space.locator(".political-index-card").count(),10);
+  await space.locator(".political-collections button").nth(2).click();
+  assert.equal(await space.locator(".political-index-card").count(),9);
+ });
+ await verify("Grid opens original viewer and closes by Escape",async()=>{
+  await space.locator(".political-index-card").first().click();
+  assert.equal(await page.locator(".political-viewer[open]").count(),1);
+  assert.match(await page.locator(".political-viewer-stage img").getAttribute("src"),/political-creative/);
+  await page.keyboard.press("Escape");
+  assert.equal(await page.locator(".political-viewer[open]").count(),0);
+ });
+ await verify("Exhibition mode and thumbnails remain available",async()=>{
+  await space.getByRole("button",{name:"Exhibition view"}).click();
+  assert.equal(await space.locator(".political-exhibition").count(),1);
+  assert.equal(await space.locator(".political-filmstrip button").count(),9);
+ });
+ await verify("Direct URL loads correct original artwork",async()=>{
+  const deep=await openSite(desktopContext,base+"/?artwork=budget-3#political-artwork");
+  await deep.locator(".political-viewer[open]").waitFor({timeout:15000});
+  assert.match(await deep.locator(".political-viewer-stage img").getAttribute("src"),/political-budget-03/);
+  assert.equal(await deep.locator(".political-viewer .political-copy-link").count(),1);
+  await deep.close();
+ });
+ const mobileContext=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true});
+ const mobile=await openSite(mobileContext);
+ await verify("Mobile grid stays within viewport and keeps work intact",async()=>{
+  const panel=mobile.locator("#political-space");
+  await panel.getByRole("button",{name:"All works grid"}).click();
+  assert.equal(await panel.locator(".political-index-card").count(),7);
+  assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+2),true);
+ });
+ await verify("Mobile swipe advances a non-zoomed artwork",async()=>{
+  await mobile.locator(".political-index-card").first().click();
+  const screen=mobile.locator(".political-viewer-stage");
+  const before=await mobile.locator(".political-viewer header span").textContent();
+  await screen.evaluate(el=>{
+   const event=(type,x,y)=>{
+    const touch=new Touch({identifier:11,target:el,clientX:x,clientY:y});
+    el.dispatchEvent(new TouchEvent(type,{bubbles:true,cancelable:true,touches:type==="touchstart"?[touch]:[],changedTouches:[touch],targetTouches:type==="touchstart"?[touch]:[]}));
+   };
+   event("touchstart",330,400);event("touchend",80,405);
+  });
+  const after=await mobile.locator(".political-viewer header span").textContent();
+  assert.notEqual(after,before);
+  await mobile.locator(".political-viewer button[aria-label='Close political artwork']").click();
+ });
+ await desktopContext.close();await mobileContext.close();
+}finally{
+ await browser.close();
+ console.log(JSON.stringify({checks,passed:checks.filter(c=>c.passed).length,total:checks.length}));
+}
