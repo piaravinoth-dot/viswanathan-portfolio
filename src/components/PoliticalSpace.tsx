@@ -50,24 +50,21 @@ export default function PoliticalSpace(){
  <nav className="political-chapters" aria-label="Political Space chapters"><a href="#political-case-studies"><span>01</span><strong>Featured projects</strong><small>04 case studies</small><MdArrowOutward aria-hidden="true"/></a><a href="#political-artwork"><span>02</span><strong>Artwork archive</strong><small>03 collections · 26 works</small><MdArrowOutward aria-hidden="true"/></a></nav>
  <SelectedCases/>
  <section id="political-artwork" className="ps-archive-gate" aria-labelledby="ps-archive-title">
-  <div className="ps-gate-copy"><span className="ps-gate-kicker">CHAPTER 02 / THE ORIGINAL ARTWORK ARCHIVE</span>
+  <div className="ps-gate-copy"><span className="ps-gate-kicker">CHAPTER 02 / ORIGINAL ARTWORK</span>
     <span className="ps-gate-figure">26<span>ORIGINAL<br/>ARTWORKS</span></span>
-    <h3 id="ps-archive-title">An archive<br/><em>made to explore.</em></h3>
-    <p>From information-rich publications to content-led political posters and visual concepts. Three collections, each with its own design language.</p>
-    <a href="#political-collections" className="ps-gate-primary">ENTER THE EXHIBITION <MdArrowOutward aria-hidden="true"/></a>
+    <h3 id="ps-archive-title">Explore the<br/><em>original work.</em></h3>
+    <p>Choose a collection to view its artworks below.</p>
   </div>
-  <div className="ps-gate-artworks" role="group" aria-label="Explore the three political artwork collections">
-   {collections.map((c,i)=>{const sample=pieces.find(p=>p.category===c.id);return sample?<a key={c.id} href="#political-collections" className={`ps-gate-art ps-gate-art-${c.id}`} onClick={()=>{setCategory(c.id);setIndex(0);setDisplayMode("exhibition")}} aria-label={`Explore ${c.label} collection`}>
+  <div className="ps-gate-artworks" role="group" aria-label="Choose political collection">
+   {collections.map((c,i)=>{const sample=pieces.find(p=>p.category===c.id);return sample?<button type="button" key={c.id} className={`ps-gate-art ps-gate-art-${c.id}`} aria-pressed={category===c.id} onClick={()=>{setCategory(c.id);setIndex(0);setZoom(false);requestAnimationFrame(()=>{const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;document.getElementById("political-artwork-gallery")?.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"})})}} aria-label={`View ${c.label} collection, ${pieces.filter(p=>p.category===c.id).length} artworks`}>
     <span className="ps-gate-art-image"><img src={sample.preview} width={sample.width} height={sample.height} loading="lazy" decoding="async" alt="" /></span>
     <span className="ps-gate-art-label"><span>0{i+1}</span><strong>{c.label}</strong><MdArrowOutward aria-hidden="true"/></span>
-   </a>:null})}
+   </button>:null})}
   </div>
-  <div className="ps-gate-folio"><span>VISWANATHAN G — AN EXHIBITION OF ORIGINAL WORK</span><span>2026 / 03 COLLECTIONS</span></div>
+  <div className="ps-gate-folio"><span>VISWANATHAN G / ORIGINAL POLITICAL COMMUNICATION</span><span>03 COLLECTIONS</span></div>
  </section>
- <div className="political-archive-heading"><span>02 / POSTER & PUBLICATION ARCHIVE</span><h3>Choose a collection.</h3><p>Browse in exhibition view or switch to the index. Select an artwork to explore its original detail.</p></div>
- <div id="political-collections" className="political-collections" role="group" aria-label="Choose political collection">{collections.map((c,i)=><button type="button" key={c.id} aria-pressed={category===c.id} onClick={()=>{setCategory(c.id);setIndex(0)}}><span>0{i+1}</span><strong>{c.label}</strong><small>{pieces.filter(p=>p.category===c.id).length} works</small><MdArrowOutward aria-hidden="true"/></button>)}</div>
- <div className="political-view-switch" role="group" aria-label="Artwork browsing mode">
-  <div className="political-view-context"><span>THE ARTWORK COLLECTION</span><strong>{String(artworks.length).padStart(2,"0")} selected works</strong></div>
+ <div id="political-artwork-gallery" className="political-view-switch" role="group" aria-label="Artwork browsing mode">
+  <div className="political-view-context"><span>{collection.label}</span><strong>{String(artworks.length).padStart(2,"0")} original works</strong></div>
   <div className="political-view-options"><button type="button" aria-pressed={displayMode==="exhibition"} onClick={()=>setDisplayMode("exhibition")}>Exhibition view</button><button type="button" aria-pressed={displayMode==="index"} onClick={()=>setDisplayMode("index")}>All works grid</button></div>
  </div>
  {displayMode==="exhibition"&&<>
@@ -84,6 +81,6 @@ export default function PoliticalSpace(){
   <strong>{p.caption}</strong><small>View original artwork</small>
  </button>)}
  </div>}
- <div className="political-foot"><span>03 COLLECTIONS / 26 ORIGINAL WORKS</span><p>Original project artwork. Dates, figures and messages belong to the campaigns and publications shown.</p></div>
+ <div className="political-foot"><span>ORIGINAL WORK / FULL-RESOLUTION VIEWER</span><p>Original project artwork. Dates, figures and messages belong to the campaigns and publications shown.</p></div>
  </div><dialog className="political-viewer" ref={dialog} aria-labelledby="political-viewer-title" onCancel={()=>setOpen(false)} onKeyDown={keys}>{open&&<><header><div><strong id="political-viewer-title">{collection.label}</strong><span aria-live="polite">{artwork.caption} · {index+1} / {artworks.length}</span></div><button type="button" aria-label="Close political artwork" onClick={()=>setOpen(false)}><MdClose aria-hidden="true"/></button></header><div className={`political-viewer-stage${zoom?" is-zoomed":""}`} ref={stage} tabIndex={0} role="region" aria-label="Artwork detail — scroll to explore when zoomed" onTouchStart={e=>{if(zoom)return;const t=e.touches[0];swipeStart.current={x:t.clientX,y:t.clientY}}} onTouchEnd={e=>{const start=swipeStart.current;swipeStart.current=null;if(!start||zoom)return;const t=e.changedTouches[0],dx=t.clientX-start.x,dy=t.clientY-start.y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.3)move(dx<0?1:-1)}}><img src={artwork.image} width={artwork.width} height={artwork.height} alt={artwork.alt}/></div><footer><button type="button" aria-label="Previous political artwork" onClick={()=>move(-1)}><MdArrowBack aria-hidden="true"/></button><button type="button" className="political-zoom" aria-pressed={zoom} onClick={()=>setZoom(v=>!v)}>{zoom?<MdZoomOut aria-hidden="true"/>:<MdZoomIn aria-hidden="true"/>}{zoom?"Fit artwork":"Zoom to detail"}</button><button type="button" className="political-copy-link" onClick={copyArtworkLink} aria-label={"Copy link to "+artwork.title}>Copy link <MdArrowOutward aria-hidden="true"/></button><button type="button" aria-label="Next political artwork" onClick={()=>move(1)}><MdArrowForward aria-hidden="true"/></button><span className="political-copy-notice" role="status">{copyNotice}</span></footer></>}</dialog></section>;
 }
