@@ -28,3 +28,72 @@
 @media(max-width:600px){.political-view-switch{align-items:stretch;flex-direction:column;gap:15px;padding-top:20px}.political-view-options{width:100%}.political-view-options button{width:50%;padding:12px 9px}.political-index-grid{padding-top:22px}.political-index-image{padding:10px;height:clamp(184px,57vw,270px)}.political-index-card strong{font-size:13px}.political-index-card small{font-size:11px}.political-viewer footer{gap:9px}.political-viewer .political-copy-link{padding:0 12px}}
 @media(max-width:360px){.political-index-grid{gap:18px 12px}.political-index-image{height:165px}.political-viewer .political-copy-link{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.political-index-image img{transition:none!important}}
+
+
+/* V2.2 — editorial project index. Images are original artwork, never generated.
+   The preview changes on hover/focus; rows remain one-click case-study links. */
+.political-space .ps-featured{padding-bottom:86px}
+.political-space .ps-featured-heading{display:grid;grid-template-columns:1.25fr .75fr;align-items:end;gap:8%;padding:36px 0 42px}
+.political-space .ps-featured-heading-main .comm-kicker{color:var(--ps-accent);font-size:10px;letter-spacing:.18em}
+.political-space .ps-featured-heading-main .comm-kicker span{margin:0 8px;color:#a3a4a7}
+.political-space .ps-featured-heading h3{font-size:clamp(44px,5.4vw,79px);font-weight:460;line-height:1.015;letter-spacing:-.065em;margin:21px 0 0}
+.political-space .ps-featured-heading h3 em{color:var(--ps-accent);font-family:Georgia,serif;font-weight:400}
+.political-space .ps-featured-heading-side{padding-bottom:2px;max-width:420px}
+.political-space .ps-featured-count{display:flex;align-items:center;gap:14px;color:#f1eee9;font-size:clamp(40px,4vw,56px);font-weight:420;letter-spacing:-.07em;line-height:1}
+.political-space .ps-featured-count span{font-size:10px;color:var(--ps-accent);letter-spacing:.15em;font-weight:600}
+.political-space .ps-featured-heading-side p{color:#c5c8cb;font-size:15px;line-height:1.75;max-width:385px;margin:14px 0 13px}
+.political-space .ps-interaction-hint{color:#aab1ba;font-size:9px;letter-spacing:.14em;font-weight:600}
+.political-space .ps-interaction-hint span{color:var(--ps-accent);margin:0 5px}
+.political-space .ps-editorial-layout{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(34px,5.5vw,86px);align-items:start;border-top:1px solid #657079;padding-top:18px}
+.political-space .ps-index-list{min-width:0}
+.political-space .ps-index-row{display:grid;grid-template-columns:32px minmax(0,1fr) 28px;gap:14px;align-items:start;min-height:130px;border-bottom:1px solid #3c4652;position:relative;padding:24px 8px 26px 0;color:#cfd3d7;text-decoration:none;transition:color .24s,padding .24s}
+.political-space .ps-index-row::before{content:"";position:absolute;left:-13px;top:20px;bottom:20px;width:3px;background:var(--ps-accent);transform:scaleY(0);transform-origin:center;transition:transform .25s}
+.political-space .ps-index-row.is-active,.political-space .ps-index-row:hover,.political-space .ps-index-row:focus-visible{color:#fff}
+.political-space .ps-index-row.is-active::before,.political-space .ps-index-row:hover::before,.political-space .ps-index-row:focus-visible::before{transform:scaleY(1)}
+.political-space .ps-index-number{font:600 11px/1.5 Geist,Arial,sans-serif;color:var(--ps-accent);padding-top:10px;font-variant-numeric:tabular-nums}
+.political-space .ps-index-copy{display:flex;flex-direction:column;gap:10px;min-width:0}
+.political-space .ps-index-copy strong{font-size:clamp(24px,2.7vw,39px);letter-spacing:-.046em;line-height:1.12;font-weight:430;transition:transform .28s}
+.political-space .ps-index-copy small{font-size:11px;color:#9da7b3;line-height:1.5;letter-spacing:.015em}
+.political-space .ps-index-arrow{font-size:21px;color:#c6cbd1;justify-self:end;transform:translate(-4px,4px);transition:transform .25s,color .25s}
+.political-space .ps-index-row.is-active .ps-index-arrow,.political-space .ps-index-row:hover .ps-index-arrow{color:var(--ps-accent);transform:translate(0,0)}
+.political-space .ps-index-row:hover .ps-index-copy strong{transform:translateX(4px)}
+.political-space .ps-index-mobile-cover{display:none}
+.political-space .ps-index-foot{display:flex;justify-content:space-between;align-items:center;gap:15px;color:#87929d;font-size:9px;letter-spacing:.065em;padding:18px 0 6px}
+.political-space .ps-featured-preview{position:sticky;top:96px;min-width:0;background:#15202c;border:1px solid #3e4b59;padding:14px 14px 18px}
+.political-space .ps-featured-top{display:flex;justify-content:space-between;gap:12px;color:var(--ps-accent);font-size:10px;font-weight:600;letter-spacing:.14em;padding:4px 2px 14px}
+.political-space .ps-featured-stage{display:flex;align-items:center;justify-content:center;position:relative;width:100%;min-height:370px;aspect-ratio:1.18;background:#233141;overflow:hidden;border:1px solid #4b5a68}
+.political-space .ps-featured-stage img{width:100%;height:100%;max-height:475px;object-fit:contain;display:block;animation:ps-original-arrive .3s ease both}
+.political-space .ps-preview-corner{position:absolute;right:0;bottom:0;background:#e5ad86;color:#15202c;padding:13px 16px;font-size:10px;letter-spacing:.07em;font-weight:700;transition:background .2s}
+.political-space .ps-featured-stage:hover .ps-preview-corner{background:#f7ccaa}
+.political-space .ps-preview-bottom{display:flex;justify-content:space-between;gap:15px;align-items:end;border-top:1px solid #505a66;margin-top:16px;padding:14px 2px 0}
+.political-space .ps-preview-bottom>div>span{color:var(--ps-accent);font-size:9px;letter-spacing:.14em}
+.political-space .ps-preview-bottom h4{font-size:clamp(21px,2.2vw,30px);line-height:1.22;letter-spacing:-.035em;font-weight:450;margin:9px 0}
+.political-space .ps-preview-bottom p{max-width:410px;font-size:12px;line-height:1.7;color:#bdc5cf;margin:0}
+.political-space .ps-preview-folio{font:450 clamp(50px,5vw,75px)/1 Geist,Arial,sans-serif;letter-spacing:-.09em;color:#627183}
+@keyframes ps-original-arrive{from{opacity:.58;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1050px){
+.political-space .ps-featured-heading{grid-template-columns:1.15fr .85fr;gap:32px}
+.political-space .ps-editorial-layout{gap:28px}
+.political-space .ps-index-row{min-height:116px;padding-top:21px}
+.political-space .ps-featured-stage{min-height:305px}
+}
+@media(max-width:700px){
+.political-space .ps-featured{padding-bottom:50px}
+.political-space .ps-featured-heading{grid-template-columns:1fr;gap:18px;padding:24px 0 30px}
+.political-space .ps-featured-heading h3{font-size:clamp(39px,10vw,60px);margin-top:17px}
+.political-space .ps-featured-heading-side{display:flex;flex-direction:column;gap:8px}
+.political-space .ps-featured-count{font-size:37px}
+.political-space .ps-featured-heading-side p{margin:0;font-size:14px}
+.political-space .ps-interaction-hint{display:none}
+.political-space .ps-editorial-layout{grid-template-columns:1fr;gap:20px}
+.political-space .ps-featured-preview{display:none}
+.political-space .ps-index-row{grid-template-columns:25px minmax(0,1fr) 21px;gap:10px;padding:19px 2px 22px 0;min-height:110px}
+.political-space .ps-index-copy strong{font-size:clamp(22px,5.8vw,32px)}
+.political-space .ps-index-copy small{font-size:10px}
+.political-space .ps-index-mobile-cover{display:block;width:100%;max-width:390px;max-height:0;overflow:hidden;opacity:0;transition:max-height .25s,opacity .2s}
+.political-space .ps-index-row:first-child .ps-index-mobile-cover{max-height:245px;opacity:1;margin-top:7px}
+.political-space .ps-index-mobile-cover img{display:block;object-fit:contain;width:100%;height:210px;background:#192634;border:1px solid #404d59}
+.political-space .ps-index-row:hover .ps-index-mobile-cover,.political-space .ps-index-row:focus-visible .ps-index-mobile-cover{max-height:245px;opacity:1;margin-top:7px}
+.political-space .ps-index-foot{font-size:8px;line-height:1.5}
+}
+@media(prefers-reduced-motion:reduce){.political-space .ps-featured-stage img{animation:none}.political-space .ps-index-row,.political-space .ps-index-copy strong,.political-space .ps-index-row::before,.political-space .ps-index-arrow,.political-space .ps-preview-corner,.political-space .ps-index-mobile-cover{transition:none!important}}
