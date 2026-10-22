@@ -170,3 +170,26 @@
  .political-space .ps-archive-gate{margin-bottom:28px}
  .political-space #political-artwork-gallery{scroll-margin-top:72px}
 }
+
+
+/* Portfolio creative work is presented by identity and idea, never volume or rank. */
+.political-space .political-chapters a{grid-template-columns:minmax(0,1fr) 24px;column-gap:16px}
+.political-space .political-chapters a strong{grid-column:1;grid-row:1}
+.political-space .political-chapters a small{grid-column:1;grid-row:2}
+.political-space .political-chapters a svg{grid-column:2;grid-row:1/3}
+.political-space .ps-index-row{grid-template-columns:minmax(0,1fr) 28px}
+.political-space .ps-index-copy{grid-column:1}
+.political-space .ps-index-arrow{grid-column:2}
+.political-space .ps-gate-figure{font-size:clamp(74px,8.5vw,120px);letter-spacing:-.085em}
+.political-space .ps-gate-art-label{grid-template-columns:minmax(0,1fr) 20px;gap:8px}
+.political-space .ps-gate-art-label strong{grid-column:1;min-width:0}
+.political-space .ps-gate-art-label svg{grid-column:2}
+.political-space .political-filmstrip button{padding-bottom:8px}
+.political-space .political-pagination-caption{font-size:12px;color:#c3c5ca;letter-spacing:.035em;white-space:nowrap}
+.political-space .ps-preview-bottom{align-items:start}
+@media(max-width:700px){
+.political-space .ps-index-row{grid-template-columns:minmax(0,1fr) 22px}
+.political-space .ps-gate-figure{font-size:clamp(60px,15vw,88px)}
+.political-space .ps-gate-art-label{grid-template-columns:minmax(0,1fr) 16px}
+.political-space .political-chapters a{grid-template-columns:minmax(0,1fr) 24px}
+}
