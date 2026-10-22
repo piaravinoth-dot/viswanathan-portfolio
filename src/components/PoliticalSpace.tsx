@@ -49,8 +49,23 @@ export default function PoliticalSpace(){
  <div className="political-intro"><h2 id="political-title">Politics.<br/><em>Through design.</em></h2><p>Public ideas, shaped into visual stories.<br/>Campaign identities, publications and political communication.<br/><span>Explore the thinking. Discover the artwork.</span></p></div>
  <nav className="political-chapters" aria-label="Political Space chapters"><a href="#political-case-studies"><span>01</span><strong>Featured projects</strong><small>04 case studies</small><MdArrowOutward aria-hidden="true"/></a><a href="#political-artwork"><span>02</span><strong>Artwork archive</strong><small>03 collections · 26 works</small><MdArrowOutward aria-hidden="true"/></a></nav>
  <SelectedCases/>
- <div id="political-artwork" className="political-archive-heading"><span>02 / POSTER & PUBLICATION ARCHIVE</span><h3>Explore the artwork.</h3><p>Choose a collection, browse its works, then open any artwork to see the original details.</p></div>
- <div className="political-collections" role="group" aria-label="Choose political collection">{collections.map((c,i)=><button type="button" key={c.id} aria-pressed={category===c.id} onClick={()=>{setCategory(c.id);setIndex(0)}}><span>0{i+1}</span><strong>{c.label}</strong><small>{pieces.filter(p=>p.category===c.id).length} works</small><MdArrowOutward aria-hidden="true"/></button>)}</div>
+ <section id="political-artwork" className="ps-archive-gate" aria-labelledby="ps-archive-title">
+  <div className="ps-gate-copy"><span className="ps-gate-kicker">CHAPTER 02 / THE ORIGINAL ARTWORK ARCHIVE</span>
+    <span className="ps-gate-figure">26<span>ORIGINAL<br/>ARTWORKS</span></span>
+    <h3 id="ps-archive-title">An archive<br/><em>made to explore.</em></h3>
+    <p>From information-rich publications to content-led political posters and visual concepts. Three collections, each with its own design language.</p>
+    <a href="#political-collections" className="ps-gate-primary">ENTER THE EXHIBITION <MdArrowOutward aria-hidden="true"/></a>
+  </div>
+  <div className="ps-gate-artworks" role="group" aria-label="Explore the three political artwork collections">
+   {collections.map((c,i)=>{const sample=pieces.find(p=>p.category===c.id);return sample?<a key={c.id} href="#political-collections" className={`ps-gate-art ps-gate-art-${c.id}`} onClick={()=>{setCategory(c.id);setIndex(0);setDisplayMode("exhibition")}} aria-label={`Explore ${c.label} collection`}>
+    <span className="ps-gate-art-image"><img src={sample.preview} width={sample.width} height={sample.height} loading="lazy" decoding="async" alt="" /></span>
+    <span className="ps-gate-art-label"><span>0{i+1}</span><strong>{c.label}</strong><MdArrowOutward aria-hidden="true"/></span>
+   </a>:null})}
+  </div>
+  <div className="ps-gate-folio"><span>VISWANATHAN G — AN EXHIBITION OF ORIGINAL WORK</span><span>2026 / 03 COLLECTIONS</span></div>
+ </section>
+ <div className="political-archive-heading"><span>02 / POSTER & PUBLICATION ARCHIVE</span><h3>Choose a collection.</h3><p>Browse in exhibition view or switch to the index. Select an artwork to explore its original detail.</p></div>
+ <div id="political-collections" className="political-collections" role="group" aria-label="Choose political collection">{collections.map((c,i)=><button type="button" key={c.id} aria-pressed={category===c.id} onClick={()=>{setCategory(c.id);setIndex(0)}}><span>0{i+1}</span><strong>{c.label}</strong><small>{pieces.filter(p=>p.category===c.id).length} works</small><MdArrowOutward aria-hidden="true"/></button>)}</div>
  <div className="political-view-switch" role="group" aria-label="Artwork browsing mode">
   <div className="political-view-context"><span>THE ARTWORK COLLECTION</span><strong>{String(artworks.length).padStart(2,"0")} selected works</strong></div>
   <div className="political-view-options"><button type="button" aria-pressed={displayMode==="exhibition"} onClick={()=>setDisplayMode("exhibition")}>Exhibition view</button><button type="button" aria-pressed={displayMode==="index"} onClick={()=>setDisplayMode("index")}>All works grid</button></div>
