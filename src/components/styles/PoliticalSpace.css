@@ -155,3 +155,18 @@
 .political-space .ps-gate-art-label>span{display:none}
 }
 @media(prefers-reduced-motion:reduce){.political-space .ps-gate-art,.political-space .ps-gate-art-image img,.political-space .ps-gate-primary svg{transition:none!important}}
+
+
+/* Single collection picker: the artwork triptych replaces the old second selector. */
+.political-space .ps-gate-art{font-family:inherit;font-size:inherit;text-align:left;cursor:pointer}
+.political-space .ps-gate-art[aria-pressed=true]{border-color:var(--ps-accent);background:#223348}
+.political-space .ps-gate-art[aria-pressed=true] .ps-gate-art-label strong{color:var(--ps-accent)}
+.political-space #political-artwork-gallery{scroll-margin-top:110px;padding-top:8px;border-top:1px solid #576373}
+.political-space .ps-archive-gate{margin-bottom:38px}
+.political-space .ps-gate-copy p{margin-bottom:0}
+.political-space .ps-featured-heading-side .ps-featured-count{display:none}
+@media(max-width:700px){
+ .political-space .ps-gate-art{min-height:0;touch-action:manipulation}
+ .political-space .ps-archive-gate{margin-bottom:28px}
+ .political-space #political-artwork-gallery{scroll-margin-top:72px}
+}
