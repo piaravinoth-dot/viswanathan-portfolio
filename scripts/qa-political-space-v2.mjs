@@ -41,7 +41,7 @@ try{
     await space.locator(".ps-gate-folio").innerText(),
     await space.locator(".political-view-context").innerText()
   ].join(" ");
-  assert.doesNotMatch(labels,/\\b(?:26|04|03)\\b|(?:projects|works|artworks)\\s*[:/–-]?\\s*\\d+/i);
+  assert.doesNotMatch(labels,/\b(?:26|04|03)\b|(?:projects|works|artworks)\s*[:/–-]?\s*\d+/i);
   assert.equal(await space.locator(".ps-index-number,.ps-preview-folio,.ps-featured-count").count(),0);
  });
  await verify("Only one artwork-collection selector is presented",async()=>{
