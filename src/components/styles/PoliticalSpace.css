@@ -8,7 +8,7 @@
 .political-view-context>span{font-size:10px;letter-spacing:.13em;color:var(--ps-accent)}
 .political-view-context strong{font-size:14px;font-weight:500;color:#e9e7e2}
 .political-view-options{display:flex;border:1px solid #74777d;flex-shrink:0}
-.political-view-options button{font:600 12px/1.4 inherit;min-height:46px;padding:12px 20px;background:#121c27;border:0;color:#e2dfde;cursor:pointer}
+.political-view-options button{font-family:inherit;font-size:12px;font-weight:600;line-height:1.4;min-height:46px;padding:12px 20px;background:#121c27;border:0;color:#e2dfde;cursor:pointer}
 .political-view-options button+button{border-left:1px solid #74777d}
 .political-view-options button[aria-pressed=true]{color:#0b1017;background:var(--ps-accent)}
 .political-view-options button:not([aria-pressed=true]):hover{background:#263646}
