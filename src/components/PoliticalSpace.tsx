@@ -12,9 +12,28 @@ const collections=[
 ];
 export default function PoliticalSpace(){
  const [category,setCategory]=useState("budget"),[index,setIndex]=useState(0),[open,setOpen]=useState(false),[zoom,setZoom]=useState(false);
+ const [displayMode,setDisplayMode]=useState<"exhibition"|"index">("exhibition");
+ const [copyNotice,setCopyNotice]=useState("");
+ const swipeStart=useRef<{x:number;y:number}|null>(null);
  const dialog=useRef<HTMLDialogElement>(null),opener=useRef<HTMLElement|null>(null),strip=useRef<HTMLDivElement>(null),stage=useRef<HTMLDivElement>(null);
  const collection=collections.find(c=>c.id===category)!,artworks=pieces.filter(p=>p.category===category),artwork=artworks[index];
- const move=(step:number)=>{setIndex(i=>(i+step+artworks.length)%artworks.length);setZoom(false)};
+ const move=(step:number)=>{setIndex(i=>(i+step+artworks.length)%artworks.length);setZoom(false);setCopyNotice("")};
+ const openArtwork=(event:React.MouseEvent<HTMLElement>,itemIndex:number)=>{opener.current=event.currentTarget;setIndex(itemIndex);setZoom(false);setCopyNotice("");setOpen(true)};
+ const copyArtworkLink=async()=>{
+  const url=new URL("/",window.location.origin);
+  url.searchParams.set("artwork",artwork.id);
+  url.hash="political-artwork";
+  try{await navigator.clipboard.writeText(url.toString());setCopyNotice("Artwork link copied")}
+  catch{setCopyNotice("Copy unavailable in this browser")}
+ };
+ useEffect(()=>{
+  const id=new URLSearchParams(window.location.search).get("artwork");
+  const match=pieces.find(piece=>piece.id===id);
+  if(!match)return;
+  const itemIndex=pieces.filter(piece=>piece.category===match.category).findIndex(piece=>piece.id===id);
+  if(itemIndex<0)return;
+  setCategory(match.category);setIndex(itemIndex);setDisplayMode("exhibition");setOpen(true);
+ },[]);
  useEffect(()=>{const row=strip.current,thumb=row?.querySelector<HTMLElement>('[aria-pressed="true"]');if(row&&thumb)row.scrollLeft=thumb.offsetLeft-row.offsetLeft-row.clientWidth/2+thumb.clientWidth/2;},[index,category]);
  useEffect(()=>{stage.current?.scrollTo(0,0);if(zoom)stage.current?.focus({preventScroll:true})},[index,zoom]);
  useEffect(()=>{const frame=requestAnimationFrame(()=>ScrollTrigger.refresh());return()=>cancelAnimationFrame(frame)},[category]);
@@ -32,11 +51,24 @@ export default function PoliticalSpace(){
  <SelectedCases/>
  <div id="political-artwork" className="political-archive-heading"><span>02 / POSTER & PUBLICATION ARCHIVE</span><h3>Explore the artwork.</h3><p>Choose a collection, browse its works, then open any artwork to see the original details.</p></div>
  <div className="political-collections" role="group" aria-label="Choose political collection">{collections.map((c,i)=><button type="button" key={c.id} aria-pressed={category===c.id} onClick={()=>{setCategory(c.id);setIndex(0)}}><span>0{i+1}</span><strong>{c.label}</strong><small>{pieces.filter(p=>p.category===c.id).length} works</small><MdArrowOutward aria-hidden="true"/></button>)}</div>
+ <div className="political-view-switch" role="group" aria-label="Artwork browsing mode">
+  <div className="political-view-context"><span>THE ARTWORK COLLECTION</span><strong>{String(artworks.length).padStart(2,"0")} selected works</strong></div>
+  <div className="political-view-options"><button type="button" aria-pressed={displayMode==="exhibition"} onClick={()=>setDisplayMode("exhibition")}>Exhibition view</button><button type="button" aria-pressed={displayMode==="index"} onClick={()=>setDisplayMode("index")}>All works grid</button></div>
+ </div>
+ {displayMode==="exhibition"&&<>
  <div className="political-exhibition" onKeyDown={keys}>
  <div className="political-curatorial"><span className="political-discipline">{collection.discipline}</span><h4>{collection.title}</h4><p>{collection.description}</p><div className="political-pagination"><button type="button" aria-label="Previous artwork" onClick={()=>move(-1)}><MdArrowBack aria-hidden="true"/></button><span role="status">{String(index+1).padStart(2,"0")} <span>/ {String(artworks.length).padStart(2,"0")}</span></span><button type="button" aria-label="Next artwork" onClick={()=>move(1)}><MdArrowForward aria-hidden="true"/></button></div><div className="political-progress" aria-hidden="true"><span style={{width:`${(index+1)/artworks.length*100}%`}}/></div><p className="political-help">Browse the strip or use the arrows.<br/>Open an artwork to explore every detail.</p></div>
- <div className="political-display"><button type="button" className="political-feature" aria-label={`View ${artwork.title} full screen`} onClick={e=>{opener.current=e.currentTarget;setZoom(false);setOpen(true)}} data-cursor="disable"><img key={artwork.id} src={artwork.image} width={artwork.width} height={artwork.height} loading="lazy" decoding="async" alt={artwork.alt}/></button><div className="political-feature-caption"><strong>{artwork.caption}</strong><span>{artwork.width} × {artwork.height}</span></div><button type="button" className="political-view-label" aria-label={`Open ${artwork.title} in artwork viewer`} onClick={e=>{opener.current=e.currentTarget;setZoom(false);setOpen(true)}}><MdZoomIn aria-hidden="true"/> View artwork</button></div>
+ <div className="political-display"><button type="button" className="political-feature" aria-label={`View ${artwork.title} full screen`} onClick={e=>openArtwork(e,index)} data-cursor="disable"><img key={artwork.id} src={artwork.image} width={artwork.width} height={artwork.height} loading="lazy" decoding="async" alt={artwork.alt}/></button><div className="political-feature-caption"><strong>{artwork.caption}</strong><span>{artwork.width} × {artwork.height}</span></div><button type="button" className="political-view-label" aria-label={`Open ${artwork.title} in artwork viewer`} onClick={e=>openArtwork(e,index)}><MdZoomIn aria-hidden="true"/> View artwork</button></div>
  </div>
  <div className="political-filmstrip" ref={strip} role="group" aria-label={`${collection.label} artworks`}>{artworks.map((p,i)=><button type="button" key={p.id} aria-pressed={index===i} aria-label={`Select ${p.title}`} onClick={()=>setIndex(i)}><img src={p.preview} width={p.width} height={p.height} loading="lazy" decoding="async" alt=""/><span>{String(i+1).padStart(2,"0")}</span></button>)}</div>
+ </>}
+ {displayMode==="index"&&<div className="political-index-grid" role="region" aria-label={collection.label+" all artworks"}>
+ {artworks.map((p,i)=><button type="button" key={p.id} className="political-index-card" onClick={e=>openArtwork(e,i)} aria-label={"Open "+p.title+" in high-resolution viewer"}>
+  <span className="political-index-image"><img src={p.preview} width={p.width} height={p.height} loading="lazy" decoding="async" alt=""/></span>
+  <span className="political-index-meta"><span>{String(i+1).padStart(2,"0")} / {String(artworks.length).padStart(2,"0")}</span><span aria-hidden="true">↗</span></span>
+  <strong>{p.caption}</strong><small>View original artwork</small>
+ </button>)}
+ </div>}
  <div className="political-foot"><span>03 COLLECTIONS / 26 ORIGINAL WORKS</span><p>Original project artwork. Dates, figures and messages belong to the campaigns and publications shown.</p></div>
- </div><dialog className="political-viewer" ref={dialog} aria-labelledby="political-viewer-title" onCancel={()=>setOpen(false)} onKeyDown={keys}>{open&&<><header><div><strong id="political-viewer-title">{collection.label}</strong><span aria-live="polite">{artwork.caption} · {index+1} / {artworks.length}</span></div><button type="button" aria-label="Close political artwork" onClick={()=>setOpen(false)}><MdClose aria-hidden="true"/></button></header><div className={`political-viewer-stage${zoom?" is-zoomed":""}`} ref={stage} tabIndex={0} role="region" aria-label="Artwork detail — scroll to explore when zoomed"><img src={artwork.image} width={artwork.width} height={artwork.height} alt={artwork.alt}/></div><footer><button type="button" aria-label="Previous political artwork" onClick={()=>move(-1)}><MdArrowBack aria-hidden="true"/></button><button type="button" className="political-zoom" aria-pressed={zoom} onClick={()=>setZoom(v=>!v)}>{zoom?<MdZoomOut aria-hidden="true"/>:<MdZoomIn aria-hidden="true"/>}{zoom?"Fit artwork":"Zoom to detail"}</button><button type="button" aria-label="Next political artwork" onClick={()=>move(1)}><MdArrowForward aria-hidden="true"/></button></footer></>}</dialog></section>;
+ </div><dialog className="political-viewer" ref={dialog} aria-labelledby="political-viewer-title" onCancel={()=>setOpen(false)} onKeyDown={keys}>{open&&<><header><div><strong id="political-viewer-title">{collection.label}</strong><span aria-live="polite">{artwork.caption} · {index+1} / {artworks.length}</span></div><button type="button" aria-label="Close political artwork" onClick={()=>setOpen(false)}><MdClose aria-hidden="true"/></button></header><div className={`political-viewer-stage${zoom?" is-zoomed":""}`} ref={stage} tabIndex={0} role="region" aria-label="Artwork detail — scroll to explore when zoomed" onTouchStart={e=>{if(zoom)return;const t=e.touches[0];swipeStart.current={x:t.clientX,y:t.clientY}}} onTouchEnd={e=>{const start=swipeStart.current;swipeStart.current=null;if(!start||zoom)return;const t=e.changedTouches[0],dx=t.clientX-start.x,dy=t.clientY-start.y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.3)move(dx<0?1:-1)}}><img src={artwork.image} width={artwork.width} height={artwork.height} alt={artwork.alt}/></div><footer><button type="button" aria-label="Previous political artwork" onClick={()=>move(-1)}><MdArrowBack aria-hidden="true"/></button><button type="button" className="political-zoom" aria-pressed={zoom} onClick={()=>setZoom(v=>!v)}>{zoom?<MdZoomOut aria-hidden="true"/>:<MdZoomIn aria-hidden="true"/>}{zoom?"Fit artwork":"Zoom to detail"}</button><button type="button" className="political-copy-link" onClick={copyArtworkLink} aria-label={"Copy link to "+artwork.title}>Copy link <MdArrowOutward aria-hidden="true"/></button><button type="button" aria-label="Next political artwork" onClick={()=>move(1)}><MdArrowForward aria-hidden="true"/></button><span className="political-copy-notice" role="status">{copyNotice}</span></footer></>}</dialog></section>;
 }
