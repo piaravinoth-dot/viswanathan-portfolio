@@ -85,7 +85,13 @@ try{
         `Gujarat poster has excessive blank space above at ${width}px`);
     }
     await page.setViewportSize({width:1440,height:900});
-    await space.locator(".ps-archive-gate").screenshot({path:"political-space-archive-verified.png",animations:"disabled"});
+    await page.evaluate(()=>{
+      const link=document.querySelector('.political-chapters a[href="#political-artwork"]');
+      if(!link)throw new Error("Missing Political Space archive navigation link");
+      link.dispatchEvent(new MouseEvent("click",{bubbles:true,cancelable:true,button:0}));
+    });
+    await page.waitForTimeout(1100);
+    await page.screenshot({path:"political-space-archive-verified.png",animations:"disabled"});
   }finally{
     await page.setViewportSize({width:1440,height:900});
   }
