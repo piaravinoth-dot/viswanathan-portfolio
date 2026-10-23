@@ -147,45 +147,45 @@ try{
     await section.screenshot({path:"political-featured-oneview.png",animations:"disabled"});
   }finally{await visit.close()}
  });
- await verify("Archive shows heading ABOVE three equally-sized artwork cards",async()=>{
+ await verify("Archive heading above four original collections with responsive equal cards",async()=>{
   try{
-    for(const width of [1440,1200,1024,920,820]){
+    const ids=["budget","content","creative","commercial"];
+    for(const width of [1600,1440,1280,1180,1024,820,390]){
       await page.setViewportSize({width,height:900});
-      const [copy,grid,budget,content,creative]=await Promise.all(
-        [".ps-gate-copy",".ps-gate-artworks",".ps-gate-art-budget",".ps-gate-art-content",".ps-gate-art-creative"]
-          .map(selector=>space.locator(selector).boundingBox()));
-      assert([copy,grid,budget,content,creative].every(Boolean));
-      const bottom=r=>r.y+r.height;
-      assert(copy.y<grid.y && bottom(copy)<=grid.y+2,`Text must be ABOVE all three cards at ${width}px`);
-      assert(Math.abs(budget.width-content.width)<3 && Math.abs(content.width-creative.width)<3,`Unequal card widths at ${width}px`);
-      assert(Math.abs(budget.height-content.height)<3 && Math.abs(content.height-creative.height)<3,`Unequal card heights at ${width}px`);
-      assert(Math.abs(budget.y-content.y)<3 && Math.abs(content.y-creative.y)<3,`Cards must share top edge at ${width}px`);
-      assert(Math.abs(bottom(budget)-bottom(content))<3 && Math.abs(bottom(content)-bottom(creative))<3,`Cards must share bottom edge at ${width}px`);
-      const gap1=content.x-(budget.x+budget.width),gap2=creative.x-(content.x+content.width);
-      assert(Math.abs(gap1-gap2)<3,`Three card gaps inconsistent at ${width}px`);
-      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+2),true,`Horizontal overflow at ${width}px`);
+      const [copy,grid,...cards]=await Promise.all(
+        [".ps-gate-copy",".ps-gate-artworks",...ids.map(id=>".ps-gate-art-"+id)].map(sel=>space.locator(sel).boundingBox()));
+      assert([copy,grid,...cards].every(Boolean));
+      const bottom=b=>b.y+b.height;
+      assert(bottom(copy)<=grid.y+2,`Archive title is not above all four cards at ${width}px`);
+      for(let i=1;i<cards.length;i++)assert(Math.abs(cards[i].width-cards[0].width)<3,`Unequal card widths at ${width}px`);
+      if(width>=1180){
+        for(const b of cards)assert(Math.abs(b.y-cards[0].y)<3&&Math.abs(b.height-cards[0].height)<3,`Four cards must share top and bottom at ${width}px`);
+        const gaps=cards.slice(1).map((b,i)=>b.x-(cards[i].x+cards[i].width));
+        assert(gaps.every((g,i)=>i===0||Math.abs(g-gaps[0])<4),`Card gutters differ at ${width}px`);
+      }else if(width>=701){
+        assert(Math.abs(cards[0].y-cards[1].y)<3&&Math.abs(cards[2].y-cards[3].y)<3,`Two-column tablet rows misaligned at ${width}px`);
+        assert(cards[2].y>cards[0].y,`Tablet second row missing at ${width}px`);
+      }else{
+        assert(cards.every((b,i)=>i===0||b.y>cards[i-1].y),`Mobile cards must stack at ${width}px`);
+      }
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),true,`Horizontal overflow at ${width}px`);
     }
-    await page.setViewportSize({width:390,height:844});
-    const mobileCards=await Promise.all(["budget","content","creative"].map(id=>space.locator(".ps-gate-art-"+id).boundingBox()));
-    assert(mobileCards[0].y<mobileCards[1].y && mobileCards[1].y<mobileCards[2].y,"Mobile cards must stack vertically");
-    assert(Math.abs(mobileCards[0].width-mobileCards[1].width)<3 && Math.abs(mobileCards[1].width-mobileCards[2].width)<3,"Mobile cards must be equal width");
   }finally{await page.setViewportSize({width:1440,height:900})}
  });
- await verify("No two-row or spanning layouts remain in the archive",async()=>{
+ await verify("Four original archive collections use a single wide desktop row",async()=>{
   const layout=await page.evaluate(()=>{
-    const grid=document.querySelector(".ps-gate-artworks");
-    const styles=getComputedStyle(grid);
-    return {display:styles.display,columns:styles.gridTemplateColumns.split(/\s+/).filter(Boolean).length,rows:styles.gridTemplateRows.split(/\s+/).filter(Boolean).length};
+    const style=getComputedStyle(document.querySelector(".ps-gate-artworks"));
+    return {display:style.display,cols:style.gridTemplateColumns.trim().split(/ +/).length,rows:style.gridTemplateRows.trim().split(/ +/).length};
   });
   assert.equal(layout.display,"grid");
-  assert.equal(layout.columns,3);
+  assert.equal(layout.cols,4);
   assert.equal(layout.rows,1);
  });
  await verify("Full original artwork visible in all equal-size cards",async()=>{
   try{
     for(const width of [1440,1024,820,390]){
       await page.setViewportSize({width,height:900});
-      for(const id of ["budget","content","creative"]){
+      for(const id of ["budget","content","creative","commercial"]){
         const x=await space.locator(".ps-gate-art-"+id+" img").evaluate(async img=>{
           await img.decode();
           const css=getComputedStyle(img),box=img.getBoundingClientRect();
@@ -199,17 +199,17 @@ try{
     const screenshotPage=await openSite(desktopContext);
     try{
       await screenshotPage.locator("#political-artwork").scrollIntoViewIfNeeded();
-      await screenshotPage.waitForFunction(()=>[...document.querySelectorAll(".ps-gate-art img")].length===3
+      await screenshotPage.waitForFunction(()=>[...document.querySelectorAll(".ps-gate-art img")].length===4
         &&[...document.querySelectorAll(".ps-gate-art img")].every(img=>img.complete&&img.naturalWidth>0),null,{timeout:20000});
       await screenshotPage.locator(".ps-gate-art img").evaluateAll(async images=>{await Promise.all(images.map(img=>img.decode()))});
-      await screenshotPage.screenshot({path:"political-space-archive-verified.png",animations:"disabled"});
+      await screenshotPage.locator(".ps-gate-artworks").screenshot({path:"political-space-archive-verified.png",animations:"disabled"});
     }finally{await screenshotPage.close()}
   }finally{await page.setViewportSize({width:1440,height:900})}
  });
  await verify("Artwork card labels remain inside equal card boundaries",async()=>{
   for(const width of [1440,1024,820,390]){
     await page.setViewportSize({width,height:900});
-    for(const id of ["budget","content","creative"]){
+    for(const id of ["budget","content","creative","commercial"]){
       const card=await space.locator(".ps-gate-art-"+id).boundingBox();
       const label=await space.locator(".ps-gate-art-"+id+" .ps-gate-art-label").boundingBox();
       assert(label.y>=card.y && label.y+label.height<=card.y+card.height+2,`Label overflows ${id} ${width}px`);
@@ -248,32 +248,36 @@ try{
  });
  await verify("Only one artwork-collection selector is presented",async()=>{
   assert.equal(await space.locator(".ps-gate-artworks").count(),1);
-  assert.equal(await space.locator(".ps-gate-art").count(),3);
+  assert.equal(await space.locator(".ps-gate-art").count(),4);
   assert.equal(await space.locator(".political-collections").count(),0);
   assert.equal(await space.locator("#political-artwork-gallery").count(),0);
   assert.equal(await space.locator(".political-exhibition,.political-index-grid,.political-filmstrip").count(),0);
   assert.equal(await space.locator(".ps-gate-art[aria-pressed=true]").count(),0);
   assert.equal(await space.locator(".political-archive-heading").count(),0);
  });
- await verify("Artwork archive has three original, linked cover previews",async()=>{
+ await verify("Artwork archive has four original, linked cover previews",async()=>{
   const visit=await openSite(desktopContext);
   try{
     await visit.waitForLoadState("networkidle",{timeout:15000});
-    assert.equal(await visit.locator(".ps-gate-art").count(),3);
-    assert.equal(await visit.locator(".ps-gate-art img").count(),3);
+    assert.equal(await visit.locator(".ps-gate-art").count(),4);
+    assert.equal(await visit.locator(".ps-gate-art img").count(),4);
     assert.match((await visit.locator(".ps-gate-figure").innerText()).replace(/\s+/g,""),/WORKWITHPURPOSE/);
     const previews=await visit.locator(".ps-gate-art img").evaluateAll(elements=>elements.map(img=>({src:img.getAttribute("src"),loaded:img.complete&&img.naturalWidth>0})));
-    assert(previews.every(img=>img.src.includes("political-")));
+    assert(previews.every(img=>img.src.includes("/portfolio-media/")));
     const creative=visit.locator(".ps-gate-art-creative");
     await creative.click();
     await visit.locator("#political-artwork-gallery").waitFor({state:"visible",timeout:10000});
     assert.equal(await creative.getAttribute("aria-pressed"),"true");
   }finally{await visit.close()}
  });
- await verify("26 original works in source manifest",async()=>{
-  const data=JSON.parse((await (await import("node:fs/promises")).readFile("src/data/politicalProjects.json","utf8")));
-  assert.equal(data.length,26);assert.equal(new Set(data.map(p=>p.id)).size,26);
-  assert.deepEqual(["budget","content","creative"].map(c=>data.filter(p=>p.category===c).length),[7,10,9]);
+ await verify("Political and six commercial source artworks preserved",async()=>{
+  const fs=await import("node:fs/promises");
+  const political=JSON.parse(await fs.readFile("src/data/politicalProjects.json","utf8"));
+  const commercial=JSON.parse(await fs.readFile("src/data/commercialProjects.json","utf8"));
+  const all=[...political,...commercial];
+  assert.deepEqual(["budget","content","creative","commercial"].map(c=>all.filter(p=>p.category===c).length),[7,10,9,6]);
+  assert.equal(new Set(all.map(p=>p.id)).size,all.length);
+  for(const piece of all){await fs.access("public"+piece.image);await fs.access("public"+piece.preview)}
  });
  await verify("Grid reveals all seven budget designs",async()=>{
   await space.locator(".ps-gate-art").first().click();
@@ -292,7 +296,7 @@ try{
   assert.equal(await space.locator(".political-index-card").count(),9);
  });
  await verify("Clicking each collection on a fresh visit selects that collection",async()=>{
-  for(const item of [{name:"budget"},{name:"content"},{name:"creative"}]){
+  for(const item of [{name:"budget"},{name:"content"},{name:"creative"},{name:"commercial"}]){
     const visit=await openSite(desktopContext);
     try{
       const tile=visit.locator(".ps-gate-art-"+item.name);
@@ -314,6 +318,22 @@ try{
   assert.equal(await space.locator(".political-exhibition").count(),1);
   assert.equal(await space.locator(".political-filmstrip button").count(),9);
  });
+ await verify("Commercial collection opens original full-resolution viewer and thumbnails",async()=>{
+  await space.locator(".ps-gate-art-commercial").click();
+  await space.getByRole("button",{name:"All works grid"}).click();
+  assert.equal(await space.locator(".political-index-card").count(),6);
+  await space.locator(".political-index-card").first().click();
+  await page.locator(".political-viewer[open]").waitFor({state:"visible"});
+  assert.match(await page.locator(".political-viewer-stage img").getAttribute("src"),/15-concert-poster/);
+  await page.keyboard.press("Escape");
+  await page.locator(".political-viewer[open]").waitFor({state:"hidden"});
+  await space.getByRole("button",{name:"Exhibition view"}).click();
+  assert.equal(await space.locator(".political-filmstrip button").count(),6);
+ });
+ await verify("Former Work that speaks section removed; digital products retained",async()=>{
+  assert.equal(await page.locator("#visual-archive,.visual-edit").count(),0);
+  assert.equal(await page.locator("#products").count(),1);
+ });
  await verify("Direct URL loads correct original artwork",async()=>{
   const deep=await openSite(desktopContext,base+"/?artwork=budget-3#political-artwork");
   await deep.locator(".political-viewer[open]").waitFor({timeout:15000});
@@ -326,7 +346,7 @@ try{
  await verify("Mobile featured chapter and archive entry remain usable",async()=>{
   const section=mobile.locator("#political-space");
   assert.equal(await section.locator(".ps-index-row").count(),4);
-  assert.equal(await section.locator(".ps-gate-art").count(),3);
+  assert.equal(await section.locator(".ps-gate-art").count(),4);
   assert.equal(await section.locator(".ps-featured-preview").isVisible(),true);
   assert.equal(await section.locator(".political-exhibition,.political-index-grid,.political-filmstrip").count(),0);
   assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+2),true);
