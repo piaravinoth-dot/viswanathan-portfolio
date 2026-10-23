@@ -1,0 +1,74 @@
+[
+  {
+    "id": "commercial-1",
+    "category": "commercial",
+    "collection": "Events & Commercial",
+    "title": "Concert Campaign",
+    "image": "/portfolio-media/15-concert-poster-110e1d11e4d4.webp",
+    "preview": "/portfolio-media/15-concert-poster-110e1d11e4d4.webp",
+    "width": 675,
+    "height": 1200,
+    "caption": "Event / Visual storytelling",
+    "alt": "Concert Campaign — original event / visual storytelling artwork by Viswanathan G"
+  },
+  {
+    "id": "commercial-2",
+    "category": "commercial",
+    "collection": "Events & Commercial",
+    "title": "Natural Stone",
+    "image": "/portfolio-media/03-quartzites-3dddf161324c.webp",
+    "preview": "/portfolio-media/03-quartzites-3dddf161324c.webp",
+    "width": 900,
+    "height": 900,
+    "caption": "Brand / Commercial",
+    "alt": "Natural Stone — original brand / commercial artwork by Viswanathan G"
+  },
+  {
+    "id": "commercial-3",
+    "category": "commercial",
+    "collection": "Events & Commercial",
+    "title": "Onam Brunch",
+    "image": "/portfolio-media/04-onam-brunch-3f210a27df22.webp",
+    "preview": "/portfolio-media/04-onam-brunch-3f210a27df22.webp",
+    "width": 848,
+    "height": 1200,
+    "caption": "Hospitality / Campaign",
+    "alt": "Onam Brunch — original hospitality / campaign artwork by Viswanathan G"
+  },
+  {
+    "id": "commercial-4",
+    "category": "commercial",
+    "collection": "Events & Commercial",
+    "title": "Ganesh Chaturthi",
+    "image": "/portfolio-media/06-ganesh-chaturthi-71566ff8f17f.webp",
+    "preview": "/portfolio-media/06-ganesh-chaturthi-71566ff8f17f.webp",
+    "width": 900,
+    "height": 1050,
+    "caption": "Festive / Art direction",
+    "alt": "Ganesh Chaturthi — original festive / art direction artwork by Viswanathan G"
+  },
+  {
+    "id": "commercial-5",
+    "category": "commercial",
+    "collection": "Events & Commercial",
+    "title": "Live Music",
+    "image": "/portfolio-media/14-concert-layout-338c7ed4999a.webp",
+    "preview": "/portfolio-media/14-concert-layout-338c7ed4999a.webp",
+    "width": 675,
+    "height": 1200,
+    "caption": "Entertainment / Poster",
+    "alt": "Live Music — original entertainment / poster artwork by Viswanathan G"
+  },
+  {
+    "id": "commercial-6",
+    "category": "commercial",
+    "collection": "Events & Commercial",
+    "title": "Happy Hours",
+    "image": "/portfolio-media/10-happy-hours-3847686b15a0.webp",
+    "preview": "/portfolio-media/10-happy-hours-3847686b15a0.webp",
+    "width": 848,
+    "height": 1200,
+    "caption": "Hospitality / Social creative",
+    "alt": "Happy Hours — original hospitality / social creative artwork by Viswanathan G"
+  }
+]
