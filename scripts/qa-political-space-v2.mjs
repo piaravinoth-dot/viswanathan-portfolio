@@ -110,10 +110,10 @@ try{
  });
  await verify("Grid opens original viewer and closes by Escape",async()=>{
   await space.locator(".political-index-card").first().click();
-  assert.equal(await page.locator(".political-viewer[open]").count(),1);
+  await page.locator(".political-viewer[open]").waitFor({state:"visible",timeout:10000});
   assert.match(await page.locator(".political-viewer-stage img").getAttribute("src"),/political-creative/);
   await page.keyboard.press("Escape");
-  assert.equal(await page.locator(".political-viewer[open]").count(),0);
+  await page.locator(".political-viewer[open]").waitFor({state:"hidden",timeout:10000});
  });
  await verify("Exhibition mode and thumbnails remain available",async()=>{
   await space.getByRole("button",{name:"Exhibition view"}).click();
