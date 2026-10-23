@@ -181,13 +181,14 @@ try{
   const labels=[
     await space.locator(".political-topline").innerText(),
     await space.locator(".political-chapters").innerText(),
-    await space.locator(".ps-featured-heading").innerText(),
+    await space.locator(".ps-work-heading").innerText(),
     await space.locator(".ps-gate-copy").innerText(),
     await space.locator(".ps-gate-folio").innerText(),
     (await space.locator(".political-view-context").count())?await space.locator(".political-view-context").innerText():""
   ].join(" ");
   assert.doesNotMatch(labels,/\b(?:26|04|03)\b|(?:projects|works|artworks)\s*[:/–-]?\s*\d+/i);
-  assert.equal(await space.locator(".ps-index-number,.ps-preview-folio,.ps-featured-count").count(),0);
+  assert.equal(await space.locator(".ps-index-number").count(),4);
+  assert.equal(await space.locator(".ps-preview-folio,.ps-featured-count").count(),0);
  });
  await verify("No political artwork gallery is open before visitor chooses a collection",async()=>{
   assert.equal(await space.locator(".ps-gate-art[aria-pressed=true]").count(),0);
