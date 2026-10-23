@@ -4,6 +4,7 @@ on:
     branches:
       - preview/political-space-v2-exhibition
       - fix/political-archive-vertical-balance
+      - fix/political-archive-top-alignment
     paths:
       - "src/components/PoliticalSpace.tsx"
       - "src/components/styles/PoliticalSpace.css"
