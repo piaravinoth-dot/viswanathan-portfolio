@@ -68,7 +68,7 @@ try{
           const style=getComputedStyle(image);
           const scale=Math.min(box.width/image.naturalWidth,box.height/image.naturalHeight);
           const drawnHeight=image.naturalHeight*scale;
-          const positions=style.objectPosition.split(/\\s+/);
+          const positions=style.objectPosition.split(/\s+/);
           const percentage=positions[1]?.endsWith("%")?Number.parseFloat(positions[1])/100:.5;
           return {paintTop:box.top+Math.max(0,box.height-drawnHeight)*percentage,objectFit:style.objectFit,position:style.objectPosition,naturalHeight:image.naturalHeight,drawnHeight};
         };
