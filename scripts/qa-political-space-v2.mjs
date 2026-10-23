@@ -235,6 +235,10 @@ try{
       await collection.click();
       assert.equal(await collection.getAttribute("aria-pressed"),"true");
       const gridButton=visit.getByRole("button",{name:"All works grid"});
+      await gridButton.waitFor({state:"visible",timeout:10000});
+      // The collection gallery mounts after the category click; allow it to
+      // settle before the next human-style interaction on a fresh page.
+      await visit.waitForTimeout(220);
       await gridButton.click();
       try{
         await visit.waitForFunction(expected=>document.querySelectorAll(".political-index-card").length===expected,item.count,{timeout:12000});
