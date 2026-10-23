@@ -55,6 +55,41 @@ try{
     await page.setViewportSize({width:1440,height:900});
   }
  });
+ await verify("Gujarat artwork bitmap starts alongside Content Posters — no tall blank space above",async()=>{
+  try{
+    for(const width of [1440,1200,1024,920]){
+      await page.setViewportSize({width,height:900});
+      const metrics=await page.evaluate(async()=>{
+        const read=async selector=>{
+          const image=document.querySelector(selector);
+          if(!(image instanceof HTMLImageElement))throw new Error("Missing archive image "+selector);
+          await image.decode();
+          const box=image.getBoundingClientRect();
+          const style=getComputedStyle(image);
+          const scale=Math.min(box.width/image.naturalWidth,box.height/image.naturalHeight);
+          const drawnHeight=image.naturalHeight*scale;
+          const positions=style.objectPosition.split(/\\s+/);
+          const percentage=positions[1]?.endsWith("%")?Number.parseFloat(positions[1])/100:.5;
+          return {paintTop:box.top+Math.max(0,box.height-drawnHeight)*percentage,objectFit:style.objectFit,position:style.objectPosition,naturalHeight:image.naturalHeight,drawnHeight};
+        };
+        const gujarat=await read(".ps-gate-art-budget .ps-gate-art-image img");
+        const content=await read(".ps-gate-art-content .ps-gate-art-image img");
+        const frame=document.querySelector(".ps-gate-art-budget .ps-gate-art-image").getBoundingClientRect();
+        return {gujarat,content,frameTop:frame.top};
+      });
+      assert.equal(metrics.gujarat.objectFit,"contain");
+      assert.equal(metrics.gujarat.position,"50% 0%");
+      assert(Math.abs(metrics.gujarat.paintTop-metrics.content.paintTop)<26,
+        `Gujarat poster still starts below the Content poster at ${width}px: ${JSON.stringify(metrics)}`);
+      assert(metrics.gujarat.paintTop-metrics.frameTop<25,
+        `Gujarat poster has excessive blank space above at ${width}px`);
+    }
+    await page.setViewportSize({width:1440,height:900});
+    await space.locator(".ps-archive-gate").screenshot({path:"political-space-archive-verified.png",animations:"disabled"});
+  }finally{
+    await page.setViewportSize({width:1440,height:900});
+  }
+ });
  await verify("Archive introduction starts at the top, never halfway down",async()=>{
   try{
     for(const width of [1440,1200,1024,920]){
