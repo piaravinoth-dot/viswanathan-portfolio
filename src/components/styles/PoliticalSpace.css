@@ -315,3 +315,60 @@
   max-height:none;
   object-fit:contain;
 }
+
+
+/* Final exhibition composition: three truly equal desktop panels.
+   Left copy, complete Gujarat print, and the two stacked poster collections
+   occupy the same visual height and share the same column width. No cropping,
+   poster distortion, added counters or fake artwork. */
+@media (min-width:901px){
+  .political-space .ps-archive-gate{
+    align-items:start;
+  }
+  .political-space .ps-gate-artworks{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-rows:repeat(2,minmax(0,1fr));
+    gap:var(--ps-exhibit-gap);
+    width:100%;
+    aspect-ratio:1.42/1;
+    height:auto;
+    min-height:0;
+    align-self:start;
+    align-content:stretch;
+    align-items:stretch;
+  }
+  .political-space .ps-gate-copy{
+    height:100%;
+    min-height:0;
+  }
+  .political-space .ps-gate-art{
+    align-self:stretch;
+    height:100%;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  .political-space .ps-gate-art-image{
+    display:flex;
+    flex:1 1 0;
+    min-height:0;
+    align-items:center;
+    justify-content:center;
+    padding:clamp(8px,1vw,14px);
+    overflow:hidden;
+  }
+  .political-space .ps-gate-art-image img{
+    display:block;
+    flex:none;
+    width:100%;
+    height:100%;
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+  }
+  .political-space .ps-gate-art-budget .ps-gate-art-image img{
+    object-position:center center;
+  }
+}
