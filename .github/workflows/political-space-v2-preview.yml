@@ -1,0 +1,52 @@
+name: Political Space V2 preview QA
+on:
+  push:
+    branches:
+      - preview/political-space-v2-exhibition
+    paths:
+      - "src/components/PoliticalSpace.tsx"
+      - "src/components/styles/PoliticalSpace.css"
+      - "scripts/qa-political-space-v2.mjs"
+      - ".github/workflows/political-space-v2-preview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: political-space-v2-preview
+  cancel-in-progress: true
+
+jobs:
+  political-space-v2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install project and browser test dependencies
+        run: |
+          npm install --no-audit
+          npm install --no-save --ignore-scripts playwright axe-core
+          npx playwright install --with-deps chromium
+      - name: Build preview and check source
+        run: npm run build
+      - name: Start local production preview
+        run: |
+          nohup npm run preview -- --host 127.0.0.1 --port 4173 >/tmp/political-v2-preview.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/political-v2-preview.log
+          exit 1
+      - name: Exercise exhibition, index and viewer on desktop and mobile
+        env:
+          QA_URL: http://127.0.0.1:4173
+        run: node scripts/qa-political-space-v2.mjs
+      - name: WCAG audit across portfolio routes and devices
+        env:
+          QA_URL: http://127.0.0.1:4173
+        run: node scripts/qa-accessibility.mjs
