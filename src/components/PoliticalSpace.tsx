@@ -56,7 +56,7 @@ export default function PoliticalSpace(){
     <p>Choose a collection to view its artworks below.</p>
   </div>
   <div className="ps-gate-artworks" role="group" aria-label="Choose political collection">
-   {collections.map(c=>{const sample=pieces.find(p=>p.category===c.id);return sample?<button type="button" key={c.id} className={`ps-gate-art ps-gate-art-${c.id}`} aria-pressed={category===c.id} onClick={()=>{setCategory(c.id);setIndex(0);setZoom(false);requestAnimationFrame(()=>{const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;document.getElementById("political-artwork-gallery")?.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"})})}} aria-label={`View ${c.label} collection`}>
+   {collections.map(c=>{const sample=pieces.find(p=>p.category===c.id);return sample?<button type="button" key={c.id} className={`ps-gate-art ps-gate-art-${c.id}`} aria-pressed={category===c.id} onClick={()=>{setCategory(c.id);setIndex(0);setZoom(false)}} aria-label={`View ${c.label} collection`}>
     <span className="ps-gate-art-image"><img src={sample.preview} width={sample.width} height={sample.height} loading="lazy" decoding="async" alt="" /></span>
     <span className="ps-gate-art-label"><strong>{c.label}</strong><MdArrowOutward aria-hidden="true"/></span>
    </button>:null})}
