@@ -25,7 +25,7 @@ try{
   assert.equal(await space.locator(".ps-index-row").count(),4);
   assert.equal(await space.locator(".ps-work-artwork img").count(),1);
   const rows=space.locator(".ps-index-row");
-  await rows.nth(1).hover();
+  await rows.nth(1).click();
   assert.match(await space.locator(".ps-work-artwork img").getAttribute("src"),/telangana-manifesto/);
   await rows.nth(2).focus();
   assert.match(await space.locator(".ps-work-artwork img").getAttribute("src"),/led-rath-yatra/);
