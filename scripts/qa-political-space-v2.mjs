@@ -60,7 +60,7 @@ try{
   const layout=await page.evaluate(()=>{
     const grid=document.querySelector(".ps-gate-artworks");
     const styles=getComputedStyle(grid);
-    return {display:styles.display,columns:styles.gridTemplateColumns.split(/\\s+/).filter(Boolean).length,rows:styles.gridTemplateRows.split(/\\s+/).filter(Boolean).length};
+    return {display:styles.display,columns:styles.gridTemplateColumns.split(/\s+/).filter(Boolean).length,rows:styles.gridTemplateRows.split(/\s+/).filter(Boolean).length};
   });
   assert.equal(layout.display,"grid");
   assert.equal(layout.columns,3);
