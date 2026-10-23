@@ -99,6 +99,40 @@ try{
     await page.setViewportSize({width:1440,height:900});
   }
  });
+ await verify("No archive poster has a stretched empty image frame",async()=>{
+  try {
+    for(const width of [1440,1200,1024,920,820,390]){
+      await page.setViewportSize({width,height:900});
+      const measurements=await page.evaluate(async()=>{
+        const ids=["budget","content","creative"];
+        return Promise.all(ids.map(async id=>{
+          const card=document.querySelector(".ps-gate-art-"+id);
+          const frame=card?.querySelector(".ps-gate-art-image");
+          const image=frame?.querySelector("img");
+          const label=card?.querySelector(".ps-gate-art-label");
+          if(!(card instanceof HTMLElement)||!(frame instanceof HTMLElement)||!(image instanceof HTMLImageElement)||!(label instanceof HTMLElement))throw new Error("Missing archive artwork "+id);
+          await image.decode();
+          const cr=card.getBoundingClientRect(),fr=frame.getBoundingClientRect(),ir=image.getBoundingClientRect(),lr=label.getBoundingClientRect();
+          const frameCss=getComputedStyle(frame);
+          const verticalPadding=parseFloat(frameCss.paddingTop)+parseFloat(frameCss.paddingBottom);
+          return {id,cardTop:cr.top,cardBottom:cr.bottom,cardHeight:cr.height,frameBottom:fr.bottom,imageTop:ir.top,imageBottom:ir.bottom,imageHeight:ir.height,naturalWidth:image.naturalWidth,naturalHeight:image.naturalHeight,labelBottom:lr.bottom,remainingFrameSpace:fr.height-ir.height-verticalPadding};
+        }));
+      });
+      for(const m of measurements){
+        assert(m.naturalWidth>0&&m.naturalHeight>0,`Artwork asset did not load: ${m.id}`);
+        assert(Math.abs(m.remainingFrameSpace)<5,`Stretched image frame at ${width}px: ${JSON.stringify(m)}`);
+        assert(m.cardBottom-m.labelBottom<20,`Blank space below ${m.id} label at ${width}px`);
+        assert(m.imageTop-m.cardTop<40,`Blank space above artwork ${m.id} at ${width}px`);
+      }
+      const budget=measurements[0],content=measurements[1];
+      assert(Math.abs(budget.imageTop-content.imageTop)<25,`Gujarat and Content image tops differ at ${width}px`);
+      if(width>=920){
+        const creative=measurements[2];
+        assert(budget.cardHeight < content.cardHeight+creative.cardHeight,`Gujarat remains stretched at ${width}px`);
+      }
+    }
+  }finally{await page.setViewportSize({width:1440,height:900})}
+ });
  await verify("Archive introduction starts at the top, never halfway down",async()=>{
   try{
     for(const width of [1440,1200,1024,920]){
