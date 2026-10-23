@@ -245,27 +245,36 @@
 /* Allow collection cards to be scrolled back into view without the sticky header covering them. */
 .political-space .ps-gate-art{scroll-margin-top:140px;scroll-margin-bottom:32px}
 
-/* Archive optical-balance correction: equal columns were already measured;
-   the first column's content now occupies its full vertical canvas deliberately. */
+/* Archive introduction: anchor its entire message close to the TOP of the
+   three-column exhibition, rather than vertically centering the headline or
+   pushing the instruction to the bottom of the tall artwork frames. */
 @media (min-width:901px){
   .political-space .ps-gate-copy{
-    display:grid;
-    grid-template-rows:auto minmax(0,1fr) auto;
-    align-items:stretch;
-    gap:clamp(22px,2.4vw,38px);
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:flex-start;
+    gap:0;
     height:100%;
     padding-block:2px 10px;
   }
-  .political-space .ps-gate-kicker{align-self:start}
-  .political-space .ps-gate-statement{min-width:0;align-self:center}
+  .political-space .ps-gate-kicker{align-self:flex-start;flex:none}
+  .political-space .ps-gate-statement{
+    width:100%;
+    min-width:0;
+    flex:none;
+    align-self:flex-start;
+    margin-top:clamp(32px,3.3vw,52px);
+  }
   .political-space .ps-gate-statement .ps-gate-figure{
     margin:0 0 clamp(18px,2.2vw,32px);
     max-width:100%;
   }
   .political-space .ps-gate-statement h3{margin:0}
   .political-space .ps-gate-copy>p{
-    align-self:end;
-    margin:0;
+    flex:none;
+    align-self:flex-start;
+    margin:clamp(19px,2.1vw,30px) 0 0;
     max-width:360px;
   }
 }
