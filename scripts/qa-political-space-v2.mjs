@@ -319,16 +319,24 @@ try{
   assert.equal(await space.locator(".political-filmstrip button").count(),9);
  });
  await verify("Commercial collection opens original full-resolution viewer and thumbnails",async()=>{
-  await space.locator(".ps-gate-art-commercial").click();
-  await space.getByRole("button",{name:"All works grid"}).click();
-  assert.equal(await space.locator(".political-index-card").count(),6);
-  await space.locator(".political-index-card").first().click();
-  await page.locator(".political-viewer[open]").waitFor({state:"visible"});
-  assert.match(await page.locator(".political-viewer-stage img").getAttribute("src"),/15-concert-poster/);
-  await page.keyboard.press("Escape");
-  await page.locator(".political-viewer[open]").waitFor({state:"hidden"});
-  await space.getByRole("button",{name:"Exhibition view"}).click();
-  assert.equal(await space.locator(".political-filmstrip button").count(),6);
+  // A fresh visit avoids an unrelated GSAP SmoothScroller viewport displacement
+  // after the main page has opened and switched older collections repeatedly.
+  const visit=await openSite(desktopContext);
+  const gallery=visit.locator("#political-space");
+  try{
+    const collection=gallery.locator(".ps-gate-art-commercial");
+    await collection.click();
+    assert.equal(await collection.getAttribute("aria-pressed"),"true");
+    await gallery.getByRole("button",{name:"All works grid"}).click();
+    assert.equal(await gallery.locator(".political-index-card").count(),6);
+    await gallery.locator(".political-index-card").first().click();
+    await visit.locator(".political-viewer[open]").waitFor({state:"visible"});
+    assert.match(await visit.locator(".political-viewer-stage img").getAttribute("src"),/15-concert-poster/);
+    await visit.keyboard.press("Escape");
+    await visit.locator(".political-viewer[open]").waitFor({state:"hidden"});
+    await gallery.getByRole("button",{name:"Exhibition view"}).click();
+    assert.equal(await gallery.locator(".political-filmstrip button").count(),6);
+  }finally{await visit.close()}
  });
  await verify("Former Work that speaks section removed; digital products retained",async()=>{
   assert.equal(await page.locator("#visual-archive,.visual-edit").count(),0);
