@@ -379,7 +379,7 @@ try{
   });
   const after=await mobile.locator(".political-viewer header span").textContent();
   assert.notEqual(after,before);
-  await mobile.locator(".political-viewer button[aria-label='Close political artwork']").click();
+  await mobile.locator(".political-viewer button[aria-label='Close artwork']").click();
  });
  await desktopContext.close();await mobileContext.close();
 }finally{
