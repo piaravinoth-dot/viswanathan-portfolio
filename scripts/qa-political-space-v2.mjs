@@ -135,13 +135,26 @@ try{
   for(const item of [{name:"budget",count:7},{name:"content",count:10},{name:"creative",count:9}]){
     const visit=await openSite(desktopContext);
     try{
+      await visit.waitForLoadState("networkidle",{timeout:15000});
       const collection=visit.locator(".ps-gate-art-"+item.name);
       await collection.click();
       assert.equal(await collection.getAttribute("aria-pressed"),"true");
-      await visit.getByRole("button",{name:"All works grid"}).click();
-      const cards=visit.locator(".political-index-card");
-      await cards.first().waitFor({state:"visible",timeout:10000});
-      assert.equal(await cards.count(),item.count);
+      const gridButton=visit.getByRole("button",{name:"All works grid"});
+      await gridButton.click();
+      try{
+        await visit.waitForFunction(expected=>document.querySelectorAll(".political-index-card").length===expected,item.count,{timeout:12000});
+      }catch(error){
+        const state=await visit.evaluate(()=>({
+          collection:document.querySelector(".ps-gate-art[aria-pressed=true]")?.getAttribute("aria-label"),
+          view:[...document.querySelectorAll(".political-view-options button")].map(el=>({text:el.textContent,pressed:el.getAttribute("aria-pressed")})),
+          gallery:!!document.querySelector("#political-artwork-gallery"),
+          cards:document.querySelectorAll(".political-index-card").length,
+          exhibition:!!document.querySelector(".political-exhibition")
+        }));
+        console.error("Fresh-visit gallery state for "+item.name,JSON.stringify(state));
+        throw error;
+      }
+      assert.equal(await visit.locator(".political-index-card").count(),item.count);
     }finally{await visit.close()}
   }
  });
