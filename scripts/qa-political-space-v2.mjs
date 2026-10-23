@@ -49,6 +49,18 @@ try{
       assert(last.y>first.y,`Featured rows not sequential at ${width}px`);
       assert(bottom(context)<=bottom(section)+3,`Right case context goes outside the section at ${width}px`);
       assert(bottom(last)<=bottom(section)+3,`Left projects go outside the section at ${width}px`);
+      if(section.height>=870){
+        const measured=await page.evaluate(()=>{
+          const sels=[".ps-featured-oneview",".selected-cases-inner",".ps-work-overline",".ps-work-layout",".ps-work-aside",".ps-work-heading",".ps-index-list",".ps-work-preview",".ps-work-artwork",".ps-work-context"];
+          return sels.map(sel=>{
+            const el=document.querySelector(".ps-featured-oneview "+sel)||document.querySelector(sel);
+            if(!el)return{sel,missing:true};
+            const b=el.getBoundingClientRect(),c=getComputedStyle(el);
+            return{sel,top:b.top,height:b.height,width:b.width,paddingTop:c.paddingTop,paddingBottom:c.paddingBottom,minHeight:c.minHeight,display:c.display,position:c.position};
+          });
+        });
+        console.log("FEATURED_GEOMETRY_DEBUG",JSON.stringify({width,measured}));
+      }
       assert(section.height<870,`Featured work requires more than one normal desktop scroll at ${width}px, height ${section.height}`);
       const scrollState=await page.evaluate(()=>{
         const root=document.querySelector(".ps-featured-oneview");
