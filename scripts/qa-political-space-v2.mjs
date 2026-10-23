@@ -102,15 +102,27 @@ try{
   assert.equal(await space.locator(".political-index-card").count(),7);
   assert.equal(await space.locator(".political-filmstrip").count(),0);
  });
- await verify("Content and Creative collections show 10 and 9 designs",async()=>{
+ await verify("Content and Creative collections work with keyboard navigation",async()=>{
   const contentTile=space.locator(".ps-gate-art-content");
-  await contentTile.evaluate(el=>el.scrollIntoView({block:"center",behavior:"instant"}));
-  await contentTile.click();
+  await contentTile.focus();
+  await contentTile.press("Enter");
   assert.equal(await space.locator(".political-index-card").count(),10);
   const creativeTile=space.locator(".ps-gate-art-creative");
-  await creativeTile.evaluate(el=>el.scrollIntoView({block:"center",behavior:"instant"}));
-  await creativeTile.click();
+  await creativeTile.focus();
+  await creativeTile.press("Enter");
   assert.equal(await space.locator(".political-index-card").count(),9);
+ });
+ await verify("Clicking each collection opens its correct artwork on a fresh visit",async()=>{
+  for(const item of [{name:"budget",count:7},{name:"content",count:10},{name:"creative",count:9}]){
+    const visit=await openSite(desktopContext);
+    try{
+      const collection=visit.locator(".ps-gate-art-"+item.name);
+      await collection.click();
+      assert.equal(await collection.getAttribute("aria-pressed"),"true");
+      await visit.getByRole("button",{name:"All works grid"}).click();
+      assert.equal(await visit.locator(".political-index-card").count(),item.count);
+    }finally{await visit.close()}
+  }
  });
  await verify("Grid opens original viewer and closes by Escape",async()=>{
   await space.locator(".political-index-card").first().click();
