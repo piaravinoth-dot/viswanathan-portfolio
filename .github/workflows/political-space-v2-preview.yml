@@ -8,6 +8,7 @@ on:
       - fix/political-budget-poster-top-alignment
       - fix/political-budget-intrinsic-card-height
       - fix/political-archive-three-equal-panels
+      - fix/political-archive-header-balance
     paths:
       - "src/components/PoliticalSpace.tsx"
       - "src/components/styles/PoliticalSpace.css"
