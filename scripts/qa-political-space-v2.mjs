@@ -195,15 +195,19 @@ try{
   assert.equal(await space.locator(".political-archive-heading").count(),0);
  });
  await verify("Artwork archive has three original, linked cover previews",async()=>{
-  assert.equal(await space.locator(".ps-gate-art").count(),3);
-  assert.equal(await space.locator(".ps-gate-art img").count(),3);
-  assert.match((await space.locator(".ps-gate-figure").innerText()).replace(/\s+/g,""),/WORKWITHPURPOSE/);
-  const previews=await space.locator(".ps-gate-art img").evaluateAll(elements=>elements.map(img=>({src:img.getAttribute("src"),loaded:img.complete&&img.naturalWidth>0})));
-  if(previews.some(img=>!img.loaded))await space.locator(".ps-gate-art img").first().waitFor({state:"visible"});
-  assert(previews.every(img=>img.src.includes("political-")));
-  await space.locator(".ps-gate-art-creative").click();
-  assert.equal(await space.locator("#political-artwork-gallery").count(),1);
-  assert.equal(await space.locator(".ps-gate-art[aria-pressed=true]").innerText().then(x=>x.includes("Creative Posters")),true);
+  const visit=await openSite(desktopContext);
+  try{
+    await visit.waitForLoadState("networkidle",{timeout:15000});
+    assert.equal(await visit.locator(".ps-gate-art").count(),3);
+    assert.equal(await visit.locator(".ps-gate-art img").count(),3);
+    assert.match((await visit.locator(".ps-gate-figure").innerText()).replace(/\s+/g,""),/WORKWITHPURPOSE/);
+    const previews=await visit.locator(".ps-gate-art img").evaluateAll(elements=>elements.map(img=>({src:img.getAttribute("src"),loaded:img.complete&&img.naturalWidth>0})));
+    assert(previews.every(img=>img.src.includes("political-")));
+    const creative=visit.locator(".ps-gate-art-creative");
+    await creative.click();
+    await visit.locator("#political-artwork-gallery").waitFor({state:"visible",timeout:10000});
+    assert.equal(await creative.getAttribute("aria-pressed"),"true");
+  }finally{await visit.close()}
  });
  await verify("26 original works in source manifest",async()=>{
   const data=JSON.parse((await (await import("node:fs/promises")).readFile("src/data/politicalProjects.json","utf8")));
