@@ -55,21 +55,20 @@ try{
     await page.setViewportSize({width:1440,height:900});
   }
  });
- await verify("Archive introduction has deliberate top-center-bottom vertical balance",async()=>{
+ await verify("Archive introduction starts at the top, never halfway down",async()=>{
   try{
     for(const width of [1440,1200,1024,920]){
       await page.setViewportSize({width,height:900});
       const selectors=[".ps-gate-copy",".ps-gate-kicker",".ps-gate-statement",".ps-gate-copy>p",".ps-gate-art-budget"];
-      const [panel,kicker,statement,description,budget]=await Promise.all(selectors.map(s=>space.locator(s).boundingBox()));
+      const [panel,kicker,statement,description,budget]=await Promise.all(selectors.map(sel=>space.locator(sel).boundingBox()));
       assert([panel,kicker,statement,description,budget].every(Boolean));
-      const center=(r)=>r.y+r.height/2;
-      assert(Math.abs(center(statement)-center(budget)) < budget.height*.13,
-        `Archive title is not vertically centered at ${width}px`);
-      assert(kicker.y-panel.y < 25,`Archive kicker is no longer top aligned at ${width}px`);
-      assert(Math.abs((description.y+description.height)-(panel.y+panel.height)) < 34,
-        `Archive description does not anchor the bottom at ${width}px`);
-      assert(statement.y >= kicker.y+kicker.height,`Archive title overlaps kicker at ${width}px`);
-      assert(statement.y+statement.height < description.y,`Archive text blocks overlap at ${width}px`);
+      assert(kicker.y-panel.y < 25,`Archive kicker is not at the top at ${width}px`);
+      assert(statement.y-panel.y < 125,`Archive headline starts too far down at ${width}px`);
+      assert(statement.y >= kicker.y+kicker.height,`Headline overlaps kicker at ${width}px`);
+      assert(description.y >= statement.y+statement.height,`Description overlaps headline at ${width}px`);
+      assert(description.y+description.height < panel.y+panel.height*.73,
+        `Description has been pushed into the bottom half at ${width}px`);
+      assert(Math.abs(panel.y-budget.y) < 5,`Intro and poster columns start at different heights at ${width}px`);
     }
   }finally{
     await page.setViewportSize({width:1440,height:900});
