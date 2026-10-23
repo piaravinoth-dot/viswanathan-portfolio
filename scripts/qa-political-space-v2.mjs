@@ -74,6 +74,34 @@ try{
     }
   }finally{await page.setViewportSize({width:1440,height:900})}
  });
+ await verify("Project names, subtitles and arrows fit their own grid cells without overlapping",async()=>{
+  try {
+    for(const width of [1440,1280,1024,768]){
+      await page.setViewportSize({width,height:900});
+      const rows=space.locator(".ps-work-aside .ps-index-row");
+      for(let i=0;i<4;i++){
+        const data=await rows.nth(i).evaluate(el=>{
+          const box=el.getBoundingClientRect();
+          const number=el.querySelector(".ps-index-number").getBoundingClientRect();
+          const text=el.querySelector(".ps-index-copy").getBoundingClientRect();
+          const title=el.querySelector(".ps-index-copy strong").getBoundingClientRect();
+          const subtitle=el.querySelector(".ps-index-copy small").getBoundingClientRect();
+          const arrow=el.querySelector(".ps-index-arrow").getBoundingClientRect();
+          return {box:{left:box.left,right:box.right,top:box.top,bottom:box.bottom},
+            number:{left:number.left,right:number.right},
+            text:{left:text.left,right:text.right,top:text.top,bottom:text.bottom},
+            title:{left:title.left,right:title.right,top:title.top,bottom:title.bottom},
+            subtitle:{top:subtitle.top,bottom:subtitle.bottom},
+            arrow:{left:arrow.left,right:arrow.right}};
+        });
+        assert(data.text.left>=data.number.right-1,`Title overlaps index number on row ${i} at ${width}px`);
+        assert(data.text.right<=data.arrow.left+1,`Title overlaps arrow on row ${i} at ${width}px`);
+        assert(data.title.bottom<=data.subtitle.top+2,`Title overlaps discipline on row ${i} at ${width}px`);
+        assert(data.text.top>=data.box.top-2 && data.text.bottom<=data.box.bottom+2,`Project text clips outside row ${i} at ${width}px: ${JSON.stringify(data)}`);
+      }
+    }
+  }finally{await page.setViewportSize({width:1440,height:900})}
+ });
  await verify("Mobile keeps a visible selected artwork and all four project controls",async()=>{
   const ctx=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
   const visit=await openSite(ctx);
