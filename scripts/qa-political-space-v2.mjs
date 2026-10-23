@@ -120,7 +120,9 @@ try{
       await collection.click();
       assert.equal(await collection.getAttribute("aria-pressed"),"true");
       await visit.getByRole("button",{name:"All works grid"}).click();
-      assert.equal(await visit.locator(".political-index-card").count(),item.count);
+      const cards=visit.locator(".political-index-card");
+      await cards.first().waitFor({state:"visible",timeout:10000});
+      assert.equal(await cards.count(),item.count);
     }finally{await visit.close()}
   }
  });
