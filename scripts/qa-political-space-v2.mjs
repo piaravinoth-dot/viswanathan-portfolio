@@ -103,9 +103,13 @@ try{
   assert.equal(await space.locator(".political-filmstrip").count(),0);
  });
  await verify("Content and Creative collections show 10 and 9 designs",async()=>{
-  await space.locator(".ps-gate-art").nth(1).click();
+  const contentTile=space.locator(".ps-gate-art-content");
+  await contentTile.evaluate(el=>el.scrollIntoView({block:"center",behavior:"instant"}));
+  await contentTile.click();
   assert.equal(await space.locator(".political-index-card").count(),10);
-  await space.locator(".ps-gate-art").nth(2).click();
+  const creativeTile=space.locator(".ps-gate-art-creative");
+  await creativeTile.evaluate(el=>el.scrollIntoView({block:"center",behavior:"instant"}));
+  await creativeTile.click();
   assert.equal(await space.locator(".political-index-card").count(),9);
  });
  await verify("Grid opens original viewer and closes by Escape",async()=>{
