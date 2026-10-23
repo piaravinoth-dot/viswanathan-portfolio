@@ -323,7 +323,7 @@
    poster distortion, added counters or fake artwork. */
 @media (min-width:901px){
   .political-space .ps-archive-gate{
-    align-items:start;
+    align-items:stretch;
   }
   .political-space .ps-gate-artworks{
     display:grid;
@@ -334,13 +334,15 @@
     aspect-ratio:1.42/1;
     height:auto;
     min-height:0;
-    align-self:start;
+    align-self:stretch;
     align-content:stretch;
     align-items:stretch;
   }
   .political-space .ps-gate-copy{
-    height:100%;
+    height:auto;
     min-height:0;
+    align-self:stretch;
+    box-sizing:border-box;
   }
   .political-space .ps-gate-art{
     align-self:stretch;
