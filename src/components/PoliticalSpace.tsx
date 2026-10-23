@@ -50,9 +50,12 @@ export default function PoliticalSpace(){
  <nav className="political-chapters" aria-label="Political Space chapters"><a href="#political-case-studies"><strong>Featured projects</strong><small>Creative direction & visual systems</small><MdArrowOutward aria-hidden="true"/></a><a href="#political-artwork"><strong>Artwork archive</strong><small>Posters, publications & concepts</small><MdArrowOutward aria-hidden="true"/></a></nav>
  <SelectedCases/>
  <section id="political-artwork" className="ps-archive-gate" aria-labelledby="ps-archive-title">
-  <div className="ps-gate-copy"><span className="ps-gate-kicker">ORIGINAL ARTWORK / CURATED ARCHIVE</span>
-    <span className="ps-gate-figure">WORK<span>WITH<br/>PURPOSE</span></span>
-    <h3 id="ps-archive-title">Explore the<br/><em>archive.</em></h3>
+  <div className="ps-gate-copy">
+    <span className="ps-gate-kicker">ORIGINAL ARTWORK / CURATED ARCHIVE</span>
+    <div className="ps-gate-statement">
+      <span className="ps-gate-figure">WORK<span>WITH<br/>PURPOSE</span></span>
+      <h3 id="ps-archive-title">Explore the<br/><em>archive.</em></h3>
+    </div>
     <p>Choose a collection to view its artworks below.</p>
   </div>
   <div className="ps-gate-artworks" role="group" aria-label="Choose political collection">
