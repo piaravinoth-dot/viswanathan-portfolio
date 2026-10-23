@@ -286,3 +286,32 @@
     max-width:360px;
   }
 }
+
+
+/* FIX: Archive cards must size to their real artwork aspect ratios.
+   Previously a two-row spanning Gujarat card stretched to the combined height
+   of both right cards. object-position only moved the image within that tall
+   empty rectangle; the rectangle itself remained wrong.
+   The three equal-width columns and source images are unchanged. */
+.political-space .ps-gate-artworks{
+  grid-template-rows:auto auto;
+  align-content:start;
+  align-self:start;
+}
+.political-space .ps-gate-art{
+  height:max-content;
+  align-self:start;
+}
+.political-space .ps-gate-art-image{
+  display:block;
+  flex:none;
+  min-height:0;
+}
+.political-space .ps-gate-art-image img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:100%;
+  max-height:none;
+  object-fit:contain;
+}
