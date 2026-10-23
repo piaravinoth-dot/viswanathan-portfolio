@@ -303,7 +303,7 @@ try{
   const section=mobile.locator("#political-space");
   assert.equal(await section.locator(".ps-index-row").count(),4);
   assert.equal(await section.locator(".ps-gate-art").count(),3);
-  assert.equal(await section.locator(".ps-featured-preview").isVisible(),false);
+  assert.equal(await section.locator(".ps-featured-preview").isVisible(),true);
   assert.equal(await section.locator(".political-exhibition,.political-index-grid,.political-filmstrip").count(),0);
   assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+2),true);
  });
