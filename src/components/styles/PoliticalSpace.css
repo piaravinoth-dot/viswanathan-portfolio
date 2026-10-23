@@ -756,3 +756,22 @@
   .political-space .ps-work-artwork img,
   .political-space .ps-work-aside .ps-index-row{animation:none;transition:none}
 }
+
+
+/* Keep all four project buttons compact in the unified viewport, regardless
+   of legacy case-study item sizing from the previous showcase layout. */
+@media(min-width:701px){
+  .political-space .ps-featured-oneview .ps-index-list>.ps-index-row{
+    height:clamp(76px,6.65vw,96px);
+    min-height:0;
+    max-height:96px;
+    box-sizing:border-box;
+  }
+}
+@media(max-width:700px){
+  .political-space .ps-featured-oneview .ps-index-list>.ps-index-row{
+    height:auto;
+    min-height:75px;
+    max-height:none;
+  }
+}
