@@ -23,7 +23,7 @@ export default function SelectedCases(){
           <div className="ps-index-list" aria-label="Featured political project selector">
             {projects.map((p,i)=><button type="button" className={`selected-case ps-index-row${active===i?' is-active':''}`}
               key={p.slug} onClick={()=>setActive(i)}
-              onFocus={()=>setActive(i)} aria-pressed={active===i}
+              onMouseEnter={()=>setActive(i)} onFocus={()=>setActive(i)} aria-pressed={active===i}
               aria-label={`Preview ${p.title}`}>
               <span className="ps-index-number" aria-hidden="true">{String(i+1).padStart(2,'0')}</span>
               <span className="ps-index-copy"><strong>{p.title}</strong><small>{p.discipline}</small></span>
