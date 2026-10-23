@@ -27,6 +27,7 @@ try{
   const rows=space.locator(".ps-index-row");
   await rows.nth(1).click();
   assert.match(await space.locator(".ps-work-artwork img").getAttribute("src"),/telangana-manifesto/);
+  await page.mouse.move(2,2); // Avoid accidental hover on a different row while verifying keyboard focus.
   await rows.nth(2).focus();
   assert.match(await space.locator(".ps-work-artwork img").getAttribute("src"),/led-rath-yatra/);
   await rows.nth(3).click();
@@ -35,6 +36,29 @@ try{
   assert.equal(await space.locator(".ps-work-case-link").getAttribute("href"),"/work/samvidhan");
   for(let i=0;i<4;i++)assert.equal(await rows.nth(i).getAttribute("type"),"button");
   assert.equal(await rows.nth(3).getAttribute("aria-pressed"),"true");
+ });
+ await verify("Hovering each left project immediately previews its matching artwork and context",async()=>{
+  const visit=await openSite(desktopContext);
+  try{
+    const rows=visit.locator("#political-case-studies .ps-index-row");
+    const projects=[
+      {slug:"nation-building",headline:"One identity."},
+      {slug:"telangana-manifesto",headline:"A publication,"},
+      {slug:"led-rath-yatra",headline:"Graphics across"},
+      {slug:"samvidhan",headline:"A deck with"}
+    ];
+    for(let i=0;i<projects.length;i++){
+      const item=projects[i];
+      await rows.nth(i).hover();
+      await visit.waitForFunction(slug=>
+        document.querySelector("#political-case-studies .ps-work-artwork img")?.getAttribute("src")?.includes("/"+slug+"/")
+      ,item.slug,{timeout:10000});
+      assert.match(await visit.locator(".ps-work-context h4").innerText(),new RegExp(item.headline.replace(".","\\.")));
+      assert.equal(await visit.locator(".ps-work-artwork").getAttribute("href"),"/work/"+item.slug);
+      assert.equal(await visit.locator(".ps-work-case-link").getAttribute("href"),"/work/"+item.slug);
+      assert.equal(await rows.nth(i).getAttribute("aria-pressed"),"true");
+    }
+  }finally{await visit.close()}
  });
  await verify("Featured Projects fits one continuous desktop section with aligned columns",async()=>{
   try{
