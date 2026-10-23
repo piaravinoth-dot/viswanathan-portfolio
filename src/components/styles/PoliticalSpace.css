@@ -789,3 +789,21 @@
   grid-column:3;
   grid-row:1;
 }
+
+
+/* Tablet: use one page column rather than squeeze long project titles into
+   half of a narrow viewport. No nested scroll pane is introduced. */
+@media(min-width:701px) and (max-width:900px){
+  .political-space .ps-editorial-layout.ps-work-layout{
+    grid-template-columns:1fr;
+    gap:26px;
+  }
+  .political-space .ps-featured-oneview .ps-index-list>.ps-index-row{
+    height:auto;
+    min-height:76px;
+    max-height:none;
+  }
+  .political-space .ps-work-aside .ps-index-row{grid-template-columns:36px minmax(0,1fr) 30px}
+  .political-space .ps-work-preview{display:block}
+  .political-space .ps-featured-stage.ps-work-artwork{height:clamp(300px,45vw,400px)}
+}
