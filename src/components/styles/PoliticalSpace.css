@@ -241,3 +241,6 @@
   .political-space .ps-gate-figure{font-size:clamp(64px,10vw,90px)}
   .political-space .ps-gate-folio{grid-column:1;grid-row:3}
 }
+
+/* Allow collection cards to be scrolled back into view without the sticky header covering them. */
+.political-space .ps-gate-art{scroll-margin-top:140px;scroll-margin-bottom:32px}
