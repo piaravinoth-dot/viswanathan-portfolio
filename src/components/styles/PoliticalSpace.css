@@ -119,6 +119,14 @@
 .political-space .ps-gate-art-creative{grid-row:2;grid-column:2}
 .political-space .ps-gate-art-image{display:flex;align-items:center;justify-content:center;min-height:0;flex:1;background:#283746;overflow:hidden;padding:12px}
 .political-space .ps-gate-art-image img{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;display:block;transition:transform .3s}
+
+/* The Gujarat print is portrait-shaped inside a tall two-row panel.
+   Align its visible artwork with the top of the neighboring poster, keeping
+   object-fit:contain so no source content is cropped or stretched. */
+.political-space .ps-gate-art-budget .ps-gate-art-image img{
+  object-position:center top;
+}
+
 .political-space .ps-gate-art-label{display:grid;grid-template-columns:16px 1fr auto;gap:9px;align-items:center;min-height:30px;font-size:11px;line-height:1.35}
 .political-space .ps-gate-art-label>span{color:var(--ps-accent);font-size:10px}
 .political-space .ps-gate-art-label strong{font-weight:500}
