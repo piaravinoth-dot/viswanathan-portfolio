@@ -5,6 +5,7 @@ on:
       - preview/political-space-v2-exhibition
       - fix/political-archive-vertical-balance
       - fix/political-archive-top-alignment
+      - fix/political-budget-poster-top-alignment
     paths:
       - "src/components/PoliticalSpace.tsx"
       - "src/components/styles/PoliticalSpace.css"
@@ -48,6 +49,14 @@ jobs:
         env:
           QA_URL: http://127.0.0.1:4173
         run: node scripts/qa-political-space-v2.mjs
+      - name: Save desktop Political Space archive screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: political-archive-layout-screenshot
+          path: political-space-archive-verified.png
+          if-no-files-found: ignore
+          retention-days: 7
       - name: WCAG audit across portfolio routes and devices
         env:
           QA_URL: http://127.0.0.1:4173
