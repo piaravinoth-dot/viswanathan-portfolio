@@ -807,3 +807,34 @@
   .political-space .ps-work-preview{display:block}
   .political-space .ps-featured-stage.ps-work-artwork{height:clamp(300px,45vw,400px)}
 }
+
+
+/* One unified artwork archive: four equally sized collections on wide screens.
+   The last card now contains the six original event/brand artworks, replacing
+   the former standalone "Work that speaks" section. */
+@media(min-width:1180px){
+  .political-space .ps-gate-artworks{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    grid-template-rows:minmax(0,1fr);
+    gap:clamp(12px,1.45vw,23px);
+  }
+  .political-space .ps-gate-art-image{
+    height:clamp(310px,31vw,455px);
+    padding:clamp(8px,.9vw,12px);
+  }
+  .political-space .ps-gate-art-label strong{font-size:clamp(11px,.95vw,14px)}
+}
+@media(min-width:701px) and (max-width:1179px){
+  .political-space .ps-gate-artworks{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-rows:auto;
+    gap:clamp(14px,2vw,23px);
+  }
+  .political-space .ps-gate-art-image{height:clamp(300px,42vw,415px)}
+}
+@media(max-width:700px){
+  .political-space .ps-gate-artworks{
+    grid-template-columns:1fr;
+    grid-template-rows:none;
+  }
+}

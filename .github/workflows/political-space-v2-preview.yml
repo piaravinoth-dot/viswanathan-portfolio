@@ -10,8 +10,12 @@ on:
       - fix/political-archive-three-equal-panels
       - feature/featured-projects-single-view-20261023
       - fix/featured-projects-hover-preview-20261023
+      - feature/merge-commercial-visual-archive-20261023
     paths:
       - "src/components/PoliticalSpace.tsx"
+      - "src/components/Work.tsx"
+      - "src/components/MainContainer.tsx"
+      - "src/data/commercialProjects.json"
       - "src/components/SelectedCases.tsx"
       - "src/components/styles/PoliticalSpace.css"
       - "scripts/qa-political-space-v2.mjs"
