@@ -84,6 +84,9 @@ try{
     const screenshotPage=await openSite(desktopContext);
     try{
       await screenshotPage.locator("#political-artwork").scrollIntoViewIfNeeded();
+      await screenshotPage.waitForFunction(()=>[...document.querySelectorAll(".ps-gate-art img")].length===3
+        &&[...document.querySelectorAll(".ps-gate-art img")].every(img=>img.complete&&img.naturalWidth>0),null,{timeout:20000});
+      await screenshotPage.locator(".ps-gate-art img").evaluateAll(async images=>{await Promise.all(images.map(img=>img.decode()))});
       await screenshotPage.screenshot({path:"political-space-archive-verified.png",animations:"disabled"});
     }finally{await screenshotPage.close()}
   }finally{await page.setViewportSize({width:1440,height:900})}
