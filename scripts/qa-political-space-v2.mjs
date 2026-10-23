@@ -105,11 +105,16 @@ try{
     await page.setViewportSize({width:1440,height:900});
     const screenshotPage=await openSite(desktopContext);
     try{
-      await screenshotPage.locator("#political-artwork").scrollIntoViewIfNeeded();
-      await screenshotPage.waitForFunction(()=>[...document.querySelectorAll(".ps-gate-art img")].length===3
-        &&[...document.querySelectorAll(".ps-gate-art img")].every(img=>img.complete&&img.naturalWidth>0),null,{timeout:20000});
-      await screenshotPage.locator(".ps-gate-art img").evaluateAll(async images=>{await Promise.all(images.map(img=>img.decode()))});
-      await screenshotPage.screenshot({path:"political-space-archive-verified.png",animations:"disabled"});
+      const archive=screenshotPage.locator("#political-artwork");
+      await archive.locator(".ps-gate-art img").evaluateAll(async images=>{
+        await Promise.all(images.map(img=>img.decode()));
+      });
+      const imageState=await archive.locator(".ps-gate-art img").evaluateAll(images=>images.map(img=>({complete:img.complete,width:img.naturalWidth})));
+      assert.equal(imageState.length,3);
+      assert(imageState.every(img=>img.complete&&img.width>0),"Original archive images must all be loaded for the screenshot");
+      // Capture the archive ELEMENT, not the viewport: GSAP's smoother can keep
+      // the viewport on the homepage even when a scroll request is issued.
+      await archive.screenshot({path:"political-space-archive-verified.png",animations:"disabled",timeout:20000});
     }finally{await screenshotPage.close()}
   }finally{await page.setViewportSize({width:1440,height:900})}
  });
