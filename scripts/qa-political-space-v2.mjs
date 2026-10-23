@@ -55,6 +55,23 @@ try{
     await page.setViewportSize({width:1440,height:900});
   }
  });
+ await verify("Three marked sections have matching top/bottom and balanced right-hand stack",async()=>{
+  try{
+    for(const width of [1440,1200,1024,920]){
+      await page.setViewportSize({width,height:900});
+      const [copy,budget,content,creative]=await Promise.all(
+        [".ps-gate-copy",".ps-gate-art-budget",".ps-gate-art-content",".ps-gate-art-creative"]
+          .map(selector=>space.locator(selector).boundingBox()));
+      assert([copy,budget,content,creative].every(Boolean));
+      const bottom=r=>r.y+r.height;
+      assert(Math.abs(copy.y-budget.y)<4,`Left/middle top mismatch at ${width}px`);
+      assert(Math.abs(budget.y-content.y)<4,`Middle/right top mismatch at ${width}px`);
+      assert(Math.abs(bottom(copy)-bottom(budget))<4,`Left/middle bottom mismatch at ${width}px`);
+      assert(Math.abs(bottom(budget)-bottom(creative))<4,`Middle/right bottom mismatch at ${width}px`);
+      assert(Math.abs(content.height-creative.height)<3,`Right cards not evenly stacked at ${width}px`);
+    }
+  }finally{await page.setViewportSize({width:1440,height:900})}
+ });
  await verify("Gujarat artwork bitmap starts alongside Content Posters — no tall blank space above",async()=>{
   try{
     for(const width of [1440,1200,1024,920]){
@@ -78,7 +95,7 @@ try{
         return {gujarat,content,frameTop:frame.top};
       });
       assert.equal(metrics.gujarat.objectFit,"contain");
-      assert.equal(metrics.gujarat.position,"50% 0%");
+      assert.equal(metrics.gujarat.position,"50% 50%");
       assert(Math.abs(metrics.gujarat.paintTop-metrics.content.paintTop)<26,
         `Gujarat poster still starts below the Content poster at ${width}px: ${JSON.stringify(metrics)}`);
       assert(metrics.gujarat.paintTop-metrics.frameTop<25,
@@ -128,7 +145,7 @@ try{
       assert(Math.abs(budget.imageTop-content.imageTop)<25,`Gujarat and Content image tops differ at ${width}px`);
       if(width>=920){
         const creative=measurements[2];
-        assert(budget.cardHeight < content.cardHeight+creative.cardHeight,`Gujarat remains stretched at ${width}px`);
+        assert(Math.abs(budget.cardHeight-(content.cardHeight+creative.cardHeight+(creative.cardTop-(content.cardTop+content.cardHeight))))<5,`Stacked right cards do not align to Gujarat card at ${width}px`);
       }
     }
   }finally{await page.setViewportSize({width:1440,height:900})}
