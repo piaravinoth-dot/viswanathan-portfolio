@@ -9,6 +9,7 @@ on:
       - fix/political-budget-intrinsic-card-height
       - fix/political-archive-three-equal-panels
       - feature/featured-projects-single-view-20261023
+      - fix/featured-projects-hover-preview-20261023
     paths:
       - "src/components/PoliticalSpace.tsx"
       - "src/components/SelectedCases.tsx"
