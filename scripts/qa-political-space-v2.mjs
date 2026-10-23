@@ -32,6 +32,29 @@ try{
   assert.equal(await space.locator(".ps-featured-stage").getAttribute("href"),"/work/led-rath-yatra");
   for(let i=0;i<4;i++)assert.match(await rows.nth(i).getAttribute("href"),/^\/work\//);
  });
+ await verify("Archive uses three equal desktop columns and even spacing",async()=>{
+  const targets=[".ps-gate-copy",".ps-gate-art-budget",".ps-gate-art-content",".ps-gate-art-creative"];
+  try {
+    for(const width of [1440,1024,920]){
+      await page.setViewportSize({width,height:900});
+      const boxes=await Promise.all(targets.map(selector=>space.locator(selector).boundingBox()));
+      const [copy,budget,content,creative]=boxes;
+      assert(boxes.every(Boolean),"All archive sections must have measurable layout");
+      assert(Math.abs(copy.width-budget.width)<3,`Text and Gujarat columns unequal at ${width}px`);
+      assert(Math.abs(budget.width-content.width)<3,`Gujarat and content columns unequal at ${width}px`);
+      assert(Math.abs(content.width-creative.width)<3,`Content and creative columns unequal at ${width}px`);
+      const gap1=budget.x-(copy.x+copy.width),gap2=content.x-(budget.x+budget.width);
+      assert(Math.abs(gap1-gap2)<3,`Archive gutters differ at ${width}px`);
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+2),true,`Horizontal overflow at ${width}px`);
+    }
+    await page.setViewportSize({width:820,height:900});
+    const budget=await space.locator(".ps-gate-art-budget").boundingBox();
+    const content=await space.locator(".ps-gate-art-content").boundingBox();
+    assert(Math.abs(budget.width-content.width)<3,"Tablet artwork columns must share width");
+  } finally {
+    await page.setViewportSize({width:1440,height:900});
+  }
+ });
  await verify("Project and artwork totals are not displayed as creative claims",async()=>{
   const labels=[
     await space.locator(".political-topline").innerText(),
