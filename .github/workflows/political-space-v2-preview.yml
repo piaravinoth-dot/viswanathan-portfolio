@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - preview/political-space-v2-exhibition
+      - fix/political-archive-vertical-balance
     paths:
       - "src/components/PoliticalSpace.tsx"
       - "src/components/styles/PoliticalSpace.css"
@@ -14,7 +15,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: political-space-v2-preview
+  group: political-space-preview-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
