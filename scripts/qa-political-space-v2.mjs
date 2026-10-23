@@ -21,16 +21,107 @@ try{
  await verify("Four original featured case studies are preserved",async()=>{
   assert.equal(await space.locator(".selected-case").count(),4);
  });
- await verify("Editorial index preview responds to hover and keyboard focus",async()=>{
+ await verify("Project selection updates the original artwork in place without navigation",async()=>{
   assert.equal(await space.locator(".ps-index-row").count(),4);
-  assert.equal(await space.locator(".ps-featured-stage img").count(),1);
+  assert.equal(await space.locator(".ps-work-artwork img").count(),1);
   const rows=space.locator(".ps-index-row");
-  await rows.nth(1).hover();
-  assert.match(await space.locator(".ps-featured-stage img").getAttribute("src"),/telangana-manifesto/);
+  await rows.nth(1).click();
+  assert.match(await space.locator(".ps-work-artwork img").getAttribute("src"),/telangana-manifesto/);
   await rows.nth(2).focus();
-  assert.match(await space.locator(".ps-featured-stage img").getAttribute("src"),/led-rath-yatra/);
-  assert.equal(await space.locator(".ps-featured-stage").getAttribute("href"),"/work/led-rath-yatra");
-  for(let i=0;i<4;i++)assert.match(await rows.nth(i).getAttribute("href"),/^\/work\//);
+  assert.match(await space.locator(".ps-work-artwork img").getAttribute("src"),/led-rath-yatra/);
+  await rows.nth(3).click();
+  assert.match(await space.locator(".ps-work-artwork img").getAttribute("src"),/samvidhan/);
+  assert.equal(await space.locator(".ps-work-artwork").getAttribute("href"),"/work/samvidhan");
+  assert.equal(await space.locator(".ps-work-case-link").getAttribute("href"),"/work/samvidhan");
+  for(let i=0;i<4;i++)assert.equal(await rows.nth(i).getAttribute("type"),"button");
+  assert.equal(await rows.nth(3).getAttribute("aria-pressed"),"true");
+ });
+ await verify("Featured Projects fits one continuous desktop section with aligned columns",async()=>{
+  try{
+    for(const width of [1440,1280,1024]){
+      await page.setViewportSize({width,height:900});
+      const selectors=[".ps-featured-oneview",".ps-work-aside",".ps-work-preview",".ps-index-row:first-child",".ps-index-row:last-child",".ps-work-artwork",".ps-work-context"];
+      const boxes=await Promise.all(selectors.map(sel=>space.locator(sel).boundingBox()));
+      assert(boxes.every(Boolean),`Missing featured project layout at ${width}px`);
+      const [section,left,right,first,last,art,context]=boxes;
+      const bottom=r=>r.y+r.height;
+      assert(Math.abs(left.y-right.y)<5,`Featured columns start at different heights at ${width}px`);
+      assert(last.y>first.y,`Featured rows not sequential at ${width}px`);
+      assert(bottom(context)<=bottom(section)+3,`Right case context goes outside the section at ${width}px`);
+      assert(bottom(last)<=bottom(section)+3,`Left projects go outside the section at ${width}px`);
+      if(section.height>=870){
+        const measured=await page.evaluate(()=>{
+          const sels=[".ps-featured-oneview",".selected-cases-inner",".ps-work-overline",".ps-work-layout",".ps-work-aside",".ps-work-heading",".ps-index-list",".ps-work-preview",".ps-work-artwork",".ps-work-context"];
+          return sels.map(sel=>{
+            const el=document.querySelector(".ps-featured-oneview "+sel)||document.querySelector(sel);
+            if(!el)return{sel,missing:true};
+            const b=el.getBoundingClientRect(),c=getComputedStyle(el);
+            return{sel,top:b.top,height:b.height,width:b.width,paddingTop:c.paddingTop,paddingBottom:c.paddingBottom,minHeight:c.minHeight,display:c.display,position:c.position};
+          });
+        });
+        console.log("FEATURED_GEOMETRY_DEBUG",JSON.stringify({width,measured}));
+      }
+      assert(section.height<870,`Featured work requires more than one normal desktop scroll at ${width}px, height ${section.height}`);
+      const scrollState=await page.evaluate(()=>{
+        const root=document.querySelector(".ps-featured-oneview");
+        const preview=document.querySelector(".ps-work-preview");
+        const left=document.querySelector(".ps-work-aside");
+        return [root,preview,left].map(el=>({height:el.scrollHeight,client:el.clientHeight,overflowY:getComputedStyle(el).overflowY,position:getComputedStyle(el).position}));
+      });
+      assert(scrollState.every(x=>!["auto","scroll"].includes(x.overflowY)||x.height<=x.client+4),`Nested scrolling found at ${width}px`);
+      assert.notEqual(scrollState[1].position,"sticky",`Sticky separate right pane at ${width}px`);
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),true,`Horizontal overflow at ${width}px`);
+    }
+  }finally{await page.setViewportSize({width:1440,height:900})}
+ });
+ await verify("Project names, subtitles and arrows fit their own grid cells without overlapping",async()=>{
+  try {
+    for(const width of [1440,1280,1024,768]){
+      await page.setViewportSize({width,height:900});
+      const rows=space.locator(".ps-work-aside .ps-index-row");
+      for(let i=0;i<4;i++){
+        const data=await rows.nth(i).evaluate(el=>{
+          const box=el.getBoundingClientRect();
+          const number=el.querySelector(".ps-index-number").getBoundingClientRect();
+          const text=el.querySelector(".ps-index-copy").getBoundingClientRect();
+          const title=el.querySelector(".ps-index-copy strong").getBoundingClientRect();
+          const subtitle=el.querySelector(".ps-index-copy small").getBoundingClientRect();
+          const arrow=el.querySelector(".ps-index-arrow").getBoundingClientRect();
+          return {box:{left:box.left,right:box.right,top:box.top,bottom:box.bottom},
+            number:{left:number.left,right:number.right},
+            text:{left:text.left,right:text.right,top:text.top,bottom:text.bottom},
+            title:{left:title.left,right:title.right,top:title.top,bottom:title.bottom},
+            subtitle:{top:subtitle.top,bottom:subtitle.bottom},
+            arrow:{left:arrow.left,right:arrow.right}};
+        });
+        assert(data.text.left>=data.number.right-1,`Title overlaps index number on row ${i} at ${width}px`);
+        assert(data.text.right<=data.arrow.left+1,`Title overlaps arrow on row ${i} at ${width}px`);
+        assert(data.title.bottom<=data.subtitle.top+2,`Title overlaps discipline on row ${i} at ${width}px`);
+        assert(data.text.top>=data.box.top-2 && data.text.bottom<=data.box.bottom+2,`Project text clips outside row ${i} at ${width}px: ${JSON.stringify(data)}`);
+      }
+    }
+  }finally{await page.setViewportSize({width:1440,height:900})}
+ });
+ await verify("Mobile keeps a visible selected artwork and all four project controls",async()=>{
+  const ctx=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+  const visit=await openSite(ctx);
+  try{
+    const selector=visit.locator(".ps-work-aside .ps-index-row");
+    assert.equal(await selector.count(),4);
+    assert.equal(await visit.locator(".ps-work-preview").isVisible(),true);
+    await selector.nth(1).click();
+    assert.match(await visit.locator(".ps-work-artwork img").getAttribute("src"),/telangana-manifesto/);
+    assert.equal(await visit.locator(".ps-work-case-link").getAttribute("href"),"/work/telangana-manifesto");
+    assert.equal(await visit.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),true);
+  }finally{await visit.close();await ctx.close()}
+ });
+ await verify("Capture the featured project and selected artwork together",async()=>{
+  const visit=await openSite(desktopContext);
+  try{
+    await visit.locator(".ps-work-artwork img").evaluate(img=>img.decode());
+    const section=visit.locator("#political-case-studies");
+    await section.screenshot({path:"political-featured-oneview.png",animations:"disabled"});
+  }finally{await visit.close()}
  });
  await verify("Archive shows heading ABOVE three equally-sized artwork cards",async()=>{
   try{
@@ -118,13 +209,14 @@ try{
   const labels=[
     await space.locator(".political-topline").innerText(),
     await space.locator(".political-chapters").innerText(),
-    await space.locator(".ps-featured-heading").innerText(),
+    await space.locator(".ps-work-heading").innerText(),
     await space.locator(".ps-gate-copy").innerText(),
     await space.locator(".ps-gate-folio").innerText(),
     (await space.locator(".political-view-context").count())?await space.locator(".political-view-context").innerText():""
   ].join(" ");
   assert.doesNotMatch(labels,/\b(?:26|04|03)\b|(?:projects|works|artworks)\s*[:/–-]?\s*\d+/i);
-  assert.equal(await space.locator(".ps-index-number,.ps-preview-folio,.ps-featured-count").count(),0);
+  assert.equal(await space.locator(".ps-index-number").count(),4);
+  assert.equal(await space.locator(".ps-preview-folio,.ps-featured-count").count(),0);
  });
  await verify("No political artwork gallery is open before visitor chooses a collection",async()=>{
   assert.equal(await space.locator(".ps-gate-art[aria-pressed=true]").count(),0);
@@ -211,7 +303,7 @@ try{
   const section=mobile.locator("#political-space");
   assert.equal(await section.locator(".ps-index-row").count(),4);
   assert.equal(await section.locator(".ps-gate-art").count(),3);
-  assert.equal(await section.locator(".ps-featured-preview").isVisible(),false);
+  assert.equal(await section.locator(".ps-featured-preview").isVisible(),true);
   assert.equal(await section.locator(".political-exhibition,.political-index-grid,.political-filmstrip").count(),0);
   assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+2),true);
  });

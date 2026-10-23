@@ -8,8 +8,10 @@ on:
       - fix/political-budget-poster-top-alignment
       - fix/political-budget-intrinsic-card-height
       - fix/political-archive-three-equal-panels
+      - feature/featured-projects-single-view-20261023
     paths:
       - "src/components/PoliticalSpace.tsx"
+      - "src/components/SelectedCases.tsx"
       - "src/components/styles/PoliticalSpace.css"
       - "scripts/qa-political-space-v2.mjs"
       - ".github/workflows/political-space-v2-preview.yml"
@@ -57,6 +59,14 @@ jobs:
         with:
           name: political-archive-layout-screenshot
           path: political-space-archive-verified.png
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Save featured-projects viewport screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: featured-projects-oneview
+          path: political-featured-oneview.png
           if-no-files-found: ignore
           retention-days: 7
       - name: WCAG audit across portfolio routes and devices

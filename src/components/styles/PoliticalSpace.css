@@ -528,3 +528,282 @@
   .political-space .ps-gate-art{height:auto;min-height:0}
   .political-space .ps-gate-folio{grid-column:auto;grid-row:auto}
 }
+
+
+/* Featured Projects: one coherent editorial viewport. This replaces the former
+   tall index + sticky-preview treatment only in Political Space. */
+.political-space .ps-featured-oneview{
+  padding:clamp(34px,4.5vw,62px) 0 clamp(54px,6vw,82px);
+  background:#0b1017;
+  color:#f3f1ee;
+}
+.political-space .ps-featured-oneview .selected-cases-inner{
+  width:calc(100% - 76px);
+  max-width:1340px;
+}
+.political-space .ps-work-overline{
+  display:flex;
+  align-items:center;
+  gap:24px;
+  width:100%;
+  margin-bottom:clamp(22px,2.6vw,38px);
+  font:600 10px/1.4 Geist,Arial,sans-serif;
+  letter-spacing:.155em;
+  color:#dfab87;
+}
+.political-space .ps-work-overline>span:last-child{color:#8894a3}
+.political-space .ps-work-rule{height:1px;background:#394552;flex:1}
+.political-space .ps-editorial-layout.ps-work-layout{
+  display:grid;
+  grid-template-columns:minmax(0,.91fr) minmax(0,1.09fr);
+  gap:clamp(28px,3.5vw,52px);
+  align-items:start;
+  border:0;
+  padding:0;
+}
+.political-space .ps-work-aside{min-width:0}
+.political-space .ps-work-heading{padding:0 0 clamp(24px,3vw,38px)}
+.political-space .ps-work-heading h3{
+  margin:0 0 12px;
+  font-size:clamp(37px,3.7vw,54px);
+  font-weight:475;
+  letter-spacing:-.06em;
+  line-height:1.05;
+}
+.political-space .ps-work-heading p{
+  max-width:485px;
+  margin:0;
+  font-size:clamp(13px,1.08vw,16px);
+  line-height:1.6;
+  color:#aebccc;
+}
+.political-space .ps-work-aside .ps-index-list{border-top:1px solid #3a4551}
+.political-space .ps-work-aside .ps-index-row{
+  font:inherit;
+  appearance:none;
+  border:0;
+  border-bottom:1px solid #3a4551;
+  color:#dbe1e6;
+  background:transparent;
+  width:100%;
+  display:grid;
+  grid-template-columns:36px minmax(0,1fr) 30px;
+  gap:clamp(10px,1.4vw,18px);
+  min-height:clamp(79px,7.15vw,104px);
+  padding:clamp(15px,1.7vw,22px) 14px;
+  text-align:left;
+  align-items:center;
+  cursor:pointer;
+  box-sizing:border-box;
+  transition:background .23s,color .23s;
+}
+.political-space .ps-work-aside .ps-index-row::before{
+  top:0;bottom:0;left:0;width:3px;
+  transform:none;
+  background:transparent;
+}
+.political-space .ps-work-aside .ps-index-row.is-active{
+  background:#302725;
+  color:#fff;
+}
+.political-space .ps-work-aside .ps-index-row.is-active::before{background:#e5ad86}
+.political-space .ps-work-aside .ps-index-row:hover{background:#202a35;color:#fff}
+.political-space .ps-work-aside .ps-index-row.is-active:hover{background:#392c29}
+.political-space .ps-work-aside .ps-index-number{
+  color:#95a5b4;
+  font-size:14px;
+  font-weight:500;
+  padding:0;
+}
+.political-space .ps-work-aside .ps-index-row.is-active .ps-index-number{color:#e5ad86}
+.political-space .ps-work-aside .ps-index-copy{gap:6px}
+.political-space .ps-work-aside .ps-index-copy strong{
+  font-size:clamp(18px,2vw,28px);
+  font-weight:450;
+  line-height:1.15;
+  letter-spacing:-.04em;
+  transform:none;
+}
+.political-space .ps-work-aside .ps-index-copy small{
+  font-size:clamp(11px,.85vw,13px);
+  line-height:1.4;
+  color:#9faebb;
+}
+.political-space .ps-work-aside .ps-index-arrow{
+  transform:none;
+  font-size:23px;
+  color:#bfc7ce;
+}
+.political-space .ps-work-aside .ps-index-row.is-active .ps-index-arrow{color:#e5ad86;transform:none}
+.political-space .ps-work-preview{
+  position:static;
+  top:auto;
+  padding:0;
+  border:0;
+  background:transparent;
+  min-width:0;
+  width:100%;
+  align-self:start;
+}
+.political-space .ps-featured-stage.ps-work-artwork{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  height:clamp(285px,30vw,408px);
+  min-height:0;
+  aspect-ratio:auto;
+  border:1px solid #4b5b6b;
+  background:#293746;
+  box-sizing:border-box;
+  overflow:hidden;
+  position:relative;
+}
+.political-space .ps-work-artwork img{
+  width:100%;
+  height:100%;
+  max-height:none;
+  object-fit:contain;
+  animation:ps-original-arrive .23s ease both;
+}
+.political-space .ps-work-expand{
+  position:absolute;
+  right:14px;
+  bottom:12px;
+  font-size:20px;
+  font-weight:500;
+  color:#e5ad86;
+  text-shadow:0 1px 3px #15202c;
+}
+.political-space .ps-preview-bottom.ps-work-context{
+  padding:18px 0 0;
+  margin-top:15px;
+  border-top:1px solid #44505e;
+  align-items:flex-end;
+  gap:20px;
+  display:flex;
+  justify-content:space-between;
+}
+.political-space .ps-work-context-copy{min-width:0;flex:1}
+.political-space .ps-work-context-copy>span{
+  font-size:10px;letter-spacing:.13em;
+  font-weight:600;color:#e5ad86;
+}
+.political-space .ps-work-context h4{
+  font-size:clamp(20px,2.05vw,29px);
+  line-height:1.19;
+  font-weight:450;
+  margin:8px 0 8px;
+}
+.political-space .ps-work-context p{
+  font-size:12px;
+  line-height:1.6;
+  max-width:500px;
+  margin:0;
+  color:#afbcca;
+}
+.political-space .ps-work-case-link{
+  flex:none;
+  min-height:46px;
+  display:inline-flex;
+  align-items:center;
+  gap:18px;
+  justify-content:space-between;
+  padding:12px 16px;
+  box-sizing:border-box;
+  background:#e5ad86;
+  color:#12202d;
+  font-size:10px;
+  font-weight:750;
+  letter-spacing:.08em;
+  text-decoration:none;
+  transition:background .18s;
+}
+.political-space .ps-work-case-link:hover{background:#f2c39f}
+.political-space .ps-work-case-link span{font-size:17px}
+@media(min-width:901px) and (max-height:800px){
+  .political-space .ps-featured-oneview{padding-top:28px;padding-bottom:44px}
+  .political-space .ps-work-overline{margin-bottom:22px}
+  .political-space .ps-work-heading{padding-bottom:20px}
+  .political-space .ps-work-aside .ps-index-row{min-height:78px;padding-block:12px}
+  .political-space .ps-featured-stage.ps-work-artwork{height:clamp(260px,28vw,355px)}
+}
+@media(max-width:1050px){
+  .political-space .ps-featured-oneview .selected-cases-inner{width:calc(100% - 52px)}
+  .political-space .ps-editorial-layout.ps-work-layout{gap:25px;grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr)}
+  .political-space .ps-work-aside .ps-index-row{padding-inline:8px}
+  .political-space .ps-preview-bottom.ps-work-context{flex-direction:column;align-items:stretch}
+  .political-space .ps-work-case-link{align-self:flex-start}
+}
+@media(max-width:700px){
+  .political-space .ps-featured-oneview{padding:28px 0 48px}
+  .political-space .ps-featured-oneview .selected-cases-inner{width:calc(100% - 36px)}
+  .political-space .ps-work-overline{gap:10px;margin-bottom:20px;font-size:9px}
+  .political-space .ps-work-overline>span:last-child{font-size:8px}
+  .political-space .ps-editorial-layout.ps-work-layout{grid-template-columns:minmax(0,1fr);gap:24px}
+  .political-space .ps-work-heading{padding-bottom:20px}
+  .political-space .ps-work-heading h3{font-size:clamp(35px,9vw,49px)}
+  .political-space .ps-work-heading p{font-size:13px}
+  .political-space .ps-work-aside .ps-index-row{min-height:70px;padding:12px 8px;grid-template-columns:25px minmax(0,1fr) 22px}
+  .political-space .ps-work-aside .ps-index-copy strong{font-size:clamp(19px,5.2vw,24px)}
+  .political-space .ps-work-aside .ps-index-copy small{font-size:11px}
+  .political-space .ps-work-preview{display:block}
+  .political-space .ps-featured-stage.ps-work-artwork{height:clamp(235px,68vw,395px)}
+  .political-space .ps-preview-bottom.ps-work-context{margin-top:12px;padding-top:16px}
+  .political-space .ps-work-case-link{width:100%;justify-content:center;gap:18px}
+}
+@media(prefers-reduced-motion:reduce){
+  .political-space .ps-work-artwork img,
+  .political-space .ps-work-aside .ps-index-row{animation:none;transition:none}
+}
+
+
+/* Keep all four project buttons compact in the unified viewport, regardless
+   of legacy case-study item sizing from the previous showcase layout. */
+@media(min-width:701px){
+  .political-space .ps-featured-oneview .ps-index-list>.ps-index-row{
+    height:clamp(76px,6.65vw,96px);
+    min-height:0;
+    max-height:96px;
+    box-sizing:border-box;
+  }
+}
+@media(max-width:700px){
+  .political-space .ps-featured-oneview .ps-index-list>.ps-index-row{
+    height:auto;
+    min-height:75px;
+    max-height:none;
+  }
+}
+
+
+/* Override legacy Political Space column assignments that were placing the
+   project NAME in the narrow folio cell and the arrow in the name cell. */
+.political-space .ps-featured-oneview .ps-index-row>.ps-index-number{grid-column:1;grid-row:1}
+.political-space .ps-featured-oneview .ps-index-row>.ps-index-copy{
+  grid-column:2;
+  grid-row:1;
+  min-width:0;
+}
+.political-space .ps-featured-oneview .ps-index-row>.ps-index-arrow{
+  grid-column:3;
+  grid-row:1;
+}
+
+
+/* Tablet: use one page column rather than squeeze long project titles into
+   half of a narrow viewport. No nested scroll pane is introduced. */
+@media(min-width:701px) and (max-width:900px){
+  .political-space .ps-editorial-layout.ps-work-layout{
+    grid-template-columns:1fr;
+    gap:26px;
+  }
+  .political-space .ps-featured-oneview .ps-index-list>.ps-index-row{
+    height:auto;
+    min-height:76px;
+    max-height:none;
+  }
+  .political-space .ps-work-aside .ps-index-row{grid-template-columns:36px minmax(0,1fr) 30px}
+  .political-space .ps-work-preview{display:block}
+  .political-space .ps-featured-stage.ps-work-artwork{height:clamp(300px,45vw,400px)}
+}
