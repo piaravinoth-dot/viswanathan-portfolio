@@ -68,7 +68,7 @@ try{
         const left=document.querySelector(".ps-work-aside");
         return [root,preview,left].map(el=>({height:el.scrollHeight,client:el.clientHeight,overflowY:getComputedStyle(el).overflowY,position:getComputedStyle(el).position}));
       });
-      assert(scrollState.every(x=>x.height<=x.client+4),`Nested scrolling found at ${width}px`);
+      assert(scrollState.every(x=>!["auto","scroll"].includes(x.overflowY)||x.height<=x.client+4),`Nested scrolling found at ${width}px`);
       assert.notEqual(scrollState[1].position,"sticky",`Sticky separate right pane at ${width}px`);
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),true,`Horizontal overflow at ${width}px`);
     }
