@@ -32,6 +32,28 @@ try{
   assert.equal(await space.locator(".ps-featured-stage").getAttribute("href"),"/work/led-rath-yatra");
   for(let i=0;i<4;i++)assert.match(await rows.nth(i).getAttribute("href"),/^\/work\//);
  });
+ await verify("Archive heading uses full width — headline and guidance aligned right",async()=>{
+  try{
+    for(const width of [1440,1200,1024,920,820]){
+      await page.setViewportSize({width,height:900});
+      const [statement,figure,invitation,heading,description,cards]=await Promise.all(
+        [".ps-gate-statement",".ps-gate-figure",".ps-gate-invitation",".ps-gate-invitation h3",".ps-gate-invitation p",".ps-gate-artworks"]
+          .map(selector=>space.locator(selector).boundingBox()));
+      const right=r=>r.x+r.width, bottom=r=>r.y+r.height;
+      assert(figure.x < invitation.x,`Heading halves not separated at ${width}px`);
+      assert(right(figure)+15 <= invitation.x,`Headline overlaps work title at ${width}px`);
+      assert(right(statement)-right(heading)<14,`Right heading leaves excess unused space at ${width}px`);
+      assert(right(statement)-right(description)<14,`Right guidance leaves excess unused space at ${width}px`);
+      assert(bottom(statement) <= cards.y+2,`Heading overlaps artwork cards at ${width}px`);
+      assert(Math.abs(right(statement)-right(cards))<4,`Heading does not fill artwork row width at ${width}px`);
+    }
+    await page.setViewportSize({width:390,height:844});
+    const [figure,invitation,art]=await Promise.all(
+      [".ps-gate-figure",".ps-gate-invitation",".ps-gate-artworks"].map(x=>space.locator(x).boundingBox()));
+    assert(invitation.y >= figure.y+figure.height,`Mobile title should stack beneath Work with Purpose`);
+    assert(invitation.y+invitation.height < art.y,`Mobile title must stay above cards`);
+  }finally{await page.setViewportSize({width:1440,height:900})}
+ });
  await verify("Archive shows heading ABOVE three equally-sized artwork cards",async()=>{
   try{
     for(const width of [1440,1200,1024,920,820]){
@@ -83,11 +105,16 @@ try{
     await page.setViewportSize({width:1440,height:900});
     const screenshotPage=await openSite(desktopContext);
     try{
-      await screenshotPage.locator("#political-artwork").scrollIntoViewIfNeeded();
-      await screenshotPage.waitForFunction(()=>[...document.querySelectorAll(".ps-gate-art img")].length===3
-        &&[...document.querySelectorAll(".ps-gate-art img")].every(img=>img.complete&&img.naturalWidth>0),null,{timeout:20000});
-      await screenshotPage.locator(".ps-gate-art img").evaluateAll(async images=>{await Promise.all(images.map(img=>img.decode()))});
-      await screenshotPage.screenshot({path:"political-space-archive-verified.png",animations:"disabled"});
+      const archive=screenshotPage.locator("#political-artwork");
+      await archive.locator(".ps-gate-art img").evaluateAll(async images=>{
+        await Promise.all(images.map(img=>img.decode()));
+      });
+      const imageState=await archive.locator(".ps-gate-art img").evaluateAll(images=>images.map(img=>({complete:img.complete,width:img.naturalWidth})));
+      assert.equal(imageState.length,3);
+      assert(imageState.every(img=>img.complete&&img.width>0),"Original archive images must all be loaded for the screenshot");
+      // Capture the archive ELEMENT, not the viewport: GSAP's smoother can keep
+      // the viewport on the homepage even when a scroll request is issued.
+      await archive.screenshot({path:"political-space-archive-verified.png",animations:"disabled",timeout:20000});
     }finally{await screenshotPage.close()}
   }finally{await page.setViewportSize({width:1440,height:900})}
  });
@@ -107,7 +134,7 @@ try{
     for(const width of [1440,1024,920,820,390]){
       await page.setViewportSize({width,height:900});
       const [copy,kicker,statement,description,firstCard]=await Promise.all(
-        [".ps-gate-copy",".ps-gate-kicker",".ps-gate-statement",".ps-gate-copy>p",".ps-gate-art-budget"].map(x=>space.locator(x).boundingBox()));
+        [".ps-gate-copy",".ps-gate-kicker",".ps-gate-statement",".ps-gate-invitation p",".ps-gate-art-budget"].map(x=>space.locator(x).boundingBox()));
       assert(kicker.y>=copy.y-3 && statement.y>=kicker.y,`Archive text order incorrect at ${width}px`);
       assert(description.y>=statement.y,`Description precedes heading at ${width}px`);
       assert(description.y+description.height<=firstCard.y,`Description overlaps first artwork at ${width}px`);

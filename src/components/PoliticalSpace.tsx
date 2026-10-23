@@ -54,9 +54,11 @@ export default function PoliticalSpace(){
     <span className="ps-gate-kicker">ORIGINAL ARTWORK / CURATED ARCHIVE</span>
     <div className="ps-gate-statement">
       <span className="ps-gate-figure">WORK<span>WITH<br/>PURPOSE</span></span>
-      <h3 id="ps-archive-title">Explore the<br/><em>archive.</em></h3>
+      <div className="ps-gate-invitation">
+        <h3 id="ps-archive-title">Explore the<br/><em>archive.</em></h3>
+        <p>Choose a collection to view its artworks below.</p>
+      </div>
     </div>
-    <p>Choose a collection to view its artworks below.</p>
   </div>
   <div className="ps-gate-artworks" role="group" aria-label="Choose political collection">
    {collections.map(c=>{const sample=pieces.find(p=>p.category===c.id);return sample?<button type="button" key={c.id} className={`ps-gate-art ps-gate-art-${c.id}`} aria-pressed={category===c.id} onClick={()=>{setCategory(c.id);setIndex(0);setZoom(false)}} aria-label={`View ${c.label} collection`}>
