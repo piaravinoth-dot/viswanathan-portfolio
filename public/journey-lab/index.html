@@ -1,114 +1,67 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#162630"><meta name="description" content="Viswanathan G — experimental interactive journey. Move through five chapters of creative work and discover the original artwork."><title>Journey · Viswanathan G — Interactive Prototype</title>
-<style>
-:root{--navy:#162630;--sand:#f0e9dc;--muted:#b4bbb9;--coral:#c5654b;--accent:#e2b07b;--edge:clamp(20px,4.8vw,84px)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--navy);color:var(--sand);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}button{font:inherit;cursor:pointer}a{color:inherit}button,a{-webkit-tap-highlight-color:transparent}:focus-visible{outline:3px solid #ffca83;outline-offset:4px}img{max-width:100%;display:block}::selection{background:#e2b07b;color:#162630}
-.skip{position:fixed;z-index:1000;top:-50px;left:20px;background:white;color:#162630;padding:12px}.skip:focus{top:15px}
-.topbar{height:80px;position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 var(--edge);border-bottom:1px solid #ffffff24;pointer-events:none}
-.topbar>a,.topbar .side{pointer-events:auto}.mark{text-decoration:none;font-weight:700;font-size:22px;letter-spacing:-.08em}.mark:after{content:"";display:inline-block;height:5px;width:5px;background:var(--accent);border-radius:50%;margin-left:2px}.side{display:flex;align-items:center;gap:20px;font-size:11px;letter-spacing:.12em;text-transform:uppercase}.side a{text-decoration:none;border-bottom:1px solid var(--sand);padding-bottom:5px}.side span{color:#b9c5c9}
-.intro{min-height:100svh;position:relative;display:flex;align-items:center;padding:130px var(--edge) 110px;isolation:isolate;overflow:hidden}
-.intro .paper{position:absolute;right:-10%;top:8%;width:50%;height:90%;border:1px solid #ffffff1e;transform:rotate(-13deg);pointer-events:none}.intro .paper:before{content:"";position:absolute;inset:5%;border:1px solid #ffffff12}
-.intro .arc{position:absolute;left:49%;top:-25%;width:80vw;aspect-ratio:1;border:1px solid #f2dabb34;border-radius:50%;pointer-events:none}
-.intro .intro-copy{max-width:1120px;position:relative;z-index:2}
-.kicker{display:inline-flex;align-items:center;gap:15px;font-size:11px;letter-spacing:.21em;text-transform:uppercase;color:var(--accent);font-weight:700}.kicker:before{content:"";width:35px;height:1px;background:currentColor}
-.intro h1{font:normal clamp(84px,13.6vw,240px)/.82 Georgia,"Times New Roman",serif;letter-spacing:-.115em;margin:39px 0 27px}.intro h1 i{color:var(--accent);font-weight:400;display:inline-block}
-.intro .intro-sub{max-width:650px;font-size:clamp(16px,1.4vw,21px);line-height:1.65;color:#c3c8c3;margin:0}
-.begin{background:var(--sand);color:var(--navy);border:0;padding:19px 24px;display:inline-flex;gap:60px;align-items:center;margin-top:43px;font-size:12px;font-weight:bold;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .2s}.begin:hover{background:#e8b280;transform:translateY(-3px)}
-.intro-foot{position:absolute;left:var(--edge);right:var(--edge);bottom:33px;border-top:1px solid #ffffff2b;padding-top:20px;display:flex;justify-content:space-between;font-size:10px;letter-spacing:.15em;color:#c9cdc8;text-transform:uppercase}.intro-foot em{font:italic 19px Georgia,serif;color:var(--accent);letter-spacing:0}
-.runway{height:580svh;position:relative}.viewport{position:sticky;top:0;height:100svh;min-height:540px;overflow:hidden;background:#192832;isolation:isolate}
-.track{height:100%;width:500%;display:flex;will-change:transform;position:absolute;inset:0 auto 0 0}
-.scene{position:relative;flex:0 0 20%;height:100%;min-width:0;display:grid;grid-template-columns:48% 52%;align-items:center;padding:84px var(--edge) 84px;overflow:hidden}
-.scene:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:#fff5}
-.scene:after{content:"";position:absolute;left:50%;top:12%;height:65%;width:1px;background:currentColor;opacity:.11;pointer-events:none}
-.scene-one{background:#28343c;color:#f1ebdf}.scene-two{background:#614b47;color:#faf3e6}.scene-three{background:#4c5d59;color:#faf1dc}.scene-four{background:#9a8a79;color:#1e2b31}.scene-five{background:#254250;color:#f2efe5}
-.scene-light{position:absolute;width:58vw;aspect-ratio:1;right:-12%;top:-40%;border:1px solid currentColor;border-radius:50%;opacity:.1;pointer-events:none}
-.scene-light:before,.scene-light:after{content:"";position:absolute;border:1px solid currentColor;border-radius:50%}.scene-light:before{inset:10%}.scene-light:after{inset:21%}
-.scene-copy{position:relative;z-index:4;padding-right:clamp(25px,4vw,75px);max-width:720px}
-.scene-num{display:block;font-size:11px;letter-spacing:.21em;text-transform:uppercase;opacity:.8;font-weight:bold;margin-bottom:29px}
-.scene-year{display:block;font:italic clamp(38px,5vw,78px)/.9 Georgia,serif;letter-spacing:-.05em;color:#e7b987;margin-bottom:13px}.scene-four .scene-year{color:#713d31}.scene h2{font:normal clamp(55px,6.5vw,118px)/.92 Georgia,serif;letter-spacing:-.072em;margin:0 0 29px;max-width:760px}
-.scene h2 em{font-weight:400;font-style:italic;opacity:.75}
-.scene p{font-size:clamp(15px,1.14vw,19px);line-height:1.75;max-width:450px;margin:0 0 22px;opacity:.86}
-.scene small{display:block;font-size:10px;letter-spacing:.14em;line-height:1.6;text-transform:uppercase;opacity:.68}
-.stage-art{width:100%;height:80%;position:relative;display:grid;place-content:center;z-index:2;perspective:1400px;pointer-events:none}
-.art-frame{position:absolute;left:17%;top:11%;height:77%;width:70%;background:#e8ddca;border:12px solid #e4dacf;box-shadow:22px 32px 0 #00000023,0 25px 75px #0003;transform:rotate(-4deg);transition:transform .6s cubic-bezier(.2,.8,.2,1);pointer-events:auto;overflow:hidden}
-.art-frame>img{width:100%;height:100%;object-fit:cover;object-position:top center;filter:none}
-.art-frame:hover,.art-frame:focus-within{transform:rotate(-1deg) translateY(-10px)}
-.art-secondary{position:absolute;right:1%;bottom:3%;width:39%;height:45%;background:#eee6d5;box-shadow:10px 15px 40px #0004;transform:rotate(8deg);overflow:hidden;pointer-events:none}.art-secondary img{width:100%;height:100%;object-fit:cover;object-position:center top}
-.art-caption{position:absolute;bottom:1%;left:10%;font-size:10px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;opacity:.75}
-.art-explore{position:absolute;bottom:3%;right:2%;z-index:3;border:1px solid #f7efe5a0;padding:15px 18px;background:#14252de9;color:#f3e9d6;font-size:11px;text-transform:uppercase;letter-spacing:.11em;pointer-events:auto;transition:background .2s}
-.art-explore:hover{background:#b75c47}.scene-four .art-explore{background:#283f4c}
-.craft-type{position:absolute;left:8%;top:22%;width:78%;aspect-ratio:.88;border:1px solid #e9d5b875;transform:rotate(-7deg);display:grid;place-content:center;text-align:center}
-.craft-type:before{content:"";position:absolute;inset:15px;border:1px solid #e9d5b852}.craft-type span{font:italic clamp(55px,7.2vw,125px)/.89 Georgia,serif;letter-spacing:-.065em;color:#f0ddc2}.craft-type small{color:#e9d5b8;font-size:10px;letter-spacing:.2em;margin-top:18px}
-.final-type{font:italic clamp(70px,10vw,160px)/.82 Georgia,serif;text-align:center;letter-spacing:-.1em;color:#f1e2c9;transform:rotate(-7deg)}
-.world-foreground{position:absolute;left:0;right:0;bottom:0;height:15%;z-index:5;pointer-events:none;border-top:1px solid #ffe9c329;background:#14252dce;display:flex;align-items:center;justify-content:space-between;padding:8px var(--edge)}
-.travel-guide{display:flex;align-items:center;gap:20px}.walker{width:46px;height:46px;border:1px solid #e2b07b9a;border-radius:50%;display:grid;place-content:center;position:relative;color:#e2b07b;font-size:16px;font-weight:bold;letter-spacing:-.07em}.walker:after{content:"";position:absolute;bottom:-12px;width:40px;height:1px;background:#e2b07b8e}
-.guide-label{display:flex;flex-direction:column;gap:6px}.guide-label strong{font:italic 22px Georgia,serif;color:#f6eee2}.guide-label span{font-size:10px;letter-spacing:.13em;color:#b7c6c7;text-transform:uppercase}
-.progress-area{width:min(500px,44%);display:flex;flex-direction:column;gap:12px}.progress-top{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#ece3d5}.progress-line{height:1px;background:#ffffff40;position:relative}.progress-line:after{content:"";position:absolute;left:0;top:-2px;background:#e2b07b;width:var(--travel,0%);height:5px;transition:width .08s linear}
-.run-head{position:absolute;top:0;left:0;right:0;height:76px;z-index:9;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:0 var(--edge);border-bottom:1px solid #ffffff3d;background:#192c36e3;color:#f8e9d8;backdrop-filter:blur(4px)}
-.run-head .micro{font-size:10px;letter-spacing:.2em;text-transform:uppercase}.run-head .steps{display:flex;gap:9px;align-items:center}
-.steps button{width:38px;height:38px;border:1px solid #d3bfa364;background:transparent;color:#f4e7d2;border-radius:50%;font-size:11px}.steps button[aria-current="step"]{background:#e2b07b;color:#1e3038;border-color:#e2b07b}.steps button:hover{border-color:white}
-.scene-transition{position:absolute;z-index:8;inset:76px 0 15%;pointer-events:none;background:linear-gradient(90deg,transparent 0%,#172b312b 43%,transparent 100%);mix-blend-mode:multiply;opacity:.45}
-.outro{padding:140px var(--edge) 70px;background:#162630;position:relative;overflow:hidden}
-.outro:before{content:"";position:absolute;right:-20%;top:-50%;width:65vw;aspect-ratio:1;border:1px solid #f4e0b12b;border-radius:50%;pointer-events:none}
-.outro h2{font:normal clamp(72px,10vw,170px)/.89 Georgia,serif;letter-spacing:-.09em;margin:27px 0 36px;max-width:1100px}.outro h2 em{color:#e2b07b}
-.outro p{font-size:19px;color:#bdc4c5;max-width:590px;line-height:1.7}
-.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:35px}.actions a{border:1px solid #d9c5a2;padding:17px 21px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none}.actions a.primary{background:#f0e9dc;color:#162630}.outro-foot{margin-top:125px;padding-top:25px;border-top:1px solid #ffffff2b;display:flex;justify-content:space-between;gap:25px;color:#bdc5c5;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
-.detail{max-width:min(920px,90vw);width:100%;max-height:89vh;padding:0;border:1px solid #eee4d1;background:#f2ede2;color:#1a2a35;box-shadow:0 28px 95px #0008}
-.detail::backdrop{background:#081621d9}
-.detail-head{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #14263235;padding:24px clamp(20px,3vw,40px);gap:15px}
-.detail-head span{font-size:11px;letter-spacing:.19em;text-transform:uppercase}.detail-close{background:transparent;border:1px solid #14263299;color:#142632;padding:11px 15px}
-.detail-body{padding:clamp(24px,5vw,53px);display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center}
-.detail-body img{max-height:52vh;width:100%;object-fit:contain;background:#d9d3c8}.detail-body h3{font:normal clamp(35px,4vw,62px)/.99 Georgia,serif;letter-spacing:-.06em;margin:15px 0 23px}.detail-body p{line-height:1.7;color:#465560}.detail-body a{display:inline-block;background:#1d303a;color:#f5ebdb;text-decoration:none;padding:15px 19px;font-size:12px;letter-spacing:.08em;margin-top:17px}.detail-foot{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#5b6770}
-.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-@media(max-width:950px){.scene{grid-template-columns:49% 51%}.scene h2{font-size:clamp(48px,6vw,73px)}.scene p{font-size:14px}.art-frame{left:6%;width:82%;height:68%;top:19%}.art-secondary{right:0;width:40%;height:34%}.intro h1{font-size:clamp(80px,15vw,150px)}}
-@media(max-width:720px){.topbar{height:68px}.side span{display:none}.intro{min-height:100svh;padding-top:100px}.intro h1{font-size:clamp(70px,18vw,110px)}.intro .paper{right:-70%;width:110%;opacity:.5}.intro-foot{font-size:9px;flex-wrap:wrap}.viewport{min-height:0}.run-head{height:64px}.run-head .micro{font-size:9px;letter-spacing:.1em}.steps{gap:5px!important}.steps button{width:34px;height:34px}.scene{grid-template-columns:1fr;grid-template-rows:auto auto;align-content:start;padding:90px 24px 110px}.scene:after{display:none}.scene-copy{padding:0;max-width:none}.scene-year{font-size:34px;margin-bottom:9px}.scene-num{font-size:9px;margin:0 0 16px}.scene h2{font-size:clamp(42px,11vw,72px);margin-bottom:12px;max-width:80vw}.scene p{font-size:clamp(13px,3.4vw,16px);line-height:1.5;margin-bottom:11px;max-width:90%}.scene small{display:none}.stage-art{height:auto;min-height:0;position:absolute;left:24px;right:24px;top:48%;bottom:16%;width:auto}.art-frame{top:4%;left:19%;height:80%;width:57%;border-width:7px}.art-secondary{height:43%;width:39%;right:1%;bottom:0}.art-caption{font-size:8px;bottom:1%}.art-explore{right:0;bottom:1%;padding:11px 13px;font-size:10px}.craft-type{top:5%;left:12%;width:71%;height:82%;aspect-ratio:auto}.craft-type span{font-size:clamp(60px,14vw,110px)}.final-type{font-size:clamp(60px,16vw,130px)}.world-foreground{height:12%;padding:12px 20px}.walker{width:36px;height:36px;font-size:13px}.guide-label strong{font-size:17px}.guide-label span{font-size:8px}.travel-guide{gap:10px}.progress-area{width:39%}.progress-top{font-size:8px}.scene-transition{inset:64px 0 12%}.outro{padding:90px 24px 48px}.outro h2{font-size:clamp(58px,14vw,105px)}.outro-foot{flex-direction:column;margin-top:75px}.detail-body{grid-template-columns:1fr}.detail-body img{max-height:32vh}.detail-body h3{font-size:38px}}
-@media(max-width:390px){.scene{padding:80px 18px 92px}.scene h2{font-size:40px}.scene-year{font-size:29px}.scene p{font-size:12.6px;line-height:1.45}.stage-art{top:52%;bottom:13%;left:18px;right:18px}.scene .art-explore{bottom:0}.steps button{width:31px;height:31px}.progress-area{width:34%}.guide-label span{display:none}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.track{will-change:auto}.begin:hover{transform:none}}
-</style></head><body>
-<a class="skip" href="#journey">Skip introduction</a>
-<header class="topbar"><a class="mark" href="/" aria-label="Return to Viswanathan G portfolio">VG</a><div class="side"><span>Independent experience / concept preview</span><a href="/">Return to portfolio ↗</a></div></header>
-<main>
-<section class="intro" aria-labelledby="intro-title"><div class="paper" aria-hidden="true"></div><div class="arc" aria-hidden="true"></div><div class="intro-copy"><span class="kicker">An interactive story of making</span><h1 id="intro-title">This is<br>my <i>journey.</i></h1><p class="intro-sub">Not another timeline to read. A world to move through. Scroll forward to explore where I began, what I learned, and why I started building products.</p><a class="begin" href="#journey">Enter the journey <span aria-hidden="true">↗</span></a></div><div class="intro-foot"><span>Scroll to move through the experience</span><em>Five chapters. One evolving practice.</em><span>2016 — now</span></div></section>
-<div class="runway" id="journey">
- <div class="viewport" id="viewport" aria-label="Interactive career journey. Scroll to move between five scenes.">
-  <div class="track" id="track">
-   <section class="scene scene-one" id="chapter-2016" aria-labelledby="title2016"><div class="scene-light" aria-hidden="true"></div><div class="scene-copy"><span class="scene-num">01 / The foundation</span><span class="scene-year">2016</span><h2 id="title2016">It began with <em>craft.</em></h2><p>Visual communication was my first language. Type, composition, production and the discipline of giving a message a clear form.</p><small>Graphic design · Editorial rhythm · Making things with intent</small></div><div class="stage-art"><div class="craft-type" aria-hidden="true"><span>form.<br>idea.<br>craft.</span><small>THE BEGINNING</small></div><span class="art-caption">Scene 01 / Foundations</span></div></section>
-   <section class="scene scene-two" id="chapter-2018" aria-labelledby="title2018"><div class="scene-light" aria-hidden="true"></div><div class="scene-copy"><span class="scene-num">02 / Communication at scale</span><span class="scene-year">2018</span><h2 id="title2018">Ideas in the <em>public eye.</em></h2><p>I moved into political communication, where hierarchy, speed and audience understanding mattered as much as visual craft.</p><small>Campaign communication · Visual systems · Fast-paced teams</small></div><div class="stage-art"><div class="art-frame"><img src="/behance/nation-building/cover.webp" loading="lazy" alt="Original Nation Building communication design"></div><div class="art-secondary"><img src="/behance/nation-building/03-digital-system.webp" loading="lazy" alt=""></div><button class="art-explore" type="button" data-inspect="1">Inspect this work ↗</button><span class="art-caption">Original artwork / Nation Building</span></div></section>
-   <section class="scene scene-three" id="chapter-2022" aria-labelledby="title2022"><div class="scene-light" aria-hidden="true"></div><div class="scene-copy"><span class="scene-num">03 / Creative leadership</span><span class="scene-year">2022</span><h2 id="title2022">From creating to <em>leading.</em></h2><p>Building Smart Mind Strategies changed my perspective. My work now included setting direction, shaping systems and helping creative teams execute.</p><small>Creative direction · Leadership · Original publications</small></div><div class="stage-art"><div class="art-frame"><img src="/behance/telangana-manifesto/cover.webp" loading="lazy" alt="Original Telangana Manifesto publication artwork"></div><div class="art-secondary"><img src="/behance/samvidhan/cover.webp" loading="lazy" alt=""></div><button class="art-explore" type="button" data-inspect="2">Inspect this work ↗</button><span class="art-caption">Original artwork / Publication systems</span></div></section>
-   <section class="scene scene-four" id="chapter-2026" aria-labelledby="title2026"><div class="scene-light" aria-hidden="true"></div><div class="scene-copy"><span class="scene-num">04 / Creative technology</span><span class="scene-year">2026</span><h2 id="title2026">Then I built <em>the tools.</em></h2><p>Design became something more interactive. AI Design Studio, Content Studio and creator tools brought product thinking into my creative work.</p><small>Product UX · AI workflows · Creative technology</small></div><div class="stage-art"><div class="art-frame"><img src="/social/ai-design-studio.png" loading="lazy" alt="AI Design Studio product overview"></div><div class="art-secondary"><img src="/social/content-studio.png" loading="lazy" alt=""></div><button class="art-explore" type="button" data-inspect="3">Inspect this work ↗</button><span class="art-caption">Original products / Built, not just imagined</span></div></section>
-   <section class="scene scene-five" id="chapter-next" aria-labelledby="titleNext"><div class="scene-light" aria-hidden="true"></div><div class="scene-copy"><span class="scene-num">05 / The unwritten chapter</span><span class="scene-year">Next →</span><h2 id="titleNext">The best work is <em>ahead.</em></h2><p>I want to keep building where visual thinking meets useful technology. Better products. More human interactions. A new reason to be curious.</p><small>Design leadership · Making · Experimenting</small></div><div class="stage-art"><div class="final-type" aria-hidden="true">what<br>next?</div><a class="art-explore" href="mailto:piaravinoth@gmail.com" style="text-decoration:none">Start a conversation ↗</a><span class="art-caption">Journey continues / 2026—</span></div></section>
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#1c1d1f">
+<meta name="description" content="Explore Viswanathan G's creative career through an interactive animated journey map, from graphic design to products and creative technology.">
+<title>Journey Map — Viswanathan G | Interactive Preview</title>
+<link rel="stylesheet" href="/journey-lab/map.css">
+</head><body>
+<a class="skip" href="#storyTitle">Skip to current career milestone</a>
+<main class="app" id="app" aria-label="Interactive map of Viswanathan G's professional journey">
+  <div class="map-viewport" id="mapViewport" aria-label="Illustrated journey map showing nine career milestones">
+    <div class="map-world" id="mapWorld">
+      <svg class="map-svg" id="mapSVG" width="3200" height="2500" viewBox="0 0 3200 2500" role="img" aria-label="Stylised urban street map connected by one blue career route">
+        <rect width="3200" height="2500" fill="#202123"/>
+        <g id="parks"></g><g id="blocks"></g><g id="roadGrid"></g>
+        <g class="map-districts" fill="#777b7c" opacity=".26" font-size="54" letter-spacing="13" font-weight="700">
+        <text x="140" y="320">THE BEGINNING</text>
+        <text x="1110" y="410">CAMPAIGN DISTRICT</text>
+        <text x="2080" y="680">PRODUCT DISTRICT</text>
+        <text x="2060" y="2210">WHAT'S NEXT</text></g>
+        <path id="routeOutline" class="route-outline" d="" fill="none" stroke="#0d1524" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="routeBlue" class="route-blue" d="" fill="none" stroke="#286ee9" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="routeCore" class="route-core" d="" fill="none" stroke="#619cff" stroke-width="4.3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="routeProgress" class="route-progress" d="" fill="none" stroke="#9dc2ff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div id="mapPins" class="map-pins"></div>
+    </div>
   </div>
-  <div class="run-head"><span class="micro">VG / A life in creative work</span><div class="steps" aria-label="Jump to a journey scene"><button data-step="0" aria-current="step" aria-label="Chapter 1, 2016" type="button">01</button><button data-step="1" aria-label="Chapter 2, 2018" type="button">02</button><button data-step="2" aria-label="Chapter 3, 2022" type="button">03</button><button data-step="3" aria-label="Chapter 4, 2026" type="button">04</button><button data-step="4" aria-label="Chapter 5, next" type="button">05</button></div></div>
-  <div class="scene-transition" aria-hidden="true"></div>
-  <div class="world-foreground"><div class="travel-guide"><div class="walker" id="walker" aria-hidden="true">VG</div><div class="guide-label"><strong id="sceneTitle">The foundation</strong><span>Scroll / swipe to keep moving</span></div></div><div class="progress-area"><div class="progress-top"><span>Journey progress</span><span id="progressLabel">01 / 05</span></div><div class="progress-line" id="progressLine" aria-hidden="true"></div></div></div>
- </div>
-</div>
-<section class="outro" id="finish"><span class="kicker">You've reached the present</span><h2>And the story<br><em>keeps going.</em></h2><p>I bring together visual communication, product thinking and creative technology. Explore the full work behind these moments.</p><div class="actions"><a class="primary" href="/">Explore full portfolio ↗</a><a href="mailto:piaravinoth@gmail.com">Get in touch ↗</a><a href="#journey">Travel again ↑</a></div><div class="outro-foot"><span>Viswanathan G / Experimental journey / 2026</span><span>Artworks sourced from my portfolio</span></div></section>
+  <div class="map-shade" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="identity" href="/" aria-label="Back to Viswanathan G portfolio"><span class="identity-avatar" aria-hidden="true">VG</span><span class="identity-label">VISWANATHAN G <small>MY JOURNEY</small></span></a>
+    <span class="journey-tag">INTERACTIVE CAREER MAP <span class="journey-tag-number">/ 2026</span></span>
+    <div class="top-actions">
+      <button type="button" class="round-btn" id="soundBtn" aria-label="Enable navigation sound" aria-pressed="false" title="Navigation sound"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="sound-waves" d="M17 9a4 4 0 0 1 0 6M19.5 6a8 8 0 0 1 0 12"/></svg></button>
+      <button type="button" class="round-btn theme-btn" id="themeBtn" aria-label="Switch to daytime map" aria-pressed="false" title="Day and night"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg></button>
+    </div>
+  </header>
+  <div class="compass" aria-label="Direction of travel"><span class="compass-n">N</span><span class="compass-e">E</span><span class="compass-s">S</span><span class="compass-w">W</span><div id="compassNeedle" class="compass-needle"><span></span></div></div>
+  <div class="hero-marker" id="heroMarker" aria-hidden="true"><div class="hero-halo"></div><div class="hero-arrow"><svg viewBox="0 0 60 60"><path d="M14 10L50 26 29 32 23 50z" fill="#3678f0" stroke="#f8fbff" stroke-width="3.8" stroke-linejoin="round"/></svg></div></div>
+  <section class="story-card" id="storyCard" aria-labelledby="storyTitle" style="--stop-tone:#bd7c5e">
+    <div class="story-head">
+      <div class="story-logo" id="storyLogo" aria-hidden="true">P</div>
+      <div class="story-meta"><strong id="storyCompany">Peacock India</strong><span id="storyDate">2015–2016 · Early career</span></div>
+      <div class="story-counter" id="storyCounter">01 / 09</div>
+    </div>
+    <div class="story-body" id="storyBody">
+      <h1 id="storyTitle">Where the story begins.</h1>
+      <p id="storySummary">A first experience of professional visual design.</p>
+      <div id="storyExtra" class="story-extra" hidden><p id="storyDetail"></p><a id="caseLink" href="/" target="_self">Explore related work <span aria-hidden="true">↗</span></a></div>
+      <button type="button" class="read-more" id="moreBtn" aria-expanded="false" aria-controls="storyExtra">Read more <span aria-hidden="true">⌄</span></button>
+    </div>
+  </section>
+  <nav class="stop-nav" aria-label="Navigate career stops">
+    <button type="button" class="previous-stop" id="prevBtn" aria-label="Previous stop"><span aria-hidden="true">←</span></button>
+    <span class="stop-number" id="stopNumber" aria-live="polite">1 / 9</span>
+    <button type="button" class="next-stop" id="nextBtn">Next stop <span aria-hidden="true">→</span></button>
+  </nav>
+  <nav class="bottom-dock" aria-label="Portfolio navigation">
+    <a class="dock-active" href="/journey-lab/index.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2V6zm6-2v14m6-12v14"/></svg><span>Journey</span></a>
+    <a href="/#products">Work</a>
+    <a href="/#contact">Contact</a>
+    <a class="resume-pill" href="/resume/Viswanathan_G_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume <span aria-hidden="true">↗</span></a>
+  </nav>
+  <div class="swipe-hint" aria-hidden="true">SWIPE OR SELECT NEXT STOP TO TRAVEL</div>
 </main>
-<dialog class="detail" id="artDialog" aria-labelledby="dialogTitle"><div class="detail-head"><span>Original artwork / From the archive</span><button class="detail-close" type="button" id="closeDialog">Close ✕</button></div><div class="detail-body"><img id="dialogImage" alt=""><div><span class="kicker" id="dialogKicker">Creative work</span><h3 id="dialogTitle">Selected original artwork</h3><p id="dialogText"></p><span class="detail-foot">Explore the complete project and process</span><a id="dialogLink" href="/">View case study ↗</a></div></div></dialog>
-<script>
-(()=>{'use strict';
-const runway=document.getElementById('journey'),track=document.getElementById('track'),progress=document.getElementById('progressLine'),label=document.getElementById('progressLabel'),sceneTitle=document.getElementById('sceneTitle'),walker=document.getElementById('walker'),buttons=[...document.querySelectorAll('[data-step]')],dialog=document.getElementById('artDialog');
-const names=['The foundation','Communication','Creative leadership','Product building','What comes next'];
-const exhibits={
- 1:{kicker:'2018 · Visual communication',title:'Nation Building',text:'A selected collection from my political visual communication work, created around clear messages, recognisable systems and applications across formats.',image:'/behance/nation-building/cover.webp',link:'/work/nation-building'},
- 2:{kicker:'2022 · Creative leadership',title:'Telangana Manifesto',text:'Publication design showing visual hierarchy and consistency across a larger communication system. Explore the original artwork and its design context.',image:'/behance/telangana-manifesto/cover.webp',link:'/work/telangana-manifesto'},
- 3:{kicker:'2026 · Product creation',title:'AI Design Studio',text:'A product case study about how creative work can become an editable, usable workflow rather than a collection of static outputs.',image:'/social/ai-design-studio.png',link:'/work/ai-design-studio'}
-};
-let last=-1,raf=0;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-function update(){raf=0;const h=Math.max(1,runway.offsetHeight-innerHeight);const rect=runway.getBoundingClientRect();const amount=clamp(-rect.top/h,0,1);const pos=amount*4;const next=clamp(Math.round(pos),0,4);
-track.style.transform='translate3d(-'+(amount*80)+'%,0,0)';
-progress.style.setProperty('--travel',(amount*100)+'%');
-if(next!==last){last=next;label.textContent=String(next+1).padStart(2,'0')+' / 05';sceneTitle.textContent=names[next];buttons.forEach((b,i)=>{if(i===next)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')})}
-if(!reduced){walker.style.transform='translate3d('+Math.sin(pos*Math.PI*1.3)*4+'px,'+Math.sin(pos*26)*2+'px,0)';walker.style.borderColor='rgba(226,176,123,'+(0.5+(amount*.5))+')'}
-}
-function onScroll(){if(!raf)raf=requestAnimationFrame(update)}
-function toScene(i){const h=Math.max(1,runway.offsetHeight-innerHeight);const y=window.scrollY+runway.getBoundingClientRect().top+(i/4)*h;window.scrollTo({top:y,behavior:reduced?'auto':'smooth'})}
-buttons.forEach(b=>b.addEventListener('click',()=>toScene(Number(b.dataset.step))));
-document.addEventListener('keydown',e=>{if(dialog.open||e.altKey||e.ctrlKey||e.metaKey||/^(INPUT|TEXTAREA|SELECT|BUTTON|A)$/.test(document.activeElement?.tagName||''))return;if(e.key==='ArrowRight'){e.preventDefault();toScene(clamp(last+1,0,4))}if(e.key==='ArrowLeft'){e.preventDefault();toScene(clamp(last-1,0,4))}});
-document.querySelectorAll('[data-inspect]').forEach(b=>b.addEventListener('click',()=>{const info=exhibits[b.dataset.inspect];if(!info)return;document.getElementById('dialogKicker').textContent=info.kicker;document.getElementById('dialogTitle').textContent=info.title;document.getElementById('dialogText').textContent=info.text;document.getElementById('dialogImage').src=info.image;document.getElementById('dialogImage').alt=info.title+' original visual work';document.getElementById('dialogLink').href=info.link;dialog.showModal()}));
-document.getElementById('closeDialog').addEventListener('click',()=>dialog.close());
-dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
-window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll,{passive:true});window.addEventListener('load',update);update();
-})();
-</script></body></html>
+<script src="/journey-lab/map.js" defer></script>
+</body></html>
