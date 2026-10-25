@@ -81,7 +81,7 @@ export default function CareerJourney(){
    <span className="exp-journey-instruction">SELECT A STOP OR FOLLOW THE ROUTE ↗</span>
   </div>
   <div className="exp-journey-stopbar" role="group" aria-label="Choose an employer">
-   {steps.map((s,i)=><button key={s.company} type="button" aria-pressed={active===i} className={active===i?"is-selected":""} onClick={()=>visit(i)}>
+   {steps.map((s,i)=><button key={s.company} type="button" aria-pressed={active===i} className={active===i?"is-selected":""} onPointerDown={e=>{if(e.pointerType==="mouse")visit(i)}} onClick={()=>visit(i)}>
      <small>0{i+1}</small><span>{s.short}</span>
    </button>)}
   </div>
@@ -111,7 +111,7 @@ export default function CareerJourney(){
      <path d={route} ref={path} fill="none" stroke="none"/>
     </svg>
     {steps.map((s,i)=><button key={s.company} type="button" className={"exp-journey-pin"+(active===i?" is-current":"")}
-      style={{left:s.x,top:s.y,["--pin-tone" as string]:s.color}} aria-label={"Navigate to "+s.company} aria-pressed={active===i} onClick={()=>visit(i)}>
+      style={{left:s.x,top:s.y,["--pin-tone" as string]:s.color}} aria-label={"Navigate to "+s.company} aria-pressed={active===i} onPointerDown={e=>{if(e.pointerType==="mouse")visit(i)}} onClick={()=>visit(i)}>
       <span className="exp-journey-pin-dot">{s.logo}</span><span className="exp-journey-pin-name">{s.short}</span>
     </button>)}
    </div>
@@ -125,9 +125,9 @@ export default function CareerJourney(){
       <h3>{stop.title}</h3><p>{stop.description}</p>
     </div>
     <nav className="exp-journey-controls" aria-label="Journey navigation">
-      <button type="button" onClick={()=>visit(active-1)} disabled={active===0} aria-label="Previous stop">← <span>Previous</span></button>
+      <button type="button" onPointerDown={e=>{if(e.pointerType==="mouse")visit(active-1)}} onClick={()=>visit(active-1)} disabled={active===0} aria-label="Previous stop">← <span>Previous</span></button>
       <output aria-live="polite">{active+1} / {steps.length}</output>
-      <button type="button" onClick={()=>visit(active+1)} disabled={active===steps.length-1}>Next stop <span aria-hidden="true">→</span></button>
+      <button type="button" onPointerDown={e=>{if(e.pointerType==="mouse")visit(active+1)}} onClick={()=>visit(active+1)} disabled={active===steps.length-1}>Next stop <span aria-hidden="true">→</span></button>
     </nav>
    </div>
   </div>
