@@ -1,0 +1,55 @@
+name: Career Journey Homepage Preview QA
+on:
+  push:
+    branches:
+      - feature/experience-journey-inline-20261025
+    paths:
+      - "src/components/CareerJourney.tsx"
+      - "src/components/styles/CareerJourney.css"
+      - "src/components/MainContainer.tsx"
+      - "scripts/qa-career-journey.mjs"
+      - ".github/workflows/career-journey-preview-qa.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: career-journey-preview
+  cancel-in-progress: true
+jobs:
+  journey-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install browser and dependencies
+        run: |
+          npm install --no-audit --no-fund
+          npm install --no-save --ignore-scripts playwright
+          npx playwright install --with-deps chromium
+      - name: Build production-like preview
+        run: npm run build
+      - name: Serve preview
+        run: |
+          nohup npm run preview -- --host 127.0.0.1 --port 4173 >/tmp/career-journey-preview.log 2>&1 &
+          for i in $(seq 1 35); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/career-journey-preview.log
+          exit 1
+      - name: Run responsive career map checks
+        run: node scripts/qa-career-journey.mjs
+      - name: Save screenshots and QA output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: career-journey-preview-qa
+          path: |
+            qa-career-journey-results.json
+            qa-career-journey-iphone.png
+            qa-career-journey-desktop.png
+          if-no-files-found: ignore
+          retention-days: 7
