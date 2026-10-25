@@ -14,3 +14,39 @@ body.day{--bg:#e1dfd7;--text:#20272a}body.day .map-viewport{filter:brightness(1.
 @media(max-width:385px){.topbar{padding:11px 14px}.round-btn{height:48px;width:48px}.compass{top:88px;width:72px;height:72px}.hero-marker{top:29%}.story-card{bottom:calc(151px + var(--safe));max-height:41dvh}.story-head{padding:10px 13px;min-height:64px}.story-body{padding:11px 13px 12px;max-height:calc(41dvh - 67px)}.story-body h1{font-size:20px}.story-body>p{font-size:13px}.story-meta strong{font-size:15px}.story-meta span{font-size:11px}.stop-nav{bottom:calc(86px + var(--safe))}.bottom-dock{bottom:calc(13px + var(--safe))}.bottom-dock a{font-size:12px;padding:11px 6px}.bottom-dock .resume-pill{padding:13px 9px}}
 @media(max-height:690px){.hero-marker{top:27%}.story-card{max-height:38dvh;bottom:calc(144px + var(--safe))}.story-body{max-height:calc(38dvh - 75px)}.stop-nav{bottom:calc(79px + var(--safe));height:48px}.stop-nav button{height:36px}.bottom-dock{bottom:calc(9px + var(--safe))}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition-duration:.01ms!important;animation:none!important}.map-world{will-change:auto}}
+
+/* Journey v4 — inertial path-following map and tactile interaction polish */
+:root{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Arial,sans-serif}
+body,button,.map-pin{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Arial,sans-serif}
+.map-world{transition:none!important;transform-origin:0 0;backface-visibility:hidden}
+.map-viewport{background:#1c2023;isolation:isolate;transition:filter .55s ease}
+.map-viewport .route-outline{stroke:#0b1728;stroke-width:29}
+.map-viewport .route-blue{stroke:#236aeb;stroke-width:17}
+.map-viewport .route-core{stroke:#8bb8ff;stroke-width:4}
+.map-viewport .route-progress{stroke:#d4e7ff;stroke-width:4;opacity:.95}
+.map-pin{transition:opacity .35s,filter .35s;filter:saturate(.88)}
+.map-pin .pin-round{transition:box-shadow .35s ease,transform .5s cubic-bezier(.16,1,.3,1)}
+.map-pin[aria-current="step"]{filter:saturate(1.1)}
+.map-pin[aria-current="step"] .pin-round{transform:translateY(-5px);box-shadow:0 0 0 9px #142a4380,0 0 0 18px #397adf24,0 15px 35px #0008}
+.map-pin .pin-label{font-size:17px;letter-spacing:-.02em;background:#29323ae8;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .2s}
+.map-pin[aria-current="step"] .pin-label{background:#2d3f52ef}
+.hero-marker{isolation:isolate}
+.hero-halo{background:#387eea14;border-color:#84b1fd9c;box-shadow:0 0 0 1px #accdff61 inset}
+.hero-halo:before{content:"";position:absolute;inset:16px;border:1px dashed #9ac2ff68;border-radius:50%}
+.hero-arrow{transition:none;box-shadow:0 5px 19px #0006,0 0 0 1px #d9e8fd}
+.hero-arrow svg{transform:none}
+.hero-marker.is-moving .hero-halo{border-color:#c5e0ffcf}
+.hero-marker.has-arrived .hero-halo{animation:arrival-ring .73s cubic-bezier(.16,1,.3,1) both}
+@keyframes arrival-ring{0%{box-shadow:0 0 0 0 #5590f180,0 0 0 1px #accdff inset}60%{box-shadow:0 0 0 21px #5590f11a,0 0 0 1px #accdff inset}100%{box-shadow:0 0 0 29px transparent,0 0 0 1px #accdff inset}}
+.story-card{background:#282a2c;border:1px solid #ffffff18;box-shadow:0 22px 65px #0b10149c;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.story-head{background:color-mix(in srgb,var(--stop-tone) 30%,#292b2d)}
+.story-body h1{letter-spacing:-.045em;font-weight:750}
+.read-more{background:#808284;box-shadow:0 1px 0 #fff5 inset}
+.stop-nav,.bottom-dock{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 12px 35px #0208109e,0 1px 0 #fff4 inset}
+.stop-nav button,.bottom-dock a{transition:background .2s,transform .2s cubic-bezier(.16,1,.3,1)}
+.stop-nav button:active,.bottom-dock a:active,.read-more:active{transform:scale(.97)}
+.stop-nav .next-stop{background:#4b5057}
+.bottom-dock .resume-pill{background:#f4d77d;box-shadow:0 1px 0 #fff8 inset}
+.compass{backdrop-filter:blur(8px)}
+@media(max-width:680px){.map-pin .pin-label{font-size:16px;padding:10px 15px}.map-pin .pin-round{width:75px;height:75px;flex-basis:75px}.map-pin{transform:translate(-38px,-99px)}.hero-marker{left:50%;top:31%}}
+@media(prefers-reduced-motion:reduce){.map-world,.map-pin,.map-pin .pin-round,.hero-arrow,.hero-halo,.story-card,.map-viewport{animation:none!important;transition:none!important}}

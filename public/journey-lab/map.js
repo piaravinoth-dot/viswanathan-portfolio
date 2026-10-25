@@ -14,7 +14,12 @@ const stops=[
 ];
 const $=id=>document.getElementById(id);const world=$('mapWorld'),pinRoot=$('mapPins'),svg=$('mapSVG'),route=$('routeBlue'),core=$('routeCore'),outline=$('routeOutline'),progress=$('routeProgress'),card=$('storyCard'),body=$('storyBody'),extra=$('storyExtra'),more=$('moreBtn'),toneDefault='#b17a64';
 const clamp=(n,min,max)=>Math.min(max,Math.max(min,n));
-let current=0,sound=false,audio=null,travelToken=0,gestureStart=null;
+const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+let current=0,sound=false,audio=null,gestureStart=null;
+let pathLength=0,stopDistances=[],cameraDistance=0,targetDistance=0,cameraVelocity=0,cameraBank=0;
+let cameraFrame=0,previousFrame=0,arriveTimer=0,wheelAt=0;
+const marker=$('heroMarker'),pointer=marker.querySelector('.hero-arrow'),compassNeedle=$('compassNeedle');
+const lerp=(a,b,t)=>a+(b-a)*t;
 function seeded(n){let x=Math.sin(n*79.71+17.13)*43758.5453;return x-Math.floor(x)}
 function drawCity(){
  const ns='http://www.w3.org/2000/svg';
@@ -57,17 +62,64 @@ function makePins(){
   b.addEventListener('click',()=>selectStop(i));pinRoot.append(b);
  });
 }
-function camera(){
- const s=stops[current],vw=innerWidth,vh=innerHeight;
- const scale=vw<=680?.78:vw<=1050?.88:1.01;
- const ax=vw*(vw<=680?.5:.56),ay=vh*(vw<=680?(vh<680?.29:.31):.38);
- const tx=ax-s.x*scale,ty=ay-s.y*scale;
- world.style.transform='translate3d('+tx+'px,'+ty+'px,0) scale('+scale+')';
- const next=stops[Math.min(current+1,stops.length-1)],prev=stops[Math.max(0,current-1)];
- const dx=(current===stops.length-1?s.x-prev.x:next.x-s.x),dy=(current===stops.length-1?s.y-prev.y:next.y-s.y);
- const angle=Math.atan2(dy,dx)*180/Math.PI+90;
- $('compassNeedle').style.transform='rotate('+angle+'deg)';
+
+function measureRoute(){
+ pathLength=route.getTotalLength();stopDistances=[0];let lower=0;
+ for(let i=1;i<stops.length-1;i++){
+  let best=Infinity,bestAt=lower;
+  for(let d=lower+3;d<pathLength;d+=12){
+   const p=route.getPointAtLength(d),error=(p.x-stops[i].x)**2+(p.y-stops[i].y)**2;
+   if(error<best){best=error;bestAt=d}
+  }
+  for(let d=Math.max(lower,bestAt-12);d<=Math.min(pathLength,bestAt+12);d++){
+   const p=route.getPointAtLength(d),error=(p.x-stops[i].x)**2+(p.y-stops[i].y)**2;
+   if(error<best){best=error;bestAt=d}
+  }
+  stopDistances.push(bestAt);lower=bestAt;
+ }
+ stopDistances.push(pathLength);
 }
+function drawCamera(){
+ const vw=innerWidth,vh=innerHeight,mobile=vw<=680;
+ const pos=clamp(cameraDistance,0,pathLength);
+ const point=route.getPointAtLength(pos);
+ const before=route.getPointAtLength(Math.max(0,pos-28));
+ const after=route.getPointAtLength(Math.min(pathLength,pos+28));
+ const slope=Math.atan2(after.y-before.y,after.x-before.x)*180/Math.PI;
+ const desiredBank=reducedMotion.matches?0:clamp(-slope*.045,-3.6,3.6);
+ cameraBank=lerp(cameraBank,desiredBank,.16);
+ const moving=Math.abs(targetDistance-pos)>2||Math.abs(cameraVelocity)>9;
+ const baseZoom=mobile?(vw<380?.71:.77):vw<=1050?.87:1.01;
+ const speedZoom=reducedMotion.matches?0:clamp(Math.abs(cameraVelocity)/4300,0,.07);
+ const zoom=baseZoom*(1-speedZoom);
+ const anchorX=vw*(mobile?.5:.56),anchorY=vh*(mobile?(vh<680?.29:.31):.38);
+ // Route stays under the stationary position pointer while the city moves.
+ world.style.transform='translate3d('+anchorX+'px,'+anchorY+'px,0) rotate('+cameraBank.toFixed(3)+'deg) scale('+zoom.toFixed(4)+') translate3d('+(-point.x).toFixed(2)+'px,'+(-point.y).toFixed(2)+'px,0)';
+ pointer.style.transform='rotate('+(slope+cameraBank+90).toFixed(2)+'deg)';
+ compassNeedle.style.transform='rotate('+(slope+cameraBank+90).toFixed(2)+'deg)';
+ marker.classList.toggle('is-moving',moving);
+ drawTravelProgress();
+}
+function animateCamera(timestamp){
+ cameraFrame=0;
+ if(document.hidden){cameraDistance=targetDistance;cameraVelocity=0;previousFrame=0;drawCamera();return}
+ if(reducedMotion.matches){cameraDistance=targetDistance;cameraVelocity=0;previousFrame=0;drawCamera();return}
+ const dt=previousFrame?clamp((timestamp-previousFrame)/1000,.001,.032):.016;
+ previousFrame=timestamp;
+ // Damped spring: retargets without interruption, preserving camera momentum.
+ const force=(targetDistance-cameraDistance)*39-cameraVelocity*12.5;
+ cameraVelocity+=force*dt;cameraDistance+=cameraVelocity*dt;
+ if(Math.abs(targetDistance-cameraDistance)<.8&&Math.abs(cameraVelocity)<3){
+  cameraDistance=targetDistance;cameraVelocity=0;previousFrame=0;
+  drawCamera();marker.classList.remove('is-moving');
+  marker.classList.remove('has-arrived');void marker.offsetWidth;marker.classList.add('has-arrived');
+  clearTimeout(arriveTimer);arriveTimer=setTimeout(()=>marker.classList.remove('has-arrived'),750);
+  return;
+ }
+ drawCamera();cameraFrame=requestAnimationFrame(animateCamera);
+}
+function camera(){drawCamera()}
+function startCamera(){if(!cameraFrame){previousFrame=0;cameraFrame=requestAnimationFrame(animateCamera)}}
 function beep(){
  if(!sound)return;
  try{
@@ -84,6 +136,10 @@ function beep(){
 function renderStory(){
  const s=stops[current];
  card.style.setProperty('--stop-tone',s.tone);
+ if(!reducedMotion.matches){
+  body.getAnimations().forEach(a=>a.cancel());
+  body.animate([{opacity:.48,transform:'translate3d(0,10px,0)'},{opacity:1,transform:'translate3d(0,0,0)'}],{duration:450,easing:'cubic-bezier(.16,1,.3,1)'});
+ }
  $('storyLogo').textContent=s.logo;$('storyLogo').style.background=s.tone;
  $('storyCompany').textContent=s.name;$('storyDate').textContent=s.period;
  $('storyTitle').textContent=s.title;$('storySummary').textContent=s.short;$('storyDetail').textContent=s.detail;
@@ -99,23 +155,26 @@ function renderStory(){
   card.animate([{opacity:.78,transform:'translateY(9px)'},{opacity:1,transform:'translateY(0)'}],{duration:350,easing:'ease-out'});
  }
 }
+
 function drawTravelProgress(){
- // Exact curve length proportional to travelled milestone positions.
- const len=route.getTotalLength();
- const sections=stops.length-1;
- const v=(current/sections)*len;
- progress.style.strokeDasharray=v+' '+len;
+ const v=clamp(cameraDistance,0,pathLength);
+ progress.style.strokeDasharray=v+' '+pathLength;
+ progress.style.strokeDashoffset='0';
 }
 function selectStop(index){
  const next=clamp(index,0,stops.length-1);
- if(current===next){return}
- current=next;travelToken++;
- camera();renderStory();drawTravelProgress();beep();
+ if(current===next)return;
+ current=next;targetDistance=stopDistances[current];
+ renderStory();beep();
+ if(reducedMotion.matches){cameraDistance=targetDistance;cameraVelocity=0;drawCamera()}
+ else startCamera();
 }
 function init(){
  drawCity();
  const d=routePath(stops);[outline,route,core,progress].forEach(p=>p.setAttribute('d',d));
- makePins();current=0;camera();renderStory();drawTravelProgress();
+ makePins();measureRoute();current=0;targetDistance=stopDistances[0];cameraDistance=targetDistance;
+ camera();renderStory();marker.classList.add('has-arrived');
+ setTimeout(()=>marker.classList.remove('has-arrived'),750);
  $('prevBtn').addEventListener('click',()=>selectStop(current-1));
  $('nextBtn').addEventListener('click',()=>selectStop(current+1));
  more.addEventListener('click',()=>{
@@ -125,9 +184,22 @@ function init(){
  soundBtn.addEventListener('click',()=>{sound=!sound;soundBtn.setAttribute('aria-pressed',String(sound));soundBtn.setAttribute('aria-label',sound?'Mute navigation sound':'Enable navigation sound');if(sound)beep()});
  themeBtn.addEventListener('click',()=>{const daytime=document.body.classList.toggle('day');themeBtn.setAttribute('aria-pressed',String(daytime));themeBtn.setAttribute('aria-label',daytime?'Switch to nighttime map':'Switch to daytime map')});
  addEventListener('resize',camera,{passive:true});
+ document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){cancelAnimationFrame(cameraFrame);cameraFrame=0;cameraDistance=targetDistance;cameraVelocity=0;previousFrame=0;drawCamera()}
+ });
+ reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches){cancelAnimationFrame(cameraFrame);cameraFrame=0;cameraDistance=targetDistance;cameraVelocity=0;previousFrame=0;drawCamera()}});
+ // Trackpad and mouse wheel: one deliberate wheel gesture = one stop.
+ window.addEventListener('wheel',e=>{
+  if(e.target.closest('.story-card')||e.ctrlKey||e.metaKey)return;
+  if(Math.abs(e.deltaY)<12||Math.abs(e.deltaY)<Math.abs(e.deltaX))return;
+  e.preventDefault();const now=performance.now();if(now-wheelAt<850)return;
+  wheelAt=now;selectStop(current+(e.deltaY>0?1:-1));
+ },{passive:false});
  document.addEventListener('keydown',e=>{if(e.altKey||e.metaKey||e.ctrlKey||/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||''))return;
   if(e.key==='ArrowRight'){e.preventDefault();selectStop(current+1)}
   if(e.key==='ArrowLeft'){e.preventDefault();selectStop(current-1)}
+  if(e.key==='Home'){e.preventDefault();selectStop(0)}
+  if(e.key==='End'){e.preventDefault();selectStop(stops.length-1)}
  });
  const app=$('app');
  app.addEventListener('touchstart',e=>{if(e.target.closest('button,a,.story-card,.bottom-dock,.topbar,.stop-nav'))return;const t=e.changedTouches[0];gestureStart={x:t.clientX,y:t.clientY}},{passive:true});
