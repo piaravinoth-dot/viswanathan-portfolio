@@ -1,6 +1,6 @@
 import {PropsWithChildren,useEffect,useState} from "react";
 import About from "./About";
-import Career from "./Career";
+import CareerJourney from "./CareerJourney";
 import Contact from "./Contact";
 import Cursor from "./Cursor";
 import Landing from "./Landing";
@@ -10,7 +10,6 @@ import WhatIDo from "./WhatIDo";
 import Work from "./Work";
 import PoliticalSpace from "./PoliticalSpace";
 import setSplitText from "./utils/splitText";
-import {setAllTimeline} from "./utils/GsapScroll";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useLoading} from "../context/LoadingProvider";
 import {useHomeMotion} from "./useHomeMotion";
@@ -32,7 +31,6 @@ const MainContainer=({children}:PropsWithChildren)=>{
     document.body.style.overflowY="auto";
     smoother?.paused(false);
     let disposed=false;
-    let stopCareer:(()=>void)|undefined;
     let timer:number;
     let previousWidth=window.innerWidth;
     const resize=()=>{
@@ -47,12 +45,11 @@ const MainContainer=({children}:PropsWithChildren)=>{
     document.fonts.ready.then(()=>{
       if(disposed)return;
       setSplitText();
-      stopCareer=setAllTimeline();
       ScrollTrigger.refresh();
     });
     window.addEventListener("resize",resize);
-    return()=>{disposed=true;window.clearTimeout(timer);window.removeEventListener("resize",resize);stopCareer?.();setSplitText(true);};
+    return()=>{disposed=true;window.clearTimeout(timer);window.removeEventListener("resize",resize);setSplitText(true);};
   },[isLoading]);
-  return <div className="container-main" ref={motionRef}><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&children}</Landing><About/><PoliticalSpace/><Work/><WhatIDo/><Career/><Contact/></div></div></div></div>;
+  return <div className="container-main" ref={motionRef}><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&children}</Landing><About/><PoliticalSpace/><Work/><WhatIDo/><CareerJourney/><Contact/></div></div></div></div>;
 };
 export default MainContainer;
