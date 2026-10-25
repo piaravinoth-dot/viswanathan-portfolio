@@ -46,6 +46,18 @@ export default function CareerJourney(){
   if(reduce.current){cancelAnimationFrame(frame.current);frame.current=0;current.current=target.current;velocity.current=0;place();}
   else if(!frame.current){last.current=0;frame.current=requestAnimationFrame(tick);}
  },[place,tick]);
+ // Smooth-scroll may move a target between pointerdown and click. Activate once
+ // on pointerdown for a mouse, and suppress its trailing synthetic click.
+ const pointerHandledAt=useRef(0);
+ const activatePointer=(i:number,event:{pointerType:string})=>{
+   if(event.pointerType!=="mouse")return;
+   pointerHandledAt.current=performance.now();
+   visit(i);
+ };
+ const activateClick=(i:number)=>{
+   if(performance.now()-pointerHandledAt.current<650){pointerHandledAt.current=0;return;}
+   visit(i);
+ };
  useEffect(()=>{
   const road=path.current;if(!road)return;
   total.current=road.getTotalLength();
@@ -81,7 +93,7 @@ export default function CareerJourney(){
    <span className="exp-journey-instruction">SELECT A STOP OR FOLLOW THE ROUTE ↗</span>
   </div>
   <div className="exp-journey-stopbar" role="group" aria-label="Choose an employer">
-   {steps.map((s,i)=><button key={s.company} type="button" aria-pressed={active===i} className={active===i?"is-selected":""} onPointerDown={e=>{if(e.pointerType==="mouse")visit(i)}} onClick={()=>visit(i)}>
+   {steps.map((s,i)=><button key={s.company} type="button" aria-pressed={active===i} className={active===i?"is-selected":""} onPointerDown={e=>activatePointer(i,e)} onClick={()=>activateClick(i)}>
      <small>0{i+1}</small><span>{s.short}</span>
    </button>)}
   </div>
@@ -111,7 +123,7 @@ export default function CareerJourney(){
      <path d={route} ref={path} fill="none" stroke="none"/>
     </svg>
     {steps.map((s,i)=><button key={s.company} type="button" className={"exp-journey-pin"+(active===i?" is-current":"")}
-      style={{left:s.x,top:s.y,["--pin-tone" as string]:s.color}} aria-label={"Navigate to "+s.company} aria-pressed={active===i} onPointerDown={e=>{if(e.pointerType==="mouse")visit(i)}} onClick={()=>visit(i)}>
+      style={{left:s.x,top:s.y,["--pin-tone" as string]:s.color}} aria-label={"Navigate to "+s.company} aria-pressed={active===i} onPointerDown={e=>activatePointer(i,e)} onClick={()=>activateClick(i)}>
       <span className="exp-journey-pin-dot">{s.logo}</span><span className="exp-journey-pin-name">{s.short}</span>
     </button>)}
    </div>
@@ -125,9 +137,9 @@ export default function CareerJourney(){
       <h3>{stop.title}</h3><p>{stop.description}</p>
     </div>
     <nav className="exp-journey-controls" aria-label="Journey navigation">
-      <button type="button" onPointerDown={e=>{if(e.pointerType==="mouse")visit(active-1)}} onClick={()=>visit(active-1)} disabled={active===0} aria-label="Previous stop">← <span>Previous</span></button>
+      <button type="button" onPointerDown={e=>activatePointer(active-1,e)} onClick={()=>activateClick(active-1)} disabled={active===0} aria-label="Previous stop">← <span>Previous</span></button>
       <output aria-live="polite">{active+1} / {steps.length}</output>
-      <button type="button" onPointerDown={e=>{if(e.pointerType==="mouse")visit(active+1)}} onClick={()=>visit(active+1)} disabled={active===steps.length-1}>Next stop <span aria-hidden="true">→</span></button>
+      <button type="button" onPointerDown={e=>activatePointer(active+1,e)} onClick={()=>activateClick(active+1)} disabled={active===steps.length-1}>Next stop <span aria-hidden="true">→</span></button>
     </nav>
    </div>
   </div>
