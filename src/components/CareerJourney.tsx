@@ -12,7 +12,7 @@ const route="M170 445 C240 445 290 215 420 220 C535 230 595 415 730 375 C840 345
 const clamp=(x:number,a:number,b:number)=>Math.max(a,Math.min(b,x));
 export default function CareerJourney(){
  const [active,setActive]=useState(0);
- const scene=useRef<HTMLDivElement>(null),world=useRef<HTMLDivElement>(null),path=useRef<SVGPathElement>(null),drawn=useRef<SVGPathElement>(null),pointer=useRef<HTMLSpanElement>(null);
+ const scene=useRef<HTMLDivElement>(null),world=useRef<HTMLDivElement>(null),path=useRef<SVGPathElement>(null),drawn=useRef<SVGPathElement>(null),pointer=useRef<HTMLDivElement>(null);
  const distances=useRef<number[]>([]),total=useRef(0),current=useRef(0),target=useRef(0),velocity=useRef(0),frame=useRef(0),last=useRef(0);
  const selected=useRef(0),reduce=useRef(false);
  const place=useCallback(()=>{
