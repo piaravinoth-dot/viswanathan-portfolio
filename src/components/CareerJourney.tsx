@@ -70,7 +70,8 @@ export default function CareerJourney(){
   if(section)visibilityObserver.observe(section);
   const resize=new ResizeObserver(place);if(scene.current)resize.observe(scene.current);
   media.addEventListener("change",onPreference);place();
-  return()=>{resize.disconnect();visibilityObserver.disconnect();document.body.classList.remove("exp-journey-visible");media.removeEventListener("change",onPreference);cancelAnimationFrame(frame.current);};
+  scene.current?.closest<HTMLElement>(".exp-journey")?.setAttribute("data-interactive","true");
+  return()=>{scene.current?.closest<HTMLElement>(".exp-journey")?.removeAttribute("data-interactive");resize.disconnect();visibilityObserver.disconnect();document.body.classList.remove("exp-journey-visible");media.removeEventListener("change",onPreference);cancelAnimationFrame(frame.current);};
  },[place]);
  const stop=steps[active];
  return <section className="exp-journey section-container" data-active-step={active} id="career" aria-labelledby="exp-journey-title">

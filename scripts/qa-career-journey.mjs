@@ -22,6 +22,7 @@ try{
   assert.equal(response?.status(),200);
   const stage=page.locator(".exp-journey-scene");
   await stage.waitFor({state:"attached",timeout:40000});
+  await page.locator('.exp-journey[data-interactive="true"]').waitFor({state:"attached",timeout:45000});
   await stage.scrollIntoViewIfNeeded();
   assert.equal(await page.locator(".exp-journey-stopbar button").count(),4);
   assert.equal(await page.locator(".exp-journey-pin").count(),4);
