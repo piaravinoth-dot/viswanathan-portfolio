@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://viswanathan-portfolio-iota.vercel.app/journey">
+<meta property="og:type" content="website">
+<meta property="og:title" content="My Journey — Viswanathan G">
+<meta property="og:description" content="An interactive map of my professional journey and the products I created.">
+<meta property="og:image" content="https://viswanathan-portfolio-iota.vercel.app/social/portfolio.png"><meta name="theme-color" content="#1c1d1f">
+<meta name="description" content="Explore Viswanathan G's creative career through an interactive animated journey map, from graphic design to products and creative technology.">
+<title>Journey Map — Viswanathan G | Interactive Experience</title>
+<link rel="stylesheet" href="/journey/map.css">
+</head><body>
+<a class="skip" href="#storyTitle">Skip to current career milestone</a>
+<main class="app" id="app" aria-label="Interactive map of Viswanathan G's professional journey">
+  <div class="map-viewport" id="mapViewport" aria-label="Illustrated journey map showing ten career and product milestones">
+    <div class="map-world" id="mapWorld">
+      <svg class="map-svg" id="mapSVG" width="3200" height="2500" viewBox="0 0 3200 2500" role="img" aria-label="Stylised urban street map connected by one blue career route">
+        <rect width="3200" height="2500" fill="#202123"/>
+        <g id="parks"></g><g id="blocks"></g><g id="roadGrid"></g>
+        <g class="map-districts" fill="#777b7c" opacity=".26" font-size="54" letter-spacing="13" font-weight="700">
+        <text x="140" y="320">THE BEGINNING</text>
+        <text x="1110" y="410">CAMPAIGN DISTRICT</text>
+        <text x="2080" y="680">PRODUCT DISTRICT</text>
+        <text x="2060" y="2210">WHAT'S NEXT</text></g>
+        <path id="routeOutline" class="route-outline" d="" fill="none" stroke="#0d1524" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="routeBlue" class="route-blue" d="" fill="none" stroke="#286ee9" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="routeCore" class="route-core" d="" fill="none" stroke="#619cff" stroke-width="4.3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="routeProgress" class="route-progress" d="" fill="none" stroke="#9dc2ff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div id="mapPins" class="map-pins"></div>
+    </div>
+  </div>
+  <div class="map-shade" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="identity" href="/" aria-label="Back to Viswanathan G portfolio"><span class="identity-avatar" aria-hidden="true">VG</span><span class="identity-label">VISWANATHAN G <small>MY JOURNEY</small></span></a>
+    <span class="journey-tag">MY CREATIVE JOURNEY <span class="journey-tag-number">/ 2026</span></span>
+    <div class="top-actions">
+      <button type="button" class="round-btn" id="soundBtn" aria-label="Enable navigation sound" aria-pressed="false" title="Navigation sound"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="sound-waves" d="M17 9a4 4 0 0 1 0 6M19.5 6a8 8 0 0 1 0 12"/></svg></button>
+      <button type="button" class="round-btn theme-btn" id="themeBtn" aria-label="Switch to daytime map" aria-pressed="false" title="Day and night"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg></button>
+    </div>
+  </header>
+  <div class="compass" aria-label="Direction of travel"><span class="compass-n">N</span><span class="compass-e">E</span><span class="compass-s">S</span><span class="compass-w">W</span><div id="compassNeedle" class="compass-needle"><span></span></div></div>
+  <div class="hero-marker" id="heroMarker" aria-hidden="true"><div class="hero-halo"></div><div class="hero-arrow"><svg viewBox="0 0 60 60"><path d="M14 10L50 26 29 32 23 50z" fill="#3678f0" stroke="#f8fbff" stroke-width="3.8" stroke-linejoin="round"/></svg></div></div>
+  <section class="story-card" id="storyCard" aria-labelledby="storyTitle" style="--stop-tone:#bd7c5e">
+    <div class="story-head">
+      <div class="story-logo" id="storyLogo" aria-hidden="true">P</div>
+      <div class="story-meta"><strong id="storyCompany">Peacock India</strong><span id="storyDate">2015–2016 · Early career</span></div>
+      <div class="story-counter" id="storyCounter">01 / 10</div>
+    </div>
+    <div class="story-body" id="storyBody">
+      <div class="story-phase" id="storyPhase">EMPLOYMENT EXPERIENCE</div>
+      <h1 id="storyTitle">Where the story begins.</h1>
+      <p id="storySummary">A first experience of professional visual design.</p>
+      <div id="storyExtra" class="story-extra" hidden><p id="storyDetail"></p><a id="caseLink" href="/" target="_self">Explore related work <span aria-hidden="true">↗</span></a></div>
+      <button type="button" class="read-more" id="moreBtn" aria-expanded="false" aria-controls="storyExtra">Read more <span aria-hidden="true">⌄</span></button>
+    </div>
+  </section>
+  <nav class="stop-nav" aria-label="Navigate career stops">
+    <button type="button" class="previous-stop" id="prevBtn" aria-label="Previous stop"><span aria-hidden="true">←</span></button>
+    <span class="stop-number" id="stopNumber" aria-live="polite">1 / 10</span>
+    <button type="button" class="next-stop" id="nextBtn">Next stop <span aria-hidden="true">→</span></button>
+  </nav>
+  <nav class="bottom-dock" aria-label="Portfolio navigation">
+    <a class="dock-active" href="/journey" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 6 6-2 6 2 6-2v14l-6 2-6-2-6 2V6zm6-2v14m6-12v14"/></svg><span>Journey</span></a>
+    <a href="/#products">Work</a>
+    <a href="/#contact">Contact</a>
+    <a class="resume-pill" href="/resume/Viswanathan_G_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume <span aria-hidden="true">↗</span></a>
+  </nav>
+  <div class="swipe-hint" aria-hidden="true">SWIPE OR SELECT NEXT STOP TO TRAVEL</div>
+</main>
+<script src="/journey/map.js" defer></script>
+</body></html>

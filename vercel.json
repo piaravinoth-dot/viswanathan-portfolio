@@ -42,6 +42,10 @@
     {
       "source": "/work/samvidhan",
       "destination": "/case-study-pages/samvidhan.html"
+    },
+    {
+      "source": "/journey",
+      "destination": "/journey/index.html"
     }
   ],
   "headers": [
