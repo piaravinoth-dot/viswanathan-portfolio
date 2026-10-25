@@ -53,5 +53,6 @@ jobs:
             qa-career-journey-results.json
             qa-career-journey-iphone.png
             qa-career-journey-desktop.png
+            qa-career-journey-*-failure.png
           if-no-files-found: ignore
           retention-days: 7

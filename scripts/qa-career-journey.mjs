@@ -28,8 +28,21 @@ try{
   assert.equal(await page.locator(".exp-journey-card-head strong").innerText(),"Peacock India");
   pass(name+" starts with four employers");
   const initial=await page.locator(".exp-journey-world").evaluate(e=>e.style.transform);
-  await page.getByRole("button",{name:/Next stop/}).click();
-  await page.waitForFunction(()=>document.querySelector(".exp-journey-card-head strong")?.textContent==="Ad2pro Media Solutions");
+  const nextButton=page.locator(".exp-journey-controls button").last();
+  assert(await nextButton.isVisible());
+  await nextButton.click();
+  try{
+    await page.waitForFunction(()=>document.querySelector(".exp-journey-card-head strong")?.textContent==="Ad2pro Media Solutions",null,{timeout:6500});
+  }catch(error){
+    await page.screenshot({path:"qa-career-journey-"+name+"-failure.png"});
+    const state=await page.evaluate(()=>({
+      headline:document.querySelector(".exp-journey-card-head strong")?.textContent,
+      step:document.querySelector(".exp-journey")?.getAttribute("data-active-step"),
+      clicked:document.querySelector(".exp-journey-controls button:last-child")?.outerHTML
+    }));
+    console.error("NAVIGATION DIAGNOSTICS",name,JSON.stringify(state));
+    throw error;
+  }
   await page.waitForTimeout(500);
   assert.notEqual(initial,await page.locator(".exp-journey-world").evaluate(e=>e.style.transform));
   pass(name+" camera moves between career stops");
@@ -51,6 +64,7 @@ try{
   assert(await page.locator("#products").count()>0,"products section missing");
   assert(await page.locator("#career").count()===1,"career anchor missing or duplicate");
   pass(name+" products retained and career anchor unique");
+  await page.waitForTimeout(1400);
   if(name==="iphone"||name==="desktop"){await page.screenshot({path:"qa-career-journey-"+name+".png",animations:"disabled"});}
   assert.deepEqual(errors,[],errors.join("; "));
   pass(name+" no uncaught errors");

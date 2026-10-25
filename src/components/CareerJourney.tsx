@@ -62,12 +62,18 @@ export default function CareerJourney(){
   const media=window.matchMedia("(prefers-reduced-motion: reduce)");
   const onPreference=()=>{reduce.current=media.matches;if(media.matches){cancelAnimationFrame(frame.current);frame.current=0;current.current=target.current;velocity.current=0;place();}};
   onPreference();
+  // Keep the floating LinkedIn tab from blocking the map's story card.
+  const section=document.getElementById("career");
+  const visibilityObserver=new IntersectionObserver(([entry])=>{
+    document.body.classList.toggle("exp-journey-visible",entry.isIntersecting&&entry.intersectionRatio>.22);
+  },{threshold:[0,.22,.55]});
+  if(section)visibilityObserver.observe(section);
   const resize=new ResizeObserver(place);if(scene.current)resize.observe(scene.current);
   media.addEventListener("change",onPreference);place();
-  return()=>{resize.disconnect();media.removeEventListener("change",onPreference);cancelAnimationFrame(frame.current);};
+  return()=>{resize.disconnect();visibilityObserver.disconnect();document.body.classList.remove("exp-journey-visible");media.removeEventListener("change",onPreference);cancelAnimationFrame(frame.current);};
  },[place]);
  const stop=steps[active];
- return <section className="exp-journey section-container" id="career" aria-labelledby="exp-journey-title">
+ return <section className="exp-journey section-container" data-active-step={active} id="career" aria-labelledby="exp-journey-title">
   <div className="exp-journey-heading"><div><span className="exp-journey-eyebrow">FOUR PLACES · ONE CREATIVE JOURNEY</span>
    <h2 id="exp-journey-title">My professional <em>journey.</em></h2>
    <p>Explore the teams that shaped my creative practice, from the first design brief to campaign leadership.</p></div>
