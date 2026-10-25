@@ -28,7 +28,7 @@ jobs:
         run: |
           npm install --no-audit --no-fund
           npm install --no-save --ignore-scripts playwright
-          npx playwright install --with-deps chromium
+          google-chrome --version
       - name: Build production-like preview
         run: npm run build
       - name: Serve preview
@@ -41,6 +41,8 @@ jobs:
           cat /tmp/career-journey-preview.log
           exit 1
       - name: Run responsive career map checks
+        env:
+          QA_CHROME_CHANNEL: chrome
         run: node scripts/qa-career-journey.mjs
       - name: Save screenshots and QA output
         if: always()

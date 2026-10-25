@@ -11,7 +11,7 @@ const main=await fs.readFile("src/components/MainContainer.tsx","utf8");
 assert(oldCareer.includes("My career")&&oldCSS.includes(".career-section"),"legacy implementation not preserved");
 assert(main.includes("<CareerJourney/>")&&!main.includes("<Career/>"),"new component not substituted");
 pass("Original career files preserved; homepage uses Journey");
-const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+const browser=await chromium.launch({headless:true,channel:process.env.QA_CHROME_CHANNEL||undefined,args:["--no-sandbox"]});
 try{
  for(const [name,width,height] of [["iphone",390,844],["small-phone",375,667],["android",412,915],["tablet",820,1180],["desktop",1440,900]]){
   const context=await browser.newContext({viewport:{width,height},isMobile:width<850,hasTouch:width<850});
