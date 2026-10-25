@@ -54,3 +54,7 @@ body,button,.map-pin{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Displa
 /* Distinguish career history from product creation without altering the map. */
 .story-phase{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:10px;letter-spacing:.16em;color:#e5bb80;font-weight:700;margin-bottom:10px}
 @media(max-width:680px){.story-phase{font-size:9px;letter-spacing:.13em;margin-bottom:7px}}
+
+/* Keep navigation legible in both map themes; background is always dark. */
+.identity-label,.stop-nav,.stop-number{color:#f7f7f7}
+.stop-nav button{color:#f7f7f7}

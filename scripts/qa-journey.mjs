@@ -37,15 +37,28 @@ try{
   await page.locator('#moreBtn').click();
   await page.locator('#themeBtn').click();
   assert(await page.locator('body').evaluate(e=>e.classList.contains('day')));
-  check(name+' switches appearance');
+  const textColor=await page.locator('.stop-number').evaluate(el=>getComputedStyle(el).color);
+  assert.equal(textColor,'rgb(247, 247, 247)');
+  check(name+' switches appearance with readable navigation');
+  await page.locator('#themeBtn').click();
   await page.keyboard.press('Home');
   assert.equal(await page.locator('#prevBtn').isDisabled(),true);
   await page.keyboard.press('End');
   assert.equal(await page.locator('#nextBtn').isDisabled(),true);
+  // A long jump must complete and place the selected destination at the GPS marker.
+  await page.waitForFunction(()=>{
+    const pin=document.querySelector('.map-pin[aria-current="step"] .pin-round');
+    const hero=document.querySelector('#heroMarker');
+    if(!pin||!hero||hero.classList.contains('is-moving'))return false;
+    const a=pin.getBoundingClientRect(),h=hero.getBoundingClientRect();
+    return Math.abs(a.left+a.width/2-h.left-h.width/2)<28 &&
+      Math.abs(a.top+a.height/2-h.top-h.height/2)<118;
+  },null,{timeout:12000});
+  check(name+' selected pin reaches the stationary GPS marker');
   assert.equal(await page.locator('#storyPhase').innerText(),'INDEPENDENTLY CREATED PRODUCT');
   assert.equal(await page.locator('#storyCompany').innerText(),'Clip Studio');
   check(name+' first/last stop navigation');
-  await page.waitForTimeout(650);
+  await page.waitForTimeout(100);
   const geom=await page.evaluate(()=>{const s=document.getElementById('storyCard').getBoundingClientRect(),d=document.querySelector('.bottom-dock').getBoundingClientRect();return{scrollWidth:document.documentElement.scrollWidth,storyLeft:s.left,storyRight:s.right,dockLeft:d.left,dockRight:d.right}});
   assert(geom.scrollWidth<=width+3,JSON.stringify(geom));
   assert(geom.storyLeft>=-2&&geom.storyRight<=width+2,JSON.stringify(geom));
