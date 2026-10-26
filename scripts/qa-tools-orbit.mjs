@@ -55,6 +55,25 @@ try{
   assert.equal(await toolkit.locator(".toolkit-tile").count(),16);
   assert.equal(await toolkit.locator(".toolkit-focus-copy strong").innerText(),"Adobe Photoshop");
   check(device+" defaults to All 16 tools");
+  if(width<=760){
+    const mobile=await toolkit.locator(".toolkit-stage").evaluate(el=>({
+      touchAction:getComputedStyle(el).touchAction,
+      visible:[...el.querySelectorAll(".toolkit-tile")].filter(t=>getComputedStyle(t).display!=="none").length
+    }));
+    assert.equal(mobile.touchAction,"pan-y","vertical native scrolling must remain available");
+    assert.equal(mobile.visible,4,"mobile orbit should show four spaced tools");
+    check(device+" only four touch-friendly icons visible with vertical pan preserved");
+    const titleBeforeSwipe=await toolkit.locator(".toolkit-focus-copy strong").innerText();
+    const rect=await toolkit.locator(".toolkit-stage").boundingBox();
+    assert(rect,"mobile stage bounding box missing");
+    await page.evaluate(()=>{
+      const stage=document.querySelector(".toolkit-stage");
+      stage.dispatchEvent(new TouchEvent("touchstart",{bubbles:true,touches:[new Touch({identifier:1,target:stage,clientX:280,clientY:320})]}));
+      stage.dispatchEvent(new TouchEvent("touchend",{bubbles:true,changedTouches:[new Touch({identifier:1,target:stage,clientX:160,clientY:319})]}));
+    });
+    assert.notEqual(await toolkit.locator(".toolkit-focus-copy strong").innerText(),titleBeforeSwipe,"horizontal swipe did not change focus");
+    check(device+" horizontal swipe changes tool");
+  }
   if(device==="iphone"||device==="desktop"){
     // Autoplay should visibly advance while the section is onscreen.
     await page.waitForTimeout(200);
