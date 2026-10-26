@@ -3,9 +3,12 @@ on:
   push:
     branches:
       - feature/experience-journey-inline-20261025
+      - fix/about-work-copy-remove-journey-cta-20261026
       - fix/journey-map-fill-card-20261026
     paths:
       - "src/components/CareerJourney.tsx"
+      - "src/components/About.tsx"
+      - "src/components/styles/About.css"
       - "src/components/styles/CareerJourney.css"
       - "src/components/MainContainer.tsx"
       - "scripts/qa-career-journey.mjs"

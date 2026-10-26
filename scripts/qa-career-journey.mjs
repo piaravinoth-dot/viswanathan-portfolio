@@ -28,6 +28,20 @@ try{
   assert.equal(await page.locator(".exp-journey-pin").count(),4);
   assert.equal(await page.locator(".exp-journey-card-head strong").innerText(),"Peacock India");
   pass(name+" starts with four employers");
+  const aboutText=await page.locator(".about-copy").innerText();
+  assert(aboutText.includes("political campaigns"),"Specific campaign experience not present");
+  assert(aboutText.includes("multi-page publications"),"Publication design not mentioned");
+  assert(aboutText.includes("creative direction"),"Leadership responsibility missing");
+  assert(aboutText.includes("AI Design Studio"),"Product-building experience missing");
+  assert(aboutText.includes("Vibe Coder"),"Vibe Coder positioning missing");
+  assert.equal(await page.locator(".about-journey-link").count(),0,"Removed Journey CTA remains visible");
+  assert.equal(await page.locator(".about-actions a").count(),2,"Resume or contact link changed");
+  const aboutGeometry=await page.locator(".about-me").evaluate(el=>{
+    const r=el.getBoundingClientRect();const parent=el.closest(".about-section")?.getBoundingClientRect();
+    return {left:r.left,right:r.right,parentLeft:parent?.left,parentRight:parent?.right}
+  });
+  assert(aboutGeometry.left>=-3 && aboutGeometry.right<=width+3,"About text overflows viewport: "+JSON.stringify(aboutGeometry));
+  pass(name+" expanded About content, CTA removed, resume/contact preserved");
   const initial=await page.locator(".exp-journey-world").evaluate(e=>e.style.transform);
   const nextButton=page.locator(".exp-journey-controls button").last();
   assert(await nextButton.isVisible());
