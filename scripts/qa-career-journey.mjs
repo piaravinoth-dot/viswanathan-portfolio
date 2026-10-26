@@ -47,7 +47,7 @@ try{
     await page.locator(".exp-journey-stopbar button").nth(index).evaluate(el=>el.click());
     assert.equal(await page.locator(".exp-journey-card-head strong").innerText(),names[index]);
     const copy=await page.locator(".exp-journey-card-body p").innerText();
-    assert(copy.trim().split(/\\s+/).length>=47,names[index]+" description is too short: "+copy);
+    assert(copy.trim().split(" ").length>=47,names[index]+" description is too short: "+copy);
   }
   await page.locator(".exp-journey-stopbar button").first().evaluate(el=>el.click());
   pass(name+" all four employer descriptions expanded");
