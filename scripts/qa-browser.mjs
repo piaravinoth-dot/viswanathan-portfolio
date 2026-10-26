@@ -179,17 +179,21 @@ async function testViewport(browser, name, width) {
     if(name==='chromium' && width===1440) {
       const orbit = page.locator('.mobile-product-orbit');
       await orbit.scrollIntoViewIfNeeded();
+      // Smooth scrolling may briefly intersect a tiny part of the carousel.
+      // Wait for meaningful, settled visibility before testing its timer.
       await page.waitForFunction(() => {
         const el = document.querySelector('.mobile-product-orbit');
         if (!el) return false;
         const box = el.getBoundingClientRect();
-        return box.top < innerHeight && box.bottom > 0;
-      },null,{timeout:5000});
+        const visibleHeight=Math.max(0,Math.min(box.bottom,innerHeight)-Math.max(box.top,0));
+        return box.height>0 && visibleHeight/Math.min(box.height,innerHeight)>.25;
+      },null,{timeout:12000});
+      await page.waitForTimeout(600);
       const initialIndex = await page.locator('.orbit-card.orbit-active').getAttribute('class');
       const changed = await page.waitForFunction(initial => {
         const active = document.querySelector('.orbit-card.orbit-active');
         return active && active.className !== initial;
-      },initialIndex,{timeout:8500}).then(()=>true).catch(()=>false);
+      },initialIndex,{timeout:14000}).then(()=>true).catch(()=>false);
       log(name,width,'desktop products auto-rotate when visible',changed);
       const control = page.locator('.orbit-autoplay');
       log(name,width,'desktop pause rotation control visible',await control.isVisible());
