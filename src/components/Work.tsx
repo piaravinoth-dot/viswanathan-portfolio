@@ -2,7 +2,6 @@ import {useEffect,useRef,useState} from "react";
 import {MdArrowOutward,MdArrowBack,MdArrowForward} from "react-icons/md";
 import "./styles/Work.css";
 import gsap from "gsap";
-import {ScrollTrigger} from "gsap/ScrollTrigger";
 
 type Product={slug:string;id:string;title:string;subtitle:string;description:string;skills:string[];accent:string;visual:string;note:string};
 const products:Product[]=[
@@ -55,18 +54,12 @@ const orbitNext=(delta:number)=>{
   }
 };
 useEffect(()=>{
+  const observer=new IntersectionObserver(entries=>{
+    setOrbitInView(entries.some(e=>e.isIntersecting));
+  },{threshold:0.05});
   const element=orbitHost.current;
-  if(!element)return;
-  // ScrollTrigger follows the existing ScrollSmoother's transformed scroll.
-  // IntersectionObserver could leave autoplay inactive after arriving here.
-  const visibility=ScrollTrigger.create({
-    trigger:element,
-    start:"top bottom",
-    end:"bottom top",
-    onToggle:self=>setOrbitInView(self.isActive),
-    onRefresh:self=>setOrbitInView(self.isActive),
-  });
-  return()=>visibility.kill();
+  if(element)observer.observe(element);
+  return()=>observer.disconnect();
 },[]);
 useEffect(()=>{
   const onVisibility=()=>setOrbitPageVisible(!document.hidden);
