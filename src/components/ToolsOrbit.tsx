@@ -137,7 +137,7 @@ export default function ToolsOrbit(){
      <div className="toolkit-ring toolkit-ring-outer" aria-hidden="true"/>
      <div className="toolkit-ring toolkit-ring-inner" aria-hidden="true"/>
      <div className="toolkit-axis" aria-hidden="true"/>
-     <div className="toolkit-hand" aria-hidden="true" style={{transform:reduced?"translate(-50%, -50%)":\`translate(-50%, -50%) rotate(\${Math.sin(orbitOffset*Math.PI/180)*3.5}deg)\`}}>
+     <div className="toolkit-hand" aria-hidden="true" style={{transform:reduced?"translate(-50%, -50%)":`translate(-50%, -50%) rotate(${Math.sin(orbitOffset*Math.PI/180)*3.5}deg)`}}>
        <GestureHand/>
      </div>
      {activeTools.map((tool,i)=>{
@@ -151,7 +151,7 @@ export default function ToolsOrbit(){
          className={"toolkit-tile"+(isActive?" is-active":"")}
          aria-label={"Select "+tool.name} aria-pressed={isActive}
          onClick={()=>setSelected(tool.name)}
-         style={{left:x+"%",top:y+"%",transform:\`translate(-50%,-50%) scale(\${scale})\`,zIndex:Math.round(10+depth*20),opacity:reduced?1:(.52+depth*.48),["--tool-color" as string]:tool.color}}>
+         style={{left:x+"%",top:y+"%",transform:`translate(-50%,-50%) scale(${scale})`,zIndex:Math.round(10+depth*20),opacity:reduced?1:(.52+depth*.48),["--tool-color" as string]:tool.color}}>
          <span className="toolkit-tile-face">{tool.mark}</span>
          <span className="toolkit-tile-name">{tool.name}</span>
        </button>;
