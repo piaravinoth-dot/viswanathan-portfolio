@@ -12,7 +12,10 @@ try{
   assert.equal(response?.status(),200);
   const toolkit=page.locator("#toolkit");
   await toolkit.waitFor({state:"attached",timeout:40000});
-  await toolkit.scrollIntoViewIfNeeded();
+  await toolkit.locator(".toolkit-stage").scrollIntoViewIfNeeded();
+  // The tall toolkit section can intersect the viewport while its orbit stage is below the fold.
+  // Test motion when the animated stage itself is visibly on-screen.
+  await page.waitForTimeout(250);
   assert.equal(await toolkit.locator(".toolkit-category").count(),5);
   const photo=toolkit.locator(".toolkit-hand-photo");
   assert.equal(await photo.count(),1,"photographic hand missing");
@@ -29,7 +32,7 @@ try{
     const beforeAngle=await toolkit.locator(".toolkit-tile").first().evaluate(el=>el.style.left);
     await page.waitForTimeout(800);
     const afterAngle=await toolkit.locator(".toolkit-tile").first().evaluate(el=>el.style.left);
-    assert.notEqual(beforeAngle,afterAngle,"toolkit orbit did not autoplay");
+    assert.notEqual(beforeAngle,afterAngle,"toolkit orbit did not autoplay while stage visible; "+JSON.stringify(await page.evaluate(()=>({hidden:document.hidden,reduced:matchMedia("(prefers-reduced-motion: reduce)").matches,stage:(()=>{const r=document.querySelector(".toolkit-stage").getBoundingClientRect();return {top:r.top,bottom:r.bottom}})()}))));
     check(device+" active autoplay advances tiles");
   }
   assert.equal(await toolkit.locator(".toolkit-tile-face svg").count(),1,"Design category should show Figma brand icon");
