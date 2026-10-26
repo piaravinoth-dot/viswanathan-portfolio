@@ -74,13 +74,34 @@ try{
     assert.notEqual(await toolkit.locator(".toolkit-focus-copy strong").innerText(),titleBeforeSwipe,"horizontal swipe did not change focus");
     check(device+" horizontal swipe changes tool");
   }
-  if(device==="iphone"||device==="desktop"){
-    // Autoplay should visibly advance while the section is onscreen.
+  if(width<=760){
+    // Composited CSS motion avoids constant React state updates during native touch scroll.
+    const sample=()=>toolkit.locator(".toolkit-tile[data-mobile-slot='0']").evaluate(el=>({
+      name:getComputedStyle(el).animationName,
+      transform:getComputedStyle(el).transform,
+      left:el.style.left
+    }));
+    await page.waitForTimeout(220);
+    const before=await sample();
+    await page.waitForTimeout(650);
+    const after=await sample();
+    assert(before.name.includes("toolkit-mobile-tile-float"),"mobile CSS animation not active");
+    assert.notEqual(before.transform,after.transform,"mobile tiles did not animate smoothly");
+    assert.equal(before.left,after.left,"mobile orbit still triggers per-frame React layout changes");
+    check(device+" GPU-friendly icon motion without per-frame React layout updates");
+    const hand=await toolkit.locator(".toolkit-hand").evaluate(el=>{
+      const a=el.getBoundingClientRect(),b=el.closest(".toolkit-stage").getBoundingClientRect();
+      return {top:a.top,bottom:a.bottom,stageTop:b.top,stageBottom:b.bottom};
+    });
+    assert(hand.top>=hand.stageTop-2&&hand.bottom<=hand.stageBottom+2,"illustrated hand cropped: "+JSON.stringify(hand));
+    check(device+" illustrated hand fits entirely inside mobile stage");
+  } else if(device==="desktop"){
+    // Desktop maintains the animated orbit with all sixteen icons.
     await page.waitForTimeout(200);
     const beforeAngle=await toolkit.locator(".toolkit-tile").first().evaluate(el=>el.style.left);
     await page.waitForTimeout(800);
     const afterAngle=await toolkit.locator(".toolkit-tile").first().evaluate(el=>el.style.left);
-    assert.notEqual(beforeAngle,afterAngle,"toolkit orbit did not autoplay while stage visible; "+JSON.stringify(await page.evaluate(()=>({hidden:document.hidden,reduced:matchMedia("(prefers-reduced-motion: reduce)").matches,stage:(()=>{const r=document.querySelector(".toolkit-stage").getBoundingClientRect();return {top:r.top,bottom:r.bottom}})()}))));
+    assert.notEqual(beforeAngle,afterAngle,"desktop orbit did not autoplay while stage visible");
     check(device+" active autoplay advances tiles");
   }
   assert.equal(await toolkit.getByRole("button",{name:"Select Figma"}).locator(".toolkit-tile-face svg").count(),1,"Figma brand icon missing");
