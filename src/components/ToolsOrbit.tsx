@@ -1,5 +1,7 @@
 import {useEffect,useMemo,useRef,useState} from "react";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
+import {SiFigma,SiReact,SiTypescript,SiGithub,SiVercel,SiCloudflare,SiOpenai} from "react-icons/si";
+import {VscVscode} from "react-icons/vsc";
 import "./styles/ToolsOrbit.css";
 
 type Group="Design"|"Motion"|"Development"|"AI";
@@ -30,7 +32,18 @@ const groupCopy:Record<string,string>={
  Development:"Turn the visual idea into a working experience.",
  AI:"Experiment faster, while keeping creative judgment human."
 };
-const clamp=(x:number,min:number,max:number)=>Math.max(min,Math.min(max,x));
+// Locally bundled brand marks, no hotlinked icon APIs.
+// Adobe's app-monogram marks remain recognizable from the reference.
+const TOOL_LOGOS:Record<string,React.ReactNode>={
+ "Figma":<SiFigma/>,
+ "Visual Studio Code":<VscVscode/>,
+ "React":<SiReact/>,
+ "TypeScript":<SiTypescript/>,
+ "GitHub":<SiGithub/>,
+ "Vercel":<SiVercel/>,
+ "Cloudflare":<SiCloudflare/>,
+ "ChatGPT":<SiOpenai/>
+};
 
 function GestureHand(){
  return <svg className="toolkit-hand-illustration" viewBox="0 0 350 590" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Original illustrated hand reaching into an orbit of creative tools">
@@ -75,6 +88,8 @@ export default function ToolsOrbit(){
  const [selected,setSelected]=useState("Adobe Photoshop");
  const [turn,setTurn]=useState(0);
  const [scrollTurn,setScrollTurn]=useState(0);
+ const [autoTurn,setAutoTurn]=useState(0);
+ const [inView,setInView]=useState(false);
  const [reduced,setReduced]=useState(false);
  const activeTools=useMemo(()=>group==="All"?TOOLS:TOOLS.filter(t=>t.group===group),[group]);
  const active=TOOLS.find(t=>t.name===selected)??TOOLS[0];
@@ -92,6 +107,7 @@ export default function ToolsOrbit(){
   const el=host.current;if(!el)return;
   const observer=new IntersectionObserver(([entry])=>{
     document.body.classList.toggle("toolkit-section-active",entry.isIntersecting&&entry.intersectionRatio>.25);
+    setInView(entry.isIntersecting);
   },{threshold:[0,.25,.6]});
   observer.observe(el);
   return()=>{observer.disconnect();document.body.classList.remove("toolkit-section-active")};
@@ -106,6 +122,21 @@ export default function ToolsOrbit(){
   });
   return()=>handle.kill();
  },[reduced]);
+ // Faster 14s revolution, throttled to ~30 updates/sec, paused offscreen.
+ useEffect(()=>{
+  if(reduced||!inView)return;
+  let frame=0,last=0;
+  const tick=(now:number)=>{
+   if(!document.hidden&&now-last>=32){
+    const elapsed=last?Math.min(now-last,80):32;
+    setAutoTurn(value=>(value+elapsed*360/14000)%360);
+    last=now;
+   }
+   frame=window.requestAnimationFrame(tick);
+  };
+  frame=window.requestAnimationFrame(tick);
+  return()=>window.cancelAnimationFrame(frame);
+ },[reduced,inView]);
  const rotate=(direction:number)=>{
    const visible=activeTools;
    const index=visible.findIndex(t=>t.name===selected);
@@ -120,7 +151,7 @@ export default function ToolsOrbit(){
    if(next)setSelected(next.name);
   }
  };
- const orbitOffset=turn+scrollTurn;
+ const orbitOffset=turn+scrollTurn+autoTurn;
  return <section className="toolkit-section section-container" id="toolkit" ref={host} aria-labelledby="toolkit-title">
   <div className="toolkit-header">
    <span className="toolkit-eyebrow">THE CREATIVE TOOLKIT <span aria-hidden="true">/</span> DESIGN × MOTION × CODE × AI</span>
@@ -160,14 +191,14 @@ export default function ToolsOrbit(){
          aria-label={"Select "+tool.name} aria-pressed={isActive}
          onClick={()=>setSelected(tool.name)}
          style={{left:x+"%",top:y+"%",transform:`translate(-50%,-50%) scale(${scale})`,zIndex:Math.round(10+depth*20),opacity:reduced?1:(.52+depth*.48),["--tool-color" as string]:tool.color}}>
-         <span className="toolkit-tile-face">{tool.mark}</span>
+         <span className="toolkit-tile-face">{TOOL_LOGOS[tool.name]??<span className="toolkit-tile-monogram">{tool.mark}</span>}</span>
          <span className="toolkit-tile-name">{tool.name}</span>
        </button>;
      })}
      <div className="toolkit-stage-number" aria-hidden="true">{String(TOOLS.indexOf(active)+1).padStart(2,"0")} / {String(TOOLS.length).padStart(2,"0")}</div>
     </div>
     <div className="toolkit-controls">
-     <span>{reduced?"SELECT A TOOL TO EXPLORE":"SCROLL THE PAGE TO ROTATE · OR USE THE ARROWS"}</span>
+     <span>{reduced?"SELECT A TOOL TO EXPLORE":"AUTO ROTATION · USE ARROWS TO EXPLORE"}</span>
      <div><button type="button" onClick={()=>rotate(-1)} aria-label="Previous tool">←</button>
           <button type="button" onClick={()=>rotate(1)} aria-label="Next tool">→</button></div>
     </div>
