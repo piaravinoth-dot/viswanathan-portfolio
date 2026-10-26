@@ -12,9 +12,14 @@ try{
   assert.equal(response?.status(),200);
   const toolkit=page.locator("#toolkit");
   await toolkit.waitFor({state:"attached",timeout:40000});
-  await toolkit.locator(".toolkit-stage").scrollIntoViewIfNeeded();
-  // The tall toolkit section can intersect the viewport while its orbit stage is below the fold.
-  // Test motion when the animated stage itself is visibly on-screen.
+  // GSAP ScrollSmoother transforms content; Playwright scrollIntoViewIfNeeded may not
+  // scroll the actual window even when the element is thousands of pixels below it.
+  await page.evaluate(()=>{
+    const stage=document.querySelector(".toolkit-stage");
+    const target=Math.max(0,window.scrollY+stage.getBoundingClientRect().top-window.innerHeight*.35);
+    window.scrollTo({top:target,behavior:"instant"});
+  });
+  await page.waitForFunction(()=>{const r=document.querySelector(".toolkit-stage").getBoundingClientRect();return r.top<window.innerHeight*.75&&r.bottom>window.innerHeight*.2},{timeout:5000});
   await page.waitForTimeout(250);
   assert.equal(await toolkit.locator(".toolkit-category").count(),5);
   const photo=toolkit.locator(".toolkit-hand-photo");
