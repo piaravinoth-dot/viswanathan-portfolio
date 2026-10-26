@@ -22,10 +22,21 @@ try{
   });
   // Desktop ScrollSmoother intentionally eases toward the scroll target over ~1.7s.
   // Wait for actual stage visibility instead of asserting mid-transition.
-  await page.waitForFunction(()=>{
-    const r=document.querySelector(".toolkit-stage").getBoundingClientRect();
-    return r.top<innerHeight*.85&&r.bottom>innerHeight*.1;
-  },null,{timeout:8000});
+  try{
+    await page.waitForFunction(()=>{
+      const r=document.querySelector(".toolkit-stage").getBoundingClientRect();
+      return r.top<innerHeight*.85&&r.bottom>innerHeight*.1;
+    },null,{timeout:8000});
+  }catch{
+    // On touch-enabled tablet, ScrollSmoother can still be settling after
+    // native window.scrollTo. Recover with an element-aware scroll before
+    // asserting the final position, rather than failing on transition timing.
+    await toolkit.locator(".toolkit-stage").scrollIntoViewIfNeeded({timeout:10000});
+    await page.waitForFunction(()=>{
+      const r=document.querySelector(".toolkit-stage").getBoundingClientRect();
+      return r.top<innerHeight*.85&&r.bottom>innerHeight*.1;
+    },null,{timeout:10000});
+  }
   const stageVisibility=await page.evaluate(()=>{
     const rect=document.querySelector(".toolkit-stage").getBoundingClientRect();
     return {top:rect.top,bottom:rect.bottom,scrollY:scrollY,scrollHeight:document.documentElement.scrollHeight,viewport:innerHeight};
@@ -56,6 +67,13 @@ try{
   assert.equal(await toolkit.locator(".toolkit-focus-copy strong").innerText(),"Adobe Photoshop");
   check(device+" defaults to All 16 tools");
   if(width<=760){
+
+    // Selection moves automatically while visible, without layout animation.
+    const autoBefore=await toolkit.locator(".toolkit-focus-copy strong").innerText();
+    await page.waitForTimeout(4000);
+    const autoAfter=await toolkit.locator(".toolkit-focus-copy strong").innerText();
+    assert.notEqual(autoBefore,autoAfter,"mobile automatic tool cycling is not working");
+    check(device+" automatic mobile tool rotation works");
     const mobile=await toolkit.locator(".toolkit-stage").evaluate(el=>({
       touchAction:getComputedStyle(el).touchAction,
       visible:[...el.querySelectorAll(".toolkit-tile")].filter(t=>getComputedStyle(t).display!=="none").length

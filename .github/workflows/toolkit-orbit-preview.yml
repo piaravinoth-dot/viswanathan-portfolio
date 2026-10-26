@@ -7,6 +7,7 @@ on:
       - review/fix-current-gallery-browser-qa-20261026
       - review/default-all-tools-20261026
       - fix/mobile-tools-orbit-spacing-20261026
+      - fix/ios-native-scroll-tools-20261026
     paths:
       - "src/components/ToolsOrbit.tsx"
       - "src/components/styles/ToolsOrbit.css"
