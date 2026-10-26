@@ -1,7 +1,7 @@
 name: Final Full-Page Accessibility Verification
 on:
   push:
-    branches: [viswanathan-g]
+    branches: [viswanathan-g, review/fix-current-gallery-browser-qa-20261026]
     paths:
       - '.github/workflows/portfolio-final-accessibility.yml'
       - 'scripts/qa-accessibility.mjs'
