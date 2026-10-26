@@ -131,12 +131,14 @@ export default function ToolsOrbit(){
  },[reduced,mobile]);
  // Faster 14s revolution, throttled to ~30 updates/sec, paused offscreen.
  useEffect(()=>{
-  if(reduced||!inView)return;
+  // Native mobile scrolling stays smooth when animation runs on the compositor,
+  // rather than forcing a React render every 32ms for sixteen orbit elements.
+  if(reduced||!inView||mobile)return;
   let frame=0,last=0;
   const tick=(now:number)=>{
    if(!document.hidden&&now-last>=32){
     const elapsed=last?Math.min(now-last,80):32;
-    setAutoTurn(value=>(value+elapsed*360/(mobile?24000:14000))%360);
+    setAutoTurn(value=>(value+elapsed*360/14000)%360);
     last=now;
    }
    frame=window.requestAnimationFrame(tick);
@@ -185,7 +187,7 @@ export default function ToolsOrbit(){
      <div className="toolkit-ring toolkit-ring-outer" aria-hidden="true"/>
      <div className="toolkit-ring toolkit-ring-inner" aria-hidden="true"/>
      <div className="toolkit-axis" aria-hidden="true"/>
-     <div className="toolkit-hand" aria-hidden="true" style={{transform:reduced?"translate(-50%, -50%)":`translate(-50%, -50%) rotate(${Math.sin(orbitOffset*Math.PI/180)*3.5}deg)`}}>
+     <div className="toolkit-hand" aria-hidden="true" style={{transform:reduced||mobile?"translate(-50%, -50%)":`translate(-50%, -50%) rotate(${Math.sin(orbitOffset*Math.PI/180)*3.5}deg)`}}>
        <GestureHand/>
      </div>
      {activeTools.map((tool,i)=>{
