@@ -12,15 +12,20 @@ try{
   assert.equal(response?.status(),200);
   const toolkit=page.locator("#toolkit");
   await toolkit.waitFor({state:"attached",timeout:40000});
-  // GSAP ScrollSmoother transforms content; Playwright scrollIntoViewIfNeeded may not
-  // scroll the actual window even when the element is thousands of pixels below it.
+  // Wait for the hardware-WebGL fallback and its portfolio:layout-ready event:
+  // it resets ScrollSmoother to top and can undo an earlier browser test scroll.
+  await page.waitForTimeout(1100);
   await page.evaluate(()=>{
     const stage=document.querySelector(".toolkit-stage");
     const target=Math.max(0,window.scrollY+stage.getBoundingClientRect().top-window.innerHeight*.35);
     window.scrollTo({top:target,behavior:"instant"});
   });
-  await page.waitForFunction(()=>{const r=document.querySelector(".toolkit-stage").getBoundingClientRect();return r.top<window.innerHeight*.75&&r.bottom>window.innerHeight*.2},{timeout:5000});
-  await page.waitForTimeout(250);
+  await page.waitForTimeout(350);
+  const stageVisibility=await page.evaluate(()=>{
+    const rect=document.querySelector(".toolkit-stage").getBoundingClientRect();
+    return {top:rect.top,bottom:rect.bottom,scrollY:scrollY,scrollHeight:document.documentElement.scrollHeight,viewport:innerHeight};
+  });
+  assert(stageVisibility.top<height*.85&&stageVisibility.bottom>height*.1,"orbit stage not in view after native scroll "+JSON.stringify(stageVisibility));
   assert.equal(await toolkit.locator(".toolkit-category").count(),5);
   const photo=toolkit.locator(".toolkit-hand-photo");
   assert.equal(await photo.count(),1,"photographic hand missing");
