@@ -7,6 +7,7 @@ import Landing from "./Landing";
 import Navbar,{smoother} from "./Navbar";
 import SocialIcons from "./SocialIcons";
 import WhatIDo from "./WhatIDo";
+import ToolsOrbit from "./ToolsOrbit";
 import Work from "./Work";
 import PoliticalSpace from "./PoliticalSpace";
 import setSplitText from "./utils/splitText";
@@ -50,6 +51,6 @@ const MainContainer=({children}:PropsWithChildren)=>{
     window.addEventListener("resize",resize);
     return()=>{disposed=true;window.clearTimeout(timer);window.removeEventListener("resize",resize);setSplitText(true);};
   },[isLoading]);
-  return <div className="container-main" ref={motionRef}><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&children}</Landing><About/><PoliticalSpace/><Work/><WhatIDo/><CareerJourney/><Contact/></div></div></div></div>;
+  return <div className="container-main" ref={motionRef}><Cursor/><Navbar/><SocialIcons/>{isDesktopView&&children}<div id="smooth-wrapper"><div id="smooth-content"><div className="container-main"><Landing>{!isDesktopView&&children}</Landing><About/><PoliticalSpace/><Work/><WhatIDo/><ToolsOrbit/><CareerJourney/><Contact/></div></div></div></div>;
 };
 export default MainContainer;
