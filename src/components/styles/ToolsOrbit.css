@@ -157,3 +157,42 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
     animation:none!important;will-change:auto
   }
 }
+
+/* Distinct mobile composition: compact illustration with clearly separated tool rails. */
+@media(max-width:760px){
+  .toolkit-layout{gap:0}
+  .toolkit-intro{padding:24px 0 0}
+  .toolkit-intro h2{margin-bottom:14px}
+  .toolkit-intro>p{margin-bottom:16px}
+  .toolkit-focus-copy{margin-top:15px;padding-top:13px}
+  .toolkit-focus-copy>span{margin-bottom:6px}
+  .toolkit-focus-copy strong{margin-bottom:4px}
+  .toolkit-focus-copy p{margin:0}
+  .toolkit-stage-col{margin-top:0}
+  .toolkit-stage{height:315px;max-width:440px;touch-action:pan-y}
+  .toolkit-ring-outer{width:67%;height:66%}
+  .toolkit-ring-inner{width:52%;height:50%}
+  .toolkit-axis{left:16%;right:16%}
+  .toolkit-hand,.toolkit-stage-mobile .toolkit-hand{
+    left:50%;top:53%;width:43%;height:73%;
+    filter:drop-shadow(0 11px 15px #03060c70)
+  }
+  .toolkit-stage .toolkit-tile[data-mobile-slot]{width:67px}
+  .toolkit-stage .toolkit-tile[data-mobile-slot="0"]{left:14%!important;top:23%!important}
+  .toolkit-stage .toolkit-tile[data-mobile-slot="1"]{left:86%!important;top:23%!important}
+  .toolkit-stage .toolkit-tile[data-mobile-slot="2"]{left:14%!important;top:71%!important}
+  .toolkit-stage .toolkit-tile[data-mobile-slot="3"]{left:86%!important;top:71%!important}
+  .toolkit-stage .toolkit-tile-face{height:48px;width:48px}
+  .toolkit-stage .toolkit-tile-name{max-width:74px}
+  .toolkit-stage-number{bottom:5px;right:8px}
+  .toolkit-controls{padding:9px 4px}
+}
+@media(max-width:390px){
+  .toolkit-stage{height:290px}
+  .toolkit-hand,.toolkit-stage-mobile .toolkit-hand{width:42%;height:72%;top:52%}
+  .toolkit-stage .toolkit-tile-face{width:44px;height:44px}
+  .toolkit-stage .toolkit-tile[data-mobile-slot="0"]{left:14%!important;top:23%!important}
+  .toolkit-stage .toolkit-tile[data-mobile-slot="1"]{left:86%!important;top:23%!important}
+  .toolkit-stage .toolkit-tile[data-mobile-slot="2"]{left:14%!important;top:71%!important}
+  .toolkit-stage .toolkit-tile[data-mobile-slot="3"]{left:86%!important;top:71%!important}
+}
