@@ -51,6 +51,9 @@ async function testViewport(browser, name, width) {
       await page.locator('#visual-archive').count()===0);
     const gallery=page.locator('#political-artwork');
     const collectionButtons=gallery.locator('.ps-gate-artworks button');
+    log(name,width,'decorative tool logos stay hidden from assistive technology',
+      await page.locator('#toolkit .toolkit-tile-face').count()===4 &&
+      await page.locator('#toolkit .toolkit-tile-face:not([aria-hidden="true"])').count()===0);
     log(name,width,'all four approved artwork collections are discoverable',
       await collectionButtons.count()===4 &&
       (await collectionButtons.allTextContents()).every((label,i)=>label.includes([

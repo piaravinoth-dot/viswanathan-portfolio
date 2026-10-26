@@ -156,7 +156,7 @@ export default function ToolsOrbit(){
          aria-label={"Select "+tool.name} aria-pressed={isActive}
          onClick={()=>setSelected(tool.name)}
          style={{left:x+"%",top:y+"%",transform:`translate(-50%,-50%) scale(${scale})`,zIndex:Math.round(10+depth*20),opacity:reduced?1:(.52+depth*.48),["--tool-color" as string]:tool.color}}>
-         <span className="toolkit-tile-face">{TOOL_LOGOS[tool.name]??<span className="toolkit-tile-monogram">{tool.mark}</span>}</span>
+         <span className="toolkit-tile-face" aria-hidden="true">{TOOL_LOGOS[tool.name]??<span className="toolkit-tile-monogram">{tool.mark}</span>}</span>
          <span className="toolkit-tile-name">{tool.name}</span>
        </button>;
      })}
