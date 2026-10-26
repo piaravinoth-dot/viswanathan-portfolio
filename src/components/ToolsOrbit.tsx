@@ -83,7 +83,7 @@ function GestureHand(){
 }
 export default function ToolsOrbit(){
  const host=useRef<HTMLElement>(null);
- const [group,setGroup]=useState<"All"|Group>("Design");
+ const [group,setGroup]=useState<"All"|Group>("All");
  const [selected,setSelected]=useState("Adobe Photoshop");
  const [turn,setTurn]=useState(0);
  const [scrollTurn,setScrollTurn]=useState(0);

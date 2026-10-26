@@ -50,9 +50,11 @@ try{
   assert((await illustration.locator("path").count())>=10,"illustrated hand SVG artwork incomplete");
   assert.equal(await toolkit.locator(".toolkit-hand-photo").count(),0,"photographic hand should not be shown");
   check(device+" original illustrated hand restored");
-  assert.equal(await toolkit.locator(".toolkit-tile").count(),4);
+  // On every fresh visit, All is the selected filter and every tool is visible.
+  assert.equal(await toolkit.locator(".toolkit-category").first().getAttribute("aria-pressed"),"true");
+  assert.equal(await toolkit.locator(".toolkit-tile").count(),16);
   assert.equal(await toolkit.locator(".toolkit-focus-copy strong").innerText(),"Adobe Photoshop");
-  check(device+" default design orbit");
+  check(device+" defaults to All 16 tools");
   if(device==="iphone"||device==="desktop"){
     // Autoplay should visibly advance while the section is onscreen.
     await page.waitForTimeout(200);
@@ -62,11 +64,15 @@ try{
     assert.notEqual(beforeAngle,afterAngle,"toolkit orbit did not autoplay while stage visible; "+JSON.stringify(await page.evaluate(()=>({hidden:document.hidden,reduced:matchMedia("(prefers-reduced-motion: reduce)").matches,stage:(()=>{const r=document.querySelector(".toolkit-stage").getBoundingClientRect();return {top:r.top,bottom:r.bottom}})()}))));
     check(device+" active autoplay advances tiles");
   }
-  assert.equal(await toolkit.locator(".toolkit-tile-face svg").count(),1,"Design category should show Figma brand icon");
+  assert.equal(await toolkit.getByRole("button",{name:"Select Figma"}).locator(".toolkit-tile-face svg").count(),1,"Figma brand icon missing");
   check(device+" Figma renders original brand icon");
-  await toolkit.getByRole("button",{name:"All",exact:false}).first().evaluate(el=>el.click());
+  await toolkit.locator(".toolkit-category").nth(1).evaluate(el=>el.click());
+  assert.equal(await toolkit.locator(".toolkit-tile").count(),4);
+  check(device+" Design filter still shows four tools");
+  await toolkit.locator(".toolkit-category").first().evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),16);
-  check(device+" displays all 16 tools");
+  assert.equal(await toolkit.locator(".toolkit-category").first().getAttribute("aria-pressed"),"true");
+  check(device+" All restores the complete sixteen-tool orbit");
   await toolkit.locator(".toolkit-category").nth(2).evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),2);
   assert.equal(await toolkit.locator(".toolkit-focus-copy strong").innerText(),"Adobe After Effects");
