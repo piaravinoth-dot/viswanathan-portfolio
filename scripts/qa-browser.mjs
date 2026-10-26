@@ -51,8 +51,12 @@ async function testViewport(browser, name, width) {
       await page.locator('#visual-archive').count()===0);
     const gallery=page.locator('#political-artwork');
     const collectionButtons=gallery.locator('.ps-gate-artworks button');
-    log(name,width,'decorative tool logos stay hidden from assistive technology',
-      await page.locator('#toolkit .toolkit-tile-face').count()===4 &&
+    // All is the default filter: verify all sixteen tool buttons are present.
+    // Each decorative icon must remain hidden from assistive technology.
+    log(name,width,'All 16 creative tools are selected by default with decorative icons hidden',
+      await page.locator('#toolkit .toolkit-category').first().getAttribute('aria-pressed')==='true' &&
+      await page.locator('#toolkit .toolkit-tile').count()===16 &&
+      await page.locator('#toolkit .toolkit-tile-face[aria-hidden="true"]').count()===16 &&
       await page.locator('#toolkit .toolkit-tile-face:not([aria-hidden="true"])').count()===0);
     log(name,width,'all four approved artwork collections are discoverable',
       await collectionButtons.count()===4 &&
