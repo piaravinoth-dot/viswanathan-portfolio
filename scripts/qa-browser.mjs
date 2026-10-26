@@ -38,35 +38,63 @@ async function testViewport(browser, name, width) {
     log(name,width,'no duplicate product directory',await page.locator('.product-directory').count()===0);
     log(name,width,'six carousel cards',await page.locator('.orbit-card').count()===6);
     log(name,width,'one product section',await page.locator('#products').count()===1);
-    const sectionOrder=await page.evaluate(()=>['landingDiv','about','political-space','products','visual-archive'].map(id=>document.getElementById(id)?.getBoundingClientRect().top??-1));
-    log(name,width,'homepage sections retain the intended order',sectionOrder.every((top,i)=>i===0||top>sectionOrder[i-1]),JSON.stringify(sectionOrder));
-    // #work is a navigation anchor inside Political Space, not a painted section.
-    for (const selector of ['#political-space', '#visual-archive']) {
-      const background=await page.locator(selector).evaluate(el=>getComputedStyle(el).backgroundColor);
-      log(name,width,`${selector} matches dark portfolio shell`,background==='rgb(11, 16, 23)',background);
-    }
-    log(name,width,'visual gallery retains six non-political artworks',
-      await page.locator('.visual-edit-index>button').count()===6 &&
-      await page.locator('#visual-archive').evaluate(el=>!el.textContent.includes('Telangana Manifesto')));
-    // Decode first: a portrait's intrinsic dimensions must never escape its
-    // thumbnail or paint over its label, especially in Safari's grid sizing.
-    const thumbnailBounds=await page.locator('.visual-edit-index>button').evaluateAll(async buttons=>{
-      return Promise.all(buttons.map(async button=>{
-        const image=button.querySelector('.visual-edit-thumb img');
-        image.loading='eager';
-        await image.decode();
-        const box=button.querySelector('.visual-edit-thumb').getBoundingClientRect();
-        const rect=image.getBoundingClientRect();
-        const text=button.querySelector('.visual-edit-index-copy').getBoundingClientRect();
-        const card=button.getBoundingClientRect();
-        return {title:button.getAttribute('aria-label'),contained:rect.left>=box.left-1&&rect.right<=box.right+1&&rect.top>=box.top-1&&rect.bottom<=box.bottom+1,
-          labelClear:innerWidth<=760?rect.bottom<=text.top:rect.right<=text.left,
-          withinCard:box.top>=card.top&&box.bottom<=card.bottom};
-      }));
-    });
-    log(name,width,'decoded visual thumbnails stay inside frames and clear of labels',
-      thumbnailBounds.length===6&&thumbnailBounds.every(x=>x.contained&&x.labelClear&&x.withinCard),JSON.stringify(thumbnailBounds));
+    // The standalone Visual Archive was intentionally merged into Political Space.
+    // Validate the current editorial flow and all four real artwork collections.
+    const sections=['landingDiv','about','political-space','products','capabilities','toolkit','career','contact'];
+    const sectionOrder=await page.evaluate(ids=>ids.map(id=>document.getElementById(id)?.getBoundingClientRect().top??null),sections);
+    log(name,width,'homepage sections retain the intended order',
+      sectionOrder.every((top,i)=>top!==null&&(i===0||top>sectionOrder[i-1])),
+      JSON.stringify(Object.fromEntries(sections.map((id,i)=>[id,sectionOrder[i]]))));
+    log(name,width,'original work and gallery share one Political Space section',
+      await page.locator('#political-space').count()===1 &&
+      await page.locator('#political-artwork').count()===1 &&
+      await page.locator('#visual-archive').count()===0);
+    const gallery=page.locator('#political-artwork');
+    const collectionButtons=gallery.locator('.ps-gate-artworks button');
+    log(name,width,'all four approved artwork collections are discoverable',
+      await collectionButtons.count()===4 &&
+      (await collectionButtons.allTextContents()).every((label,i)=>label.includes([
+        'Gujarat Budget Basics','Content Posters','Creative Posters','Events & Commercial'
+      ][i])));
+    log(name,width,'gallery keeps its accessible original artwork entry point',
+      await page.locator('a[href="#political-artwork"]').count()>=1 &&
+      await page.locator('#political-case-studies').count()===1);
+    const darkBackground=await page.locator('#political-space').evaluate(el=>getComputedStyle(el).backgroundColor);
+    const lightBackground=await page.locator('#products').evaluate(el=>getComputedStyle(el).backgroundColor);
+    log(name,width,'political gallery and products retain intentional contrasting shells',
+      darkBackground==='rgb(11, 16, 23)' && lightBackground==='rgb(241, 239, 232)',
+      JSON.stringify({political:darkBackground,products:lightBackground}));
 
+    // Use the real archive controls, rather than querying the deleted thumbnail strip.
+    await gallery.locator('.ps-gate-art-commercial').evaluate(el=>el.click());
+    log(name,width,'Events & Commercial opens within Political Space',
+      await page.locator('#political-artwork-gallery .political-view-context strong').textContent()==='Events & Commercial' &&
+      await page.locator('.political-exhibition .political-feature img').count()===1);
+    await page.locator('.political-view-options button').last().evaluate(el=>el.click());
+    const cards=page.locator('.political-index-grid .political-index-card');
+    log(name,width,'Events & Commercial shows all six original artworks',
+      await cards.count()===6);
+    const imageFrames=await cards.evaluateAll(async items=>Promise.all(items.map(async item=>{
+      const frame=item.querySelector('.political-index-image');
+      const img=frame?.querySelector('img');
+      if(!frame||!img)return {valid:false,reason:'missing artwork preview'};
+      img.loading='eager';
+      try {await img.decode();} catch {return {valid:false,reason:'image failed to decode'};}
+      const a=frame.getBoundingClientRect(),b=img.getBoundingClientRect(),c=item.getBoundingClientRect();
+      return {valid:img.naturalWidth>0 && b.left>=a.left-1&&b.right<=a.right+1&&
+        b.top>=a.top-1&&b.bottom<=a.bottom+1&&a.left>=c.left-1&&a.right<=c.right+1};
+    })));
+    log(name,width,'all six gallery previews decode and stay within artwork frames',
+      imageFrames.length===6&&imageFrames.every(frame=>frame.valid),JSON.stringify(imageFrames));
+    const feature=cards.first();
+    await feature.evaluate(el=>el.click());
+    const viewer=page.locator('.political-viewer');
+    log(name,width,'original artwork opens in accessible full-resolution viewer',
+      await viewer.evaluate(el=>el instanceof HTMLDialogElement && el.open) &&
+      await viewer.locator('.political-viewer-stage img').count()===1);
+    await viewer.getByRole('button',{name:'Close artwork'}).evaluate(el=>el.click());
+    log(name,width,'artwork viewer can close without navigating away',
+      await viewer.evaluate(el=>!el.open));
     if(width<=1024){
       const layout=await page.evaluate(()=>{
         const box=s=>document.querySelector(s).getBoundingClientRect();
