@@ -1,6 +1,6 @@
 import {useEffect,useMemo,useRef,useState} from "react";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
-import {SiFigma,SiReact,SiTypescript,SiGithub,SiVercel,SiCloudflare,SiOpenai} from "react-icons/si";
+import {SiFigma,SiReact,SiTypescript,SiGithub,SiVercel,SiCloudflare} from "react-icons/si";
 import {VscVscode} from "react-icons/vsc";
 import "./styles/ToolsOrbit.css";
 
@@ -42,7 +42,6 @@ const TOOL_LOGOS:Record<string,React.ReactNode>={
  "GitHub":<SiGithub/>,
  "Vercel":<SiVercel/>,
  "Cloudflare":<SiCloudflare/>,
- "ChatGPT":<SiOpenai/>
 };
 
 function GestureHand(){
