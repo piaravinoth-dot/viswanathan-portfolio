@@ -96,3 +96,27 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
  .toolkit-tile-monogram{font-size:17px}
 }
 @media(prefers-reduced-motion:reduce){.toolkit-tile{transition:none;will-change:auto}}
+
+/* Mobile-specific stage: only four relevant tools surround the original hand.
+   Other tools remain in the complete 16-tool list and can be reached by navigation. */
+@media(max-width:760px){
+ .toolkit-stage{height:380px;touch-action:pan-y;overflow:hidden}
+ .toolkit-stage .toolkit-tile[data-mobile-hidden="true"]{display:none}
+ .toolkit-stage .toolkit-tile[data-mobile-slot]{width:66px;opacity:1!important;z-index:16!important;transition:transform .25s ease,opacity .25s ease}
+ .toolkit-stage .toolkit-tile[data-mobile-slot="0"]{left:19%!important;top:24%!important}
+ .toolkit-stage .toolkit-tile[data-mobile-slot="1"]{left:81%!important;top:25%!important}
+ .toolkit-stage .toolkit-tile[data-mobile-slot="2"]{left:18%!important;top:67%!important}
+ .toolkit-stage .toolkit-tile[data-mobile-slot="3"]{left:82%!important;top:68%!important}
+ .toolkit-stage .toolkit-tile-face{height:52px;width:52px}
+ .toolkit-stage .toolkit-tile.is-active .toolkit-tile-name{opacity:1;white-space:normal;font-size:10px;max-width:82px}
+ .toolkit-hand{left:50%;top:62%;width:51%;height:86%}
+ .toolkit-controls button{min-width:44px;min-height:44px}
+}
+@media(max-width:390px){
+ .toolkit-stage{height:345px}
+ .toolkit-stage .toolkit-tile-face{height:47px;width:47px}
+ .toolkit-stage .toolkit-tile[data-mobile-slot="0"]{left:19%!important;top:23%!important}
+ .toolkit-stage .toolkit-tile[data-mobile-slot="1"]{left:81%!important;top:24%!important}
+ .toolkit-stage .toolkit-tile[data-mobile-slot="2"]{left:18%!important;top:68%!important}
+ .toolkit-stage .toolkit-tile[data-mobile-slot="3"]{left:82%!important;top:69%!important}
+}
