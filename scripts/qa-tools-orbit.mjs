@@ -32,12 +32,12 @@ try{
   });
   assert(stageVisibility.top<height*.85&&stageVisibility.bottom>height*.1,"orbit stage not in view after native scroll "+JSON.stringify(stageVisibility));
   assert.equal(await toolkit.locator(".toolkit-category").count(),5);
-  const photo=toolkit.locator(".toolkit-hand-photo");
-  assert.equal(await photo.count(),1,"photographic hand missing");
-  await photo.evaluate(async img=>{ if(!img.complete) await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject}); });
-  assert(await photo.evaluate(img=>img.naturalWidth>0),"photographic hand failed to load");
-  assert.equal(await toolkit.locator(".toolkit-hand-illustration").count(),0,"illustrated SVG hand still present");
-  check(device+" photographic hand loads without illustration");
+  const illustration=toolkit.locator(".toolkit-hand-illustration");
+  assert.equal(await illustration.count(),1,"original illustrated SVG hand missing");
+  assert.equal(await illustration.getAttribute("viewBox"),"0 0 350 590","original hand illustration proportions changed");
+  assert((await illustration.locator("path").count())>=10,"illustrated hand SVG artwork incomplete");
+  assert.equal(await toolkit.locator(".toolkit-hand-photo").count(),0,"photographic hand should not be shown");
+  check(device+" original illustrated hand restored");
   assert.equal(await toolkit.locator(".toolkit-tile").count(),4);
   assert.equal(await toolkit.locator(".toolkit-focus-copy strong").innerText(),"Adobe Photoshop");
   check(device+" default design orbit");
