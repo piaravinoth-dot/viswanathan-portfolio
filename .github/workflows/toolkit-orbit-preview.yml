@@ -4,6 +4,7 @@ on:
     branches:
       - experiment/interactive-tools-orbit-20261026
       - experiment/tools-orbit-photographic-v2-20261026
+      - review/fix-current-gallery-browser-qa-20261026
     paths:
       - "src/components/ToolsOrbit.tsx"
       - "src/components/styles/ToolsOrbit.css"

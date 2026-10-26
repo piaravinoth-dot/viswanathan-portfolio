@@ -45,7 +45,41 @@ const TOOL_LOGOS:Record<string,React.ReactNode>={
 };
 
 function GestureHand(){
- return <img className="toolkit-hand-photo" src="/toolkit-hand.avif" width={400} height={315} alt="" draggable={false} decoding="async"/>;
+ return <svg className="toolkit-hand-illustration" viewBox="0 0 350 590" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Original illustrated hand reaching into an orbit of creative tools">
+  <defs>
+   <linearGradient id="toolkit-skin" x1="0" y1=".1" x2=".95" y2=".8"><stop offset="0" stopColor="#e4b49b"/><stop offset=".4" stopColor="#c7907d"/><stop offset=".8" stopColor="#975c51"/><stop offset="1" stopColor="#734844"/></linearGradient>
+   <linearGradient id="toolkit-finger" x1=".1" y1="0" x2=".9" y2="1"><stop offset="0" stopColor="#dbab98"/><stop offset=".54" stopColor="#b97d70"/><stop offset="1" stopColor="#92574c"/></linearGradient>
+   <linearGradient id="toolkit-sleeve" x1=".3" y1="0" x2=".8" y2="1"><stop stopColor="#3c4552"/><stop offset=".55" stopColor="#202b37"/><stop offset="1" stopColor="#111922"/></linearGradient>
+   <radialGradient id="toolkit-palm" cx=".3" cy=".38" r=".78"><stop stopColor="#dda893" stopOpacity=".85"/><stop offset="1" stopColor="#8f5148" stopOpacity="0"/></radialGradient>
+  </defs>
+  <path d="M132 590 L114 534 Q100 510 100 470 L236 425 Q260 487 287 534 L311 590 Z" fill="url(#toolkit-sleeve)" stroke="#505462" strokeWidth="2"/>
+  <path d="M129 545 Q173 561 270 528 M126 561 Q174 578 280 543" fill="none" stroke="#626875" strokeWidth="2" opacity=".35"/>
+  {/* Upright index finger */}
+  <path d="M195 294 C181 258 170 222 154 173 C140 131 133 91 137 62 C140 39 156 30 169 40 C180 48 185 70 189 100 L211 195 L234 261 Z" fill="url(#toolkit-finger)" stroke="#855249" strokeWidth="2"/>
+  <path d="M149 84 Q164 77 179 85 M151 99 Q165 95 180 102" fill="none" stroke="#7e4d46" strokeWidth="2" opacity=".38"/>
+  {/* Finger lifted to the left */}
+  <path d="M191 292 Q165 266 121 235 L73 201 Q43 181 46 164 C48 149 66 144 82 151 Q101 161 142 188 L202 222 L234 270 Z" fill="url(#toolkit-finger)" stroke="#865049" strokeWidth="2"/>
+  <path d="M63 167 Q75 159 91 174" fill="none" stroke="#f3d0b6" strokeWidth="3" opacity=".5"/>
+  {/* Middle and ring fingers folded gently in space */}
+  <path d="M230 296 Q205 269 176 265 L130 260 Q106 261 101 246 C98 230 114 221 135 222 L196 224 Q238 229 261 266 Z" fill="url(#toolkit-finger)" stroke="#82524a" strokeWidth="2"/>
+  <path d="M256 327 Q234 301 207 295 L173 294 Q151 294 147 279 C144 262 161 253 180 255 L240 267 Q268 276 282 302 Z" fill="url(#toolkit-finger)" stroke="#834f49" strokeWidth="2"/>
+  {/* Thumb extends toward the viewer */}
+  <path d="M178 399 Q140 361 119 343 L92 318 C72 299 53 310 55 329 Q58 347 83 378 L129 431 L169 466 Z" fill="url(#toolkit-finger)" stroke="#82524b" strokeWidth="2"/>
+  {/* Main palm / wrist */}
+  <path d="M170 284 C190 270 229 272 254 294 Q278 315 279 345 C280 390 263 429 245 457 Q228 486 238 526 C200 545 149 544 124 521 Q113 481 120 443 Q125 410 149 373 Q162 356 165 326 Q167 307 170 284 Z" fill="url(#toolkit-skin)" stroke="#754941" strokeWidth="2.4"/>
+  <path d="M170 284 C190 270 229 272 254 294 Q278 315 279 345 C280 390 263 429 245 457 Q228 486 238 526 C200 545 149 544 124 521 Q113 481 120 443 Q125 410 149 373 Q162 356 165 326 Q167 307 170 284 Z" fill="url(#toolkit-palm)"/>
+  {/* Hand details, subtle rather than plastic shine */}
+  <g fill="none" stroke="#764a46" strokeWidth="2" strokeLinecap="round" opacity=".35">
+   <path d="M175 351 Q191 364 191 398 Q189 423 201 448"/>
+   <path d="M224 334 Q228 364 223 391"/>
+   <path d="M151 440 Q180 434 208 455"/>
+   <path d="M174 464 Q199 472 217 481"/>
+   <path d="M162 490 Q190 498 205 501"/>
+   <path d="M203 311 Q224 303 249 317"/>
+   <path d="M165 301 Q178 288 199 295"/>
+  </g>
+  <path d="M138 532 Q177 549 240 520" fill="none" stroke="#edc0a2" strokeOpacity=".38" strokeWidth="4"/>
+ </svg>;
 }
 export default function ToolsOrbit(){
  const host=useRef<HTMLElement>(null);
