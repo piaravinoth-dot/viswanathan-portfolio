@@ -14,6 +14,12 @@ try{
   await toolkit.waitFor({state:"attached",timeout:40000});
   await toolkit.scrollIntoViewIfNeeded();
   assert.equal(await toolkit.locator(".toolkit-category").count(),5);
+  const photo=toolkit.locator(".toolkit-hand-photo");
+  assert.equal(await photo.count(),1,"photographic hand missing");
+  await photo.evaluate(async img=>{ if(!img.complete) await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject}); });
+  assert(await photo.evaluate(img=>img.naturalWidth>0),"photographic hand failed to load");
+  assert.equal(await toolkit.locator(".toolkit-hand-illustration").count(),0,"illustrated SVG hand still present");
+  check(device+" photographic hand loads without illustration");
   assert.equal(await toolkit.locator(".toolkit-tile").count(),4);
   assert.equal(await toolkit.locator(".toolkit-focus-copy strong").innerText(),"Adobe Photoshop");
   check(device+" default design orbit");
