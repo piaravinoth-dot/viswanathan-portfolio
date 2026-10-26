@@ -20,7 +20,12 @@ try{
     const target=Math.max(0,window.scrollY+stage.getBoundingClientRect().top-window.innerHeight*.35);
     window.scrollTo({top:target,behavior:"instant"});
   });
-  await page.waitForTimeout(350);
+  // Desktop ScrollSmoother intentionally eases toward the scroll target over ~1.7s.
+  // Wait for actual stage visibility instead of asserting mid-transition.
+  await page.waitForFunction(()=>{
+    const r=document.querySelector(".toolkit-stage").getBoundingClientRect();
+    return r.top<innerHeight*.85&&r.bottom>innerHeight*.1;
+  },null,{timeout:8000});
   const stageVisibility=await page.evaluate(()=>{
     const rect=document.querySelector(".toolkit-stage").getBoundingClientRect();
     return {top:rect.top,bottom:rect.bottom,scrollY:scrollY,scrollHeight:document.documentElement.scrollHeight,viewport:innerHeight};
