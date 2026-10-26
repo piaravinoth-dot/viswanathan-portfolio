@@ -17,6 +17,17 @@ try{
   assert.equal(await toolkit.locator(".toolkit-tile").count(),4);
   assert.equal(await toolkit.locator(".toolkit-focus-copy strong").innerText(),"Adobe Photoshop");
   check(device+" default design orbit");
+  if(device==="iphone"||device==="desktop"){
+    // Autoplay should visibly advance while the section is onscreen.
+    await page.waitForTimeout(200);
+    const beforeAngle=await toolkit.locator(".toolkit-tile").first().evaluate(el=>el.style.left);
+    await page.waitForTimeout(800);
+    const afterAngle=await toolkit.locator(".toolkit-tile").first().evaluate(el=>el.style.left);
+    assert.notEqual(beforeAngle,afterAngle,"toolkit orbit did not autoplay");
+    check(device+" active autoplay advances tiles");
+  }
+  assert.equal(await toolkit.locator(".toolkit-tile-face svg").count(),1,"Design category should show Figma brand icon");
+  check(device+" Figma renders original brand icon");
   await toolkit.getByRole("button",{name:"All",exact:false}).first().evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),16);
   check(device+" displays all 16 tools");
