@@ -59,14 +59,10 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
   .toolkit-footer a{margin-left:0;text-align:left;justify-self:start}
 }
 
-/* V2: reference-inspired photographic/glass treatment, scoped to the toolkit. */
-.toolkit-stage{
- background:
- radial-gradient(ellipse at 92% 0%,rgba(114,8,17,.32),transparent 47%),
- radial-gradient(ellipse at 10% 96%,rgba(80,10,17,.19),transparent 42%),
- #0a0c10;
-}
-.toolkit-stage:before{opacity:.24}
+/* Blend the illustrated hand and orbit directly into the page-wide navy.
+   No stage box, rectangular gradient or visible grid edge. */
+.toolkit-stage{background:transparent}
+.toolkit-stage:before{display:none}
 .toolkit-ring-outer{border-color:rgba(223,92,102,.29);transform:translate(-50%,-50%) rotate(-12deg)}
 .toolkit-ring-inner{border-color:rgba(196,108,114,.14)}
 .toolkit-axis{background:rgba(166,81,90,.13)}

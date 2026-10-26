@@ -31,6 +31,18 @@ try{
     return {top:rect.top,bottom:rect.bottom,scrollY:scrollY,scrollHeight:document.documentElement.scrollHeight,viewport:innerHeight};
   });
   assert(stageVisibility.top<height*.85&&stageVisibility.bottom>height*.1,"orbit stage not in view after native scroll "+JSON.stringify(stageVisibility));
+  // The artwork must blend with the site's navy instead of showing a square panel.
+  const backdrop=await toolkit.locator(".toolkit-stage").evaluate(stage=>{
+    const style=getComputedStyle(stage);
+    const grid=getComputedStyle(stage,"::before");
+    const shell=getComputedStyle(document.querySelector(".toolkit-section"));
+    return {color:style.backgroundColor,image:style.backgroundImage,grid:grid.display,shell:shell.backgroundColor};
+  });
+  assert.equal(backdrop.color,"rgba(0, 0, 0, 0)","orbit has a separate filled rectangle");
+  assert.equal(backdrop.image,"none","orbit has a separate gradient rectangle");
+  assert.equal(backdrop.grid,"none","orbit still has the rectangular grid");
+  assert.equal(backdrop.shell,"rgb(11, 16, 23)","site shell color has changed");
+  check(device+" seamlessly integrated orbit background");
   assert.equal(await toolkit.locator(".toolkit-category").count(),5);
   const illustration=toolkit.locator(".toolkit-hand-illustration");
   assert.equal(await illustration.count(),1,"original illustrated SVG hand missing");
