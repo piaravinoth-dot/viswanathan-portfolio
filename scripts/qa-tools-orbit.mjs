@@ -56,6 +56,13 @@ try{
   assert.equal(await toolkit.locator(".toolkit-focus-copy strong").innerText(),"Adobe Photoshop");
   check(device+" defaults to All 16 tools");
   if(width<=760){
+
+    // Selection moves automatically while visible, without layout animation.
+    const autoBefore=await toolkit.locator(".toolkit-focus-copy strong").innerText();
+    await page.waitForTimeout(4000);
+    const autoAfter=await toolkit.locator(".toolkit-focus-copy strong").innerText();
+    assert.notEqual(autoBefore,autoAfter,"mobile automatic tool cycling is not working");
+    check(device+" automatic mobile tool rotation works");
     const mobile=await toolkit.locator(".toolkit-stage").evaluate(el=>({
       touchAction:getComputedStyle(el).touchAction,
       visible:[...el.querySelectorAll(".toolkit-tile")].filter(t=>getComputedStyle(t).display!=="none").length
@@ -89,13 +96,6 @@ try{
     assert.notEqual(before.transform,after.transform,"mobile tiles did not animate smoothly");
     assert.equal(before.left,after.left,"mobile orbit still triggers per-frame React layout changes");
     check(device+" GPU-friendly icon motion without per-frame React layout updates");
-    // Selection moves automatically while visible, without layout animation.
-    const autoBefore=await toolkit.locator(".toolkit-focus-copy strong").innerText();
-    await page.waitForTimeout(4000);
-    const autoAfter=await toolkit.locator(".toolkit-focus-copy strong").innerText();
-    assert.notEqual(autoBefore,autoAfter,"mobile automatic tool cycling is not working");
-    check(device+" automatic mobile tool rotation works");
-
     const hand=await toolkit.locator(".toolkit-hand").evaluate(el=>{
       const a=el.getBoundingClientRect(),b=el.closest(".toolkit-stage").getBoundingClientRect();
       return {top:a.top,bottom:a.bottom,stageTop:b.top,stageBottom:b.bottom};
