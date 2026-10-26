@@ -186,16 +186,11 @@ async function testViewport(browser, name, width) {
         await fresh.goto(base,{waitUntil:'domcontentloaded',timeout:60000});
         const cleanOrbit=fresh.locator('.mobile-product-orbit');
         await cleanOrbit.waitFor({state:'attached',timeout:30000});
-        // The hero's WebGL fallback can reset ScrollSmoother to the top just
-        // after hydration. Allow that layout-ready pass to finish first, as
-        // in the independently passing Tools Orbit browser test.
+        // Exercise the actual user navigation path. On desktop,
+        // ScrollSmoother controls the scroll offset; synthetic window.scrollTo
+        // can expose a carousel visually without firing its visibility observer.
         await fresh.waitForTimeout(1200);
-        await fresh.evaluate(() => {
-          const node=document.querySelector('.mobile-product-orbit');
-          const target=Math.max(0,window.scrollY+node.getBoundingClientRect().top-window.innerHeight*.3);
-          window.scrollTo({top:target,behavior:'instant'});
-        });
-        await fresh.mouse.wheel(0,80);
+        await fresh.locator('.header a[href="#products"]').click({timeout:10000});
         await fresh.waitForFunction(() => {
           const el=document.querySelector('.mobile-product-orbit');
           if(!el)return false;
@@ -203,10 +198,22 @@ async function testViewport(browser, name, width) {
           const visibleHeight=Math.max(0,Math.min(box.bottom,innerHeight)-Math.max(box.top,0));
           return box.height>0 && visibleHeight/Math.min(box.height,innerHeight)>.25;
         },null,{timeout:12000});
+        await fresh.waitForTimeout(700);
         const initial=await fresh.locator('.orbit-card.orbit-active').getAttribute('class');
         changed=await fresh.waitForFunction(initial =>
           document.querySelector('.orbit-card.orbit-active')?.className!==initial,
           initial,{timeout:14000}).then(()=>true).catch(()=>false);
+        if(!changed) {
+          const diagnostic=await fresh.evaluate(()=>({
+            hash:location.hash,
+            visible:!document.hidden,
+            pressed:document.querySelector('.orbit-autoplay')?.getAttribute('aria-pressed'),
+            focused:document.activeElement?.className,
+            active:document.querySelector('.orbit-card.orbit-active')?.className,
+            bounds:(()=>{const r=document.querySelector('.mobile-product-orbit')?.getBoundingClientRect();return r&&{top:r.top,bottom:r.bottom};})()
+          }));
+          console.log('First-visit product autoplay diagnostic:',JSON.stringify(diagnostic));
+        }
       }finally{await fresh.close();}
       log(name,width,'desktop products auto-rotate on a first visit',changed);
       // Return to the main scenario for Pause, Resume, hover and selection QA.
