@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - feature/experience-journey-inline-20261025
+      - fix/journey-map-fill-card-20261026
     paths:
       - "src/components/CareerJourney.tsx"
       - "src/components/styles/CareerJourney.css"

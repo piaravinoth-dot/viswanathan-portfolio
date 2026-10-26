@@ -64,6 +64,18 @@ try{
   assert(layout.card.left>=layout.stage.left-2&&layout.card.right<=layout.stage.right+2,JSON.stringify(layout));
   assert(layout.card.top>=layout.stage.top-2&&layout.card.bottom<=layout.stage.bottom+2,JSON.stringify(layout));
   pass(name+" mobile/desktop card fits map frame");
+  const coverage=await page.evaluate(()=>{
+    const host=document.querySelector(".exp-journey-scene").getBoundingClientRect();
+    const art=document.querySelector(".exp-journey-city-map").getBoundingClientRect();
+    const card=document.querySelector(".exp-journey-card").getBoundingClientRect();
+    return {host:{left:host.left,top:host.top,right:host.right,bottom:host.bottom,height:host.height},
+      art:{left:art.left,top:art.top,right:art.right,bottom:art.bottom},
+      card:{top:card.top,bottom:card.bottom}};
+  });
+  assert(coverage.art.left<=coverage.host.left+3&&coverage.art.right>=coverage.host.right-3,"Map background missing at horizontal edge: "+JSON.stringify(coverage));
+  assert(coverage.art.top<=coverage.host.top+3&&coverage.art.bottom>=coverage.host.bottom-3,"Map background missing at vertical edge: "+JSON.stringify(coverage));
+  if(width>900){assert(coverage.card.top<=coverage.host.top+135,"Desktop story card is too low: "+JSON.stringify(coverage))}
+  pass(name+" background fills scene and experience card remains readable");
   assert(await page.locator("#products").count()>0,"products section missing");
   assert(await page.locator("#career").count()===1,"career anchor missing or duplicate");
   pass(name+" products retained and career anchor unique");

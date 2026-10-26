@@ -69,3 +69,24 @@
 /* Only while Journey is in view, prevent the fixed LinkedIn tab from covering the story controls. */
 body.exp-journey-visible .icons-section .resume-button{opacity:0;pointer-events:none}
 @media(prefers-reduced-motion:reduce){body.exp-journey-visible .icons-section .resume-button{transition:none}}
+
+/* Journey landscape: extended tiled street map and readable higher desktop story card.
+   The original career section and mobile navigation remain unchanged. */
+@media(min-width:901px){
+ .exp-journey-card{
+  top:clamp(64px,11%,94px);
+  bottom:auto;
+ }
+}
+@media(min-width:711px) and (max-width:900px){
+ .exp-journey-card{
+  top:75px;
+  bottom:auto;
+ }
+}
+@media(max-width:710px){
+ .exp-journey-card{
+  top:auto;
+  bottom:24px;
+ }
+}

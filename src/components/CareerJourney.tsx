@@ -103,23 +103,55 @@ export default function CareerJourney(){
   </div>
   <div className="exp-journey-scene" ref={scene}>
    <div className="exp-journey-world" ref={world}>
-    <svg width="1280" height="710" viewBox="0 0 1280 710" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-     <rect width="1280" height="710" fill="#222629"/>
-     <g fill="#273c33" opacity=".88"><rect x="30" y="44" width="300" height="135" rx="65"/><rect x="850" y="520" width="355" height="140" rx="70"/><rect x="620" y="14" width="260" height="100" rx="52"/></g>
-     <g stroke="#383d40" strokeWidth="8">
-      {Array.from({length:12},(_,i)=><path key={"x"+i} d={"M"+(i*120)+" 0 V710"}/>)}
-      {Array.from({length:8},(_,i)=><path key={"y"+i} d={"M0 "+(i*107)+" H1280"}/>)}
+    <svg
+      className="exp-journey-city-map"
+      width="4600" height="3100" viewBox="-1600 -1200 4600 3100"
+      style={{left:-1600,top:-1200}}
+      xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+     <defs>
+      <pattern id="exp-journey-city-blocks" patternUnits="userSpaceOnUse" width="120" height="107">
+       <rect width="120" height="107" fill="#222629"/>
+       <path d="M0 0H120 M0 0V107" fill="none" stroke="#3b4144" strokeWidth="8"/>
+       <rect x="12" y="10" width="98" height="87" rx="3" fill="#303538" stroke="#444a4d" strokeWidth="1.4"/>
+       <path d="M24 32h30 m15 0h29 M24 64h70" stroke="#41484b" strokeWidth="9" opacity=".5"/>
+      </pattern>
+     </defs>
+     {/* The tiled city extends well beyond both ends of the career route.
+         Camera movement can no longer expose an empty edge of the map. */}
+     <rect x="-1600" y="-1200" width="4600" height="3100" fill="url(#exp-journey-city-blocks)"/>
+     <g fill="#2b3c34" opacity=".83">
+      <rect x="-1030" y="-860" width="420" height="230" rx="105"/>
+      <rect x="-620" y="75" width="265" height="185" rx="88"/>
+      <rect x="30" y="44" width="300" height="135" rx="65"/>
+      <rect x="620" y="-260" width="260" height="100" rx="52"/>
+      <rect x="850" y="520" width="355" height="140" rx="70"/>
+      <rect x="1380" y="-540" width="345" height="235" rx="112"/>
+      <rect x="1820" y="990" width="390" height="250" rx="118"/>
      </g>
-     <g fill="#303538" stroke="#44494b" strokeWidth="1.4">
-      {Array.from({length:11},(_,x)=>Array.from({length:7},(_,y)=><g key={x+"-"+y}>
-       <rect x={x*120+12} y={y*107+10} width="98" height="87" rx="3"/>
-       <path d={"M"+(x*120+24)+" "+(y*107+32)+" h30 m15 0 h29 M"+(x*120+24)+" "+(y*107+64)+" h70"} stroke="#414648" strokeWidth="9" opacity=".5"/>
-      </g>))}
+     <g fill="none" strokeLinecap="round">
+      <path d="M-1580 -820L1050 1140" stroke="#181e23" strokeWidth="29"/>
+      <path d="M-1580 -820L1050 1140" stroke="#464b4d" strokeWidth="8"/>
+      <path d="M-1370 1050L740 -880" stroke="#181e23" strokeWidth="27"/>
+      <path d="M-1370 1050L740 -880" stroke="#4a4f52" strokeWidth="7"/>
+      <path d="M-100 1300L1560 -300" stroke="#171c21" strokeWidth="27"/>
+      <path d="M-100 1300L1560 -300" stroke="#444a4e" strokeWidth="7"/>
      </g>
-     <path d="M-80 145 L1060 770" stroke="#171b1f" strokeWidth="26"/><path d="M-80 145 L1060 770" stroke="#45494a" strokeWidth="7"/>
-     <g fill="#7a8386" fontSize="30" letterSpacing="8" fontFamily="Arial,sans-serif" opacity=".33" fontWeight="bold">
-      <text x="100" y="105">THE BEGINNING</text><text x="590" y="93">CAMPAIGNS</text><text x="870" y="650">LEADERSHIP</text>
+     <g fill="#8b9794" fontSize="29" letterSpacing="7" fontFamily="Arial,sans-serif" opacity=".31" fontWeight="bold">
+      <text x="-680" y="-40">DESIGN DISTRICT</text>
+      <text x="-720" y="580">THE BEGINNING</text>
+      <text x="130" y="105">THE BEGINNING</text>
+      <text x="610" y="-65">CAMPAIGNS</text>
+      <text x="965" y="670">CREATIVE LEADERSHIP</text>
+      <text x="1510" y="230">NEXT CHAPTER</text>
      </g>
+     {/* The approach road begins outside the first destination, so the blue
+         route visually continues to the left without inventing an employer. */}
+     <path d="M-1180 950 C-880 890 -700 770 -515 690 S-95 535 170 445"
+       fill="none" stroke="#101c2b" strokeWidth="24" strokeLinecap="round"/>
+     <path d="M-1180 950 C-880 890 -700 770 -515 690 S-95 535 170 445"
+       fill="none" stroke="#286fe4" strokeWidth="15" strokeLinecap="round"/>
+     <path d="M-1180 950 C-880 890 -700 770 -515 690 S-95 535 170 445"
+       fill="none" stroke="#8eb8ff" strokeWidth="3.5" strokeLinecap="round"/>
      <path d={route} fill="none" stroke="#101c2b" strokeWidth="24" strokeLinecap="round"/>
      <path d={route} fill="none" stroke="#286fe4" strokeWidth="15" strokeLinecap="round"/>
      <path d={route} fill="none" stroke="#8eb8ff" strokeWidth="3.5" strokeLinecap="round"/>
