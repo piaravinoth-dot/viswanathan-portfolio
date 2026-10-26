@@ -120,3 +120,40 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
  .toolkit-stage .toolkit-tile[data-mobile-slot="2"]{left:18%!important;top:68%!important}
  .toolkit-stage .toolkit-tile[data-mobile-slot="3"]{left:82%!important;top:69%!important}
 }
+
+/* Mobile polish: native vertical momentum is the priority, not JS frame updates.
+   Keep the full illustrated wrist visible and provide low-cost compositor motion. */
+@media(max-width:760px){
+  .toolkit-intro{padding-bottom:0}
+  .toolkit-stage-col{margin-top:0}
+  .toolkit-stage{overflow:hidden;-webkit-overflow-scrolling:touch}
+  .toolkit-hand{left:50%;top:54%;width:49%;height:82%}
+  .toolkit-stage-mobile .toolkit-hand{
+    animation:toolkit-mobile-hand-drift 5.5s ease-in-out infinite alternate;
+    will-change:transform
+  }
+  .toolkit-stage-mobile .toolkit-tile[data-mobile-slot]{
+    animation:toolkit-mobile-tile-float 4.6s ease-in-out infinite alternate;
+    will-change:transform
+  }
+  .toolkit-stage-mobile .toolkit-tile[data-mobile-slot="1"]{animation-delay:-1.5s}
+  .toolkit-stage-mobile .toolkit-tile[data-mobile-slot="2"]{animation-delay:-3s}
+  .toolkit-stage-mobile .toolkit-tile[data-mobile-slot="3"]{animation-delay:-4s}
+}
+@media(max-width:390px){
+  .toolkit-hand{top:54%;height:82%;width:49%}
+}
+@keyframes toolkit-mobile-hand-drift{
+  from{transform:translate3d(-50%,-50%,0) rotate(-1.2deg)}
+  to{transform:translate3d(-50%,-50%,0) rotate(1.2deg)}
+}
+@keyframes toolkit-mobile-tile-float{
+  from{transform:translate3d(-50%,-50%,0) translateY(-4px) scale(.97)}
+  to{transform:translate3d(-50%,-50%,0) translateY(4px) scale(1)}
+}
+@media(prefers-reduced-motion:reduce){
+  .toolkit-stage-mobile .toolkit-hand,
+  .toolkit-stage-mobile .toolkit-tile[data-mobile-slot]{
+    animation:none!important;will-change:auto
+  }
+}
