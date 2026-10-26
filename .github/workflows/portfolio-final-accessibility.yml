@@ -35,7 +35,7 @@ jobs:
           done
           cat /tmp/qa-preview.log
           exit 1
-      - name: Audit all seven routes at mobile and desktop widths
+      - name: Audit homepage and ten case studies at mobile and desktop widths
         env:
           QA_URL: http://127.0.0.1:4173
         run: node scripts/qa-accessibility.mjs
