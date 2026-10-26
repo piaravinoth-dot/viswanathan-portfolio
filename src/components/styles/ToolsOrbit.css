@@ -58,3 +58,45 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
   .toolkit-footer p{order:initial;flex:auto;text-align:left;font-size:12px}
   .toolkit-footer a{margin-left:0;text-align:left;justify-self:start}
 }
+
+/* V2: reference-inspired photographic/glass treatment, scoped to the toolkit. */
+.toolkit-stage{
+ background:
+ radial-gradient(ellipse at 92% 0%,rgba(114,8,17,.32),transparent 47%),
+ radial-gradient(ellipse at 10% 96%,rgba(80,10,17,.19),transparent 42%),
+ #0a0c10;
+}
+.toolkit-stage:before{opacity:.24}
+.toolkit-ring-outer{border-color:rgba(223,92,102,.29);transform:translate(-50%,-50%) rotate(-12deg)}
+.toolkit-ring-inner{border-color:rgba(196,108,114,.14)}
+.toolkit-axis{background:rgba(166,81,90,.13)}
+.toolkit-tile{transition:left .1s linear,top .1s linear,transform .1s linear,opacity .1s linear;will-change:left,top,transform}
+.toolkit-tile-face{
+ width:70px;height:70px;
+ border-radius:17px;
+ border:2px solid rgba(195,206,212,.68);
+ background:linear-gradient(135deg,#3e4a52 0%,#14171e 24%,#080a11 66%,#282e36 100%);
+ box-shadow:inset 2px 2px 1px #ffffff62,inset -2px -3px 1px #090d15,4px 5px 0 #1b212c,6px 8px 1px #95a1aa52,0 15px 25px #000a;
+ text-shadow:none;
+}
+.toolkit-tile-face svg{width:35px;height:35px;color:var(--tool-color);filter:drop-shadow(0 2px 2px #0009)}
+.toolkit-tile-monogram{display:block;letter-spacing:-.08em;font-size:27px;font-weight:800;line-height:1}
+.toolkit-tile.is-active .toolkit-tile-face{border-color:#d5b4aa;box-shadow:inset 2px 2px 1px #ffffff8a,3px 5px 0 #272b31,5px 8px 1px #c07d8173,0 13px 28px #0008}
+.toolkit-intro h2 em{color:#ed9a9d}
+.toolkit-category.is-active{background:#e3a9a6;border-color:#e3a9a6}
+@media(max-width:1060px){
+ .toolkit-tile-face{width:59px;height:59px;border-radius:14px}
+ .toolkit-tile-face svg{width:28px;height:28px}
+ .toolkit-tile-monogram{font-size:23px}
+}
+@media(max-width:760px){
+ .toolkit-tile-face{width:48px;height:48px;border-radius:12px}
+ .toolkit-tile-face svg{width:23px;height:23px}
+ .toolkit-tile-monogram{font-size:18px}
+}
+@media(max-width:390px){
+ .toolkit-tile-face{width:43px;height:43px}
+ .toolkit-tile-face svg{width:21px;height:21px}
+ .toolkit-tile-monogram{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){.toolkit-tile{transition:none;will-change:auto}}
