@@ -29,11 +29,10 @@ try{
   assert.equal(await page.locator(".exp-journey-card-head strong").innerText(),"Peacock India");
   pass(name+" starts with four employers");
   const aboutText=await page.locator(".about-copy").innerText();
-  assert(aboutText.includes("political campaigns"),"Specific campaign experience not present");
-  assert(aboutText.includes("multi-page publications"),"Publication design not mentioned");
-  assert(aboutText.includes("creative direction"),"Leadership responsibility missing");
-  assert(aboutText.includes("AI Design Studio"),"Product-building experience missing");
-  assert(aboutText.includes("Vibe Coder"),"Vibe Coder positioning missing");
+  assert(aboutText.includes("I translate complex ideas into clear visual systems and useful digital products."),"Previous About introduction was not restored");
+  assert(aboutText.includes("With 10+ years across visual communication"),"Previous professional overview not restored");
+  assert(aboutText.includes("As a Vibe Coder"),"Previous Vibe Coder paragraph not restored");
+  assert.equal(await page.locator(".about-copy p").count(),3,"Previous About paragraph count changed");
   assert.equal(await page.locator(".about-journey-link").count(),0,"Removed Journey CTA remains visible");
   assert.equal(await page.locator(".about-actions a").count(),2,"Resume or contact link changed");
   const aboutGeometry=await page.locator(".about-me").evaluate(el=>{
@@ -41,7 +40,17 @@ try{
     return {left:r.left,right:r.right,parentLeft:parent?.left,parentRight:parent?.right}
   });
   assert(aboutGeometry.left>=-3 && aboutGeometry.right<=width+3,"About text overflows viewport: "+JSON.stringify(aboutGeometry));
-  pass(name+" expanded About content, CTA removed, resume/contact preserved");
+  pass(name+" previous About restored, CTA removed, resume/contact preserved");
+  // Check that every employer now has a detailed, distinct description.
+  const names=["Peacock India","Ad2pro Media Solutions","I-PAC","Nation with NaMo"];
+  for(let index=0;index<names.length;index++){
+    await page.locator(".exp-journey-stopbar button").nth(index).evaluate(el=>el.click());
+    assert.equal(await page.locator(".exp-journey-card-head strong").innerText(),names[index]);
+    const copy=await page.locator(".exp-journey-card-body p").innerText();
+    assert(copy.trim().split(/\\s+/).length>=47,names[index]+" description is too short: "+copy);
+  }
+  await page.locator(".exp-journey-stopbar button").first().evaluate(el=>el.click());
+  pass(name+" all four employer descriptions expanded");
   const initial=await page.locator(".exp-journey-world").evaluate(e=>e.style.transform);
   const nextButton=page.locator(".exp-journey-controls button").last();
   assert(await nextButton.isVisible());

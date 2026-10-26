@@ -90,3 +90,9 @@ body.exp-journey-visible .icons-section .resume-button{opacity:0;pointer-events:
   bottom:24px;
  }
 }
+
+/* Longer company-specific descriptions remain readable without covering the map. */
+.exp-journey-card{display:flex;flex-direction:column;max-height:calc(100% - 30px)}
+.exp-journey-card-head,.exp-journey-controls{flex-shrink:0}
+.exp-journey-card-body{min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#65727c transparent}
+@media(max-width:710px){.exp-journey-card{max-height:calc(100% - 170px)}}
