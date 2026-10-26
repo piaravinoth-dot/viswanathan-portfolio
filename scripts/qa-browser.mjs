@@ -63,7 +63,7 @@ async function testViewport(browser, name, width) {
     const lightBackground=await page.locator('#products').evaluate(el=>getComputedStyle(el).backgroundColor);
     // The product area's light theme is intentionally overridden by site styling.
     // Assert the semantic contrast rather than an obsolete, exact CSS color token.
-    const productRGB=(lightBackground.match(/\\d+/g)||[]).slice(0,3).map(Number);
+    const productRGB=(lightBackground.match(/\d+/g)||[]).slice(0,3).map(Number);
     log(name,width,'political gallery and products retain intentional contrasting shells',
       darkBackground==='rgb(11, 16, 23)' &&
       productRGB.length===3 && productRGB.every(value=>value>190),
