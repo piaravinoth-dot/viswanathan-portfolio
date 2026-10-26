@@ -213,7 +213,7 @@ export default function ToolsOrbit(){
      <div className="toolkit-stage-number" aria-hidden="true">{String(TOOLS.indexOf(active)+1).padStart(2,"0")} / {String(TOOLS.length).padStart(2,"0")}</div>
     </div>
     <div className="toolkit-controls">
-     <span>{reduced?"SELECT A TOOL TO EXPLORE":"AUTO ROTATION · USE ARROWS TO EXPLORE"}</span>
+     <span>{reduced?"SELECT A TOOL TO EXPLORE":mobile?"SWIPE TO EXPLORE · OR USE ARROWS":"AUTO ROTATION · USE ARROWS TO EXPLORE"}</span>
      <div><button type="button" onClick={()=>rotate(-1)} aria-label="Previous tool">←</button>
           <button type="button" onClick={()=>rotate(1)} aria-label="Next tool">→</button></div>
     </div>
