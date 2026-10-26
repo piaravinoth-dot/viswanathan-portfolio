@@ -89,6 +89,14 @@ export default function ToolsOrbit(){
   return()=>media.removeEventListener("change",onChange);
  },[]);
  useEffect(()=>{
+  const el=host.current;if(!el)return;
+  const observer=new IntersectionObserver(([entry])=>{
+    document.body.classList.toggle("toolkit-section-active",entry.isIntersecting&&entry.intersectionRatio>.25);
+  },{threshold:[0,.25,.6]});
+  observer.observe(el);
+  return()=>{observer.disconnect();document.body.classList.remove("toolkit-section-active")};
+ },[]);
+ useEffect(()=>{
   if(!host.current||reduced)return;
   const handle=ScrollTrigger.create({
     trigger:host.current,

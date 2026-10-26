@@ -52,6 +52,13 @@ try{
   assert.equal(await page.locator("#products").count(),1);
   assert.equal(await page.locator(".about-journey-link").count(),0);
   check(device+" existing sections preserved");
+  const footerLayout=await page.evaluate(()=>{
+    const p=document.querySelector(".toolkit-footer p").getBoundingClientRect();
+    const link=document.querySelector(".toolkit-footer a").getBoundingClientRect();
+    return {overlap:!(p.right<link.left||link.right<p.left||p.bottom<link.top||link.bottom<p.top)};
+  });
+  if(width<761)assert.equal(footerLayout.overlap,false,"toolkit footer elements overlap");
+  check(device+" readable footer");
   if(device==="iphone"||device==="desktop"){
     await toolkit.locator(".toolkit-category").nth(1).evaluate(el=>el.click());
     await page.waitForTimeout(450);

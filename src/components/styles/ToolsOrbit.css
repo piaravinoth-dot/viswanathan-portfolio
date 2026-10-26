@@ -50,3 +50,11 @@
 @media(max-width:760px){.toolkit-section{width:calc(100% - 38px);margin:60px auto;padding:15px 0}.toolkit-header{padding:13px 0;align-items:flex-start}.toolkit-eyebrow{max-width:230px;line-height:1.6;font-size:9px}.toolkit-counter{font-size:8px;white-space:nowrap}.toolkit-layout{grid-template-columns:minmax(0,1fr);gap:0;min-height:0}.toolkit-intro{padding:32px 0 14px}.toolkit-chapter{margin-bottom:16px;font-size:9px}.toolkit-intro h2{font-size:clamp(62px,12vw,91px);margin:0 0 22px}.toolkit-intro>p{font-size:15px;line-height:1.6;margin-bottom:24px}.toolkit-category-list{gap:6px}.toolkit-category{min-height:40px;font-size:11px;padding:9px 10px;gap:7px}.toolkit-focus-copy{min-height:0;margin-top:20px;padding-top:15px}.toolkit-focus-copy strong{font-size:20px}.toolkit-focus-copy p{font-size:13px}.toolkit-stage{height:420px;max-width:520px;margin:0 auto}.toolkit-stage-col{margin-top:8px}.toolkit-tile{width:58px}.toolkit-tile-face{height:46px;width:46px;border-radius:11px;font-size:15px}.toolkit-tile-name{font-size:9px}.toolkit-hand{left:51%;top:61%;width:47%;height:85%}.toolkit-ring-outer{width:84%;height:60%}.toolkit-ring-inner{width:64%}.toolkit-controls{padding:13px 4px}.toolkit-controls>span{font-size:8px;letter-spacing:.1em;max-width:190px}.toolkit-controls button{height:40px;width:40px}.toolkit-footer{align-items:start;flex-wrap:wrap;gap:10px 22px}.toolkit-footer p{text-align:left;order:2;flex:1 1 100%}.toolkit-footer a{margin-left:auto;white-space:normal;text-align:right}}
 @media(max-width:390px){.toolkit-stage{height:350px}.toolkit-hand{height:90%;width:50%}.toolkit-tile{width:49px}.toolkit-tile-face{width:42px;height:42px}.toolkit-category small{display:none}.toolkit-intro h2{font-size:59px}}
 @media(prefers-reduced-motion:reduce){.toolkit-hand,.toolkit-tile,.toolkit-tile-name,.toolkit-category,.toolkit-controls button{transition:none!important;animation:none!important}}
+
+/* Keep persistent profile tab clear of toolkit controls while this section is in view. */
+body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-events:none}
+@media(max-width:760px){
+  .toolkit-footer{display:grid;grid-template-columns:1fr;gap:10px;align-items:start}
+  .toolkit-footer p{order:initial;flex:auto;text-align:left;font-size:12px}
+  .toolkit-footer a{margin-left:0;text-align:left;justify-self:start}
+}
