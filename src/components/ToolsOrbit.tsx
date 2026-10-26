@@ -90,12 +90,20 @@ export default function ToolsOrbit(){
  const [autoTurn,setAutoTurn]=useState(0);
  const [inView,setInView]=useState(false);
  const [reduced,setReduced]=useState(false);
+ const [mobile,setMobile]=useState(false);
+ const touchStart=useRef<{x:number;y:number}|null>(null);
  const activeTools=useMemo(()=>group==="All"?TOOLS:TOOLS.filter(t=>t.group===group),[group]);
  const active=TOOLS.find(t=>t.name===selected)??TOOLS[0];
  useEffect(()=>{
   if(activeTools.some(t=>t.name===selected))return;
   setSelected(activeTools[0].name);
  },[activeTools,selected]);
+ useEffect(()=>{
+  const media=window.matchMedia("(max-width: 760px)");
+  const onChange=()=>setMobile(media.matches);
+  onChange();media.addEventListener("change",onChange);
+  return()=>media.removeEventListener("change",onChange);
+ },[]);
  useEffect(()=>{
   const media=window.matchMedia("(prefers-reduced-motion: reduce)");
   const onChange=()=>setReduced(media.matches);
@@ -112,7 +120,7 @@ export default function ToolsOrbit(){
   return()=>{observer.disconnect();document.body.classList.remove("toolkit-section-active")};
  },[]);
  useEffect(()=>{
-  if(!host.current||reduced)return;
+  if(!host.current||reduced||mobile)return;
   const handle=ScrollTrigger.create({
     trigger:host.current,
     start:"top bottom",
@@ -120,10 +128,12 @@ export default function ToolsOrbit(){
     onUpdate:self=>setScrollTurn(self.progress*130)
   });
   return()=>handle.kill();
- },[reduced]);
+ },[reduced,mobile]);
  // Faster 14s revolution, throttled to ~30 updates/sec, paused offscreen.
  useEffect(()=>{
-  if(reduced||!inView)return;
+  // Native mobile scrolling stays smooth when animation runs on the compositor,
+  // rather than forcing a React render every 32ms for sixteen orbit elements.
+  if(reduced||!inView||mobile)return;
   let frame=0,last=0;
   const tick=(now:number)=>{
    if(!document.hidden&&now-last>=32){
@@ -135,7 +145,7 @@ export default function ToolsOrbit(){
   };
   frame=window.requestAnimationFrame(tick);
   return()=>window.cancelAnimationFrame(frame);
- },[reduced,inView]);
+ },[reduced,inView,mobile]);
  const rotate=(direction:number)=>{
    const visible=activeTools;
    const index=visible.findIndex(t=>t.name===selected);
@@ -171,11 +181,13 @@ export default function ToolsOrbit(){
       <strong>{active.name}</strong><p>{active.description}</p></div>
    </div>
    <div className="toolkit-stage-col">
-    <div className="toolkit-stage" role="group" aria-label="Interactive orbit of creative software tools">
+    <div className={"toolkit-stage"+(mobile?" toolkit-stage-mobile":"")} role="group" aria-label="Interactive orbit of creative software tools"
+     onTouchStart={event=>{const t=event.touches[0];touchStart.current={x:t.clientX,y:t.clientY}}}
+     onTouchEnd={event=>{const start=touchStart.current;touchStart.current=null;if(!start)return;const t=event.changedTouches[0];const dx=t.clientX-start.x;const dy=t.clientY-start.y;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.4)rotate(dx<0?1:-1)}}>
      <div className="toolkit-ring toolkit-ring-outer" aria-hidden="true"/>
      <div className="toolkit-ring toolkit-ring-inner" aria-hidden="true"/>
      <div className="toolkit-axis" aria-hidden="true"/>
-     <div className="toolkit-hand" aria-hidden="true" style={{transform:reduced?"translate(-50%, -50%)":`translate(-50%, -50%) rotate(${Math.sin(orbitOffset*Math.PI/180)*3.5}deg)`}}>
+     <div className="toolkit-hand" aria-hidden="true" style={{transform:reduced||mobile?"translate(-50%, -50%)":`translate(-50%, -50%) rotate(${Math.sin(orbitOffset*Math.PI/180)*3.5}deg)`}}>
        <GestureHand/>
      </div>
      {activeTools.map((tool,i)=>{
@@ -185,8 +197,12 @@ export default function ToolsOrbit(){
        const y=49+Math.sin(angle)*30;
        const scale=.72+depth*.34;
        const isActive=selected===tool.name;
+       // Four generously spaced interactive icons on small screens; arrows/swipes reach all 16.
+       const relative=(i-activeTools.findIndex(t=>t.name===selected)+activeTools.length)%activeTools.length;
+       const slot=relative===0?0:relative===1?1:relative===activeTools.length-1?2:relative===2?3:-1;
        return <button type="button" key={tool.name}
          className={"toolkit-tile"+(isActive?" is-active":"")}
+         data-mobile-slot={slot>=0?slot:undefined} data-mobile-hidden={mobile&&slot<0?"true":undefined}
          aria-label={"Select "+tool.name} aria-pressed={isActive}
          onClick={()=>setSelected(tool.name)}
          style={{left:x+"%",top:y+"%",transform:`translate(-50%,-50%) scale(${scale})`,zIndex:Math.round(10+depth*20),opacity:reduced?1:(.52+depth*.48),["--tool-color" as string]:tool.color}}>
@@ -197,7 +213,7 @@ export default function ToolsOrbit(){
      <div className="toolkit-stage-number" aria-hidden="true">{String(TOOLS.indexOf(active)+1).padStart(2,"0")} / {String(TOOLS.length).padStart(2,"0")}</div>
     </div>
     <div className="toolkit-controls">
-     <span>{reduced?"SELECT A TOOL TO EXPLORE":"AUTO ROTATION · USE ARROWS TO EXPLORE"}</span>
+     <span>{reduced?"SELECT A TOOL TO EXPLORE":mobile?"SWIPE TO EXPLORE · OR USE ARROWS":"AUTO ROTATION · USE ARROWS TO EXPLORE"}</span>
      <div><button type="button" onClick={()=>rotate(-1)} aria-label="Previous tool">←</button>
           <button type="button" onClick={()=>rotate(1)} aria-label="Next tool">→</button></div>
     </div>
