@@ -186,8 +186,15 @@ async function testViewport(browser, name, width) {
         await fresh.goto(base,{waitUntil:'domcontentloaded',timeout:60000});
         const cleanOrbit=fresh.locator('.mobile-product-orbit');
         await cleanOrbit.waitFor({state:'attached',timeout:30000});
-        await cleanOrbit.scrollIntoViewIfNeeded();
-        // A real user wheel event also wakes GSAP smooth-scrolling observers.
+        // The hero's WebGL fallback can reset ScrollSmoother to the top just
+        // after hydration. Allow that layout-ready pass to finish first, as
+        // in the independently passing Tools Orbit browser test.
+        await fresh.waitForTimeout(1200);
+        await fresh.evaluate(() => {
+          const node=document.querySelector('.mobile-product-orbit');
+          const target=Math.max(0,window.scrollY+node.getBoundingClientRect().top-window.innerHeight*.3);
+          window.scrollTo({top:target,behavior:'instant'});
+        });
         await fresh.mouse.wheel(0,80);
         await fresh.waitForFunction(() => {
           const el=document.querySelector('.mobile-product-orbit');
