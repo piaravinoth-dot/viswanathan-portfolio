@@ -69,11 +69,29 @@ try{
   if(width<=760){
 
     // Selection moves automatically while visible, without layout animation.
+    const readStableLayout=()=>toolkit.evaluate(el=>{
+      const focus=el.querySelector(".toolkit-focus-copy");
+      const description=focus.querySelector("p");
+      const stage=el.querySelector(".toolkit-stage");
+      const panel=focus.getBoundingClientRect();
+      return {
+        focusHeight:panel.height,
+        stageTop:stage.getBoundingClientRect().top,
+        descriptionFits:description.getBoundingClientRect().bottom<=panel.bottom+1
+      };
+    });
+    const beforeLayout=await readStableLayout();
     const autoBefore=await toolkit.locator(".toolkit-focus-copy strong").innerText();
     await page.waitForTimeout(4000);
     const autoAfter=await toolkit.locator(".toolkit-focus-copy strong").innerText();
     assert.notEqual(autoBefore,autoAfter,"mobile automatic tool cycling is not working");
     check(device+" automatic mobile tool rotation works");
+    const afterLayout=await readStableLayout();
+    assert.equal(afterLayout.focusHeight,beforeLayout.focusHeight,"focus panel resized during autoplay");
+    assert(Math.abs(afterLayout.stageTop-beforeLayout.stageTop)<=2,
+      "mobile page shifts when tool name changes: "+JSON.stringify({beforeLayout,afterLayout}));
+    assert(beforeLayout.descriptionFits&&afterLayout.descriptionFits,"focus description extends into mobile artwork");
+    check(device+" tool text updates without shifting the scroll layout");
     const mobile=await toolkit.locator(".toolkit-stage").evaluate(el=>({
       touchAction:getComputedStyle(el).touchAction,
       visible:[...el.querySelectorAll(".toolkit-tile")].filter(t=>getComputedStyle(t).display!=="none").length
