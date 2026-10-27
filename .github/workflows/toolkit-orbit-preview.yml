@@ -11,6 +11,7 @@ on:
       - fix/mobile-tools-scroll-stability-20261027
       - fix/mobile-orbit-smooth-rotation-20261027
       - fix/mobile-all16-continuous-orbit-20261027
+      - fix/mobile-orbit-overlap-20261027
     paths:
       - "src/components/ToolsOrbit.tsx"
       - "src/components/styles/ToolsOrbit.css"
