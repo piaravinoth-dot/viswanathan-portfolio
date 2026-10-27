@@ -213,6 +213,7 @@ try{
  const ctx=await browser.newContext({viewport:{width:390,height:844},reducedMotion:"reduce"});
  const page=await ctx.newPage();await page.goto(origin+"/",{waitUntil:"domcontentloaded"});
  await page.locator("#toolkit .toolkit-category").nth(3).evaluate(el=>el.click());
+ await page.waitForFunction(()=>document.querySelectorAll("#toolkit .toolkit-tile").length===8,null,{timeout:5000});
  assert.equal(await page.locator("#toolkit .toolkit-tile").count(),8);
  check("reduced motion mode remains interactive");
  await ctx.close();
