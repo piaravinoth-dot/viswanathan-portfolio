@@ -68,7 +68,7 @@ try{
   check(device+" defaults to All 16 tools");
   if(width<=760){
 
-    // Selection moves automatically while visible, without layout animation.
+    // Smooth CSS orbital motion must progress without changing the selected tool.
     const readStableLayout=()=>toolkit.evaluate(el=>{
       const focus=el.querySelector(".toolkit-focus-copy");
       const description=focus.querySelector("p");
@@ -82,10 +82,10 @@ try{
     });
     const beforeLayout=await readStableLayout();
     const autoBefore=await toolkit.locator(".toolkit-focus-copy strong").innerText();
-    await page.waitForTimeout(4000);
+    await page.waitForTimeout(600);
     const autoAfter=await toolkit.locator(".toolkit-focus-copy strong").innerText();
-    assert.notEqual(autoBefore,autoAfter,"mobile automatic tool cycling is not working");
-    check(device+" automatic mobile tool rotation works");
+    assert.equal(autoBefore,autoAfter,"mobile orbit should not change selected tool every few seconds");
+    check(device+" selected description remains stable during rotation");
     const afterLayout=await readStableLayout();
     assert.equal(afterLayout.focusHeight,beforeLayout.focusHeight,"focus panel resized during autoplay");
     assert(Math.abs(afterLayout.stageTop-beforeLayout.stageTop)<=2,
@@ -114,17 +114,19 @@ try{
     // Composited CSS motion avoids constant React state updates during native touch scroll.
     const sample=()=>toolkit.locator(".toolkit-tile[data-mobile-slot='0']").evaluate(el=>({
       name:getComputedStyle(el).animationName,
-      transform:getComputedStyle(el).transform,
+      distance:getComputedStyle(el).offsetDistance,
+      pos:(()=>{const r=el.getBoundingClientRect();return [r.left,r.top]})(),
       left:el.style.left
     }));
     await page.waitForTimeout(220);
     const before=await sample();
     await page.waitForTimeout(650);
     const after=await sample();
-    assert(before.name.includes("toolkit-mobile-tile-float"),"mobile CSS animation not active");
-    assert.notEqual(before.transform,after.transform,"mobile tiles did not animate smoothly");
+    assert(before.name.includes("toolkit-orbit-mobile"),"continuous mobile orbit animation not active");
+    assert.notEqual(before.distance,after.distance,"mobile orbital progress did not advance");
+    assert.notDeepEqual(before.pos,after.pos,"mobile orbit icons did not physically move");
     assert.equal(before.left,after.left,"mobile orbit still triggers per-frame React layout changes");
-    check(device+" GPU-friendly icon motion without per-frame React layout updates");
+    check(device+" continuous orbital motion with no per-frame React layout updates");
     const hand=await toolkit.locator(".toolkit-hand").evaluate(el=>{
       const a=el.getBoundingClientRect(),b=el.closest(".toolkit-stage").getBoundingClientRect();
       return {top:a.top,bottom:a.bottom,stageTop:b.top,stageBottom:b.bottom};
