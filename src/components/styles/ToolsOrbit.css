@@ -196,3 +196,19 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
   .toolkit-stage .toolkit-tile[data-mobile-slot="2"]{left:14%!important;top:71%!important}
   .toolkit-stage .toolkit-tile[data-mobile-slot="3"]{left:86%!important;top:71%!important}
 }
+
+/* Stable mobile focus panel: changing the highlighted tool must never resize
+   the section and tug native iOS scrolling during automatic cycling. */
+@media (max-width:760px) {
+  .toolkit-focus-copy {
+    box-sizing:border-box;
+    height:140px;
+    min-height:140px;
+    overflow:visible;
+  }
+  .toolkit-focus-copy strong {line-height:1.2}
+  .toolkit-focus-copy p {line-height:1.5;overflow-wrap:break-word}
+}
+@media (max-width:390px) {
+  .toolkit-focus-copy {height:154px;min-height:154px}
+}
