@@ -97,8 +97,8 @@ try{
       visible:[...el.querySelectorAll(".toolkit-tile")].filter(t=>getComputedStyle(t).display!=="none").length
     }));
     assert.equal(mobile.touchAction,"pan-y","vertical native scrolling must remain available");
-    assert.equal(mobile.visible,4,"mobile orbit should show four spaced tools");
-    check(device+" only four touch-friendly icons visible with vertical pan preserved");
+    assert.equal(mobile.visible,16,"all sixteen tools must be in the mobile orbit");
+    check(device+" all sixteen tools participate with vertical pan preserved");
     const titleBeforeSwipe=await toolkit.locator(".toolkit-focus-copy strong").innerText();
     const rect=await toolkit.locator(".toolkit-stage").boundingBox();
     assert(rect,"mobile stage bounding box missing");
@@ -112,7 +112,7 @@ try{
   }
   if(width<=760){
     // Composited CSS motion avoids constant React state updates during native touch scroll.
-    const sample=()=>toolkit.locator(".toolkit-tile[data-mobile-slot='0']").evaluate(el=>({
+    const sample=()=>toolkit.locator(".toolkit-tile[data-orbit-index='0']").evaluate(el=>({
       name:getComputedStyle(el).animationName,
       distance:getComputedStyle(el).offsetDistance,
       pos:(()=>{const r=el.getBoundingClientRect();return [r.left,r.top]})(),
@@ -122,11 +122,22 @@ try{
     const before=await sample();
     await page.waitForTimeout(650);
     const after=await sample();
-    assert(before.name.includes("toolkit-orbit-mobile"),"continuous mobile orbit animation not active");
+    assert(before.name.includes("toolkit-all-sixteen-orbit"),"all-sixteen mobile orbit animation not active");
     assert.notEqual(before.distance,after.distance,"mobile orbital progress did not advance");
     assert.notDeepEqual(before.pos,after.pos,"mobile orbit icons did not physically move");
     assert.equal(before.left,after.left,"mobile orbit still triggers per-frame React layout changes");
     check(device+" continuous orbital motion with no per-frame React layout updates");
+    const phases=await toolkit.locator(".toolkit-stage .toolkit-tile").evaluateAll(els=>els.map(el=>({
+      name:el.getAttribute("aria-label"),
+      animation:getComputedStyle(el).animationName,
+      delay:getComputedStyle(el).animationDelay
+    })));
+    assert.equal(phases.length,16,"all tools must be present");
+    assert.equal(new Set(phases.map(x=>x.name)).size,16,"tool identities duplicated");
+    assert.equal(new Set(phases.map(x=>x.delay)).size,16,"all sixteen require distinct orbital phases");
+    assert(phases.every(x=>x.animation.includes("toolkit-all-sixteen-orbit")),"a tool is missing orbital motion");
+    check(device+" all sixteen distinct tools are continuously phased around the orbit");
+
     const hand=await toolkit.locator(".toolkit-hand").evaluate(el=>{
       const a=el.getBoundingClientRect(),b=el.closest(".toolkit-stage").getBoundingClientRect();
       return {top:a.top,bottom:a.bottom,stageTop:b.top,stageBottom:b.bottom};
