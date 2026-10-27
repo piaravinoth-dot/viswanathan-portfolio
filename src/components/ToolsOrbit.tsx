@@ -203,15 +203,12 @@ export default function ToolsOrbit(){
        const y=49+Math.sin(angle)*30;
        const scale=.72+depth*.34;
        const isActive=selected===tool.name;
-       // Four generously spaced interactive icons on small screens; arrows/swipes reach all 16.
-       const relative=(i-activeTools.findIndex(t=>t.name===selected)+activeTools.length)%activeTools.length;
-       const slot=relative===0?0:relative===1?1:relative===activeTools.length-1?2:relative===2?3:-1;
        return <button type="button" key={tool.name}
          className={"toolkit-tile"+(isActive?" is-active":"")}
-         data-mobile-slot={slot>=0?slot:undefined} data-mobile-hidden={mobile&&slot<0?"true":undefined}
+         data-orbit-index={i}
          aria-label={"Select "+tool.name} aria-pressed={isActive}
          onClick={()=>{interactionPause.current=Date.now()+6500;setSelected(tool.name)}}
-         style={{left:x+"%",top:y+"%",transform:`translate(-50%,-50%) scale(${scale})`,zIndex:Math.round(10+depth*20),opacity:reduced?1:(.52+depth*.48),["--tool-color" as string]:tool.color}}>
+         style={{left:x+"%",top:y+"%",transform:`translate(-50%,-50%) scale(${scale})`,zIndex:Math.round(10+depth*20),opacity:reduced?1:(.52+depth*.48),["--tool-color" as string]:tool.color,["--mobile-orbit-delay" as string]:`${(-24*i/activeTools.length).toFixed(3)}s`}}>
          <span className="toolkit-tile-face" aria-hidden="true">{TOOL_LOGOS[tool.name]??<span className="toolkit-tile-monogram">{tool.mark}</span>}</span>
          <span className="toolkit-tile-name">{tool.name}</span>
        </button>;
