@@ -246,3 +246,49 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
  .toolkit-stage-mobile .toolkit-tile[data-mobile-slot="2"]{offset-distance:50%}
  .toolkit-stage-mobile .toolkit-tile[data-mobile-slot="3"]{offset-distance:75%}
 }
+
+/* All sixteen tools now move through the mobile orbit. A visibility window
+   exposes about five icons at once, avoiding the original stacked cluster.
+   Each icon has a unique negative delay, so all sixteen pass through the
+   same visible arc during every complete 24-second revolution. */
+@media(max-width:760px) {
+ .toolkit-stage-mobile .toolkit-tile {
+   display:flex!important;
+   left:0!important;
+   top:0!important;
+   offset-path:ellipse(34% 30% at 50% 50%);
+   offset-rotate:0deg;
+   offset-anchor:center;
+   transform:translate(-50%,-50%) scale(1)!important;
+   animation:toolkit-all-sixteen-orbit 24s linear infinite!important;
+   animation-delay:var(--mobile-orbit-delay,0s)!important;
+   transition:none!important;
+   will-change:offset-distance,opacity;
+ }
+ .toolkit-stage-mobile .toolkit-tile .toolkit-tile-name{opacity:0}
+ .toolkit-stage-mobile .toolkit-tile.is-active .toolkit-tile-name{opacity:1}
+}
+@keyframes toolkit-all-sixteen-orbit{
+  0%{offset-distance:0%;opacity:0;pointer-events:none}
+  6%{opacity:0;pointer-events:none}
+  13%{opacity:1;pointer-events:auto}
+  36%{opacity:1;pointer-events:auto}
+  43%{opacity:0;pointer-events:none}
+  100%{offset-distance:100%;opacity:0;pointer-events:none}
+}
+@media(max-width:760px) and (prefers-reduced-motion:reduce){
+ .toolkit-stage-mobile .toolkit-tile{
+   animation:none!important;opacity:0!important;pointer-events:none!important;
+   will-change:auto;
+ }
+ .toolkit-stage-mobile .toolkit-tile:nth-of-type(1),
+ .toolkit-stage-mobile .toolkit-tile:nth-of-type(2),
+ .toolkit-stage-mobile .toolkit-tile:nth-of-type(3),
+ .toolkit-stage-mobile .toolkit-tile:nth-of-type(4){
+   opacity:1!important;pointer-events:auto!important;
+ }
+ .toolkit-stage-mobile .toolkit-tile:nth-of-type(1){offset-distance:0%}
+ .toolkit-stage-mobile .toolkit-tile:nth-of-type(2){offset-distance:25%}
+ .toolkit-stage-mobile .toolkit-tile:nth-of-type(3){offset-distance:50%}
+ .toolkit-stage-mobile .toolkit-tile:nth-of-type(4){offset-distance:75%}
+}
