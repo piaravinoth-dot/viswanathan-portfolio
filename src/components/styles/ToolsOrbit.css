@@ -292,3 +292,44 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
  .toolkit-stage-mobile .toolkit-tile:nth-of-type(3){offset-distance:50%}
  .toolkit-stage-mobile .toolkit-tile:nth-of-type(4){offset-distance:75%}
 }
+
+/* Correct mobile positioning: anchor every orbit path to the hand's centre.
+   Previous offset-path was relative to (0,0), clustering icons over the wrist.
+   The narrower visibility window also prevents sixteen icons crowding together. */
+@media(max-width:760px){
+ .toolkit-stage-mobile .toolkit-tile {
+   left:50%!important;top:49%!important;
+   offset-path:ellipse(132px 108px at 0px 0px);
+   offset-rotate:0deg;
+   offset-anchor:center;
+   transform:translate(-50%,-50%) scale(.86)!important;
+   animation:toolkit-spaced-sixteen-orbit 32s linear infinite!important;
+   animation-delay:calc(var(--mobile-orbit-delay,0s) * 1.333333)!important;
+   will-change:offset-distance,opacity;
+ }
+ .toolkit-stage-mobile .toolkit-tile.is-active {z-index:30!important}
+}
+@media(max-width:390px) {
+ .toolkit-stage-mobile .toolkit-tile {
+   offset-path:ellipse(114px 100px at 0px 0px);
+ }
+}
+@keyframes toolkit-spaced-sixteen-orbit {
+  0%{offset-distance:0%;opacity:0;pointer-events:none}
+  1%{opacity:0;pointer-events:none}
+  2.5%{opacity:1;pointer-events:auto}
+  7%{opacity:1;pointer-events:auto}
+  8.5%{opacity:0;pointer-events:none}
+  100%{offset-distance:100%;opacity:0;pointer-events:none}
+}
+@media(max-width:760px) and (prefers-reduced-motion:reduce) {
+ .toolkit-stage-mobile .toolkit-tile {animation:none!important;opacity:0!important;pointer-events:none!important}
+ .toolkit-stage-mobile .toolkit-tile[data-orbit-index="0"],
+ .toolkit-stage-mobile .toolkit-tile[data-orbit-index="4"],
+ .toolkit-stage-mobile .toolkit-tile[data-orbit-index="8"],
+ .toolkit-stage-mobile .toolkit-tile[data-orbit-index="12"] {opacity:1!important;pointer-events:auto!important}
+ .toolkit-stage-mobile .toolkit-tile[data-orbit-index="0"]{offset-distance:0%}
+ .toolkit-stage-mobile .toolkit-tile[data-orbit-index="4"]{offset-distance:25%}
+ .toolkit-stage-mobile .toolkit-tile[data-orbit-index="8"]{offset-distance:50%}
+ .toolkit-stage-mobile .toolkit-tile[data-orbit-index="12"]{offset-distance:75%}
+}
