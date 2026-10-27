@@ -9,6 +9,7 @@ on:
       - fix/mobile-tools-orbit-spacing-20261026
       - fix/ios-native-scroll-tools-20261026
       - fix/mobile-tools-scroll-stability-20261027
+      - fix/mobile-orbit-smooth-rotation-20261027
     paths:
       - "src/components/ToolsOrbit.tsx"
       - "src/components/styles/ToolsOrbit.css"

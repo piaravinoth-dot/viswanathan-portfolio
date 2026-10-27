@@ -147,20 +147,9 @@ export default function ToolsOrbit(){
   frame=window.requestAnimationFrame(tick);
   return()=>window.cancelAnimationFrame(frame);
  },[reduced,inView,mobile]);
- // On mobile, rotate the *selection* at a low frequency rather than animating
- // sixteen absolute-positioned React elements every frame. Native page scroll
- // remains independent of the orbit.
- useEffect(()=>{
-  if(!mobile||reduced||!inView)return;
-  const timer=window.setInterval(()=>{
-   if(document.hidden||Date.now()<interactionPause.current)return;
-   setSelected(current=>{
-    const index=activeTools.findIndex(tool=>tool.name===current);
-    return activeTools[(index+1)%activeTools.length].name;
-   });
-  },3500);
-  return()=>window.clearInterval(timer);
- },[mobile,reduced,inView,activeTools]);
+ // The mobile orbit is continuously animated by CSS motion paths. No timer
+ // changes selection during scrolling: this avoids tool-text jumps and costly
+ // React layout rerenders on iOS Safari.
  const rotate=(direction:number)=>{
    interactionPause.current=Date.now()+6500;
    const visible=activeTools;
@@ -230,7 +219,7 @@ export default function ToolsOrbit(){
      <div className="toolkit-stage-number" aria-hidden="true">{String(TOOLS.indexOf(active)+1).padStart(2,"0")} / {String(TOOLS.length).padStart(2,"0")}</div>
     </div>
     <div className="toolkit-controls">
-     <span>{reduced?"SELECT A TOOL TO EXPLORE":mobile?"AUTO CYCLE · SWIPE OR USE ARROWS":"AUTO ROTATION · USE ARROWS TO EXPLORE"}</span>
+     <span>{reduced?"SELECT A TOOL TO EXPLORE":mobile?"AUTO ROTATION · SWIPE OR USE ARROWS":"AUTO ROTATION · USE ARROWS TO EXPLORE"}</span>
      <div><button type="button" onClick={()=>rotate(-1)} aria-label="Previous tool">←</button>
           <button type="button" onClick={()=>rotate(1)} aria-label="Next tool">→</button></div>
     </div>

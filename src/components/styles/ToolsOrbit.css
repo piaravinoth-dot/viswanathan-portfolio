@@ -212,3 +212,37 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
 @media (max-width:390px) {
   .toolkit-focus-copy {height:154px;min-height:154px}
 }
+
+/* iOS-friendly continuous orbital movement. The four visible icons travel
+   around a real ellipse on the compositor; neither the stage nor document
+   scroll position is animated. Uses the CSS motion-path supported by iOS Safari. */
+@media (max-width:760px) {
+ .toolkit-stage-mobile .toolkit-tile[data-mobile-slot] {
+   left:0!important;top:0!important;
+   offset-path:ellipse(34% 30% at 50% 50%);
+   offset-rotate:0deg;
+   offset-anchor:center;
+   transform:translate(-50%,-50%) scale(1)!important;
+   animation:toolkit-orbit-mobile 16s linear infinite!important;
+   transition:none!important;
+   will-change:offset-distance;
+ }
+ .toolkit-stage-mobile .toolkit-tile[data-mobile-slot="0"] {animation-delay:0s!important}
+ .toolkit-stage-mobile .toolkit-tile[data-mobile-slot="1"] {animation-delay:-4s!important}
+ .toolkit-stage-mobile .toolkit-tile[data-mobile-slot="2"] {animation-delay:-8s!important}
+ .toolkit-stage-mobile .toolkit-tile[data-mobile-slot="3"] {animation-delay:-12s!important}
+ .toolkit-stage-mobile .toolkit-tile.is-active .toolkit-tile-name{opacity:1}
+}
+@keyframes toolkit-orbit-mobile {
+ from{offset-distance:0%}
+ to{offset-distance:100%}
+}
+@media (prefers-reduced-motion:reduce) {
+ .toolkit-stage-mobile .toolkit-tile[data-mobile-slot] {
+   animation:none!important;
+   offset-distance:0%;
+ }
+ .toolkit-stage-mobile .toolkit-tile[data-mobile-slot="1"]{offset-distance:25%}
+ .toolkit-stage-mobile .toolkit-tile[data-mobile-slot="2"]{offset-distance:50%}
+ .toolkit-stage-mobile .toolkit-tile[data-mobile-slot="3"]{offset-distance:75%}
+}
