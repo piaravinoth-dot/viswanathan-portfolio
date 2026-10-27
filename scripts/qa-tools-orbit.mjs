@@ -122,7 +122,7 @@ try{
     const before=await sample();
     await page.waitForTimeout(650);
     const after=await sample();
-    assert(before.name.includes("toolkit-all-sixteen-orbit"),"all-sixteen mobile orbit animation not active");
+    assert(before.name.includes("toolkit-spaced-sixteen-orbit"),"all-sixteen mobile orbit animation not active");
     assert.notEqual(before.distance,after.distance,"mobile orbital progress did not advance");
     assert.notDeepEqual(before.pos,after.pos,"mobile orbit icons did not physically move");
     assert.equal(before.left,after.left,"mobile orbit still triggers per-frame React layout changes");
@@ -135,8 +135,33 @@ try{
     assert.equal(phases.length,16,"all tools must be present");
     assert.equal(new Set(phases.map(x=>x.name)).size,16,"tool identities duplicated");
     assert.equal(new Set(phases.map(x=>x.delay)).size,16,"all sixteen require distinct orbital phases");
-    assert(phases.every(x=>x.animation.includes("toolkit-all-sixteen-orbit")),"a tool is missing orbital motion");
+    assert(phases.every(x=>x.animation.includes("toolkit-spaced-sixteen-orbit")),"a tool is missing orbital motion");
     check(device+" all sixteen distinct tools are continuously phased around the orbit");
+    // Verify the visible icons do not pile up over the hand or each other.
+    // Sample multiple animation frames so one lucky screenshot cannot pass.
+    for(let frame=0;frame<5;frame++){
+      const g=await toolkit.locator(".toolkit-stage").evaluate(stage=>{
+        const bound=stage.getBoundingClientRect();
+        const hand=stage.querySelector(".toolkit-hand").getBoundingClientRect();
+        const items=[...stage.querySelectorAll(".toolkit-tile")].filter(el=>{
+          const css=getComputedStyle(el);
+          return Number(css.opacity)>.6&&css.pointerEvents!=="none";
+        }).map(el=>{const v=el.getBoundingClientRect();return {name:el.getAttribute("aria-label"),x:v.left+v.width/2,y:v.top+v.height/2,w:v.width,h:v.height};});
+        return {cx:bound.left+bound.width/2,cy:bound.top+bound.height/2,items,handY:hand.top};
+      });
+      assert(g.items.length<=2,"too many orbit icons visible simultaneously: "+g.items.length);
+      for(let i=0;i<g.items.length;i++){
+        const a=g.items[i];
+        assert(Math.abs(a.x-g.cx)>40||Math.abs(a.y-g.cy)>65,"icon obscures hand centre: "+JSON.stringify(a));
+        for(let j=i+1;j<g.items.length;j++){
+          const b=g.items[j];
+          assert(Math.hypot(a.x-b.x,a.y-b.y)>48,"orbit icons overlap: "+JSON.stringify({a,b}));
+        }
+      }
+      await page.waitForTimeout(350);
+    }
+    check(device+" rotating mobile icons do not cluster over the hand");
+
 
     const hand=await toolkit.locator(".toolkit-hand").evaluate(el=>{
       const a=el.getBoundingClientRect(),b=el.closest(".toolkit-stage").getBoundingClientRect();
