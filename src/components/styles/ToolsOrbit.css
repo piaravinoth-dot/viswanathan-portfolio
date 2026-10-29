@@ -354,6 +354,7 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
 @media(max-width:760px) and (prefers-reduced-motion:no-preference){
  .toolkit-stage-mobile.toolkit-stage-filtered .toolkit-tile{
    animation:toolkit-filtered-mobile-orbit 32s linear infinite!important;
+   animation-delay:calc(var(--mobile-orbit-delay,0s) * 1.333333)!important;
    opacity:1!important;
    pointer-events:auto!important;
  }
