@@ -348,3 +348,17 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
  .toolkit-stage-mobile .toolkit-tile[data-orbit-index="8"]{offset-distance:50%}
  .toolkit-stage-mobile .toolkit-tile[data-orbit-index="12"]{offset-distance:75%}
 }
+
+/* Filtered categories have only 2–8 icons. Keep each one continuously
+   visible and evenly spaced; the four-arc mask is only for the full 16. */
+@media(max-width:760px) and (prefers-reduced-motion:no-preference){
+ .toolkit-stage-mobile.toolkit-stage-filtered .toolkit-tile{
+   animation:toolkit-filtered-mobile-orbit 32s linear infinite!important;
+   opacity:1!important;
+   pointer-events:auto!important;
+ }
+}
+@keyframes toolkit-filtered-mobile-orbit{
+ from{offset-distance:0%}
+ to{offset-distance:100%}
+}
