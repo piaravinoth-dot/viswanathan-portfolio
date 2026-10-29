@@ -12,6 +12,7 @@ on:
       - fix/mobile-orbit-smooth-rotation-20261027
       - fix/mobile-all16-continuous-orbit-20261027
       - fix/mobile-orbit-overlap-20261027
+      - fix/mobile-orbit-diagonal-visibility-20261029
     paths:
       - "src/components/ToolsOrbit.tsx"
       - "src/components/styles/ToolsOrbit.css"
@@ -59,6 +60,7 @@ jobs:
           path: |
             qa-tools-results.json
             qa-tools-iphone.png
+            qa-tools-iphone-pro-max.png
             qa-tools-desktop.png
           if-no-files-found: ignore
           retention-days: 7
