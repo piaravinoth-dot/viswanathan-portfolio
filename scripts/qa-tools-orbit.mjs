@@ -147,11 +147,12 @@ try{
           const css=getComputedStyle(el);
           return Number(css.opacity)>.6&&css.pointerEvents!=="none";
         }).map(el=>{const v=el.getBoundingClientRect();return {name:el.getAttribute("aria-label"),x:v.left+v.width/2,y:v.top+v.height/2,w:v.width,h:v.height};});
-        return {cx:bound.left+bound.width/2,cy:bound.top+bound.height/2,items,handY:hand.top};
+        return {cx:bound.left+bound.width/2,cy:bound.top+bound.height/2,stage:{left:bound.left,right:bound.right,top:bound.top,bottom:bound.bottom},items,handY:hand.top};
       });
       assert(g.items.length>=3&&g.items.length<=5,"expected four spaced orbit icons around the hand: "+g.items.length);
       for(let i=0;i<g.items.length;i++){
         const a=g.items[i];
+        assert(a.x>g.stage.left+20&&a.x<g.stage.right-20&&a.y>g.stage.top+20&&a.y<g.stage.bottom-20,"visible icon clipped outside orbit stage: "+JSON.stringify(a));
         assert(Math.abs(a.x-g.cx)>40||Math.abs(a.y-g.cy)>65,"icon obscures hand centre: "+JSON.stringify(a));
         for(let j=i+1;j<g.items.length;j++){
           const b=g.items[j];
@@ -233,7 +234,7 @@ try{
   if(device==="iphone"||device==="iphone-pro-max"||device==="desktop"){
     await toolkit.locator(".toolkit-category").nth(1).evaluate(el=>el.click());
     await page.waitForTimeout(450);
-    await toolkit.screenshot({path:"qa-tools-"+device+".png",animations:"disabled"});
+    await toolkit.screenshot({path:"qa-tools-"+device+".png",animations:"allow"});
   }
   assert.deepEqual(errs,[]);
   check(device+" no browser errors");
