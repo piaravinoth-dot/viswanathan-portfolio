@@ -137,6 +137,7 @@ try{
     assert.equal(new Set(phases.map(x=>x.delay)).size,16,"all sixteen require distinct orbital phases");
     assert(phases.every(x=>x.animation.includes("toolkit-spaced-sixteen-orbit")),"a tool is missing orbital motion");
     check(device+" all sixteen distinct tools are continuously phased around the orbit");
+    if(device==="iphone")await toolkit.screenshot({path:"qa-tools-iphone-orbit-debug.png",animations:"allow"});
     // Verify the visible icons do not pile up over the hand or each other.
     // Sample multiple animation frames so one lucky screenshot cannot pass.
     for(let frame=0;frame<5;frame++){
@@ -146,14 +147,14 @@ try{
         const items=[...stage.querySelectorAll(".toolkit-tile")].filter(el=>{
           const css=getComputedStyle(el);
           return Number(css.opacity)>.6&&css.pointerEvents!=="none";
-        }).map(el=>{const v=el.getBoundingClientRect();return {name:el.getAttribute("aria-label"),x:v.left+v.width/2,y:v.top+v.height/2,w:v.width,h:v.height};});
+        }).map(el=>{const v=el.getBoundingClientRect();return {name:el.getAttribute("aria-label"),x:v.left+v.width/2,y:v.top+v.height/2,w:v.width,h:v.height,distance:getComputedStyle(el).offsetDistance};});
         return {cx:bound.left+bound.width/2,cy:bound.top+bound.height/2,stage:{left:bound.left,right:bound.right,top:bound.top,bottom:bound.bottom},items,handY:hand.top};
       });
       assert(g.items.length>=3&&g.items.length<=5,"expected four spaced orbit icons around the hand: "+g.items.length);
       for(let i=0;i<g.items.length;i++){
         const a=g.items[i];
         assert(a.x>g.stage.left+20&&a.x<g.stage.right-20&&a.y>g.stage.top+20&&a.y<g.stage.bottom-20,"visible icon clipped outside orbit stage: "+JSON.stringify(a));
-        assert(Math.abs(a.x-g.cx)>40||Math.abs(a.y-g.cy)>65,"icon obscures hand centre: "+JSON.stringify(a));
+        assert(Math.abs(a.x-g.cx)>40||Math.abs(a.y-g.cy)>65,"icon obscures hand centre: "+JSON.stringify({a,cx:g.cx,cy:g.cy}));
         for(let j=i+1;j<g.items.length;j++){
           const b=g.items[j];
           assert(Math.hypot(a.x-b.x,a.y-b.y)>48,"orbit icons overlap: "+JSON.stringify({a,b}));
