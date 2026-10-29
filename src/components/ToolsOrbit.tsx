@@ -187,7 +187,7 @@ export default function ToolsOrbit(){
       <strong>{active.name}</strong><p>{active.description}</p></div>
    </div>
    <div className="toolkit-stage-col">
-    <div className={"toolkit-stage"+(mobile?" toolkit-stage-mobile":"")} role="group" aria-label="Interactive orbit of creative software tools"
+    <div className={"toolkit-stage"+(mobile?" toolkit-stage-mobile":"")+(group!=="All"?" toolkit-stage-filtered":"")} role="group" aria-label="Interactive orbit of creative software tools"
      onTouchStart={event=>{const t=event.touches[0];touchStart.current={x:t.clientX,y:t.clientY}}}
      onTouchEnd={event=>{const start=touchStart.current;touchStart.current=null;if(!start)return;const t=event.changedTouches[0];const dx=t.clientX-start.x;const dy=t.clientY-start.y;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.4)rotate(dx<0?1:-1)}}>
      <div className="toolkit-ring toolkit-ring-outer" aria-hidden="true"/>
