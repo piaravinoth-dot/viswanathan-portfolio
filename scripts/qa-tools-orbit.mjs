@@ -203,6 +203,19 @@ try{
   assert.equal(await toolkit.locator(".toolkit-tile").count(),2);
   if(width<=760)assert.equal(await toolkit.locator(".toolkit-tile").evaluateAll(els=>els.filter(el=>Number(getComputedStyle(el).opacity)>.9).length),2,"filtered AI tools should stay visible");
   check(device+" filters AI tools");
+  if(width<=760){
+    // A shorthand animation override must retain the per-icon phase delays:
+    // otherwise filtered icons all pile up at the same spot.
+    const filtered=await toolkit.locator(".toolkit-stage .toolkit-tile").evaluateAll(els=>els.map(el=>{
+      const r=el.getBoundingClientRect(),s=getComputedStyle(el);
+      return {x:r.left+r.width/2,y:r.top+r.height/2,delay:s.animationDelay,opacity:Number(s.opacity)};
+    }));
+    assert.equal(new Set(filtered.map(x=>x.delay)).size,2,"filtered icons lost distinct orbit delays");
+    assert(Math.hypot(filtered[0].x-filtered[1].x,filtered[0].y-filtered[1].y)>90,
+      "filtered icons are stacked: "+JSON.stringify(filtered));
+    check(device+" filtered orbit keeps distinct icon positions");
+  }
+
   await toolkit.locator(".toolkit-category").first().evaluate(el=>el.click());
   const before=await toolkit.locator(".toolkit-focus-copy strong").innerText();
   await toolkit.locator(".toolkit-controls button").last().click();
