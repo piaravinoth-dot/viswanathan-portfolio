@@ -182,6 +182,7 @@ try{
   check(device+" Figma renders original brand icon");
   await toolkit.locator(".toolkit-category").nth(1).evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),4);
+  if(width<=760)assert.equal(await toolkit.locator(".toolkit-tile").evaluateAll(els=>els.filter(el=>Number(getComputedStyle(el).opacity)>.9).length),4,"filtered Design tools should stay visible");
   check(device+" Design filter still shows four tools");
   await toolkit.locator(".toolkit-category").first().evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),16);
@@ -189,13 +190,16 @@ try{
   check(device+" All restores the complete sixteen-tool orbit");
   await toolkit.locator(".toolkit-category").nth(2).evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),2);
+  if(width<=760)assert.equal(await toolkit.locator(".toolkit-tile").evaluateAll(els=>els.filter(el=>Number(getComputedStyle(el).opacity)>.9).length),2,"filtered Motion tools should stay visible");
   assert.equal(await toolkit.locator(".toolkit-focus-copy strong").innerText(),"Adobe After Effects");
   check(device+" filters motion tools");
   await toolkit.locator(".toolkit-category").nth(3).evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),8);
+  if(width<=760)assert.equal(await toolkit.locator(".toolkit-tile").evaluateAll(els=>els.filter(el=>Number(getComputedStyle(el).opacity)>.9).length),8,"filtered Development tools should stay visible");
   check(device+" filters development tools");
   await toolkit.locator(".toolkit-category").nth(4).evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),2);
+  if(width<=760)assert.equal(await toolkit.locator(".toolkit-tile").evaluateAll(els=>els.filter(el=>Number(getComputedStyle(el).opacity)>.9).length),2,"filtered AI tools should stay visible");
   check(device+" filters AI tools");
   await toolkit.locator(".toolkit-category").first().evaluate(el=>el.click());
   const before=await toolkit.locator(".toolkit-focus-copy strong").innerText();
