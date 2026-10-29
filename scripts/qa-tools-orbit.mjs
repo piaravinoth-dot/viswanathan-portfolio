@@ -5,7 +5,7 @@ const origin=process.env.QA_URL||"http://127.0.0.1:4173";
 const browser=await chromium.launch({headless:true,channel:"chrome",args:["--no-sandbox"]});
 const results=[];const check=(name)=>{results.push(name);console.log("PASS",name)};
 try{
- for(const [device,width,height] of [["iphone",390,844],["android",412,915],["tablet",820,1180],["desktop",1440,900]]){
+ for(const [device,width,height] of [["iphone",390,844],["iphone-pro-max",428,926],["android",412,915],["tablet",820,1180],["desktop",1440,900]]){
   const ctx=await browser.newContext({viewport:{width,height},isMobile:width<850,hasTouch:width<850});
   const page=await ctx.newPage();const errs=[];page.on("pageerror",e=>errs.push(e.message));
   const response=await page.goto(origin+"/",{waitUntil:"domcontentloaded",timeout:60000});
@@ -137,6 +137,7 @@ try{
     assert.equal(new Set(phases.map(x=>x.delay)).size,16,"all sixteen require distinct orbital phases");
     assert(phases.every(x=>x.animation.includes("toolkit-spaced-sixteen-orbit")),"a tool is missing orbital motion");
     check(device+" all sixteen distinct tools are continuously phased around the orbit");
+    if(device==="iphone")await toolkit.screenshot({path:"qa-tools-iphone-orbit-debug.png",animations:"allow"});
     // Verify the visible icons do not pile up over the hand or each other.
     // Sample multiple animation frames so one lucky screenshot cannot pass.
     for(let frame=0;frame<5;frame++){
@@ -146,13 +147,14 @@ try{
         const items=[...stage.querySelectorAll(".toolkit-tile")].filter(el=>{
           const css=getComputedStyle(el);
           return Number(css.opacity)>.6&&css.pointerEvents!=="none";
-        }).map(el=>{const v=el.getBoundingClientRect();return {name:el.getAttribute("aria-label"),x:v.left+v.width/2,y:v.top+v.height/2,w:v.width,h:v.height};});
-        return {cx:bound.left+bound.width/2,cy:bound.top+bound.height/2,items,handY:hand.top};
+        }).map(el=>{const v=el.getBoundingClientRect();return {name:el.getAttribute("aria-label"),x:v.left+v.width/2,y:v.top+v.height/2,w:v.width,h:v.height,distance:getComputedStyle(el).offsetDistance};});
+        return {cx:bound.left+bound.width/2,cy:bound.top+bound.height/2,stage:{left:bound.left,right:bound.right,top:bound.top,bottom:bound.bottom},items,handY:hand.top};
       });
-      assert(g.items.length<=2,"too many orbit icons visible simultaneously: "+g.items.length);
+      assert(g.items.length>=3&&g.items.length<=5,"expected four spaced orbit icons around the hand: "+g.items.length);
       for(let i=0;i<g.items.length;i++){
         const a=g.items[i];
-        assert(Math.abs(a.x-g.cx)>40||Math.abs(a.y-g.cy)>65,"icon obscures hand centre: "+JSON.stringify(a));
+        assert(a.x>g.stage.left+20&&a.x<g.stage.right-20&&a.y>g.stage.top+20&&a.y<g.stage.bottom-20,"visible icon clipped outside orbit stage: "+JSON.stringify(a));
+        assert(Math.abs(a.x-g.cx)>40||Math.abs(a.y-g.cy)>65,"icon obscures hand centre: "+JSON.stringify({a,cx:g.cx,cy:g.cy}));
         for(let j=i+1;j<g.items.length;j++){
           const b=g.items[j];
           assert(Math.hypot(a.x-b.x,a.y-b.y)>48,"orbit icons overlap: "+JSON.stringify({a,b}));
@@ -182,6 +184,7 @@ try{
   check(device+" Figma renders original brand icon");
   await toolkit.locator(".toolkit-category").nth(1).evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),4);
+  if(width<=760)assert.equal(await toolkit.locator(".toolkit-tile").evaluateAll(els=>els.filter(el=>Number(getComputedStyle(el).opacity)>.9).length),4,"filtered Design tools should stay visible");
   check(device+" Design filter still shows four tools");
   await toolkit.locator(".toolkit-category").first().evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),16);
@@ -189,14 +192,30 @@ try{
   check(device+" All restores the complete sixteen-tool orbit");
   await toolkit.locator(".toolkit-category").nth(2).evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),2);
+  if(width<=760)assert.equal(await toolkit.locator(".toolkit-tile").evaluateAll(els=>els.filter(el=>Number(getComputedStyle(el).opacity)>.9).length),2,"filtered Motion tools should stay visible");
   assert.equal(await toolkit.locator(".toolkit-focus-copy strong").innerText(),"Adobe After Effects");
   check(device+" filters motion tools");
   await toolkit.locator(".toolkit-category").nth(3).evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),8);
+  if(width<=760)assert.equal(await toolkit.locator(".toolkit-tile").evaluateAll(els=>els.filter(el=>Number(getComputedStyle(el).opacity)>.9).length),8,"filtered Development tools should stay visible");
   check(device+" filters development tools");
   await toolkit.locator(".toolkit-category").nth(4).evaluate(el=>el.click());
   assert.equal(await toolkit.locator(".toolkit-tile").count(),2);
+  if(width<=760)assert.equal(await toolkit.locator(".toolkit-tile").evaluateAll(els=>els.filter(el=>Number(getComputedStyle(el).opacity)>.9).length),2,"filtered AI tools should stay visible");
   check(device+" filters AI tools");
+  if(width<=760){
+    // A shorthand animation override must retain the per-icon phase delays:
+    // otherwise filtered icons all pile up at the same spot.
+    const filtered=await toolkit.locator(".toolkit-stage .toolkit-tile").evaluateAll(els=>els.map(el=>{
+      const r=el.getBoundingClientRect(),s=getComputedStyle(el);
+      return {x:r.left+r.width/2,y:r.top+r.height/2,delay:s.animationDelay,opacity:Number(s.opacity)};
+    }));
+    assert.equal(new Set(filtered.map(x=>x.delay)).size,2,"filtered icons lost distinct orbit delays");
+    assert(Math.hypot(filtered[0].x-filtered[1].x,filtered[0].y-filtered[1].y)>90,
+      "filtered icons are stacked: "+JSON.stringify(filtered));
+    check(device+" filtered orbit keeps distinct icon positions");
+  }
+
   await toolkit.locator(".toolkit-category").first().evaluate(el=>el.click());
   const before=await toolkit.locator(".toolkit-focus-copy strong").innerText();
   await toolkit.locator(".toolkit-controls button").last().click();
@@ -226,10 +245,10 @@ try{
   });
   if(width<761)assert.equal(footerLayout.overlap,false,"toolkit footer elements overlap");
   check(device+" readable footer");
-  if(device==="iphone"||device==="desktop"){
+  if(device==="iphone"||device==="iphone-pro-max"||device==="desktop"){
     await toolkit.locator(".toolkit-category").nth(1).evaluate(el=>el.click());
     await page.waitForTimeout(450);
-    await toolkit.screenshot({path:"qa-tools-"+device+".png",animations:"disabled"});
+    await toolkit.screenshot({path:"qa-tools-"+device+".png",animations:"allow"});
   }
   assert.deepEqual(errs,[]);
   check(device+" no browser errors");

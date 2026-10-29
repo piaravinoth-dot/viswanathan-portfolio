@@ -1,5 +1,13 @@
 name: Interactive Tools Orbit Preview QA
 on:
+  pull_request:
+    branches:
+      - viswanathan-g
+    paths:
+      - "src/components/ToolsOrbit.tsx"
+      - "src/components/styles/ToolsOrbit.css"
+      - "scripts/qa-tools-orbit.mjs"
+      - ".github/workflows/toolkit-orbit-preview.yml"
   push:
     branches:
       - experiment/interactive-tools-orbit-20261026
@@ -12,6 +20,7 @@ on:
       - fix/mobile-orbit-smooth-rotation-20261027
       - fix/mobile-all16-continuous-orbit-20261027
       - fix/mobile-orbit-overlap-20261027
+      - fix/mobile-orbit-diagonal-visibility-20261029
     paths:
       - "src/components/ToolsOrbit.tsx"
       - "src/components/styles/ToolsOrbit.css"
@@ -59,6 +68,8 @@ jobs:
           path: |
             qa-tools-results.json
             qa-tools-iphone.png
+            qa-tools-iphone-orbit-debug.png
+            qa-tools-iphone-pro-max.png
             qa-tools-desktop.png
           if-no-files-found: ignore
           retention-days: 7

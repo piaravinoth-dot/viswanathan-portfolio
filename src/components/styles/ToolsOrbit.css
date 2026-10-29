@@ -293,16 +293,16 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
  .toolkit-stage-mobile .toolkit-tile:nth-of-type(4){offset-distance:75%}
 }
 
-/* Correct mobile positioning: anchor every orbit path to the hand's centre.
-   Previous offset-path was relative to (0,0), clustering icons over the wrist.
-   The narrower visibility window also prevents sixteen icons crowding together. */
+/* Position the CSS motion path inside the stage's own coordinate system.
+   A path centred at (0,0) sends most icons outside the clipped stage.
+   Diagonal visibility windows keep the full 16-tool cycle uncrowded. */
 @media(max-width:760px){
  .toolkit-stage-mobile .toolkit-tile {
-   left:50%!important;top:49%!important;
-   offset-path:ellipse(132px 108px at 0px 0px);
+   left:0!important;top:0!important;
+   offset-path:ellipse(132px 108px at calc(50% + 18px) 49%);
    offset-rotate:0deg;
    offset-anchor:center;
-   transform:translate(-50%,-50%) scale(.86)!important;
+   transform:scale(.86)!important;
    animation:toolkit-spaced-sixteen-orbit 32s linear infinite!important;
    animation-delay:calc(var(--mobile-orbit-delay,0s) * 1.333333)!important;
    will-change:offset-distance,opacity;
@@ -311,15 +311,30 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
 }
 @media(max-width:390px) {
  .toolkit-stage-mobile .toolkit-tile {
-   offset-path:ellipse(114px 100px at 0px 0px);
+   offset-path:ellipse(114px 100px at calc(50% + 18px) 49%);
  }
 }
+/* Four short diagonal arcs keep four well-separated tools visible around the
+   illustrated hand. All sixteen tools still rotate through these positions,
+   without animating React state or interfering with native mobile scrolling. */
 @keyframes toolkit-spaced-sixteen-orbit {
   0%{offset-distance:0%;opacity:0;pointer-events:none}
-  1%{opacity:0;pointer-events:none}
-  2.5%{opacity:1;pointer-events:auto}
-  7%{opacity:1;pointer-events:auto}
-  8.5%{opacity:0;pointer-events:none}
+  12.5%{opacity:0;pointer-events:none}
+  13%{opacity:1;pointer-events:auto}
+  18.75%{opacity:1;pointer-events:auto}
+  19.5%{opacity:0;pointer-events:none}
+  37.5%{opacity:0;pointer-events:none}
+  38%{opacity:1;pointer-events:auto}
+  43.75%{opacity:1;pointer-events:auto}
+  44.5%{opacity:0;pointer-events:none}
+  62.5%{opacity:0;pointer-events:none}
+  63%{opacity:1;pointer-events:auto}
+  68.75%{opacity:1;pointer-events:auto}
+  69.5%{opacity:0;pointer-events:none}
+  87.5%{opacity:0;pointer-events:none}
+  88%{opacity:1;pointer-events:auto}
+  93.75%{opacity:1;pointer-events:auto}
+  94.5%{opacity:0;pointer-events:none}
   100%{offset-distance:100%;opacity:0;pointer-events:none}
 }
 @media(max-width:760px) and (prefers-reduced-motion:reduce) {
@@ -332,4 +347,19 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
  .toolkit-stage-mobile .toolkit-tile[data-orbit-index="4"]{offset-distance:25%}
  .toolkit-stage-mobile .toolkit-tile[data-orbit-index="8"]{offset-distance:50%}
  .toolkit-stage-mobile .toolkit-tile[data-orbit-index="12"]{offset-distance:75%}
+}
+
+/* Filtered categories have only 2–8 icons. Keep each one continuously
+   visible and evenly spaced; the four-arc mask is only for the full 16. */
+@media(max-width:760px) and (prefers-reduced-motion:no-preference){
+ .toolkit-stage-mobile.toolkit-stage-filtered .toolkit-tile{
+   animation:toolkit-filtered-mobile-orbit 32s linear infinite!important;
+   animation-delay:calc(var(--mobile-orbit-delay,0s) * 1.333333)!important;
+   opacity:1!important;
+   pointer-events:auto!important;
+ }
+}
+@keyframes toolkit-filtered-mobile-orbit{
+ from{offset-distance:0%}
+ to{offset-distance:100%}
 }
