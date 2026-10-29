@@ -1,5 +1,13 @@
 name: Interactive Tools Orbit Preview QA
 on:
+  pull_request:
+    branches:
+      - viswanathan-g
+    paths:
+      - "src/components/ToolsOrbit.tsx"
+      - "src/components/styles/ToolsOrbit.css"
+      - "scripts/qa-tools-orbit.mjs"
+      - ".github/workflows/toolkit-orbit-preview.yml"
   push:
     branches:
       - experiment/interactive-tools-orbit-20261026
