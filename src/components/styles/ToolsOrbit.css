@@ -295,7 +295,7 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
 
 /* Correct mobile positioning: anchor every orbit path to the hand's centre.
    Previous offset-path was relative to (0,0), clustering icons over the wrist.
-   The narrower visibility window also prevents sixteen icons crowding together. */
+   Diagonal visibility windows prevent sixteen icons crowding together. */
 @media(max-width:760px){
  .toolkit-stage-mobile .toolkit-tile {
    left:50%!important;top:49%!important;
@@ -314,12 +314,27 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
    offset-path:ellipse(114px 100px at 0px 0px);
  }
 }
+/* Four short diagonal arcs keep four well-separated tools visible around the
+   illustrated hand. All sixteen tools still rotate through these positions,
+   without animating React state or interfering with native mobile scrolling. */
 @keyframes toolkit-spaced-sixteen-orbit {
   0%{offset-distance:0%;opacity:0;pointer-events:none}
-  1%{opacity:0;pointer-events:none}
-  2.5%{opacity:1;pointer-events:auto}
-  7%{opacity:1;pointer-events:auto}
-  8.5%{opacity:0;pointer-events:none}
+  12.5%{opacity:0;pointer-events:none}
+  13%{opacity:1;pointer-events:auto}
+  18.75%{opacity:1;pointer-events:auto}
+  19.5%{opacity:0;pointer-events:none}
+  37.5%{opacity:0;pointer-events:none}
+  38%{opacity:1;pointer-events:auto}
+  43.75%{opacity:1;pointer-events:auto}
+  44.5%{opacity:0;pointer-events:none}
+  62.5%{opacity:0;pointer-events:none}
+  63%{opacity:1;pointer-events:auto}
+  68.75%{opacity:1;pointer-events:auto}
+  69.5%{opacity:0;pointer-events:none}
+  87.5%{opacity:0;pointer-events:none}
+  88%{opacity:1;pointer-events:auto}
+  93.75%{opacity:1;pointer-events:auto}
+  94.5%{opacity:0;pointer-events:none}
   100%{offset-distance:100%;opacity:0;pointer-events:none}
 }
 @media(max-width:760px) and (prefers-reduced-motion:reduce) {
