@@ -68,6 +68,7 @@ jobs:
           path: |
             qa-tools-results.json
             qa-tools-iphone.png
+            qa-tools-iphone-orbit-debug.png
             qa-tools-iphone-pro-max.png
             qa-tools-desktop.png
           if-no-files-found: ignore
