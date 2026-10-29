@@ -293,13 +293,13 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
  .toolkit-stage-mobile .toolkit-tile:nth-of-type(4){offset-distance:75%}
 }
 
-/* Correct mobile positioning: anchor every orbit path to the hand's centre.
-   Previous offset-path was relative to (0,0), clustering icons over the wrist.
-   Diagonal visibility windows prevent sixteen icons crowding together. */
+/* Position the CSS motion path inside the stage's own coordinate system.
+   A path centred at (0,0) sends most icons outside the clipped stage.
+   Diagonal visibility windows keep the full 16-tool cycle uncrowded. */
 @media(max-width:760px){
  .toolkit-stage-mobile .toolkit-tile {
-   left:50%!important;top:49%!important;
-   offset-path:ellipse(132px 108px at 0px 0px);
+   left:0!important;top:0!important;
+   offset-path:ellipse(132px 108px at 50% 49%);
    offset-rotate:0deg;
    offset-anchor:center;
    transform:translate(-50%,-50%) scale(.86)!important;
@@ -311,7 +311,7 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
 }
 @media(max-width:390px) {
  .toolkit-stage-mobile .toolkit-tile {
-   offset-path:ellipse(114px 100px at 0px 0px);
+   offset-path:ellipse(114px 100px at 50% 49%);
  }
 }
 /* Four short diagonal arcs keep four well-separated tools visible around the
