@@ -5,7 +5,7 @@ const origin=process.env.QA_URL||"http://127.0.0.1:4173";
 const browser=await chromium.launch({headless:true,channel:"chrome",args:["--no-sandbox"]});
 const results=[];const check=(name)=>{results.push(name);console.log("PASS",name)};
 try{
- for(const [device,width,height] of [["iphone",390,844],["android",412,915],["tablet",820,1180],["desktop",1440,900]]){
+ for(const [device,width,height] of [["iphone",390,844],["iphone-pro-max",428,926],["android",412,915],["tablet",820,1180],["desktop",1440,900]]){
   const ctx=await browser.newContext({viewport:{width,height},isMobile:width<850,hasTouch:width<850});
   const page=await ctx.newPage();const errs=[];page.on("pageerror",e=>errs.push(e.message));
   const response=await page.goto(origin+"/",{waitUntil:"domcontentloaded",timeout:60000});
@@ -149,7 +149,7 @@ try{
         }).map(el=>{const v=el.getBoundingClientRect();return {name:el.getAttribute("aria-label"),x:v.left+v.width/2,y:v.top+v.height/2,w:v.width,h:v.height};});
         return {cx:bound.left+bound.width/2,cy:bound.top+bound.height/2,items,handY:hand.top};
       });
-      assert(g.items.length<=2,"too many orbit icons visible simultaneously: "+g.items.length);
+      assert(g.items.length>=3&&g.items.length<=5,"expected four spaced orbit icons around the hand: "+g.items.length);
       for(let i=0;i<g.items.length;i++){
         const a=g.items[i];
         assert(Math.abs(a.x-g.cx)>40||Math.abs(a.y-g.cy)>65,"icon obscures hand centre: "+JSON.stringify(a));
@@ -226,7 +226,7 @@ try{
   });
   if(width<761)assert.equal(footerLayout.overlap,false,"toolkit footer elements overlap");
   check(device+" readable footer");
-  if(device==="iphone"||device==="desktop"){
+  if(device==="iphone"||device==="iphone-pro-max"||device==="desktop"){
     await toolkit.locator(".toolkit-category").nth(1).evaluate(el=>el.click());
     await page.waitForTimeout(450);
     await toolkit.screenshot({path:"qa-tools-"+device+".png",animations:"disabled"});
