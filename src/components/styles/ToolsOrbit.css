@@ -299,10 +299,10 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
 @media(max-width:760px){
  .toolkit-stage-mobile .toolkit-tile {
    left:0!important;top:0!important;
-   offset-path:ellipse(132px 108px at 50% 49%);
+   offset-path:ellipse(132px 108px at calc(50% + 18px) 49%);
    offset-rotate:0deg;
    offset-anchor:center;
-   transform:translate(-50%,-50%) scale(.86)!important;
+   transform:scale(.86)!important;
    animation:toolkit-spaced-sixteen-orbit 32s linear infinite!important;
    animation-delay:calc(var(--mobile-orbit-delay,0s) * 1.333333)!important;
    will-change:offset-distance,opacity;
@@ -311,7 +311,7 @@ body.toolkit-section-active .icons-section .resume-button{opacity:0;pointer-even
 }
 @media(max-width:390px) {
  .toolkit-stage-mobile .toolkit-tile {
-   offset-path:ellipse(114px 100px at 50% 49%);
+   offset-path:ellipse(114px 100px at calc(50% + 18px) 49%);
  }
 }
 /* Four short diagonal arcs keep four well-separated tools visible around the
