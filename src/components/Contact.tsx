@@ -35,7 +35,7 @@ const Contact=()=>{
       <div className="contact-heading">
         <span className="contact-eyebrow">05 / GET IN TOUCH</span>
         <h2 className="contact-title" id="contact-title">Have something <em>in mind?</em></h2>
-        <p>Open to thoughtful opportunities, product design roles and creative collaborations. Tell me what you're working on.</p>
+        <p>Open to Art Director, Creative Lead and senior visual design roles, and to creative collaborations. Tell me what you're working on.</p>
       </div>
       <a className="contact-direct-action" href={`mailto:${contactEmail}`}>Email me directly <MdArrowOutward aria-hidden="true"/><span>{contactEmail}</span></a>
       <div className="contact-layout">

@@ -31,7 +31,7 @@ try{
   const aboutText=await page.locator(".about-copy").innerText();
   assert(aboutText.includes("I translate complex ideas into clear visual systems and useful digital products."),"Previous About introduction was not restored");
   assert(aboutText.includes("With 10+ years across visual communication"),"Previous professional overview not restored");
-  assert(aboutText.includes("As a Vibe Coder"),"Previous Vibe Coder paragraph not restored");
+  assert(aboutText.includes("Alongside design, I use AI-assisted development"),"AI-assisted development paragraph not present");
   assert.equal(await page.locator(".about-copy p").count(),3,"Previous About paragraph count changed");
   assert.equal(await page.locator(".about-journey-link").count(),0,"Removed Journey CTA remains visible");
   assert.equal(await page.locator(".about-actions a").count(),2,"Resume or contact link changed");

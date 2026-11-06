@@ -23,9 +23,9 @@ const capabilities = [
   },
   {
     title: "Creative Development",
-    focus: "Vibe coding. Ideas into working products.",
+    focus: "AI-Assisted Development. Ideas into working products.",
     description: "I use AI-assisted development to turn design ideas into working products. I shape the flows and interfaces, guide implementation, test the experience and refine it through iteration. This portfolio brings that approach into React, TypeScript, GSAP and Three.js.",
-    skills: ["React", "TypeScript", "CSS", "GSAP", "Three.js", "Vibe coding"],
+    skills: ["React", "TypeScript", "CSS", "GSAP", "Three.js", "AI-Assisted Development"],
     links: [{label: "Content Tracker", href: "/work/content-tracker"}, {label: "Clip Studio prototype", href: "/work/clip-studio"}],
     note: "Interactive experiences · Frontend implementation · Motion",
   },

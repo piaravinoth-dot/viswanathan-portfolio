@@ -11,5 +11,5 @@ export function CaseBrief({slug}:{slug:ProductSlug}) {
   </section>;
 }
 export function CaseContact() {
-  return <section className="case-contact" aria-labelledby="case-contact-title"><div><span>LET’S WORK TOGETHER</span><h2 id="case-contact-title">A role to discuss.<br/>An idea to build.</h2><p>Open to product design, visual design and creative leadership opportunities.</p></div><div className="case-contact-actions"><a href="/#contact">Discuss a role or project <span aria-hidden="true">↗</span></a><a href="/resume/Viswanathan_G_Resume.pdf" download>Download résumé <span aria-hidden="true">↓</span></a></div></section>;
+  return <section className="case-contact" aria-labelledby="case-contact-title"><div><span>LET’S WORK TOGETHER</span><h2 id="case-contact-title">A role to discuss.<br/>An idea to build.</h2><p>Open to art direction, creative leadership and visual design opportunities.</p></div><div className="case-contact-actions"><a href="/#contact">Discuss a role or project <span aria-hidden="true">↗</span></a><a href="/resume/Viswanathan_G_Resume.pdf" download>Download résumé <span aria-hidden="true">↓</span></a></div></section>;
 }

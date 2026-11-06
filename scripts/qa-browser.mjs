@@ -125,7 +125,7 @@ async function testViewport(browser, name, width) {
     const within=metrics.indexRects.every(r=>r.width>0&&r.left>=-tolerance&&r.right<=metrics.vw+tolerance);
     log(name,width,'index buttons within viewport',within,JSON.stringify(metrics.indexRects.map(r=>[Math.round(r.left),Math.round(r.right)])));
     log(name,width,'no document horizontal overflow',metrics.scrollWidth<=metrics.vw+tolerance,`scrollWidth=${metrics.scrollWidth} viewport=${metrics.vw}`);
-    const linkedIn=page.locator('a[href*="linkedin.com/in/viswanathan-g-55a0176a"]');
+    const linkedIn=page.locator('a[href*="linkedin.com/in/viswanathang-gd9969"]');
     log(name,width,'exactly one LinkedIn link',await linkedIn.count()===1,`count=${await linkedIn.count()}`);
     log(name,width,'LinkedIn retained in right-hand rail',await page.locator('.icons-section .resume-button[href*="linkedin.com"]').count()===1);
     if(name==='chromium' && (width===375||width===1440)){
