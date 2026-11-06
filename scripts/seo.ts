@@ -12,7 +12,7 @@ function metadata(html: string, page: typeof pages[number]) {
   const heroPreload = project ? `<link rel="preload" as="image" href="${project.hero.src}" imagesrcset="${project.hero.src.replace('.webp','-800.webp')} 800w, ${project.hero.src} ${project.hero.width}w" imagesizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1333px) 90vw, 1200px" fetchpriority="high" />` : "";
   const schema = page.path === "/" ? {
     "@context":"https://schema.org", "@type":"ProfilePage", "url":url,
-    "mainEntity":{"@type":"Person","name":"Viswanathan G","url":origin,"@id":origin+"/#person","jobTitle":"Senior Product & Visual Designer","description":"Creative Lead and Vibe Coder working across visual communication and digital products","sameAs":["https://www.linkedin.com/in/viswanathan-g-55a0176a/","https://github.com/piaravinoth-dot"]}
+    "mainEntity":{"@type":"Person","name":"Viswanathan G","url":origin,"@id":origin+"/#person","description":"Art Director and Creative Lead working across brand, visual design and interactive experiences, with AI-assisted development","sameAs":["https://www.linkedin.com/in/viswanathan-g-55a0176a/","https://github.com/piaravinoth-dot"]}
   } : {"@context":"https://schema.org","@type":"CreativeWork","name":page.title.split(" — ")[0],"description":page.description,"url":url,"image":image,"author":{"@type":"Person","name":"Viswanathan G","url":origin,"@id":origin+"/#person"}};
   const block = `<!--seo:start-->
 ${heroPreload}
